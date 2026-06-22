@@ -1,0 +1,60 @@
+/* ============================================================================
+   H6 — "How we work" process timeline. Scoped design tokens + editorial type.
+   Dark ink + indigo accent (cohesive with the rest of the site).
+   ========================================================================== */
+.process {
+  --color-ink: #08080b;
+  --color-bone: #f4f4f5;
+  --color-bone-dim: rgba(244, 244, 245, 0.66);
+  --color-bone-faint: rgba(244, 244, 245, 0.34);
+  --color-line: rgba(255, 255, 255, 0.09);
+  --color-line-strong: rgba(255, 255, 255, 0.22);
+  --color-accent: #6366f1;
+}
+
+.process .pin-display {
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+.process .pin-serif {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.process .pin-kicker {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.process .pin-star {
+  width: 0.55em;
+  height: 0.55em;
+  border-radius: 1px;
+  background: var(--color-accent);
+  transform: rotate(45deg);
+  display: inline-block;
+  flex: none;
+}
+.process .pin-fluid-1 {
+  font-size: clamp(3rem, 9vw, 7rem);
+}
+.process .pin-fluid-2 {
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+}
+
+/* tactile grain */
+.process-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 170px 170px;
+}

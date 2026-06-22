@@ -1,0 +1,424 @@
+/* ============================================================================
+   Sterling Gate — kinetic fullscreen navigation
+   ----------------------------------------------------------------------------
+   This is the AUTHORITATIVE stylesheet, extracted verbatim from the published
+   21st.dev compiled bundle (cdn.21st.dev/.../bundle.html) — NOT a re-creation.
+   The component author never shipped CSS in the shadcn registry; it lives only
+   in the compiled preview. Values are kept exact.
+
+   Local adaptations (only what our multi-page mount requires):
+   - Scoped the dark token-inversion to `.dark` (added to the component root) so
+     it doesn't flip the whole site's palette.
+   - Neutralized `.fullscreen-menu-container` layout (was min-height:100svh) — in
+     the demo it IS the page; here the nav mounts above real page content, so it
+     must take zero flow space. It only carries the --menu-padding variable now.
+   - Added :focus-visible rings (WCAG). Fonts/@font-face live in globals.css.
+   GSAP owns xPercent/yPercent on .menu-content/.nav-link/.backdrop-layer — note
+   there are deliberately NO CSS transform defaults on those (would compound).
+   ========================================================================== */
+
+/* Dark theme token inversion — scoped to the nav root (<div class="dark">) */
+.dark,
+[data-theme="dark"] {
+  --color-primary: #818cf8;
+  --color-dark: #f5f5f5;
+  --color-neutral-100: #1f1f1f;
+  --color-neutral-200: #262626;
+  --color-neutral-300: #171717;
+  --color-neutral-800: #e5e5e5;
+}
+
+/* ---- Header --------------------------------------------------------------- */
+.site-header-wrapper {
+  z-index: 0;
+  pointer-events: none;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+.header {
+  z-index: 110;
+  /* respect notch / status bar on mobile */
+  padding-top: calc(var(--gap) + env(safe-area-inset-top));
+  padding-bottom: 1.25em;
+  position: fixed;
+  inset: 0% 0% auto;
+  /* Transparent bar. A soft top-down scrim keeps the logo + menu legible over
+     media/hero and light sections without a solid frosted bar. */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.18) 45%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+.container {
+  z-index: 1;
+  max-width: var(--size-container);
+  /* respect landscape notch insets */
+  padding-left: calc(var(--container-padding) + env(safe-area-inset-left));
+  padding-right: calc(var(--container-padding) + env(safe-area-inset-right));
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+.container.is--full {
+  max-width: 100%;
+}
+.nav-row {
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  display: flex;
+}
+.nav-logo-row {
+  pointer-events: auto;
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+  display: flex;
+}
+.logo-text {
+  color: var(--color-dark);
+  font-family: var(--font-geist-sans), sans-serif;
+  letter-spacing: -0.04em;
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1;
+  transition: color 0.3s;
+}
+.logo-star {
+  color: var(--color-primary);
+  font-weight: 900;
+  margin-left: 0.04em;
+  vertical-align: 0.18em;
+  font-size: 0.8em;
+}
+.nav-row__right {
+  grid-column-gap: 0.625rem;
+  grid-row-gap: 0.625rem;
+  pointer-events: auto;
+  justify-content: flex-end;
+  align-items: center;
+  display: flex;
+}
+.nav-toggle-label {
+  align-items: center;
+  gap: 0.5em;
+  margin-right: 1.25em;
+  display: flex;
+}
+.toggle-text {
+  color: var(--color-dark);
+  opacity: 0.8;
+  font-family: Caveat, cursive, Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: color 0.3s;
+}
+.nav-close-btn {
+  grid-column-gap: 0.875em;
+  grid-row-gap: 0.875em;
+  color: var(--color-dark);
+  background-color: #0000;
+  border: none;
+  justify-content: flex-end;
+  align-items: center;
+  margin: -1em;
+  padding: 1em;
+  font-size: 1.25rem;
+  display: flex;
+  transition: color 0.3s;
+}
+.menu-button-text {
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  height: 1.5em;
+  display: flex;
+  overflow: hidden;
+}
+.menu-button-text .p-large {
+  font-size: 1.5em;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+.p-large {
+  font-family: Arial, Helvetica;
+  font-size: 1.125em;
+}
+.icon-wrap {
+  transition: transform 0.4s cubic-bezier(0.65, 0.05, 0, 1);
+}
+.menu-button-icon {
+  width: 1.5em;
+  height: 1.5em;
+}
+.nav-close-btn:hover .icon-wrap {
+  transform: rotate(90deg);
+}
+
+/* ---- Overlay + sliding panel ---------------------------------------------- */
+.fullscreen-menu-container {
+  /* demo used min-height:100svh; here it must not occupy flow space.
+     It only carries the --menu-padding variable for the panel. */
+  --menu-padding: 2em;
+  position: relative;
+}
+.nav-overlay-wrapper {
+  z-index: 100;
+  width: 100%;
+  height: 100dvh;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  position: fixed;
+  inset: 0%;
+}
+.nav-overlay-wrapper[data-nav="closed"] {
+  display: none;
+}
+.overlay {
+  z-index: 0;
+  cursor: pointer;
+  background-color: #0006;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0%;
+}
+.menu-content {
+  padding-bottom: calc(var(--menu-padding) + env(safe-area-inset-bottom));
+  grid-column-gap: 5em;
+  grid-row-gap: 5em;
+  padding-top: calc(3 * var(--menu-padding) + env(safe-area-inset-top));
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 35em;
+  max-width: 100%;
+  height: 100%;
+  margin-left: auto;
+  position: relative;
+  overflow: auto;
+}
+.menu-bg {
+  z-index: 0;
+  position: absolute;
+  inset: 0%;
+}
+.backdrop-layer {
+  z-index: 0;
+  background-color: var(--color-neutral-300);
+  border-top-left-radius: 1.25em;
+  border-bottom-left-radius: 1.25em;
+  position: absolute;
+  inset: 0%;
+}
+.backdrop-layer.first {
+  background-color: var(--color-primary);
+}
+.backdrop-layer.second {
+  background-color: var(--color-neutral-100);
+}
+.ambient-background-shapes {
+  z-index: 1;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.bg-shape {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.5s;
+  position: absolute;
+}
+.bg-shape.active {
+  opacity: 1;
+}
+.shape-element {
+  transform-origin: 50%;
+}
+
+/* ---- Menu content / links ------------------------------------------------- */
+.menu-content-wrapper {
+  z-index: 1;
+  grid-column-gap: 5em;
+  grid-row-gap: 5em;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 100%;
+  display: flex;
+  position: relative;
+  /* .menu-content owns the single scroll container — no nested scroller here. */
+}
+.menu-list {
+  flex-flow: column;
+  width: 100%;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+}
+.menu-list-item {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---- Menu footer (brand line + direct contact) ---------------------------- */
+.menu-footer {
+  padding-left: var(--menu-padding);
+  padding-right: var(--menu-padding);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+}
+.menu-footer-tagline {
+  color: var(--color-dark);
+  opacity: 0.55;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+}
+.menu-footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6em 1.25em;
+}
+.menu-footer-link {
+  color: var(--color-dark);
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.3s;
+}
+.menu-footer-link:hover {
+  opacity: 0.6;
+}
+.menu-footer-link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+.menu-footer-meta {
+  color: var(--color-dark);
+  opacity: 0.6;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.9rem;
+}
+.nav-link {
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
+  padding-left: var(--menu-padding);
+  grid-column-gap: 0.75em;
+  grid-row-gap: 0.75em;
+  width: 100%;
+  color: var(--color-dark);
+  text-decoration: none;
+  display: flex;
+}
+.nav-link-text {
+  z-index: 1;
+  text-transform: uppercase;
+  font-family: "PP Neue Corp Tight", Arial, sans-serif;
+  font-size: clamp(3rem, 10vw, 5.625em);
+  font-weight: 700;
+  line-height: 0.75;
+  transition: transform 0.55s cubic-bezier(0.65, 0.05, 0, 1);
+  position: relative;
+  text-shadow: 0px 1em 0px var(--color-neutral-200);
+}
+.dark .nav-link-text {
+  text-shadow: 0px 1em 0px var(--color-neutral-100);
+}
+.nav-link-hover-bg {
+  z-index: 0;
+  background-color: var(--color-neutral-800);
+  transform-origin: 50% 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.65, 0.05, 0, 1);
+  position: absolute;
+  inset: 0%;
+  transform: scaleY(0);
+}
+.nav-link:hover .nav-link-text {
+  transition-delay: 0.1s;
+  transform: translateY(-1em);
+}
+.nav-link:hover .nav-link-hover-bg {
+  transform: scale(1);
+}
+.nav-link:hover {
+  color: var(--color-neutral-100);
+}
+.dark .nav-link:hover {
+  color: var(--color-neutral-300);
+}
+
+/* ---- Visible focus states (WCAG) ------------------------------------------ */
+.nav-logo-row:focus-visible,
+.nav-close-btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+/* ---- Responsive (verbatim from bundle) ------------------------------------ */
+@media screen and (max-width: 767px) {
+  .fullscreen-menu-container {
+    --menu-padding: 1em;
+  }
+  .nav-logo-row {
+    grid-column-gap: 2.5em;
+    grid-row-gap: 2.5em;
+    width: auto;
+  }
+  .nav-row__right {
+    grid-column-gap: 0rem;
+    grid-row-gap: 0rem;
+  }
+  .nav-toggle-label {
+    gap: 0.25em;
+    margin-right: 0.5em;
+  }
+  .toggle-text {
+    font-size: 1.2rem;
+  }
+  .menu-content {
+    padding-top: calc(6 * var(--menu-padding));
+    width: 100%;
+  }
+  .backdrop-layer {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .menu-list-item {
+    height: 4.5em;
+  }
+  .nav-link-text {
+    font-size: 4em;
+  }
+}
+@media screen and (max-width: 479px) {
+  .menu-content {
+    padding-top: calc(7 * var(--menu-padding));
+    padding-bottom: calc(2 * var(--menu-padding));
+  }
+}
+
+/* Sub-375 phones: the decorative "click me" hint crowds/collides with the
+   logo + Menu button. Menu is the primary toggle, so drop the redundant
+   hint on the smallest screens. */
+@media screen and (max-width: 374px) {
+  .nav-toggle-label {
+    display: none;
+  }
+}

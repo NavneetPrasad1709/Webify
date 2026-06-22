@@ -1,26 +1,289 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Instrument+Serif:ital@0;1&display=swap");
 @import "tailwindcss";
+@import "tw-animate-css";
+
+/* Heavy condensed display face used by the Sterling Gate nav links.
+   Self-hosted copy of the font the 21st.dev component references.
+   NOTE: "PP Neue Corp Tight" is a commercial Pangram Pangram font — a license
+   is required for production. Swap to a free face (Anton/Archivo Black) on request. */
+@font-face {
+  font-family: "PP Neue Corp Tight";
+  src: url("/fonts/PPNeueCorp-TightUltrabold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* --- Sterling Gate kinetic navigation tokens (shipped WITH the locked component) --- */
+  --color-primary: #6366f1;
+  --color-dark: #131313;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-800: #262626;
+  --size-container: 1400px;
+  --container-padding: 2em;
+  --section-padding: 4em;
+  --gap: 1.5em;
+  --cubic-default: cubic-bezier(0.65, 0.05, 0, 1);
+
+  /* --- App shell base (premium near-black "z-black") --- */
+  --background: #08080b;
+  --foreground: var(--color-neutral-100);
+
+  /* --- Unified craft tokens (one elevation scale, one accent, one hairline) --- */
+  --surface-0: #08080b; /* base canvas */
+  --surface-1: #0e0e13; /* raised cards / panels */
+  --surface-2: #121217; /* highest elevation / inputs */
+  --hairline: rgba(255, 255, 255, 0.08);
+  --hairline-strong: rgba(255, 255, 255, 0.14);
+  --accent: #6366f1;
+  --accent-hi: #818cf8;
+  --accent-glow: rgba(99, 102, 241, 0.1);
+  /* Script-accent green for the heading treatment (from the reference).
+     Single source of truth — flip to var(--accent-hi) for brand indigo. */
+  --accent-script: #4ade80;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  /* Expose the craft accent to Tailwind utilities (text-accent, bg-accent,
+     border-accent, text-accent-hi) — used across the interior pages. */
+  --color-accent: var(--accent);
+  --color-accent-hi: var(--accent-hi);
+  /* shadcn-style semantic tokens, mapped to the dark palette, so reference
+     components built against them (muted / muted-foreground / border / card)
+     render exactly as designed instead of falling back to no color. */
+  --color-card: var(--surface-1);
+  --color-muted: rgba(255, 255, 255, 0.06);
+  --color-muted-foreground: #a1a1aa; /* neutral-400 */
+  --color-border: var(--hairline-strong);
+  --font-sans: var(--font-geist-sans), sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Safety net: clip stray horizontal bleed (e.g. intentional off-screen
+   elements) so no width ever shows a horizontal scrollbar. `clip` (not
+   hidden) keeps vertical scroll + doesn't trap position:fixed / Lenis. */
+html {
+  overflow-x: clip;
+}
+
+/* --- Craft polish: site-wide focus + numeral + heading details --- */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+/* tabular + lining figures kill width-jitter in the stacking-card counters */
+.nums {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+/* balance short display headings (no orphan words) */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Script-accent heading treatment — set a key word in a bold script + accent
+   green inside an otherwise bold sans heading (reference design approach).
+   Sized up + tightened so the script word sits on the sans baseline; overrides
+   gradient-clip parents via -webkit-text-fill-color. */
+.script-accent {
+  font-family: "Caveat", cursive;
+  font-weight: 700;
+  font-style: normal;
+  /* script reads best in natural case even inside uppercase headings */
+  text-transform: none;
+  color: var(--accent-script);
+  -webkit-text-fill-color: var(--accent-script);
+  font-size: 1.15em;
+  line-height: 0.8;
+  padding-inline: 0.04em;
+}
+/* Deep-green variant for light backgrounds (e.g. /work, cream panels). */
+.script-accent-ink {
+  --accent-script: #15803d;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  overflow-x: clip;
+}
+
+/* Site-wide animated starfield background lives in ./starfield.css
+   (imported in layout.tsx) — pure CSS, GPU-composited, warm/white stars. */
+
+/* Lenis smooth-scroll baseline (recommended by the lib) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Honor reduced-motion for CSS-driven motion.
+   GSAP + Framer Motion are gated separately in JS where they run. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===========================================================================
+   H9 — Landing CTA section tokens + utilities (locked reference spec)
+   =========================================================================== */
+@theme {
+  --color-landing-surface: rgba(255, 255, 255, 0.1);
+  --color-landing-surface-hover: rgba(255, 255, 255, 0.16);
+  --color-landing-border: rgba(255, 255, 255, 0.1);
+  --color-landing-border-strong: rgba(255, 255, 255, 0.2);
+  --color-landing-text: rgba(255, 255, 255, 0.8);
+  --color-landing-text-muted: rgba(255, 255, 255, 0.6);
+  --font-inter: var(--font-geist-sans), sans-serif;
+  --font-instrument: "Instrument Serif", serif;
+}
+
+/* Gradient display heading — used by the featured-work section */
+.hero-heading {
+  font-family: var(--font-geist-sans), sans-serif;
+  background-image: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Hero (video) — scroll-indicator highlight, role cycling, accent gradient */
+@keyframes scroll-down {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+@keyframes role-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-scroll-down {
+  animation: scroll-down 1.5s ease-in-out infinite;
+}
+.animate-role-fade-in {
+  animation: role-fade-in 0.4s ease-out;
+}
+.accent-gradient {
+  background-image: linear-gradient(90deg, #89aacc 0%, #4e85bf 100%);
+}
+.hero-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='hn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hn)'/%3E%3C/svg%3E");
+}
+
+/* Frosted translucent surface */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Velorah hero inner reveal */
+@keyframes fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-rise {
+  animation: fade-rise 0.8s ease-out both;
+}
+.animate-fade-rise-delay {
+  animation: fade-rise 0.8s ease-out 0.25s both;
+}
+.animate-fade-rise-delay-2 {
+  animation: fade-rise 0.8s ease-out 0.5s both;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+
+/* CTA — vertical text marquee + entrance (lyanchouss/cta-with-text-marquee).
+   Reduced-motion is handled by the global block above (kills the loop). */
+@keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+.animate-marquee-vertical {
+  animation: marquee-vertical var(--duration, 30s) linear infinite;
+}
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ===========================================================================
+   /work (Habito-style light page) — horizontal marquee + route-aware nav.
+   The marquee freezes under the global prefers-reduced-motion block above.
+   =========================================================================== */
+@keyframes marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee-x {
+  animation: marquee-x var(--marquee-duration, 28s) linear infinite;
 }
