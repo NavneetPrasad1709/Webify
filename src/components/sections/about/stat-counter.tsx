@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
  * Count-up stat that animates from 0 → value when it scrolls into view
  * (IntersectionObserver + rAF, eased). Honors prefers-reduced-motion by showing
  * the final value immediately. setState only ever fires from the IO callback /
- * rAF — never synchronously in the effect body.
+ * rAF - never synchronously in the effect body.
  */
 export function StatCounter({
   value,

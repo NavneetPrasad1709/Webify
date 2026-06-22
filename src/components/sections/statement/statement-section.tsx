@@ -8,32 +8,32 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./statement.css";
 
 /**
- * H4 — "What we build" manifesto. One section that combines two references:
+ * H4 - "What we build" manifesto. One section that combines two references:
  *  - Magic UI text-reveal: the statement fills word-by-word as you scroll
- *    (GSAP ScrollTrigger scrub + CSS sticky — Lenis-safe, accumulates).
+ *    (GSAP ScrollTrigger scrub + CSS sticky - Lenis-safe, accumulates).
  *  - 21st.dev hover-preview: the three product terms are hover links that
  *    reveal a cursor-following high-res image card (touch → inline gallery).
  *
- * [REPLACE:] preview images are high-res Unsplash placeholders.
+ * Preview images are illustrative high-res Unsplash visuals - swap for owned art.
  */
 type Preview = { image: string; title: string; subtitle: string };
 
 const PREVIEWS: Record<string, Preview> = {
   ai: {
     image:
-      "https://images.unsplash.com/photo-1695144244472-a4543101ef35?w=1200&h=900&fit=crop&q=85",
+      "https://images.unsplash.com/photo-1695144244472-a4543101ef35?w=1600&h=1200&fit=crop&q=85",
     title: "AI products",
     subtitle: "Models, agents & AI-native interfaces",
   },
   web: {
     image:
-      "https://images.unsplash.com/photo-1718241905696-cb34c2c07bed?w=1200&h=900&fit=crop&q=85",
+      "https://images.unsplash.com/photo-1718241905696-cb34c2c07bed?w=1600&h=1200&fit=crop&q=85",
     title: "Web platforms",
     subtitle: "Sites & web apps that convert",
   },
   mobile: {
     image:
-      "https://images.unsplash.com/photo-1712002641088-9d76f9080889?w=1200&h=900&fit=crop&q=85",
+      "https://images.unsplash.com/photo-1712002641088-9d76f9080889?w=1600&h=1200&fit=crop&q=85",
     title: "Mobile apps",
     subtitle: "iOS & Android people keep",
   },
@@ -41,13 +41,13 @@ const PREVIEWS: Record<string, Preview> = {
 
 // The manifesto, with the three product terms woven in as hover anchors.
 const PARTS: Array<string | { term: string; label: string }> = [
-  "Great products aren't briefed into existence. They're designed, engineered and shipped end to end — from",
+  "Great products aren't briefed into existence. They're designed, engineered and shipped end to end - from",
   { term: "ai", label: "AI products" },
   "to",
   { term: "web", label: "web platforms" },
   "to",
   { term: "mobile", label: "mobile apps" },
-  "— built by senior people obsessed with the outcome.",
+  "- built by senior people obsessed with the outcome.",
 ];
 
 type Token = { text: string; term?: string };
@@ -190,7 +190,7 @@ export function StatementSection() {
         </div>
       </div>
 
-      {/* Touch fallback — hover doesn't exist, so the imagery shows inline. */}
+      {/* Touch fallback - hover doesn't exist, so the imagery shows inline. */}
       <div className="stmt-gallery">
         {Object.values(PREVIEWS).map((d) => (
           <figure key={d.title}>

@@ -24,7 +24,7 @@ export function WaveSection() {
           </p>
           <p className="text-balance text-xl leading-[1.3] text-white/80 md:w-3/4 md:text-4xl">
             Great products are felt before they&apos;re understood. We sweat the
-            details others skip — the motion, the milliseconds, the moments that
+            details others skip - the motion, the milliseconds, the moments that
             make software feel inevitable.
           </p>
         </div>

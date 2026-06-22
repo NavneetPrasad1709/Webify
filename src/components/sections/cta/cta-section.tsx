@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { ReactNode, useEffect, useRef } from "react";
+import { SparklesTitle } from "@/components/ui/sparkles-title";
 
 interface VerticalMarqueeProps {
   children: ReactNode;
@@ -47,7 +48,7 @@ function VerticalMarquee({
   );
 }
 
-// Who we build for — scrolls in the right column.
+// Who we build for - scrolls in the right column.
 const marqueeItems = [
   "Founders & Execs",
   "Startups",
@@ -57,7 +58,7 @@ const marqueeItems = [
 ];
 
 /**
- * H9 — Final CTA. Vertical text marquee of who we build for, with a
+ * H9 - Final CTA. Vertical text marquee of who we build for, with a
  * center-focus opacity falloff (rAF). Adapted from the 21st.dev
  * lyanchouss/cta-with-text-marquee reference; dark Webify palette.
  */
@@ -98,14 +99,20 @@ export function CtaSection() {
     >
       <div className="w-full max-w-7xl animate-fade-in-up">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-24">
-          {/* Left — CTA copy */}
+          {/* Left - CTA copy */}
           <div className="max-w-xl space-y-8">
-            <h2 className="animate-fade-in-up text-balance text-5xl font-medium leading-tight tracking-tight text-foreground [animation-delay:200ms] md:text-6xl lg:text-7xl">
+            <SparklesTitle
+              as="h2"
+              className="animate-fade-in-up text-balance text-5xl font-medium leading-tight tracking-tight text-foreground [animation-delay:200ms] md:text-6xl lg:text-7xl"
+              beamClassName="mx-0 mr-auto mt-1 max-w-[22rem]"
+              density={32}
+            >
               Let&apos;s <span className="script-accent">build</span> your product.
-            </h2>
+            </SparklesTitle>
             <p className="animate-fade-in-up text-lg leading-relaxed text-landing-text-muted [animation-delay:400ms] md:text-xl">
-              Book a free strategy call. We&apos;ll scope the work, map the build,
-              and ship a working prototype — fast. Senior-led, end to end.
+              Tell us about the idea you can&apos;t stop thinking about. In one free
+              call we&apos;ll scope it, price it, and show you exactly how we&apos;d
+              ship it - fast, senior-led, and 100% yours to keep.
             </p>
             <div className="flex flex-wrap gap-4 animate-fade-in-up [animation-delay:600ms]">
               <Link
@@ -125,7 +132,7 @@ export function CtaSection() {
             </div>
           </div>
 
-          {/* Right — vertical marquee */}
+          {/* Right - vertical marquee */}
           <div
             ref={marqueeRef}
             className="relative flex h-[600px] animate-fade-in-up items-center justify-center [animation-delay:400ms] lg:h-[700px]"

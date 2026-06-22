@@ -17,7 +17,7 @@ interface ZoomParallaxProps {
 
 const SCALES = [4, 5, 6, 5, 6, 8, 9];
 
-/** Per-image inner offset + size — verbatim from the reference layout. */
+/** Per-image inner offset + size - verbatim from the reference layout. */
 const POS: Record<number, string> = {
   1: "[&>div]:!-top-[30vh] [&>div]:!left-[5vw] [&>div]:!h-[30vh] [&>div]:!w-[35vw]",
   2: "[&>div]:!-top-[10vh] [&>div]:!-left-[25vw] [&>div]:!h-[45vh] [&>div]:!w-[20vw]",
@@ -42,12 +42,12 @@ function useReducedMotion() {
 
 /**
  * ZoomParallax (sshahaider/zoom-parallax). A pinned cluster of images that zoom
- * apart as the section scrolls — the centre fills the screen while the others
+ * apart as the section scrolls - the centre fills the screen while the others
  * sweep past the edges.
  *
  * Driven by GSAP ScrollTrigger (synced to our Lenis smooth-scroll) instead of
  * framer's useScroll, which desyncs under Lenis. The reference demo also created
- * its own Lenis instance — omitted here; the app already provides one.
+ * its own Lenis instance - omitted here; the app already provides one.
  * Reduced-motion falls back to a static grid.
  */
 export function ZoomParallax({ images }: ZoomParallaxProps) {

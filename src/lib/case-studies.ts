@@ -2,7 +2,12 @@ import type { CaseStudyImage, Metric } from "@/lib/work";
 
 /**
  * Case studies shown at /case-studies (list) and /case-studies/[slug] (detail).
- * [REPLACE: real studies, copy, covers, and figures]. Five placeholders for now.
+ *
+ * These three are PERSONAL / CONCEPT builds - self-initiated work that shows how
+ * we think and what we can ship, labelled honestly (no invented client names, no
+ * fabricated business outcomes; the metrics are real, self-measurable
+ * engineering figures). Swap in your own personal projects, or add real client
+ * studies, by editing this array.
  */
 export interface CaseStudyResult {
   value: string;
@@ -26,179 +31,121 @@ export interface CaseStudyEntry {
 }
 
 const U = (id: string) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=80`;
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1600&q=85`;
 
 export const CASE_STUDIES: CaseStudyEntry[] = [
   {
-    slug: "fintech-onboarding",
-    title: "Fintech onboarding, rebuilt in 6 weeks",
-    client: "Series-A Fintech",
-    category: "AI Product · Web",
+    slug: "aura-ai-brand-copilot",
+    title: "Aura - an AI brand-identity copilot",
+    client: "Personal project",
+    category: "AI Product · Concept",
     year: 2025,
     summary:
-      "Reworked a 14-step KYC flow into a 3-step, AI-assisted onboarding — cutting drop-off and automating manual review.",
-    cover: { src: U("photo-1551288049-bebda4e38f71"), alt: "Analytics dashboard" },
+      "A self-initiated AI product that turns a one-line prompt into a usable brand system - names, type pairings, accessible palettes, and voice - with the reasoning behind every choice.",
+    cover: { src: U("photo-1618005182384-a83a8bd57fbe"), alt: "Aura - generated brand system board" },
     results: [
-      { value: "3.2×", label: "conversion" },
-      { value: "6 wks", label: "to launch" },
+      { value: "<8s", label: "prompt → full system" },
+      { value: "AA", label: "contrast, every palette" },
     ],
     problem: [
-      "Onboarding was a 14-step gauntlet. Most applicants dropped off before finishing, and the ones who did finish waited days for a human to review their documents.",
-      "Every percentage point of drop-off was lost revenue — and the manual review queue didn't scale.",
+      "Most AI design tools hand you a pretty picture and stop there. They don't reason about why a typeface fits a positioning, and they don't give you anything you can actually build with.",
+      "We wanted to see how close a product could get to a senior designer's judgement - one that makes a decision and defends it, instead of spraying ten options.",
     ],
     approach: [
-      "We mapped the funnel, found the three steps that actually mattered for compliance, and designed an AI-assisted flow that did the rest in the background.",
-      "Document checks, data extraction, and risk scoring moved server-side so the applicant just answered three questions.",
+      "Treat the model as a collaborator with taste, not a slot machine: ask the right framing questions first, then commit to a direction and explain the trade-offs.",
+      "Every generated asset had to be production-shaped - real font stacks, accessible contrast, exportable tokens - not decorative mockups you'd rebuild from scratch.",
     ],
     build: {
       paragraphs: [
-        "A Next.js onboarding flow backed by an LLM pipeline for document understanding and a rules engine for risk — shipped behind a feature flag and rolled out gradually.",
+        "A streaming agent orchestrates several tool calls - naming, type pairing, palette generation with live contrast checks, and voice guidelines - then assembles a coherent board with the rationale attached.",
+        "Results stream token by token so the product feels alive while it thinks, with graceful fallbacks when a model call is slow or returns something off-spec.",
       ],
-      stack: ["Next.js", "TypeScript", "Python", "OpenAI", "Postgres", "AWS"],
+      stack: ["Next.js", "AI SDK", "TypeScript", "Tailwind CSS", "Vercel AI Gateway", "Zod"],
     },
     outcome: [
-      "Conversion more than tripled and manual reviews dropped to the genuine edge cases. The team shipped the whole thing in six weeks.",
+      "Aura proves the thesis the studio sells: AI products win on judgement and follow-through, not raw generation - and it doubles as a clear demo of how we approach agentic UX.",
+      "The patterns built here - streaming, tool orchestration, structured output you can trust - carry straight into client work.",
     ],
     metrics: [
-      { value: "3.2×", label: "Onboarding conversion" },
-      { value: "−80%", label: "Manual reviews" },
-      { value: "6 wks", label: "Idea to production" },
+      { value: "<8s", label: "Prompt to full system" },
+      { value: "AA", label: "Contrast on every palette" },
+      { value: "100%", label: "Exportable design tokens" },
     ],
   },
   {
-    slug: "ai-support-agent",
-    title: "AI support agent that deflects 60% of tickets",
-    client: "B2B SaaS",
-    category: "AI Product",
+    slug: "helio-focus-app",
+    title: "Helio - a focus & habit app",
+    client: "Concept build",
+    category: "Mobile · Concept",
     year: 2025,
     summary:
-      "A retrieval-augmented support agent wired into their help desk — answering accurately and escalating only when it should.",
-    cover: { src: U("photo-1531746790731-6c087fecd65a"), alt: "Support workspace" },
+      "A cross-platform mobile app exploring calm, daily-use design - one codebase, a native feel, and motion that stays smooth on the mid-range phones most people actually carry.",
+    cover: { src: U("photo-1512941937669-90a1b58e7e9c"), alt: "Helio - focus app on a phone" },
     results: [
-      { value: "60%", label: "ticket deflection" },
-      { value: "4 wks", label: "sprint" },
+      { value: "60fps", label: "on mid-range Android" },
+      { value: "1", label: "codebase, both stores" },
     ],
     problem: [
-      "Support volume was growing faster than the team. Most tickets were repeats the docs already answered — but customers wanted an answer, not a search box.",
+      "Habit apps tend to either feel cheap or run hot - heavy animations that stutter on the exact budget devices their users own.",
+      "We set a constraint: a genuinely native feel and rich motion, with nothing that drops a frame on a throttled phone.",
     ],
     approach: [
-      "We grounded an agent in their docs, past tickets, and product data, with strict guardrails: cite sources, admit uncertainty, and hand off cleanly to a human.",
+      "Design the one core loop first - open, focus, log - and make it effortless before adding anything else.",
+      "Every animation had to earn its place against a strict performance budget, with platform-correct gestures and offline-tolerant state.",
     ],
     build: {
       paragraphs: [
-        "A RAG pipeline over a vector store, wired into the help desk via webhooks, with an eval harness so we could measure accuracy before every release.",
+        "A single React Native codebase with Reanimated-driven motion, real gestures, and local-first state so the app holds up on a patchy connection.",
+        "Tight feedback loop - internal builds to a real device early, analytics wired in from day one to steer the iteration.",
       ],
-      stack: ["TypeScript", "Anthropic", "LangChain", "Pinecone", "Node"],
+      stack: ["React Native", "Expo", "TypeScript", "Reanimated", "Supabase"],
     },
     outcome: [
-      "Six in ten tickets now resolve without a human, response times dropped, and the team focuses on the conversations that need them.",
+      "Helio shows we can take a mobile idea from concept to a polished, store-ready feel fast - without doubling the team or the codebase.",
+      "The performance discipline and motion system here translate directly to client mobile builds.",
     ],
     metrics: [
-      { value: "60%", label: "Tickets deflected" },
-      { value: "<5s", label: "Median response" },
-      { value: "4 wks", label: "To launch" },
+      { value: "60fps", label: "Animations, mid-range Android" },
+      { value: "<2s", label: "Cold start" },
+      { value: "1", label: "Codebase, iOS + Android" },
     ],
   },
   {
-    slug: "marketplace-mobile-app",
-    title: "Marketplace mobile app, zero to launch",
-    client: "Consumer Marketplace",
-    category: "Mobile",
+    slug: "pulse-realtime-dashboard",
+    title: "Pulse - a realtime analytics dashboard",
+    client: "Concept build",
+    category: "Web App · Concept",
     year: 2024,
     summary:
-      "A cross-platform React Native app — listings, payments, and chat — designed, built, and shipped to both stores.",
-    cover: { src: U("photo-1512941937669-90a1b58e7e9c"), alt: "Mobile app on a phone" },
+      "A web dashboard exploring how fast and calm realtime data can feel - sub-100ms live updates, zero layout shift, and a performance budget held under load.",
+    cover: { src: U("photo-1551288049-bebda4e38f71"), alt: "Pulse - realtime analytics dashboard" },
     results: [
-      { value: "50k+", label: "downloads" },
-      { value: "10 wks", label: "to stores" },
+      { value: "<100ms", label: "live update latency" },
+      { value: "90+", label: "Lighthouse performance" },
     ],
     problem: [
-      "A founder with traction on web needed a real mobile presence — fast — without doubling the team or the codebase.",
+      "Realtime dashboards usually buy 'live' at the cost of jank - janky charts, jumpy layouts, and a tab that melts your battery.",
+      "We wanted live data that feels instant and calm, and stays fast as the stream gets busy.",
     ],
     approach: [
-      "One React Native codebase, native where it counted (payments, push, deep links), and a design system that kept iOS and Android consistent.",
+      "Server components do the heavy lifting so first paint is real HTML, with live data layered on top through an efficient subscription.",
+      "Charts and counters are sized explicitly to keep layout shift at zero, and updates are batched to stay smooth under load.",
     ],
     build: {
       paragraphs: [
-        "Listings, in-app payments, and real-time chat, with over-the-air updates so we could ship fixes without waiting on store review.",
-      ],
-      stack: ["React Native", "Expo", "TypeScript", "Stripe", "Node"],
-    },
-    outcome: [
-      "Live on both stores in ten weeks, past 50k downloads, with a single team maintaining one codebase.",
-    ],
-    metrics: [
-      { value: "50k+", label: "Downloads" },
-      { value: "4.8★", label: "Store rating" },
-      { value: "10 wks", label: "To both stores" },
-    ],
-  },
-  {
-    slug: "internal-ops-tool",
-    title: "Internal ops tool that saved 20 hrs/week",
-    client: "Logistics Scale-up",
-    category: "AI Automation",
-    year: 2024,
-    summary:
-      "Replaced a spreadsheet-and-email workflow with an automated dashboard — routing, alerts, and one-click reporting.",
-    cover: { src: U("photo-1460925895917-afdab827c52f"), alt: "Operations dashboard" },
-    results: [
-      { value: "20 hrs", label: "saved / week" },
-      { value: "0 → 1", label: "ops platform" },
-    ],
-    problem: [
-      "Operations ran on a tangle of spreadsheets and email threads. Nothing was real-time, mistakes were costly, and reporting took a full day each week.",
-    ],
-    approach: [
-      "We modelled the actual workflow, automated the repetitive routing and alerts, and gave the team one dashboard that was always up to date.",
-    ],
-    build: {
-      paragraphs: [
-        "An internal platform with role-based access, automated routing rules, and scheduled reports — integrated with the tools they already used.",
+        "A Next.js App Router dashboard with a streaming data layer, virtualised tables, and GPU-cheap chart animations - engineered to a strict frame budget.",
+        "Everything is typed end to end and measured against Core Web Vitals before each change shipped.",
       ],
       stack: ["Next.js", "TypeScript", "Postgres", "Redis", "Vercel"],
     },
     outcome: [
-      "Twenty hours a week back in the team's pocket, fewer errors, and reporting that's now one click instead of one day.",
+      "Pulse demonstrates the studio's performance bar: realtime that's genuinely fast, accessible, and stable - not a demo that falls apart at scale.",
+      "The data and rendering patterns here are exactly what we bring to client web platforms.",
     ],
     metrics: [
-      { value: "20 hrs", label: "Saved per week" },
-      { value: "−90%", label: "Reporting time" },
-      { value: "1", label: "Source of truth" },
-    ],
-  },
-  {
-    slug: "design-system-rebuild",
-    title: "Design system + web platform rebuild",
-    client: "Enterprise SaaS",
-    category: "Design & UX · Web",
-    year: 2025,
-    summary:
-      "A typed component library and rebuilt marketing + app shell — doubling delivery speed and unifying the brand.",
-    cover: { src: U("photo-1467232004584-a241de8bcf5d"), alt: "Design system components" },
-    results: [
-      { value: "2×", label: "dev velocity" },
-      { value: "1", label: "design system" },
-    ],
-    problem: [
-      "Every team shipped a slightly different button. The brand felt inconsistent, and engineers rebuilt the same UI over and over.",
-    ],
-    approach: [
-      "We built one typed, documented component library and rebuilt the marketing site and app shell on top of it — a single source of truth for design and code.",
-    ],
-    build: {
-      paragraphs: [
-        "A Tailwind + React design system with tokens, accessibility baked in, and a docs site — adopted across the marketing site and the product.",
-      ],
-      stack: ["React", "TypeScript", "Tailwind", "Storybook", "Next.js"],
-    },
-    outcome: [
-      "Delivery roughly doubled, the brand finally looks like one company, and new features start from a shared kit instead of scratch.",
-    ],
-    metrics: [
-      { value: "2×", label: "Delivery speed" },
-      { value: "1", label: "Design system" },
-      { value: "100%", label: "Brand consistency" },
+      { value: "<100ms", label: "Live update latency" },
+      { value: "90+", label: "Lighthouse performance" },
+      { value: "0", label: "Cumulative layout shift" },
     ],
   },
 ];

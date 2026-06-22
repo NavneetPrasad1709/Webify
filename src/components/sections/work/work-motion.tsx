@@ -31,7 +31,7 @@ export function ZoomImage({
   src: string;
   alt: string;
   sizes?: string;
-  /** Frame classes — aspect ratio, rounding, background. */
+  /** Frame classes - aspect ratio, rounding, background. */
   className?: string;
   /** Starting scale (zooms out to 1 as it scrolls through). */
   from?: number;
@@ -122,7 +122,7 @@ export function ScrollZoom({
   );
 }
 
-/** Vertical parallax — content drifts against the scroll for depth. */
+/** Vertical parallax - content drifts against the scroll for depth. */
 export function Parallax({
   children,
   amount = 60,

@@ -48,7 +48,7 @@ export interface FlowArtProps {
 }
 
 /**
- * FlowArt (boudjadjasamira/story-scroll) — stacked full-screen panels that rotate
+ * FlowArt (boudjadjasamira/story-scroll) - stacked full-screen panels that rotate
  * up into place and pin over one another as you scroll.
  *
  * Ported off @gsap/react to our gsap.context pattern (ScrollTrigger is synced to

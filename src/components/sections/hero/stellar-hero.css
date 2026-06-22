@@ -1,5 +1,5 @@
 /* ============================================================================
-   Stellar-style hero — entrance + overlay animations (spec), scoped under
+   Stellar-style hero - entrance + overlay animations (spec), scoped under
    .stellar-hero so the generic class names can't collide with anything global.
    ========================================================================== */
 @keyframes stellar-fade-in-up {

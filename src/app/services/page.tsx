@@ -7,15 +7,15 @@ import { SparklesTitle } from "@/components/ui/sparkles-title";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "AI products, web apps, mobile, design & UX, MVP sprints, integrations, automation, and technical strategy — senior-led, end to end. Clear engagement models and transparent pricing.",
+    "AI products, web apps, mobile, design & UX, MVP sprints, integrations, automation, and technical strategy - senior-led, end to end. Clear engagement models and transparent pricing.",
 };
 
 /** A single capability / step block (mirrors the story-scroll block layout). */
 function Block({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="min-w-[180px] flex-1">
-      <p className="mb-2 text-sm font-bold uppercase tracking-wider">{title}</p>
-      <p className="text-[clamp(0.85rem,1.3vw,1.05rem)] leading-relaxed opacity-75">{children}</p>
+      <p className="mb-2.5 text-base font-bold uppercase tracking-wider">{title}</p>
+      <p className="text-[clamp(1rem,1.6vw,1.3rem)] leading-relaxed opacity-85">{children}</p>
     </div>
   );
 }
@@ -24,7 +24,7 @@ const HEADING =
   "text-[clamp(3rem,11vw,12rem)] font-bold leading-[0.85] uppercase tracking-tight";
 
 /**
- * /services — S1..S6 delivered through the story-scroll (FlowArt) engine:
+ * /services - S1..S6 delivered through the story-scroll (FlowArt) engine:
  * stacked full-screen panels that rotate up and pin over one another.
  * S1 hero · S2 service blocks · S3 capabilities/stack · S4 engagement+pricing ·
  * S5 process · S6 CTA. Big headings carry the SparklesTitle treatment.
@@ -32,9 +32,9 @@ const HEADING =
 export default function ServicesPage() {
   return (
     <FlowArt aria-label="Webify services">
-      {/* S1 — Services hero */}
+      {/* S1 - Services hero */}
       <FlowSection aria-label="Services" style={{ backgroundColor: "#4f46e5", color: "#fff" }}>
-        <p className="text-xs font-bold uppercase tracking-[0.2em]">01 — Services</p>
+        <p className="text-xs font-bold uppercase tracking-[0.2em]">01 - Services</p>
         <hr className="my-[2vw] border-none border-t border-white/40" />
         <SparklesTitle
           as="h1"
@@ -52,14 +52,14 @@ export default function ServicesPage() {
         <hr className="my-[2vw] border-none border-t border-white/40" />
         <p className="mt-auto max-w-[55ch] text-[clamp(1rem,2.5vw,2rem)] font-normal leading-relaxed">
           Senior-led product teams that design, build, and ship AI products, web
-          platforms, and mobile apps — end to end. No account managers, no junior
+          platforms, and mobile apps - end to end. No account managers, no junior
           hand-offs. You work directly with the people who build.
         </p>
       </FlowSection>
 
-      {/* S2 — Service blocks (8) */}
+      {/* S2 - Service blocks (8) */}
       <FlowSection aria-label="What we do" style={{ backgroundColor: "#0a0a0a", color: "#fff" }}>
-        <p className="text-xs font-bold uppercase tracking-[0.2em]">02 — What we do</p>
+        <p className="text-xs font-bold uppercase tracking-[0.2em]">02 - What we do</p>
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <SparklesTitle
           as="h2"
@@ -83,7 +83,7 @@ export default function ServicesPage() {
             Next.js platforms, SaaS, dashboards, and sites engineered to perform.
           </Block>
           <Block title="Mobile Apps">
-            iOS &amp; Android with React Native — one codebase, a native feel.
+            iOS &amp; Android with React Native - one codebase, a native feel.
           </Block>
           <Block title="Design &amp; UX">
             Product design and design systems that make software feel inevitable.
@@ -92,7 +92,7 @@ export default function ServicesPage() {
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <div className="flex flex-wrap gap-[3vw]">
           <Block title="MVP Sprints">
-            0→1 in weeks. A working, demo-able, fundable product — fast.
+            0→1 in weeks. A working, demo-able, fundable product - fast.
           </Block>
           <Block title="Integrations &amp; APIs">
             Payments, data pipelines, and third-party systems wired in cleanly.
@@ -106,9 +106,9 @@ export default function ServicesPage() {
         </div>
       </FlowSection>
 
-      {/* S3 — Capabilities / tech stack */}
+      {/* S3 - Capabilities / tech stack */}
       <FlowSection aria-label="Capabilities" style={{ backgroundColor: "#f4f1ea", color: "#0a0a0a" }}>
-        <p className="text-xs font-bold uppercase tracking-[0.2em]">03 — Capabilities</p>
+        <p className="text-xs font-bold uppercase tracking-[0.2em]">03 - Capabilities</p>
         <hr className="my-[2vw] border-none border-t border-black/30" />
         <SparklesTitle
           as="h2"
@@ -123,7 +123,7 @@ export default function ServicesPage() {
         </SparklesTitle>
         <hr className="my-[2vw] border-none border-t border-black/30" />
         <p className="max-w-[55ch] text-[clamp(1rem,2.5vw,2rem)] font-normal leading-relaxed">
-          Modern where it matters, boring where it counts — tooling chosen to ship
+          Modern where it matters, boring where it counts - tooling chosen to ship
           fast and scale calmly.
         </p>
         <hr className="my-[2vw] border-none border-t border-black/30" />
@@ -140,9 +140,9 @@ export default function ServicesPage() {
         </div>
       </FlowSection>
 
-      {/* S4 — Engagement models + pricing clarity */}
+      {/* S4 - Engagement models + pricing clarity */}
       <FlowSection aria-label="Engagement and pricing" style={{ backgroundColor: "#1d4ed8", color: "#fff" }}>
-        <p className="text-xs font-bold uppercase tracking-[0.2em]">04 — Engagement &amp; pricing</p>
+        <p className="text-xs font-bold uppercase tracking-[0.2em]">04 - Engagement &amp; pricing</p>
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <SparklesTitle
           as="h2"
@@ -159,13 +159,13 @@ export default function ServicesPage() {
         </SparklesTitle>
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <p className="max-w-[55ch] text-[clamp(1rem,2.5vw,2rem)] font-normal leading-relaxed">
-          Clear scope, clear pricing. You always know what you&apos;re paying for —
+          Clear scope, clear pricing. You always know what you&apos;re paying for -
           and why.
         </p>
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <div className="flex flex-wrap gap-[3vw]">
           <Block title="MVP Sprint">
-            A working product in 4–6 weeks. Fixed scope, fixed price, agreed before
+            A working product in 4-6 weeks. Fixed scope, fixed price, agreed before
             we start.
           </Block>
           <Block title="Fixed-scope Project">
@@ -177,15 +177,14 @@ export default function ServicesPage() {
         </div>
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <p className="mt-auto max-w-[55ch] text-[clamp(0.95rem,1.6vw,1.25rem)] leading-relaxed opacity-90">
-          {/* [REPLACE: published starting ranges] */}
           Indicative ranges up front, a fixed quote within 48 hours, and
           GST-compliant invoicing for Indian clients. Pricing in ₹ or $.
         </p>
       </FlowSection>
 
-      {/* S5 — Process timeline */}
+      {/* S5 - Process timeline */}
       <FlowSection aria-label="Process" style={{ backgroundColor: "#0a0a0a", color: "#fff" }}>
-        <p className="text-xs font-bold uppercase tracking-[0.2em]">05 — Process</p>
+        <p className="text-xs font-bold uppercase tracking-[0.2em]">05 - Process</p>
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <SparklesTitle
           as="h2"
@@ -202,34 +201,34 @@ export default function ServicesPage() {
         </SparklesTitle>
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <p className="max-w-[55ch] text-[clamp(1rem,2.5vw,2rem)] font-normal leading-relaxed">
-          A tight, senior-led loop — you see working software every single week.
+          A tight, senior-led loop - you see working software every single week.
         </p>
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <div className="flex flex-wrap gap-[3vw]">
-          <Block title="01 — Discovery">
+          <Block title="01 - Discovery">
             We pressure-test the idea, scope the build, and agree on what success looks like.
           </Block>
-          <Block title="02 — Design">
-            Flows, UI, and a clickable prototype — so we&apos;re aligned before code.
+          <Block title="02 - Design">
+            Flows, UI, and a clickable prototype - so we&apos;re aligned before code.
           </Block>
-          <Block title="03 — Build">
+          <Block title="03 - Build">
             Weekly shippable increments. You always have something real to click.
           </Block>
         </div>
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <div className="flex flex-wrap gap-[3vw]">
-          <Block title="04 — Launch">
-            Hardening, QA, and a calm production release — on infra built to last.
+          <Block title="04 - Launch">
+            Hardening, QA, and a calm production release - on infra built to last.
           </Block>
-          <Block title="05 — Scale">
+          <Block title="05 - Scale">
             Measure, iterate, and grow. We stay on as long as you need us.
           </Block>
         </div>
       </FlowSection>
 
-      {/* S6 — CTA band */}
+      {/* S6 - CTA band */}
       <FlowSection aria-label="Start a project" style={{ backgroundColor: "#4f46e5", color: "#fff" }}>
-        <p className="text-xs font-bold uppercase tracking-[0.2em]">06 — Start</p>
+        <p className="text-xs font-bold uppercase tracking-[0.2em]">06 - Start</p>
         <hr className="my-[2vw] border-none border-t border-white/40" />
         <SparklesTitle
           as="h2"
@@ -248,7 +247,7 @@ export default function ServicesPage() {
         <div className="mt-auto flex flex-col gap-6">
           <p className="max-w-[55ch] text-[clamp(1rem,2.5vw,2rem)] font-normal leading-relaxed">
             Tell us what you&apos;re building. We&apos;ll scope it, price it, and ship
-            a working prototype — fast.
+            a working prototype - fast.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link

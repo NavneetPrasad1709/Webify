@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 /**
- * G2 — premium page-to-page route transition.
+ * G2 - premium page-to-page route transition.
  *
  * Restrained fade + slight rise on enter / fall on exit (Apple-style: motion
  * that serves orientation, not decoration). Collapses to an instant swap when

@@ -1,5 +1,5 @@
 /* ============================================================================
-   H10 — Footer (locked reference: "Kresna" SaaS footer spec).
+   H10 - Footer (locked reference: "Kresna" SaaS footer spec).
    Built to the spec EXACTLY (layout/values/fonts/shadows). Content rebranded to
    Webify per "make according to my website". Scoped under .footer-section so the
    footer's DM Sans + light palette don't leak into the dark site shell.
@@ -24,7 +24,7 @@
 }
 
 /* Grid items default to min-width:auto (won't shrink below content/intrinsic
-   width — incl. the <video>'s native size). Allow them to collapse to the
+   width - incl. the <video>'s native size). Allow them to collapse to the
    single-column track on small screens. */
 .footer-left,
 .footer-right,
@@ -332,7 +332,7 @@
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.22);
   transform: translateY(-1px);
 }
-/* Minimal validation/success message — matches the small-text language */
+/* Minimal validation/success message - matches the small-text language */
 .footer-subscribe-msg {
   font-family: var(--font-geist-sans), sans-serif;
   font-size: 12.5px;
@@ -388,7 +388,7 @@
 }
 @media (max-width: 560px) {
   /* Trim side padding so the left card's social row (label + 4 fixed icons)
-     fits on very small screens (320–360px) without horizontal overflow. */
+     fits on very small screens (320-360px) without horizontal overflow. */
   .footer-section {
     padding: 40px 16px;
   }
@@ -428,7 +428,7 @@
 }
 
 /* Smallest phones: the two nav columns' (un-wrappable Caveat titles) side-by-side
-   width is the binding constraint — stack them so the card fits 320px. */
+   width is the binding constraint - stack them so the card fits 320px. */
 @media (max-width: 360px) {
   .footer-nav-cols {
     flex-direction: column;

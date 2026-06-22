@@ -5,10 +5,10 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
-import { LiveProjectButton } from "./live-project-button";
+import { SparklesTitle } from "@/components/ui/sparkles-title";
 
 /**
- * H5 — Featured work. Sticky-stacking project cards that scale down as the next
+ * H5 - Featured work. Sticky-stacking project cards that scale down as the next
  * card slides up, forming a layered deck (sshahaider-style projects deck).
  *
  * The scroll-scale is driven by GSAP ScrollTrigger (synced to our Lenis
@@ -16,23 +16,23 @@ import { LiveProjectButton } from "./live-project-button";
  * Sticky offsets clear the fixed nav (~75px). Reduced-motion keeps the sticky
  * stack but skips the scale.
  *
- * [REPLACE:] images are the supplied reference assets — swap for real Webify
- * case-study captures when available.
+ * Images are illustrative reference assets (not client captures) - swap for
+ * owned visuals when available.
  */
-type ProjectCategory = "Client" | "Personal";
-
 interface Project {
   number: string;
   name: string;
-  category: ProjectCategory;
+  category: string;
   images: { col1a: string; col1b: string; col2: string };
 }
 
+// Capability tiles (illustrative visuals - not client work). Reframed from the
+// reference's placeholder "client" cards so nothing implies work we can't verify.
 const PROJECTS: Project[] = [
   {
     number: "01",
-    name: "Nextlevel Studio",
-    category: "Client",
+    name: "Agents, copilots & automation",
+    category: "AI Products",
     images: {
       col1a:
         "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85",
@@ -44,8 +44,8 @@ const PROJECTS: Project[] = [
   },
   {
     number: "02",
-    name: "Aura Brand Identity",
-    category: "Personal",
+    name: "Next.js sites & web apps",
+    category: "Web Platforms",
     images: {
       col1a:
         "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85",
@@ -57,8 +57,8 @@ const PROJECTS: Project[] = [
   },
   {
     number: "03",
-    name: "Solaris Digital",
-    category: "Client",
+    name: "iOS & Android, one codebase",
+    category: "Mobile Apps",
     images: {
       col1a:
         "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85",
@@ -80,12 +80,14 @@ export function ProjectsSection() {
       )}
       aria-label="Featured work"
     >
-      <h2
-        className="hero-heading text-center font-black uppercase leading-none tracking-tight"
-        style={{ fontSize: "clamp(3rem, 12vw, 160px)" }}
+      <SparklesTitle
+        as="h2"
+        className="hero-heading text-center font-black uppercase leading-none tracking-tight text-[clamp(3rem,12vw,160px)]"
+        beamClassName="mx-auto mt-1 max-w-[26rem]"
+        density={36}
       >
-        Featured <span className="script-accent">work</span>
-      </h2>
+        Built to <span className="script-accent">ship.</span>
+      </SparklesTitle>
 
       {/* Cards are DIRECT siblings here so they share one sticky containing
           block and pile on top of each other. pb gives the last card pin time. */}
@@ -153,7 +155,7 @@ function ProjectCard({
       )}
       style={{ top: `calc(5.5rem + ${index * 28}px)` }}
     >
-      {/* Top row: number + meta + Live Project */}
+      {/* Top row: number + capability label */}
         <div className="flex flex-wrap items-start justify-between gap-3 sm:gap-4">
           <div className="flex items-start gap-4 sm:gap-6">
             <span
@@ -171,8 +173,6 @@ function ProjectCard({
               </span>
             </div>
           </div>
-
-          <LiveProjectButton />
         </div>
 
         {/* Bottom row: 40% / 60% image grid */}
@@ -184,7 +184,7 @@ function ProjectCard({
             >
               <Image
                 src={project.images.col1a}
-                alt={`${project.name} — image 1`}
+                alt={`${project.name} - image 1`}
                 fill
                 sizes="40vw"
                 className="object-cover"
@@ -196,7 +196,7 @@ function ProjectCard({
             >
               <Image
                 src={project.images.col1b}
-                alt={`${project.name} — image 2`}
+                alt={`${project.name} - image 2`}
                 fill
                 sizes="40vw"
                 className="object-cover"
@@ -207,7 +207,7 @@ function ProjectCard({
           <div className="relative w-[60%] overflow-hidden rounded-[20px] sm:rounded-[40px] md:rounded-[50px]">
             <Image
               src={project.images.col2}
-              alt={`${project.name} — cover`}
+              alt={`${project.name} - cover`}
               fill
               sizes="(max-width: 640px) 60vw, 42vw"
               className="object-cover"

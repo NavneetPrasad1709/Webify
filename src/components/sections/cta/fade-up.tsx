@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 
 /** Scroll-in reveal: rises + fades once when 30% in view.
  *  Honors prefers-reduced-motion (Framer's JS animation isn't covered by the
- *  global CSS reduced-motion block) — collapses to a static, fully-visible div. */
+ *  global CSS reduced-motion block) - collapses to a static, fully-visible div. */
 export function FadeUp({
   children,
   delay = 0,

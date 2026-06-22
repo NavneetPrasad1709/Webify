@@ -1,23 +1,23 @@
 /* ============================================================================
-   Sterling Gate — kinetic fullscreen navigation
+   Sterling Gate - kinetic fullscreen navigation
    ----------------------------------------------------------------------------
    This is the AUTHORITATIVE stylesheet, extracted verbatim from the published
-   21st.dev compiled bundle (cdn.21st.dev/.../bundle.html) — NOT a re-creation.
+   21st.dev compiled bundle (cdn.21st.dev/.../bundle.html) - NOT a re-creation.
    The component author never shipped CSS in the shadcn registry; it lives only
    in the compiled preview. Values are kept exact.
 
    Local adaptations (only what our multi-page mount requires):
    - Scoped the dark token-inversion to `.dark` (added to the component root) so
      it doesn't flip the whole site's palette.
-   - Neutralized `.fullscreen-menu-container` layout (was min-height:100svh) — in
+   - Neutralized `.fullscreen-menu-container` layout (was min-height:100svh) - in
      the demo it IS the page; here the nav mounts above real page content, so it
      must take zero flow space. It only carries the --menu-padding variable now.
    - Added :focus-visible rings (WCAG). Fonts/@font-face live in globals.css.
-   GSAP owns xPercent/yPercent on .menu-content/.nav-link/.backdrop-layer — note
+   GSAP owns xPercent/yPercent on .menu-content/.nav-link/.backdrop-layer - note
    there are deliberately NO CSS transform defaults on those (would compound).
    ========================================================================== */
 
-/* Dark theme token inversion — scoped to the nav root (<div class="dark">) */
+/* Dark theme token inversion - scoped to the nav root (<div class="dark">) */
 .dark,
 [data-theme="dark"] {
   --color-primary: #818cf8;
@@ -257,7 +257,7 @@
   height: 100%;
   display: flex;
   position: relative;
-  /* .menu-content owns the single scroll container — no nested scroller here. */
+  /* .menu-content owns the single scroll container - no nested scroller here. */
 }
 .menu-list {
   flex-flow: column;

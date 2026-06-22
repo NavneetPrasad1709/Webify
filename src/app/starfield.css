@@ -12,7 +12,7 @@
   contain: strict;
 }
 
-/* star layers — box-shadow renders the stars; ::after clones them 2000px below
+/* star layers - box-shadow renders the stars; ::after clones them 2000px below
    so the upward drift loops seamlessly. */
 .stars {
   position: absolute;

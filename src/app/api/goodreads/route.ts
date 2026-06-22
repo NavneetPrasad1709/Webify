@@ -6,12 +6,12 @@ import { NextResponse } from "next/server";
  * Server-side proxy + parser for a Goodreads "currently-reading" shelf.
  *
  * Why this exists: the original 21st.dev component fetched the RSS in the
- * browser through a public CORS proxy (api.allorigins.win) — slow, rate-limited,
+ * browser through a public CORS proxy (api.allorigins.win) - slow, rate-limited,
  * and a third-party dependency on the critical path. Fetching server-side here
  * removes the proxy, dodges CORS entirely, and lets us cache the feed (Goodreads
  * updates infrequently), so the widget is fast and reliable. Returns the most
  * recently-added book, or `{ book: null }` on any failure (the client then
- * renders nothing — matching the component's original empty/error behaviour).
+ * renders nothing - matching the component's original empty/error behaviour).
  */
 
 export const revalidate = 3600; // re-fetch the shelf at most hourly
@@ -80,7 +80,7 @@ export async function GET(request: Request) {
     const res = await fetch(rssUrl, {
       headers: {
         // Goodreads serves an empty body to a missing/blank UA.
-        "User-Agent": "WebifyStudio/1.0 (+https://webify.dev)",
+        "User-Agent": "WebifyStudio/1.0 (+https://www.webify.org.in)",
         Accept: "application/rss+xml, application/xml, text/xml",
       },
       next: { revalidate },

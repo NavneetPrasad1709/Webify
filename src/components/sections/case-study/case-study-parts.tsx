@@ -76,7 +76,7 @@ export function CaseSection({
   );
 }
 
-/** Flowing prose — large, readable measure. */
+/** Flowing prose - large, readable measure. */
 export function Prose({ paragraphs }: { paragraphs: string[] }) {
   return (
     <div className="space-y-6">
@@ -94,7 +94,7 @@ export function Prose({ paragraphs }: { paragraphs: string[] }) {
   );
 }
 
-/** Tech-stack chips — large, tactile. */
+/** Tech-stack chips - large, tactile. */
 export function StackChips({ stack }: { stack: string[] }) {
   return (
     <FadeUp>
@@ -112,7 +112,7 @@ export function StackChips({ stack }: { stack: string[] }) {
   );
 }
 
-/** Headline metric figures — huge font-black numbers (W4 — metrics). */
+/** Headline metric figures - huge font-black numbers (W4 - metrics). */
 export function MetricGrid({ metrics }: { metrics: Metric[] }) {
   return (
     <dl className="grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-6">

@@ -1,10 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Instrument+Serif:ital@0;1&display=swap");
+/* Caveat + Instrument Serif are now self-hosted via next/font (see layout.tsx)
+   and exposed as --font-caveat / --font-instrument-serif - no render-blocking
+   webfont @import on the critical path. */
 @import "tailwindcss";
 @import "tw-animate-css";
 
 /* Heavy condensed display face used by the Sterling Gate nav links.
    Self-hosted copy of the font the 21st.dev component references.
-   NOTE: "PP Neue Corp Tight" is a commercial Pangram Pangram font — a license
+   NOTE: "PP Neue Corp Tight" is a commercial Pangram Pangram font - a license
    is required for production. Swap to a free face (Anton/Archivo Black) on request. */
 @font-face {
   font-family: "PP Neue Corp Tight";
@@ -42,7 +44,7 @@
   --accent-hi: #818cf8;
   --accent-glow: rgba(99, 102, 241, 0.1);
   /* Script-accent green for the heading treatment (from the reference).
-     Single source of truth — flip to var(--accent-hi) for brand indigo. */
+     Single source of truth - flip to var(--accent-hi) for brand indigo. */
   --accent-script: #4ade80;
 }
 
@@ -50,7 +52,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   /* Expose the craft accent to Tailwind utilities (text-accent, bg-accent,
-     border-accent, text-accent-hi) — used across the interior pages. */
+     border-accent, text-accent-hi) - used across the interior pages. */
   --color-accent: var(--accent);
   --color-accent-hi: var(--accent-hi);
   /* shadcn-style semantic tokens, mapped to the dark palette, so reference
@@ -89,12 +91,12 @@ html {
   text-wrap: balance;
 }
 
-/* Script-accent heading treatment — set a key word in a bold script + accent
+/* Script-accent heading treatment - set a key word in a bold script + accent
    green inside an otherwise bold sans heading (reference design approach).
    Sized up + tightened so the script word sits on the sans baseline; overrides
    gradient-clip parents via -webkit-text-fill-color. */
 .script-accent {
-  font-family: "Caveat", cursive;
+  font-family: var(--font-caveat), "Caveat", cursive;
   font-weight: 700;
   font-style: normal;
   /* script reads best in natural case even inside uppercase headings */
@@ -118,7 +120,7 @@ body {
 }
 
 /* Site-wide animated starfield background lives in ./starfield.css
-   (imported in layout.tsx) — pure CSS, GPU-composited, warm/white stars. */
+   (imported in layout.tsx) - pure CSS, GPU-composited, warm/white stars. */
 
 /* Lenis smooth-scroll baseline (recommended by the lib) */
 html.lenis,
@@ -154,7 +156,7 @@ html.lenis body {
 }
 
 /* ===========================================================================
-   H9 — Landing CTA section tokens + utilities (locked reference spec)
+   H9 - Landing CTA section tokens + utilities (locked reference spec)
    =========================================================================== */
 @theme {
   --color-landing-surface: rgba(255, 255, 255, 0.1);
@@ -164,10 +166,10 @@ html.lenis body {
   --color-landing-text: rgba(255, 255, 255, 0.8);
   --color-landing-text-muted: rgba(255, 255, 255, 0.6);
   --font-inter: var(--font-geist-sans), sans-serif;
-  --font-instrument: "Instrument Serif", serif;
+  --font-instrument: var(--font-instrument-serif), "Instrument Serif", serif;
 }
 
-/* Gradient display heading — used by the featured-work section */
+/* Gradient display heading - used by the featured-work section */
 .hero-heading {
   font-family: var(--font-geist-sans), sans-serif;
   background-image: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
@@ -177,7 +179,7 @@ html.lenis body {
   color: transparent;
 }
 
-/* Hero (video) — scroll-indicator highlight, role cycling, accent gradient */
+/* Hero (video) - scroll-indicator highlight, role cycling, accent gradient */
 @keyframes scroll-down {
   0% {
     transform: translateY(-100%);
@@ -245,7 +247,7 @@ html.lenis body {
   scrollbar-width: none;
 }
 
-/* CTA — vertical text marquee + entrance (lyanchouss/cta-with-text-marquee).
+/* CTA - vertical text marquee + entrance (lyanchouss/cta-with-text-marquee).
    Reduced-motion is handled by the global block above (kills the loop). */
 @keyframes marquee-vertical {
   from {
@@ -273,7 +275,7 @@ html.lenis body {
 }
 
 /* ===========================================================================
-   /work (Habito-style light page) — horizontal marquee + route-aware nav.
+   /work (Habito-style light page) - horizontal marquee + route-aware nav.
    The marquee freezes under the global prefers-reduced-motion block above.
    =========================================================================== */
 @keyframes marquee-x {

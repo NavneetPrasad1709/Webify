@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils";
 
 interface SparklesTitleProps {
   children: ReactNode;
-  /** Heading tag — preserve each section's level. Default h2. */
+  /** Heading tag - preserve each section's level. Default h2. */
   as?: ElementType;
-  /** Heading classes — pass each section's own heading styling, untouched. */
+  /** Heading classes - pass each section's own heading styling, untouched. */
   className?: string;
   /** Wrapper classes (alignment etc.). */
   wrapperClassName?: string;
@@ -19,18 +19,18 @@ interface SparklesTitleProps {
   density?: number;
   /** Hide the gradient underline glow (keep only the sparkle field). */
   hideBeam?: boolean;
-  /** Beam container classes — defaults to centered; pass to left-align etc. */
+  /** Beam container classes - defaults to centered; pass to left-align etc. */
   beamClassName?: string;
 }
 
 /**
- * SparklesTitle — wraps a heading with the tsparticles "sparkle beam" treatment
+ * SparklesTitle - wraps a heading with the tsparticles "sparkle beam" treatment
  * (aceternity SparklesCore): a thin indigo/sky gradient beam under the heading
  * with twinkling particles emanating from it.
  *
- * Particles mount ONLY while the title is in view (perf — no idle canvases) and
+ * Particles mount ONLY while the title is in view (perf - no idle canvases) and
  * the edge mask fades to transparent so it sits cleanly on dark OR light panels.
- * The heading text/classes you pass are rendered verbatim — nothing else changes.
+ * The heading text/classes you pass are rendered verbatim - nothing else changes.
  */
 export function SparklesTitle({
   children,

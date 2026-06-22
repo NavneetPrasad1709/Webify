@@ -8,7 +8,8 @@ import { SparklesTitle } from "@/components/ui/sparkles-title";
 export const metadata: Metadata = {
   title: "Case Studies",
   description:
-    "Selected Webify work, in depth — AI products, web platforms, and mobile apps shipped for founders and teams. Outcomes, timelines, and what we built.",
+    "Selected work & concept builds from a senior-led studio - AI products, web platforms, and mobile apps. The problem, the build, and what each one proves.",
+  alternates: { canonical: "/case-studies" },
 };
 
 function CaseStudyCard({ study, index }: { study: CaseStudyEntry; index: number }) {
@@ -19,7 +20,6 @@ function CaseStudyCard({ study, index }: { study: CaseStudyEntry; index: number 
       className="group block rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
     >
       <article className="flex flex-col gap-7 border-b border-white/10 pb-14 last:border-0 sm:gap-8 md:flex-row md:items-center md:gap-12">
-        {/* Cover — big, shadowed, hover-scaled (goodreads-style) */}
         <div className="relative aspect-[4/3] w-full flex-shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.85)] transition-colors duration-500 group-hover:border-white/25 md:aspect-[3/4] md:w-56 lg:w-64">
           <Image
             src={study.cover.src}
@@ -31,7 +31,6 @@ function CaseStudyCard({ study, index }: { study: CaseStudyEntry; index: number 
           />
         </div>
 
-        {/* Text */}
         <div className="min-w-0 flex-1 space-y-4 sm:space-y-5">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground sm:text-sm">
             <span>{study.category}</span>
@@ -67,7 +66,7 @@ function CaseStudyCard({ study, index }: { study: CaseStudyEntry; index: number 
   );
 }
 
-/** /case-studies — selected work, goodreads-card styling, mobile-first. */
+/** /case-studies - selected personal & concept work, goodreads-card styling. */
 export default function CaseStudiesPage() {
   const studies = getCaseStudies();
   return (
@@ -78,14 +77,15 @@ export default function CaseStudiesPage() {
         </p>
         <SparklesTitle
           as="h1"
-          className="mt-5 max-w-[20ch] text-balance text-[clamp(2.5rem,8vw,4.5rem)] font-black leading-[1.02] tracking-tight"
-          beamClassName="mx-0 mr-auto mt-2 max-w-[22rem]"
+          className="mt-5 max-w-[22ch] text-balance text-[clamp(2.75rem,9vw,5.5rem)] font-black leading-[1.0] tracking-tight"
+          beamClassName="mx-0 mr-auto mt-2 max-w-[24rem]"
         >
-          <span className="script-accent">Proof</span>, not promises.
+          Work we&apos;re <span className="script-accent">proud</span> of.
         </SparklesTitle>
-        <p className="mt-6 max-w-[55ch] text-lg leading-relaxed text-muted-foreground sm:text-xl">
-          A look at what we&apos;ve shipped — the problem, the build, and the
-          outcome. Real numbers, real timelines. {/* [REPLACE: real studies] */}
+        <p className="mt-7 max-w-[60ch] text-lg leading-relaxed text-muted-foreground sm:text-xl">
+          A look at how we think and what we ship - the problem, the build, and the
+          outcome. These are self-initiated concept and personal projects; client
+          work is shared in confidence on request.
         </p>
       </header>
 

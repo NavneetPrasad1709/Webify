@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { CustomEase } from "gsap/CustomEase";
+import { siteConfig, mailtoHref } from "@/lib/site";
 import "./sterling-gate-kinetic-navigation.css";
 
 // Register GSAP plugins once (SSR-guarded).
@@ -16,7 +17,7 @@ const prefersReducedMotion = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /**
- * Sterling Gate — kinetic fullscreen navigation (canonical 21st.dev reference,
+ * Sterling Gate - kinetic fullscreen navigation (canonical 21st.dev reference,
  * ported to our multi-page Next app):
  *  - Webify wordmark + the "click me" hint (Caveat) + Menu/Close toggle.
  *  - Right-drawer menu (fullscreen on mobile) with staggered backdrop panels,
@@ -39,14 +40,14 @@ export function Component() {
     if (!container) return;
     const reduced = prefersReducedMotion();
 
-    // Register the bespoke ease once. Scoped to this nav's own timelines below —
+    // Register the bespoke ease once. Scoped to this nav's own timelines below -
     // NOT via global gsap.defaults(), which would leak onto every other tween.
     try {
       if (!gsap.parseEase("main")) {
         CustomEase.create("main", "0.65, 0.01, 0.05, 0.99");
       }
     } catch {
-      /* CustomEase unavailable — timelines fall back to a built-in ease. */
+      /* CustomEase unavailable - timelines fall back to a built-in ease. */
     }
 
     // Collect listener removers so cleanup never touches a stale ref.
@@ -126,7 +127,7 @@ export function Component() {
     const reduced = prefersReducedMotion();
 
     // First mount: the menu starts hidden via CSS (data-nav="closed"), so there
-    // is nothing to animate closed — skip the timeline and the stray inline
+    // is nothing to animate closed - skip the timeline and the stray inline
     // styles it would otherwise write on every page load.
     const isFirst = firstRun.current;
     firstRun.current = false;
@@ -285,7 +286,7 @@ export function Component() {
               <div className="nav-row__right">
                 {/* Handwritten hint (intentional). Decorative + mouse-clickable;
                     aria-hidden so AT isn't given a duplicate of the real toggle
-                    below — keyboard/AT users operate the Menu button. */}
+                    below - keyboard/AT users operate the Menu button. */}
                 <div
                   className="nav-toggle-label"
                   onClick={toggleMenu}
@@ -342,7 +343,7 @@ export function Component() {
           className="nav-overlay-wrapper"
           aria-hidden={!isMenuOpen}
         >
-          {/* Backdrop — click to close (Escape + Close button also close). */}
+          {/* Backdrop - click to close (Escape + Close button also close). */}
           <div className="overlay" onClick={closeMenu} aria-hidden="true" />
 
           <nav className="menu-content" aria-label="Primary">
@@ -434,13 +435,12 @@ export function Component() {
                 </li>
               </ul>
 
-              {/* Menu footer — brand line + direct contact (eye-pleasing finish). */}
+              {/* Menu footer - brand line + direct contact (eye-pleasing finish). */}
               <div className="menu-footer" data-menu-fade>
                 <p className="menu-footer-tagline">Senior-led AI &amp; software product team.</p>
                 <div className="menu-footer-row">
-                  {/* [REPLACE: production contact email] */}
-                  <a className="menu-footer-link" href="mailto:hello@webify.dev">
-                    hello@webify.dev
+                  <a className="menu-footer-link" href={mailtoHref("Project enquiry")}>
+                    {siteConfig.email}
                   </a>
                   <span className="menu-footer-meta">India &amp; worldwide</span>
                 </div>

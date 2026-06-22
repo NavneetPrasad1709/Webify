@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Caveat, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import "./starfield.css";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import { PageTransition } from "@/components/layout/page-transition";
 import { Component as SiteNavigation } from "@/components/ui/sterling-gate-kinetic-navigation";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { StickyCta } from "@/components/layout/sticky-cta";
+import { siteConfig, hasSocials } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,6 +19,23 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Self-hosted via next/font (was a render-blocking CSS @import). Caveat drives
+// the script accents (incl. the H1), so swap-loading it removes a network
+// round-trip on the critical path and the resulting CLS.
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -25,15 +44,14 @@ export const viewport: Viewport = {
   themeColor: "#131313",
 };
 
-const SITE_URL = "https://webify.dev"; // [REPLACE: production domain]
-const SITE_DESC =
-  "Senior-led AI & software product engineering. We design, build, and ship AI products, web apps, and mobile apps for ambitious teams — in India and worldwide. You work directly with the people who build.";
+const SITE_URL = siteConfig.url;
+const SITE_DESC = siteConfig.description;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Webify — Senior-led AI & Software Product Engineering",
-    template: "%s — Webify",
+    default: "Webify - Senior-led AI & Software Product Engineering",
+    template: "%s - Webify",
   },
   description: SITE_DESC,
   applicationName: "Webify",
@@ -50,14 +68,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "Webify",
-    title: "Webify — Senior-led AI & Software Product Engineering",
+    title: "Webify - Senior-led AI & Software Product Engineering",
     description: SITE_DESC,
     url: SITE_URL,
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Webify — Senior-led AI & Software Product Engineering",
+    title: "Webify - Senior-led AI & Software Product Engineering",
     description: SITE_DESC,
   },
 };
@@ -70,7 +88,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
       {/* suppressHydrationWarning: browser extensions (ColorZilla → cz-shortcut-listen,
           Grammarly → data-gr-*) inject attributes on <body> before hydration. This
@@ -95,22 +113,35 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: "Webify",
+              name: siteConfig.name,
               url: SITE_URL,
               description: SITE_DESC,
+              email: siteConfig.email,
               areaServed: ["IN", "Worldwide"],
               knowsAbout: ["AI products", "Web apps", "Mobile apps", "Product design"],
+              contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "sales",
+                email: siteConfig.email,
+                ...(siteConfig.phone ? { telephone: siteConfig.phone } : {}),
+                areaServed: ["IN", "Worldwide"],
+              },
+              ...(hasSocials
+                ? { sameAs: Object.values(siteConfig.socials).filter(Boolean) }
+                : {}),
             }),
           }}
         />
 
         <SmoothScroll>
-          {/* G1 — persistent nav across every route (Sterling Gate kinetic menu) */}
+          {/* G1 - persistent nav across every route (Sterling Gate kinetic menu) */}
           <SiteNavigation />
-          {/* G2 — route-transition wrapper around page content only */}
+          {/* G2 - route-transition wrapper around page content only */}
           <PageTransition>{children}</PageTransition>
-          {/* G1 — persistent footer (placeholder until H10 reference) */}
+          {/* G1 - persistent footer */}
           <SiteFooter />
+          {/* Persistent conversion affordance on every page (hidden on /contact) */}
+          <StickyCta />
         </SmoothScroll>
       </body>
     </html>

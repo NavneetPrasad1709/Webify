@@ -7,10 +7,10 @@ import { Magnetic } from "@/components/ui/magnetic";
 import "./stellar-hero.css";
 
 /**
- * H2 — Hero (Stellar layout, dark + Webify content). Senior-led AI & software
- * product team — agency positioning (not a SaaS product). Archivo font, heavy
+ * H2 - Hero (Stellar layout, dark + Webify content). Senior-led AI & software
+ * product team - agency positioning (not a SaaS product). Archivo font, heavy
  * large headline. No internal nav (global Sterling Gate nav stays).
- * [REPLACE:] background video + trusted-by logos with real assets.
+ * Note: the background video is a reference/stock asset - swap for an owned clip.
  */
 const VIDEO_SRC =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260319_165750_358b1e72-c921-48b7-aaac-f200994f32fb.mp4";
@@ -51,11 +51,29 @@ export function StellarHero() {
   const [active, setActive] = useState<TabId>("ai");
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Honor reduced-motion: pause the background video (poster frame stays).
+  // Keep the decorative background video OFF the LCP/critical path: paint a dark
+  // fill immediately, then lazy-attach the source after first paint (and never,
+  // for reduced-motion users). This cuts megabytes of video out of initial load.
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      videoRef.current?.pause();
-    }
+    const v = videoRef.current;
+    if (!v) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const attach = () => {
+      if (!v.src) {
+        v.src = VIDEO_SRC;
+        v.load();
+        v.play().catch(() => {});
+      }
+    };
+    const supportsRIC = typeof window.requestIdleCallback === "function";
+    const id = supportsRIC
+      ? window.requestIdleCallback(attach)
+      : window.setTimeout(attach, 600);
+    return () => {
+      if (supportsRIC) window.cancelIdleCallback(id as number);
+      else window.clearTimeout(id as number);
+    };
   }, []);
 
   useEffect(() => {
@@ -82,11 +100,11 @@ export function StellarHero() {
           <Star className="h-3.5 w-3.5 fill-white text-white" />
         </span>
         <span className="text-xs font-medium text-white/80 sm:text-sm">
-          Senior-led AI &amp; software — India &amp; worldwide
+          Senior-led AI &amp; software - India &amp; worldwide
         </span>
       </div>
 
-      {/* Heading — heavy Archivo, large */}
+      {/* Heading - heavy Archivo, large */}
       <h1
         className="animate-fade-in-up mx-auto mb-5 max-w-[16ch] text-[clamp(2.5rem,9vw,5.5rem)] font-extrabold leading-[1.02] tracking-tight text-white"
         style={{ animationDelay: "0.3s" }}
@@ -98,23 +116,27 @@ export function StellarHero() {
 
       {/* Subheading */}
       <p
-        className="animate-fade-in-up mx-auto mb-8 max-w-2xl text-base text-white/60 opacity-0 sm:text-lg md:text-xl"
+        className="animate-fade-in-up mx-auto mb-9 max-w-2xl text-lg leading-relaxed text-white/75 opacity-0 sm:text-xl md:text-2xl"
         style={{ animationDelay: "0.4s" }}
       >
-        Senior engineers and designers — end to end, no junior hand-offs. For
-        ambitious founders and teams in India and worldwide.
+        The senior engineers and designers who design it are the ones who build
+        and ship it - end to end, no junior hand-offs. For founders who want it
+        done right, and done fast.
       </p>
 
       {/* CTA */}
-      <div className="animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
-        <Magnetic className="mb-12">
+      <div className="animate-fade-in-up flex flex-col items-center gap-3" style={{ animationDelay: "0.5s" }}>
+        <Magnetic>
           <Link
             href="/contact"
-            className="inline-flex rounded-full bg-white px-8 py-3 text-base font-semibold text-black transition-colors hover:bg-white/90"
+            className="inline-flex rounded-full bg-white px-9 py-4 text-base font-semibold text-black transition-colors hover:bg-white/90 sm:text-lg"
           >
-            Book a call
+            Book a free 30-min call
           </Link>
         </Magnetic>
+        <p className="mb-12 font-mono text-[11px] uppercase tracking-[0.18em] text-white/45">
+          No obligation · Reply within 24h
+        </p>
       </div>
 
       {/* Tab bar */}
@@ -139,16 +161,16 @@ export function StellarHero() {
 
       {/* Video + per-tab overlay */}
       <div
-        className="animate-fade-in-up relative h-[360px] overflow-hidden rounded-3xl border border-white/10 opacity-0 sm:h-[440px] md:h-[500px]"
+        className="animate-fade-in-up relative h-[360px] overflow-hidden rounded-3xl border border-white/10 bg-[#0c0c11] opacity-0 sm:h-[440px] md:h-[500px]"
         style={{ animationDelay: "0.7s" }}
       >
         <video
           ref={videoRef}
-          src={VIDEO_SRC}
           autoPlay
           loop
           muted
           playsInline
+          preload="none"
           aria-hidden
           className="h-full w-full object-cover"
         />
@@ -168,22 +190,17 @@ export function StellarHero() {
         </div>
       </div>
 
-      {/* Trusted-by logos ([REPLACE:] with real client logos) */}
+      {/* Honest capability strip (no fabricated client logos - swap for real,
+          permissioned logos once a public engagement exists). */}
       <div
-        className="animate-fade-in-up mt-16 flex flex-wrap items-center justify-center gap-x-8 gap-y-5 text-white/40 opacity-0 sm:mt-20 sm:gap-x-10"
+        className="animate-fade-in-up mt-16 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm font-medium text-white/55 opacity-0 sm:mt-20 sm:gap-x-8 sm:text-base"
         style={{ animationDelay: "0.8s" }}
       >
-        <span className="text-base font-extrabold tracking-[0.2em] sm:text-lg">NORTHWIND</span>
-        <span className="text-base font-bold tracking-tight sm:text-lg">AXIOM</span>
-        <span className="text-base font-medium sm:text-lg">Nexera</span>
-        <span className="text-lg italic [font-family:'Instrument_Serif',serif] sm:text-xl">M3</span>
-        <span className="flex items-center gap-2 text-xs font-semibold sm:text-sm">
-          <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-[10px]">
-            LC
-          </span>
-          LAURA COLE
-        </span>
-        <span className="text-base font-medium lowercase tracking-wide sm:text-lg">vertex</span>
+        <span>You talk to the senior who builds it</span>
+        <span aria-hidden className="h-4 w-px bg-white/15" />
+        <span>Shipped end to end - design to production</span>
+        <span aria-hidden className="h-4 w-px bg-white/15" />
+        <span>Your code &amp; IP, 100% yours</span>
       </div>
       </div>
     </section>

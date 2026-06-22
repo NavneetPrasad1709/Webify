@@ -18,7 +18,7 @@ const SEED_MESSAGES: Message[] = [
   },
   {
     role: "assistant",
-    text: "Great choice! In this course, you'll learn how to create full-screen looping videos, liquid glass nav bars, email signups, and manifesto buttons — all with AI assistance. Let's dive in!",
+    text: "Great choice! In this course, you'll learn how to create full-screen looping videos, liquid glass nav bars, email signups, and manifesto buttons - all with AI assistance. Let's dive in!",
   },
 ];
 
@@ -48,7 +48,7 @@ export function ChatPanel({
       { role: "user", text },
       {
         role: "assistant",
-        text: "Love it — let's build that. I'll walk you through it step by step inside the course.",
+        text: "Love it - let's build that. I'll walk you through it step by step inside the course.",
       },
     ]);
     setDraft("");

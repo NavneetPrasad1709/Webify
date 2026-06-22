@@ -24,7 +24,7 @@ interface StickyTabsProps {
   headerContentLayoutClassName?: string;
   titleClassName?: string;
   contentLayoutClassName?: string;
-  /** Render the top nav spacer (default false — our app already has a fixed nav). */
+  /** Render the top nav spacer (default false - our app already has a fixed nav). */
   withNavSpacer?: boolean;
 }
 

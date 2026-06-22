@@ -1,9 +1,9 @@
 /* ============================================================================
-   H4 — "What we build" manifesto. Combines two references in one section:
+   H4 - "What we build" manifesto. Combines two references in one section:
    scroll word-reveal (Magic UI text-reveal) + hover image preview on the
    product terms (21st.dev hover-preview). Ambient glow + grain, Syne terms.
    ========================================================================== */
-/* Fonts now come from globals.css (DM Sans + mono) — unified site-wide. */
+/* Fonts now come from globals.css (DM Sans + mono) - unified site-wide. */
 
 .statement-section {
   position: relative;
@@ -20,7 +20,7 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Tall scroll driver — drives the reveal progress. */
+/* Tall scroll driver - drives the reveal progress. */
 .statement-section .stmt-scroll {
   position: relative;
   z-index: 1;

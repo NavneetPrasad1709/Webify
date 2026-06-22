@@ -4,7 +4,7 @@ import { useEffect, useRef, type ReactNode } from "react";
 import gsap from "gsap";
 
 /**
- * Magnetic — wraps an element so it elastically follows the cursor (the
+ * Magnetic - wraps an element so it elastically follows the cursor (the
  * Awwwards "expensive site" tell). Transform-only, GPU-cheap. Desktop fine-
  * pointer only; a no-op under touch and prefers-reduced-motion.
  */

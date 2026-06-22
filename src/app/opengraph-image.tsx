@@ -1,9 +1,9 @@
 import { ImageResponse } from "next/og";
 
-// Generated Open Graph image (1200×630) — dark/indigo Webify card.
+// Generated Open Graph image (1200×630) - dark/indigo Webify card.
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Webify — Senior-led AI & software product engineering";
+export const alt = "Webify - Senior-led AI & software product engineering";
 
 export default function OpengraphImage() {
   return new ImageResponse(
@@ -54,7 +54,7 @@ export default function OpengraphImage() {
               maxWidth: 880,
             }}
           >
-            Senior-led AI &amp; software product engineering — India &amp; worldwide.
+            Senior-led AI &amp; software product engineering - India &amp; worldwide.
           </div>
         </div>
 

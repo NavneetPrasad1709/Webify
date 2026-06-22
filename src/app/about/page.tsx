@@ -5,22 +5,19 @@ import { FadeUp } from "@/components/sections/cta/fade-up";
 import { SparklesTitle } from "@/components/ui/sparkles-title";
 import { Magnetic } from "@/components/ui/magnetic";
 import { StatCounter } from "@/components/sections/about/stat-counter";
-import { GoodreadsCurrentlyReading } from "@/components/ui/goodreads-currently-reading";
+import { siteConfig, mailtoHref } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Senior-led, end to end. The person who designs and builds your product is the person you talk to — no account managers, no junior hand-offs, no agency overhead.",
+    "Senior-led, end to end. The people who design and build your product are the people you talk to - no account managers, no junior hand-offs, no agency overhead.",
   alternates: { canonical: "/about" },
 };
-
-const SITE_URL = "https://webify.dev"; // [REPLACE: production domain]
-const FOUNDER = "[REPLACE: Founder name]";
 
 const STATS = [
   { value: 100, suffix: "%", label: "Code, repos & IP you own" },
   { value: 24, suffix: "h", label: "Typical first response" },
-  { value: 1, suffix: "", label: "Senior on it — the one you talk to" },
+  { value: 1, suffix: "", label: "Senior on it - the one you talk to" },
   { value: 0, suffix: "", label: "Account managers between us" },
 ];
 
@@ -28,12 +25,12 @@ const PROCESS = [
   {
     n: "01",
     title: "Scope & strategy",
-    body: "We get on a call, pressure-test the idea, and lock the one outcome that matters — with a clear plan and a fixed first milestone.",
+    body: "We get on a call, pressure-test the idea, and lock the one outcome that matters - with a clear plan and a fixed first milestone.",
   },
   {
     n: "02",
     title: "Design & prototype",
-    body: "I design the core flow and put a clickable prototype in front of you fast — so we're aligned before a line of production code.",
+    body: "We design the core flow and put a clickable prototype in front of you fast - so we're aligned before a line of production code.",
   },
   {
     n: "03",
@@ -54,7 +51,7 @@ const VALUES = [
   },
   {
     title: "Outcomes over output",
-    body: "Judged on what ships and what it moves — activation, revenue, speed — not on slide decks or hours logged.",
+    body: "Judged on what ships and what it moves - activation, revenue, speed - not on slide decks or hours logged.",
   },
   {
     title: "You own everything",
@@ -62,12 +59,12 @@ const VALUES = [
   },
   {
     title: "Fast, and in the open",
-    body: "Working software every week, progress you can see, and a direct line — not a status report filtered through three layers.",
+    body: "Working software every week, progress you can see, and a direct line - not a status report filtered through three layers.",
   },
 ];
 
 const AGENCY = [
-  "Your project routed to whoever's free — often the most junior",
+  "Your project routed to whoever's free - often the most junior",
   "Senior in the pitch, juniors on the build",
   "Updates filtered through an account manager",
   "Scope padded to keep a large team billable",
@@ -77,23 +74,24 @@ const AGENCY = [
 const SENIOR = [
   "One senior, accountable end to end",
   "The person who pitched is the person who builds",
-  "A direct line — Slack, call, or email",
+  "A direct line - Slack, call, or email",
   "Lean scope, priced to the outcome",
   "Full ownership: your repos, your accounts, day one",
 ];
 
-/** /about — founder story + philosophy, built to convert (A1..A5 + trust + process + proof). */
+/** /about - studio story + philosophy, built to convert (A1..A5 + trust + process). */
 export default function AboutPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
-    name: "About — Webify",
-    url: `${SITE_URL}/about`,
+    name: "About - Webify",
+    url: `${siteConfig.url}/about`,
     mainEntity: {
-      "@type": "Person",
-      name: FOUNDER,
-      jobTitle: "Founder & Principal Engineer",
-      worksFor: { "@type": "Organization", name: "Webify" },
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url,
+      email: siteConfig.email,
+      description: siteConfig.description,
       knowsAbout: ["AI products", "Web apps", "Mobile apps", "Product design"],
     },
   };
@@ -111,8 +109,8 @@ export default function AboutPage() {
       />
 
       <div className="relative mx-auto w-full max-w-[var(--size-container)] px-6 sm:px-10 lg:px-16">
-        {/* A1 — Founder hero */}
-        <section aria-label="Founder">
+        {/* A1 - Studio hero */}
+        <section aria-label="About Webify">
           <div className="grid gap-10 md:grid-cols-[1.45fr_1fr] md:items-center md:gap-16">
             <div>
               <FadeUp>
@@ -121,8 +119,7 @@ export default function AboutPage() {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--accent-script)] opacity-75" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--accent-script)]" />
                   </span>
-                  {/* [REPLACE: current availability] */}
-                  Available — taking 1 new project this month
+                  Currently taking on new projects
                 </span>
               </FadeUp>
 
@@ -140,8 +137,8 @@ export default function AboutPage() {
               <FadeUp delay={0.12}>
                 <p className="mt-4 max-w-[52ch] text-pretty text-lg leading-relaxed text-neutral-300 sm:text-xl">
                   Webify is a senior-led AI &amp; product engineering studio. You
-                  don&apos;t get a sales team and a bench of juniors — you get the
-                  person who has designed, built, and shipped real products, working
+                  don&apos;t get a sales team and a bench of juniors - you get senior
+                  people who have designed, built, and shipped real products, working
                   on yours directly.
                 </p>
               </FadeUp>
@@ -175,20 +172,22 @@ export default function AboutPage() {
               </FadeUp>
             </div>
 
-            {/* Founder portrait — real photo required (BRIEF: no stock faces). */}
+            {/* Studio statement card (brand-led; no stock faces, no placeholder). */}
             <FadeUp delay={0.12}>
               <figure className="relative">
-                <div className="relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden rounded-[2rem] border border-[var(--hairline)] bg-[var(--surface-1)] shadow-[0_40px_120px_-40px_rgba(0,0,0,0.9)]">
+                <div className="relative flex aspect-[4/5] w-full flex-col justify-between overflow-hidden rounded-[2rem] border border-[var(--hairline)] bg-[var(--surface-1)] p-8 shadow-[0_40px_120px_-40px_rgba(0,0,0,0.9)]">
                   <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_15%,var(--accent-glow),transparent_60%)]" />
-                  <span className="relative font-mono text-xs uppercase tracking-[0.2em] text-neutral-600">
-                    [REPLACE: founder photo]
+                  <span className="relative flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--hairline-strong)] text-xl font-black text-neutral-50">
+                    W
                   </span>
+                  <blockquote className="relative text-balance text-2xl font-semibold leading-[1.15] tracking-[-0.01em] text-neutral-100 sm:text-3xl">
+                    We&apos;d rather ship one thing that <span className="script-accent">works</span> than pitch ten that don&apos;t.
+                  </blockquote>
                 </div>
-                {/* Floating identity badge */}
                 <figcaption className="absolute -bottom-5 left-4 right-4 flex items-center justify-between rounded-2xl border border-[var(--hairline-strong)] bg-[var(--surface-2)]/90 px-5 py-3.5 backdrop-blur-md">
-                  <span className="text-base font-semibold text-neutral-100">{FOUNDER}</span>
+                  <span className="text-base font-semibold text-neutral-100">Webify</span>
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-hi">
-                    Founder &amp; Principal
+                    Senior-led studio
                   </span>
                 </figcaption>
               </figure>
@@ -212,7 +211,7 @@ export default function AboutPage() {
           </FadeUp>
         </section>
 
-        {/* A2 — Philosophy: why senior-led beats agency */}
+        {/* A2 - Philosophy: why senior-led beats agency */}
         <section
           aria-label="Philosophy"
           className="mt-24 border-t border-[var(--hairline)] pt-16 sm:mt-32 sm:pt-24"
@@ -269,19 +268,19 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* A3a — How I work (process timeline) */}
+        {/* A3a - How we work (process timeline) */}
         <section
           aria-label="How we work"
           className="mt-24 border-t border-[var(--hairline)] pt-16 sm:mt-32 sm:pt-24"
         >
           <FadeUp>
             <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-neutral-500">
-              How I work
+              How we work
             </p>
           </FadeUp>
           <FadeUp delay={0.05}>
             <h2 className="mt-5 max-w-[24ch] text-balance text-[clamp(1.875rem,5.5vw,3.25rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-neutral-50">
-              A simple, senior process — start to <span className="script-accent">ship</span>.
+              A simple, senior process - start to <span className="script-accent">ship</span>.
             </h2>
           </FadeUp>
 
@@ -302,11 +301,11 @@ export default function AboutPage() {
           </ol>
         </section>
 
-        {/* A3b — Values */}
+        {/* A3b - Values */}
         <section aria-label="Values" className="mt-24 sm:mt-32">
           <FadeUp>
             <h2 className="max-w-[22ch] text-balance text-[clamp(1.875rem,5.5vw,3.25rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-neutral-50">
-              A few principles I don&apos;t <span className="script-accent">bend</span> on.
+              A few principles we don&apos;t <span className="script-accent">bend</span> on.
             </h2>
           </FadeUp>
 
@@ -322,57 +321,9 @@ export default function AboutPage() {
               </FadeUp>
             ))}
           </div>
-
-          {/* Human-not-a-black-box: live "currently reading" shelf */}
-          <div className="mt-12 grid gap-8 md:grid-cols-[1fr_1.1fr] md:items-center md:gap-12">
-            <FadeUp>
-              <div>
-                <h3 className="text-balance text-2xl font-semibold tracking-[-0.01em] text-neutral-50 sm:text-3xl">
-                  A person, not a black box.
-                </h3>
-                <p className="mt-4 max-w-[46ch] text-pretty leading-relaxed text-neutral-400">
-                  You&apos;re hiring a human with taste and opinions, who keeps
-                  learning. Here&apos;s what&apos;s on the nightstand right now —
-                  pulled live from my Goodreads shelf.
-                </p>
-              </div>
-            </FadeUp>
-            <FadeUp delay={0.08}>
-              {/* [REPLACE: set NEXT_PUBLIC_GOODREADS_USER_ID to the founder's shelf id] */}
-              <GoodreadsCurrentlyReading
-                goodreadsUserId={process.env.NEXT_PUBLIC_GOODREADS_USER_ID || undefined}
-              />
-            </FadeUp>
-          </div>
         </section>
 
-        {/* Social proof */}
-        <section
-          aria-label="Client testimonial"
-          className="mt-24 border-t border-[var(--hairline)] pt-16 sm:mt-32 sm:pt-24"
-        >
-          <FadeUp>
-            <figure className="mx-auto max-w-[42ch] text-center sm:max-w-[60ch]">
-              <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-neutral-500">
-                What clients say
-              </p>
-              <blockquote className="mt-7 text-balance text-[clamp(1.5rem,4.5vw,2.5rem)] font-medium leading-[1.18] tracking-[-0.02em] text-neutral-100">
-                <span className="text-accent-hi">“</span>
-                {/* [REPLACE: a real, specific-outcome client quote] */}
-                The person who pitched us was the person who built it. We shipped in
-                weeks, not quarters — and we still own every line.
-                <span className="text-accent-hi">”</span>
-              </blockquote>
-              <figcaption className="mt-8 text-sm text-neutral-400">
-                <span className="font-semibold text-neutral-200">[REPLACE: client name]</span>
-                <span className="mx-2 text-neutral-700">—</span>
-                [REPLACE: title, company]
-              </figcaption>
-            </figure>
-          </FadeUp>
-        </section>
-
-        {/* A4 — Small team / network */}
+        {/* A4 - Small team / network */}
         <section
           aria-label="Team and network"
           className="mt-24 border-t border-[var(--hairline)] pt-16 sm:mt-32 sm:pt-24"
@@ -391,13 +342,12 @@ export default function AboutPage() {
             <FadeUp delay={0.08}>
               <div className="space-y-5">
                 <p className="max-w-[58ch] text-pretty text-lg leading-relaxed text-neutral-300">
-                  Most projects ship with one senior — and that&apos;s the point. But
-                  when a build needs a specialist, I bring in collaborators I&apos;ve
+                  Most projects ship with one senior - and that&apos;s the point. But
+                  when a build needs a specialist, we bring in collaborators we&apos;ve
                   shipped with before and trust completely, so you get depth without
                   agency bloat.
                 </p>
                 <ul className="flex flex-wrap gap-2.5">
-                  {/* [REPLACE: real collaborator disciplines / names] */}
                   {["Motion & 3D", "Native mobile", "ML / MLOps", "Brand & identity", "QA & accessibility"].map(
                     (area) => (
                       <li
@@ -414,7 +364,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* A5 — Final CTA */}
+        {/* A5 - Final CTA */}
         <section aria-label="Start a project" className="mt-24 sm:mt-32">
           <FadeUp>
             <div className="relative overflow-hidden rounded-[2rem] border border-[var(--hairline-strong)] bg-[var(--surface-1)] p-8 sm:p-14">
@@ -428,9 +378,9 @@ export default function AboutPage() {
                     Let&apos;s <span className="script-accent">build</span> the thing.
                   </h2>
                   <p className="mt-4 max-w-[48ch] text-pretty leading-relaxed text-neutral-300">
-                    Tell me what you&apos;re working on. We&apos;ll scope it together,
-                    and I&apos;ll tell you honestly whether I&apos;m the right person
-                    to build it — no pressure, no pitch deck.
+                    Tell us what you&apos;re working on. We&apos;ll scope it together,
+                    and tell you honestly whether we&apos;re the right fit to build it
+                    - no pressure, no pitch deck.
                   </p>
                 </div>
                 <div className="flex flex-col items-start gap-3">
@@ -444,12 +394,11 @@ export default function AboutPage() {
                     </Link>
                   </Magnetic>
                   <a
-                    href="mailto:hello@webify.dev"
+                    href={mailtoHref("Project enquiry")}
                     className="group inline-flex items-center gap-2 px-1 text-sm font-medium text-neutral-300 transition-colors hover:text-white"
                   >
                     <Mail className="h-4 w-4" aria-hidden />
-                    {/* [REPLACE: real email] */}
-                    hello@webify.dev
+                    {siteConfig.email}
                   </a>
                 </div>
               </div>

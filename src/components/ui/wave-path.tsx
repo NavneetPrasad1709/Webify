@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 type WavePathProps = React.ComponentProps<"div">;
 
 /**
- * WavePath — a thin horizontal line that bends toward the cursor and springs
+ * WavePath - a thin horizontal line that bends toward the cursor and springs
  * back via requestAnimationFrame (jhrealex/awwwards-style). Mouse-driven only,
  * so it's a static line on touch / reduced-motion (no auto animation).
  */

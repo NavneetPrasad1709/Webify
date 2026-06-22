@@ -17,7 +17,7 @@ import {
   CaseFigure,
 } from "@/components/sections/case-study/case-study-parts";
 
-// Fixed set — prerender each study; unknown slugs 404.
+// Fixed set - prerender each study; unknown slugs 404.
 export const dynamicParams = false;
 
 export function generateStaticParams() {

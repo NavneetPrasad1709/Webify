@@ -8,17 +8,17 @@ import type { CurrentlyReadingBook } from "@/app/api/goodreads/route";
 /**
  * Goodreads "currently reading" widget (21st.dev: abbasplusplus).
  *
- * Built faithfully to the reference's BOLD look — oversized mono
+ * Built faithfully to the reference's BOLD look - oversized mono
  * "CURRENTLY READING" label, large shadowed/bordered cover, font-black title,
- * big star rating — just made mobile-first responsive (the reference's fixed
+ * big star rating - just made mobile-first responsive (the reference's fixed
  * text-5xl / w-64 / p-12 overflow a phone) so the same anatomy scales down.
  *
  * Data is fetched from our cached server route (/api/goodreads) rather than the
- * reference's public CORS proxy + browser DOMParser — faster, reliable, no
+ * reference's public CORS proxy + browser DOMParser - faster, reliable, no
  * third-party on the critical path. Visual design is unchanged.
  *
- * Pass the founder's real Goodreads list id via `goodreadsUserId`
- * (e.g. NEXT_PUBLIC_GOODREADS_USER_ID) — [REPLACE: founder's Goodreads list id].
+ * Pass a real Goodreads list id via `goodreadsUserId`
+ * (e.g. NEXT_PUBLIC_GOODREADS_USER_ID). Currently unused by the site.
  */
 export function GoodreadsCurrentlyReading({
   goodreadsUserId = "117356165-mohammad-abbas",
@@ -95,7 +95,7 @@ export function GoodreadsCurrentlyReading({
   const cover = (
     <div className="group/cover relative aspect-[2/3] w-28 shrink-0 overflow-hidden rounded-2xl border-4 border-border bg-muted shadow-2xl shadow-black/50 sm:w-44 md:w-56 lg:w-64">
       {book.imageUrl ? (
-        // Cover comes from the Goodreads CDN (dynamic, off-domain) — a plain
+        // Cover comes from the Goodreads CDN (dynamic, off-domain) - a plain
         // <img> avoids whitelisting a host for one small lazy thumbnail.
         // eslint-disable-next-line @next/next/no-img-element
         <img

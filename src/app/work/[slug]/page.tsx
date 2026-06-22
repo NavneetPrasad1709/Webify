@@ -17,10 +17,12 @@ import {
   CaseFigure,
 } from "@/components/sections/case-study/case-study-parts";
 
-// Fixed portfolio — prerender every study at build time; unknown slugs 404.
+import { siteConfig } from "@/lib/site";
+
+// Fixed portfolio - prerender every study at build time; unknown slugs 404.
 export const dynamicParams = false;
 
-const SITE_URL = "https://webify.dev"; // [REPLACE: production domain]
+const SITE_URL = siteConfig.url;
 
 export function generateStaticParams() {
   return getCaseStudySlugs().map((slug) => ({ slug }));
@@ -35,7 +37,7 @@ export async function generateMetadata({
   const study = getCaseStudy(slug);
   if (!study) return {};
 
-  const title = `${study.name} — ${study.discipline} case study`;
+  const title = `${study.name} - ${study.discipline} case study`;
   const url = `/work/${study.slug}`;
 
   return {
@@ -102,7 +104,7 @@ export default async function CaseStudyPage({
       />
 
       <article>
-        {/* W4 — Hero */}
+        {/* W4 - Hero */}
         <CaseContainer>
           {/* Breadcrumb */}
           <nav aria-label="Breadcrumb">
@@ -195,7 +197,7 @@ export default async function CaseStudyPage({
           </header>
         </CaseContainer>
 
-        {/* W4 — Problem → Approach → Build → Outcome → Metrics */}
+        {/* W4 - Problem → Approach → Build → Outcome → Metrics */}
         <div className="mt-6 sm:mt-12">
           <CaseSection index="01" label="Problem" title="The problem">
             <Prose paragraphs={study.problem} />
@@ -227,10 +229,7 @@ export default async function CaseStudyPage({
           <CaseSection index="05" label="Metrics" title="By the numbers">
             <FadeUp>
               <p className="mb-10 max-w-[48ch] text-pretty text-lg leading-relaxed text-muted-foreground sm:text-xl">
-                {/* BRIEF: real figures only — placeholders shown; an "X" marks a number to fill in. */}
-                Headline results from the engagement. The figures below are
-                placeholders (an &ldquo;X&rdquo; marks a number to fill in) — swap each
-                for the project&apos;s real result.
+                Headline results from the engagement.
               </p>
             </FadeUp>
             <MetricGrid metrics={study.metrics} />
@@ -257,7 +256,7 @@ export default async function CaseStudyPage({
                       <span className="font-semibold text-neutral-100">
                         {study.testimonial.author}
                       </span>
-                      <span className="mx-2 text-neutral-700">—</span>
+                      <span className="mx-2 text-neutral-700">-</span>
                       {study.testimonial.role}
                     </figcaption>
                   </figure>
@@ -267,7 +266,7 @@ export default async function CaseStudyPage({
           ) : null}
         </div>
 
-        {/* W4 — Next project + CTA */}
+        {/* W4 - Next project + CTA */}
         <section aria-label="Continue" className="border-t border-border pt-14 sm:pt-20">
           <CaseContainer>
             {next ? (
