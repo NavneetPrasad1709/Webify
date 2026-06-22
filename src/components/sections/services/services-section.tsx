@@ -58,11 +58,11 @@ const SERVICES: Service[] = [
   },
 ];
 
-const CARD_TEXT = "#f4f4f5";
+const CARD_TEXT = "#0f1115"; // dark ink for the light cards
 const TONES: Record<Tone, { dot: string; wash: string }> = {
-  indigo: { dot: "#6366f1", wash: "#15162b" },
-  violet: { dot: "#8b5cf6", wash: "#1b1430" },
-  slate: { dot: "#64748b", wash: "#15181f" },
+  indigo: { dot: "#6366f1", wash: "#ecebfa" },
+  violet: { dot: "#8b5cf6", wash: "#f1e9fb" },
+  slate: { dot: "#64748b", wash: "#eef1f6" },
 };
 const pad2 = (n: number) => String(n).padStart(2, "0");
 
@@ -134,10 +134,10 @@ function Card({
         style={{
           scale: reduce ? 1 : stackScale,
           top: reduce ? 0 : `${i * 22}px`,
-          background: `linear-gradient(155deg, #121217 0%, ${tone.wash} 140%)`,
+          background: `linear-gradient(155deg, #ffffff 0%, ${tone.wash} 150%)`,
           willChange: "transform",
         }}
-        className="relative h-[62vh] max-h-[600px] w-full max-w-[1100px] origin-top overflow-hidden rounded-[32px] ring-1 ring-white/[0.08] shadow-[0_30px_70px_-25px_rgba(0,0,0,0.7)] sm:h-[72vh] sm:max-h-[680px] sm:rounded-[40px]"
+        className="relative h-[62vh] max-h-[600px] w-full max-w-[1100px] origin-top overflow-hidden rounded-[32px] ring-1 ring-black/[0.06] shadow-[0_30px_70px_-25px_rgba(0,0,0,0.45)] sm:h-[72vh] sm:max-h-[680px] sm:rounded-[40px]"
       >
         {/* static giant numeral (no scroll-zoom) */}
         <span
@@ -171,7 +171,7 @@ function Card({
                 style={{ background: tone.dot, boxShadow: `0 0 0 4px ${tone.dot}1f` }}
               />
             </div>
-            <div className="mt-5 h-px w-full" style={{ backgroundColor: "rgba(255,255,255,0.1)" }} />
+            <div className="mt-5 h-px w-full" style={{ backgroundColor: "rgba(0,0,0,0.1)" }} />
           </div>
 
           {/* number + name + description — large, readable typography */}
@@ -191,7 +191,7 @@ function Card({
               </h3>
               <p
                 className="max-w-2xl font-normal leading-relaxed"
-                style={{ color: CARD_TEXT, opacity: 0.92, fontSize: "clamp(1.3rem, 3.8vw, 1.6rem)" }}
+                style={{ color: CARD_TEXT, opacity: 0.72, fontSize: "clamp(1.3rem, 3.8vw, 1.6rem)" }}
               >
                 {service.description}
               </p>

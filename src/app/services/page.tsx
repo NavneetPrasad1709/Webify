@@ -43,9 +43,7 @@ export default function ServicesPage() {
           density={50}
           beamClassName="mx-0 mr-auto mt-2 max-w-[24rem]"
         >
-          What
-          <br />
-          We
+          What We
           <br />
           <span className="script-accent">Build</span>
         </SparklesTitle>
