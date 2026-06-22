@@ -130,7 +130,9 @@ export function CtaSection() {
             ref={marqueeRef}
             className="relative flex h-[600px] animate-fade-in-up items-center justify-center [animation-delay:400ms] lg:h-[700px]"
           >
-            <div className="relative h-full w-full">
+            {/* Mask fades the marquee to transparent at top/bottom so the
+                starfield shows through (instead of solid-black vignettes). */}
+            <div className="relative h-full w-full [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,#000_16%,#000_84%,transparent_100%)] [mask-image:linear-gradient(to_bottom,transparent_0%,#000_16%,#000_84%,transparent_100%)]">
               <VerticalMarquee speed={20} pauseOnHover className="h-full">
                 {marqueeItems.map((item, idx) => (
                   <div
@@ -141,11 +143,6 @@ export function CtaSection() {
                   </div>
                 ))}
               </VerticalMarquee>
-
-              {/* Top vignette */}
-              <div className="pointer-events-none absolute left-0 right-0 top-0 z-10 h-64 bg-gradient-to-b from-background via-background/50 to-transparent" />
-              {/* Bottom vignette */}
-              <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-10 h-64 bg-gradient-to-t from-background via-background/50 to-transparent" />
             </div>
           </div>
         </div>

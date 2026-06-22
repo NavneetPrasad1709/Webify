@@ -74,9 +74,8 @@ export function ProjectsSection() {
   return (
     <section
       className={cn(
-        "relative z-10 bg-[#0C0C0C]",
+        "relative z-10",
         "-mt-10 sm:-mt-12 md:-mt-14",
-        "rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px]",
         "px-4 pt-16 sm:px-6 sm:pt-20 md:px-8 md:pt-24",
       )}
       aria-label="Featured work"

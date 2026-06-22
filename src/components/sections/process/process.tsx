@@ -52,7 +52,7 @@ const STEPS: Step[] = [
 
 export function Process() {
   return (
-    <section className="process bg-[var(--color-ink)] text-[var(--color-bone)]" aria-label="How we work">
+    <section className="process text-[var(--color-bone)]" aria-label="How we work">
       {/* Intro */}
       <Container className="pt-[clamp(6rem,12vw,10rem)] pb-[clamp(2.5rem,6vw,4.5rem)]">
         <p className="pin-kicker mb-6 text-[var(--color-bone-dim)]">
@@ -68,8 +68,8 @@ export function Process() {
       {/* Sticky section tabs */}
       <StickyTabs
         mainNavHeight="0px"
-        rootClassName="bg-[var(--color-ink)] text-[var(--color-bone)]"
-        sectionClassName="bg-[var(--color-ink)]"
+        rootClassName="text-[var(--color-bone)]"
+        sectionClassName=""
         stickyHeaderContainerClassName=""
         /* Opaque bar (no translucency) so scrolling content can't bleed through;
            sticks at the very top + clears the transparent nav via pt so content

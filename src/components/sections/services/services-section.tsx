@@ -58,7 +58,6 @@ const SERVICES: Service[] = [
   },
 ];
 
-const INK = "#0C0C0C";
 const CARD_TEXT = "#f4f4f5";
 const TONES: Record<Tone, { dot: string; wash: string }> = {
   indigo: { dot: "#6366f1", wash: "#15162b" },
@@ -75,7 +74,7 @@ export function ServicesSection() {
   });
 
   return (
-    <section id="services" className="relative" style={{ backgroundColor: INK }} aria-label="Services">
+    <section id="services" className="relative" aria-label="Services">
       {/* Header */}
       <div className="mx-auto max-w-[1100px] px-5 pt-20 pb-2 sm:px-8 sm:pt-28 sm:pb-6">
         <h2
