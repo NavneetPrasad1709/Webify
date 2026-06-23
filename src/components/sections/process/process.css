@@ -43,11 +43,18 @@
 /* Sticky step title: metallic gradient text + a soft accent underline so the
    large heading reads premium instead of a bare flat-white word. */
 .process .pin-grad {
-  background: linear-gradient(180deg, #ffffff 0%, #a7adba 100%);
+  background: linear-gradient(110deg, #9aa0ad 0%, #ffffff 30%, #cfd4dd 50%, #ffffff 70%, #9aa0ad 100%);
+  background-size: 220% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  animation: pin-sheen 7s linear infinite;
+}
+@keyframes pin-sheen {
+  to {
+    background-position: -220% center;
+  }
 }
 .process .pin-underline {
   position: absolute;

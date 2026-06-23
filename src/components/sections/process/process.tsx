@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { FadeUp } from "@/components/sections/cta/fade-up";
 import "./process.css";
@@ -51,12 +53,19 @@ const STEPS: Step[] = [
 ];
 
 /**
- * H6 - "How we work". Mobile-first 50/50 layout: on desktop the step heading
- * pins on the left (sticky) while its info scrolls on the right, then releases
- * to the next step - a calm sticky-scroll reveal. On mobile it stacks cleanly
- * (heading, then info). No decorative underline; metallic gradient headings.
+ * H6 - "How we work". 50/50 layout, mobile-first: each step's heading pins on the
+ * left while its info scrolls on the right. A scroll-driven progress rail (a
+ * glowing dot travels as an accent line fills) runs down the left on desktop, and
+ * the metallic headings carry a slow sheen sweep - the section's wow factor.
  */
 export function Process() {
+  const railRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: railRef,
+    offset: ["start 40%", "end 65%"],
+  });
+  const dotTop = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
   return (
     <section className="process text-[var(--color-bone)]" aria-label="How we work">
       {/* Intro */}
@@ -70,9 +79,24 @@ export function Process() {
         </h2>
       </Container>
 
-      {/* Steps - 50/50 split, sticky heading on the left */}
+      {/* Steps - 50/50 split with a scroll-driven progress rail */}
       <Container className="pb-[clamp(4rem,10vw,8rem)]">
-        <div className="border-t border-[var(--color-line)]">
+        <div ref={railRef} className="relative border-t border-[var(--color-line)] lg:pl-16">
+          {/* Progress rail (desktop) */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute bottom-0 left-1 top-0 hidden w-px overflow-visible bg-[var(--color-line-strong)] lg:block"
+          >
+            <motion.div
+              style={{ scaleY: scrollYProgress }}
+              className="absolute inset-0 origin-top bg-gradient-to-b from-[var(--color-accent)] via-[#818cf8] to-[#8b5cf6]"
+            />
+            <motion.div
+              style={{ top: dotTop }}
+              className="absolute left-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--color-accent)] shadow-[0_0_20px_6px_rgba(99,102,241,0.55)]"
+            />
+          </div>
+
           {STEPS.map((step) => (
             <div
               key={step.id}
