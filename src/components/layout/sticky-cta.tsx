@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MessageCircle, ArrowRight } from "lucide-react";
 import { whatsappHref } from "@/lib/site";
@@ -42,8 +41,9 @@ export function StickyCta() {
         />
 
         <div className="flex w-full items-center gap-2.5 rounded-full border border-white/15 bg-[#0c0c11]/90 p-1.5 shadow-[0_20px_55px_-15px_rgba(0,0,0,0.85)] backdrop-blur-xl sm:w-auto">
-          <Link
-            href="/contact"
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event("webify:open-contact"))}
             className="group relative inline-flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-full bg-white px-6 py-3.5 text-sm font-bold text-black transition-transform duration-300 hover:scale-[1.03] sm:flex-none sm:px-7"
           >
             <span className="relative z-10 inline-flex items-center gap-2">
@@ -58,7 +58,7 @@ export function StickyCta() {
               aria-hidden
               className="absolute inset-0 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-black/10 to-transparent animate-cta-shimmer"
             />
-          </Link>
+          </button>
 
           {wa ? (
             <a

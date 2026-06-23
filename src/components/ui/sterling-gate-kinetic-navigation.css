@@ -147,11 +147,11 @@
   outline: 2px solid var(--color-primary);
   outline-offset: 4px;
 }
+/* Mobile: drop the header CTA so the bar stays clean (logo + Menu). The sticky
+   floating CTA + contact popup cover conversion on phones. */
 @media screen and (max-width: 640px) {
   .nav-cta-btn {
-    font-size: 0.82rem;
-    padding: 0.5em 0.95em;
-    margin-right: 0.6em;
+    display: none;
   }
 }
 .toggle-text {

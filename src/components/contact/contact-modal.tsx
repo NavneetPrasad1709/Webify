@@ -4,7 +4,7 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { X, Check, ArrowRight } from "lucide-react";
 import { submitContact, type ContactState } from "@/app/contact/actions";
-import { siteConfig, mailtoHref, whatsappHref } from "@/lib/site";
+import { mailtoHref, whatsappHref } from "@/lib/site";
 
 /**
  * Site-wide contact popup. A capture-phase click listener intercepts ANY link to
@@ -39,22 +39,13 @@ export function ContactModal() {
   const nameRef = useRef<HTMLInputElement>(null);
   const wa = whatsappHref("Hi Webify - I'd like to talk about a project.");
 
-  // Intercept clicks on any /contact link, anywhere on the site.
+  // Opt-in only: a CTA opens the popup by dispatching `webify:open-contact`
+  // (see the sticky CTA). Regular "Contact us" / "Book a call" links still
+  // navigate to the full /contact page - the popup never hijacks navigation.
   useEffect(() => {
-    const onClick = (e: MouseEvent) => {
-      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
-        return;
-      }
-      const target = e.target as HTMLElement | null;
-      const a = target?.closest?.("a[href]") as HTMLAnchorElement | null;
-      if (!a) return;
-      if (a.getAttribute("href") === "/contact") {
-        e.preventDefault();
-        setOpen(true);
-      }
-    };
-    document.addEventListener("click", onClick, true);
-    return () => document.removeEventListener("click", onClick, true);
+    const onOpen = () => setOpen(true);
+    window.addEventListener("webify:open-contact", onOpen);
+    return () => window.removeEventListener("webify:open-contact", onOpen);
   }, []);
 
   // Escape to close + focus the first field on open.

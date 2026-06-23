@@ -72,7 +72,7 @@ export default function ContactPage() {
     <main className="min-h-screen w-full bg-[#e9eaec] px-4 pb-16 pt-28 sm:px-6 sm:pt-32">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <div className="mx-auto grid w-full max-w-6xl overflow-hidden rounded-[2rem] border border-[#131313]/12 bg-white shadow-[0_40px_120px_-40px_rgba(0,0,0,0.35)] lg:grid-cols-[0.85fr_1.15fr]">
+      <div className="animate-zoom-in mx-auto grid w-full max-w-6xl overflow-hidden rounded-[2rem] border border-[#131313]/12 bg-white shadow-[0_40px_120px_-40px_rgba(0,0,0,0.35)] lg:grid-cols-[0.85fr_1.15fr]">
         {/* Left - info */}
         <div className="flex flex-col justify-between gap-10 p-6 sm:p-10">
           <div>
