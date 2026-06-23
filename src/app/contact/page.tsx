@@ -1,63 +1,24 @@
 import type { Metadata } from "next";
-import { Sparkles, Clock, UserCheck, ShieldCheck } from "lucide-react";
+import { MessageSquare, Mail, Phone } from "lucide-react";
 import { ContactForm } from "./contact-form";
-import { ContactChannels } from "@/components/sections/contact/contact-channels";
-import { Faq } from "@/components/sections/faq/faq";
-import { siteConfig } from "@/lib/site";
+import { siteConfig, mailtoHref, whatsappHref, telHref } from "@/lib/site";
+
+const SOCIAL_GLYPHS: Record<string, string> = {
+  linkedin:
+    "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z",
+  github:
+    "M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.015 2.898-.015 3.293 0 .322.218.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12",
+  x: "M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z",
+};
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Tell us what you're building. Book a free 30-minute scoping call with the senior team that would build it - no obligation, reply within 24 hours.",
+    "Got ideas? We've got the skills. Tell us what you're building - a senior team replies within 24 hours. No obligation, no pitch deck.",
   alternates: { canonical: "/contact" },
 };
 
-const TRUST = [
-  { icon: Clock, label: "Reply within 24h" },
-  { icon: UserCheck, label: "Senior-led, end to end" },
-  { icon: ShieldCheck, label: "You own the code & IP" },
-];
-
-const STEPS = [
-  {
-    n: "01",
-    title: "Send the brief",
-    body: "A sentence or two on the product, the goal, and your timeline. Takes 2 minutes.",
-  },
-  {
-    n: "02",
-    title: "We reply within 24h",
-    body: "A senior reads it - not a bot, not a sales rep. You'll hear back fast.",
-  },
-  {
-    n: "03",
-    title: "Free 30-min call",
-    body: "We scope it, give you a rough price, and tell you honestly if we're the right fit.",
-  },
-];
-
-const FAQ_ITEMS = [
-  {
-    q: "How do we start working together?",
-    a: "Send the form or book a call. We'll spend 30 minutes pressure-testing the idea, then come back with a clear scope and an indicative price - usually within 48 hours.",
-  },
-  {
-    q: "What does a typical engagement cost?",
-    a: "It depends on scope, but most projects start as a fixed-scope build or an MVP sprint with the price agreed up front before any work begins. We invoice in ₹ or $ and can issue GST-compliant invoices for Indian clients.",
-  },
-  {
-    q: "Who actually does the work?",
-    a: "The senior who scopes your project is the one who builds it. No account managers, no junior hand-offs, and no relay of meetings between you and the person writing the code.",
-  },
-  {
-    q: "Do we own the code and IP?",
-    a: "Yes - completely. Your repositories, your accounts, your data, your IP, from day one. No proprietary lock-in and nothing held hostage when the engagement ends.",
-  },
-  {
-    q: "Do you work with teams outside India?",
-    a: "Yes. We work with founders and teams in India and worldwide, async-first, and overlap working hours where it matters.",
-  },
-];
+type Info = { icon: typeof Mail; title: string; body: string; value: string; href: string };
 
 export default function ContactPage() {
   const jsonLd = {
@@ -73,108 +34,107 @@ export default function ContactPage() {
     },
   };
 
+  const info: Info[] = [
+    {
+      icon: Mail,
+      title: "Chat to us",
+      body: "Our team is here to help.",
+      value: siteConfig.email,
+      href: mailtoHref("Project enquiry"),
+    },
+  ];
+  if (siteConfig.whatsapp) {
+    info.push({
+      icon: MessageSquare,
+      title: "WhatsApp us",
+      body: "Quick questions? Message us.",
+      value: "Open WhatsApp",
+      href: whatsappHref("Hi Webify - I'd like to talk about a project."),
+    });
+  }
+  if (siteConfig.phone) {
+    info.push({
+      icon: Phone,
+      title: "Call us",
+      body: "We work across time zones.",
+      value: siteConfig.phone,
+      href: telHref(),
+    });
+  }
+
+  const socials = [
+    { label: "LinkedIn", href: siteConfig.socials.linkedin, path: SOCIAL_GLYPHS.linkedin },
+    { label: "GitHub", href: siteConfig.socials.github, path: SOCIAL_GLYPHS.github },
+    { label: "X", href: siteConfig.socials.x, path: SOCIAL_GLYPHS.x },
+  ].filter((s) => s.href);
+
   return (
-    <main className="relative overflow-hidden pb-28 pt-32 sm:pt-40">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+    <main className="min-h-screen w-full bg-[#e9eaec] px-4 pb-16 pt-28 sm:px-6 sm:pt-32">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      {/* Ambient accent glows */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-[70vh] bg-[radial-gradient(60%_45%_at_50%_-8%,var(--accent-glow),transparent_70%)]"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -left-20 top-[35vh] h-[45vh] w-[45vh] rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.14),transparent_70%)] blur-3xl"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-20 top-[20vh] h-[40vh] w-[40vh] rounded-full bg-[radial-gradient(circle,rgba(34,211,238,0.1),transparent_70%)] blur-3xl"
-      />
+      <div className="mx-auto grid w-full max-w-6xl overflow-hidden rounded-[2rem] border border-[#131313]/12 bg-white shadow-[0_40px_120px_-40px_rgba(0,0,0,0.35)] lg:grid-cols-[0.85fr_1.15fr]">
+        {/* Left - info */}
+        <div className="flex flex-col justify-between gap-12 p-8 sm:p-10">
+          <div>
+            {/* Logo */}
+            <span className="text-2xl font-black uppercase tracking-tight text-[#131313]">
+              Webify<span className="text-[#4ade80]">*</span>
+            </span>
 
-      <div className="relative mx-auto w-full max-w-[var(--size-container)] px-6 sm:px-10">
-        {/* ── Hero ─────────────────────────────────────────────────────── */}
-        <section className="mx-auto max-w-3xl text-center">
-          <span className="animate-fade-in-up inline-flex items-center gap-2 rounded-full border border-[var(--hairline-strong)] bg-[var(--surface-1)] px-4 py-1.5 text-xs font-medium text-neutral-300">
-            <Sparkles className="h-3.5 w-3.5 text-accent-hi" aria-hidden />
-            Free · No obligation · 30-minute call
-          </span>
+            <ul className="mt-12 space-y-9">
+              {info.map((it) => (
+                <li key={it.title}>
+                  <span className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#131313]/15 text-[#131313]">
+                    <it.icon className="h-5 w-5" aria-hidden />
+                  </span>
+                  <p className="mt-3 text-base font-bold text-[#131313]">{it.title}</p>
+                  <p className="text-[15px] text-[#131313]/55">{it.body}</p>
+                  <a
+                    href={it.href}
+                    target={it.href.startsWith("http") ? "_blank" : undefined}
+                    rel={it.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="mt-1 inline-block text-[15px] font-semibold text-[#131313] underline-offset-4 hover:underline"
+                  >
+                    {it.value}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          <h1 className="animate-fade-in-up mx-auto mt-6 max-w-[16ch] text-balance text-[clamp(2.75rem,8.5vw,5.5rem)] font-semibold leading-[1.0] tracking-[-0.03em] text-neutral-50 [animation-delay:0.1s]">
-            Tell us what you&apos;re <span className="script-accent">building</span>.
+          {socials.length ? (
+            <div className="flex items-center gap-3">
+              {socials.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  aria-label={s.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#131313]/15 text-[#131313] transition-colors hover:bg-[#131313] hover:text-white"
+                >
+                  <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" aria-hidden="true">
+                    <path d={s.path} fill="currentColor" />
+                  </svg>
+                </a>
+              ))}
+            </div>
+          ) : null}
+        </div>
+
+        {/* Right - green form panel */}
+        <div className="bg-[#c4f24a] p-8 sm:p-12">
+          <h1 className="max-w-[16ch] text-balance text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.05] tracking-[-0.02em] text-[#131313]">
+            Got ideas? We&apos;ve got the skills. Let&apos;s team up.
           </h1>
-
-          <p className="animate-fade-in-up mx-auto mt-6 max-w-[52ch] text-xl leading-relaxed text-neutral-300 sm:text-2xl [animation-delay:0.2s]">
-            Book a free 30-minute scoping call with the senior team that would build
-            it. We&apos;ll map the work, flag the risks, and give you an honest answer
-            on whether we&apos;re the right fit - no pitch deck, no pressure.
+          <p className="mt-4 max-w-[44ch] text-base font-medium text-[#131313]/75 sm:text-lg">
+            Tell us more about yourself and what you&apos;ve got in mind. A senior
+            team replies within 24 hours - no obligation, no pitch deck.
           </p>
 
-          <ul className="animate-fade-in-up mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-base text-neutral-300 sm:text-lg [animation-delay:0.3s]">
-            {TRUST.map(({ icon: Icon, label }) => (
-              <li key={label} className="inline-flex items-center gap-2">
-                <Icon className="h-4 w-4 text-accent-hi" aria-hidden />
-                {label}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* ── The form (centerpiece) ───────────────────────────────────── */}
-        <section className="mx-auto mt-12 max-w-2xl sm:mt-14">
-          <div className="relative rounded-[2.4rem] bg-[linear-gradient(135deg,rgba(99,102,241,0.95),rgba(139,92,246,0.75),rgba(34,211,238,0.55))] p-[1.5px] shadow-[0_50px_140px_-40px_rgba(99,102,241,0.6)]">
-            <div className="relative overflow-hidden rounded-[2.3rem] bg-[linear-gradient(160deg,#181840_0%,#0f0f1d_55%,#1d1236_100%)] p-7 sm:p-10">
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 bg-[radial-gradient(80%_45%_at_50%_-5%,rgba(99,102,241,0.28),transparent_70%)]"
-              />
-              <div className="relative">
-                <p className="mb-1 font-mono text-[11px] uppercase tracking-[0.2em] text-accent-hi">
-                  Start your project
-                </p>
-                <p className="mb-6 text-2xl font-semibold text-neutral-50 sm:text-3xl">
-                  Send it over - we&apos;ll take it from here.
-                </p>
-                <ContactForm />
-              </div>
-            </div>
+          <div className="mt-9">
+            <ContactForm />
           </div>
-
-          {/* Alternative channels */}
-          <div className="mt-8 text-center">
-            <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.2em] text-neutral-500">
-              Not into forms? Reach us directly
-            </p>
-            <ContactChannels className="justify-center" />
-          </div>
-        </section>
-
-        {/* ── What happens next ────────────────────────────────────────── */}
-        <section className="mx-auto mt-24 max-w-5xl sm:mt-28">
-          <h2 className="text-center text-[clamp(1.75rem,5vw,2.75rem)] font-semibold tracking-[-0.02em] text-neutral-50">
-            What happens <span className="script-accent">next</span>.
-          </h2>
-          <div className="mt-12 grid gap-5 sm:grid-cols-3 sm:gap-6">
-            {STEPS.map((s) => (
-              <div
-                key={s.n}
-                className="group rounded-3xl border border-[var(--hairline)] bg-[var(--surface-1)] p-7 transition-colors duration-300 hover:border-[color-mix(in_oklab,var(--accent)_40%,transparent)] hover:bg-[var(--surface-2)]"
-              >
-                <span className="nums text-4xl font-bold text-[color-mix(in_oklab,var(--accent-hi)_70%,transparent)]">
-                  {s.n}
-                </span>
-                <h3 className="mt-4 text-xl font-semibold text-neutral-50 sm:text-2xl">{s.title}</h3>
-                <p className="mt-2 text-pretty text-base leading-relaxed text-neutral-400 sm:text-lg">{s.body}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ── FAQ ──────────────────────────────────────────────────────── */}
-        <div className="mx-auto max-w-3xl">
-          <Faq items={FAQ_ITEMS} />
         </div>
       </div>
     </main>
