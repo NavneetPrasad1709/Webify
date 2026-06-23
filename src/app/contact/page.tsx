@@ -72,6 +72,32 @@ export default function ContactPage() {
     <main className="min-h-screen w-full bg-[#e9eaec] px-4 pb-16 pt-28 sm:px-6 sm:pt-32">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
+      {/* Hero hook + headings */}
+      <div className="mx-auto mb-10 max-w-3xl text-center sm:mb-14">
+        <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#131313]/60">
+          <span className="h-1.5 w-1.5 rotate-45 bg-[#22c55e]" aria-hidden />
+          Let&apos;s work together
+        </p>
+        <h1 className="mt-5 text-balance text-[clamp(2.25rem,6vw,4rem)] font-bold leading-[1.04] tracking-[-0.025em] text-[#131313]">
+          Let&apos;s build something people{" "}
+          <span className="text-[#16a34a]">actually use</span>.
+        </h1>
+        <p className="mx-auto mt-5 max-w-[56ch] text-base leading-relaxed text-[#131313]/65 sm:text-lg">
+          Tell us what you&apos;re working on - a senior team reads it and replies
+          within 24 hours. No bots, no sales reps, no pressure. Just an honest answer
+          on how we&apos;d ship it.
+        </p>
+        <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm font-semibold text-[#131313]/75">
+          <li>Reply within 24h</li>
+          <li aria-hidden className="text-[#131313]/30">·</li>
+          <li>Senior-led, end to end</li>
+          <li aria-hidden className="text-[#131313]/30">·</li>
+          <li>You own everything</li>
+          <li aria-hidden className="text-[#131313]/30">·</li>
+          <li>India &amp; worldwide</li>
+        </ul>
+      </div>
+
       <div className="animate-zoom-in mx-auto grid w-full max-w-6xl overflow-hidden rounded-[2rem] border border-[#131313]/12 bg-white shadow-[0_40px_120px_-40px_rgba(0,0,0,0.35)] lg:grid-cols-[0.85fr_1.15fr]">
         {/* Left - info */}
         <div className="flex flex-col justify-between gap-10 p-6 sm:p-10">
@@ -81,7 +107,14 @@ export default function ContactPage() {
               Webify<span className="text-[#4ade80]">*</span>
             </span>
 
-            <ul className="mt-12 space-y-9">
+            <div className="mt-10">
+              <p className="text-xl font-bold tracking-tight text-[#131313]">Talk to a human.</p>
+              <p className="mt-1 text-[15px] text-[#131313]/55">
+                The senior who&apos;d build it - not a sales rep.
+              </p>
+            </div>
+
+            <ul className="mt-8 space-y-9">
               {info.map((it) => (
                 <li key={it.title}>
                   <span className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#131313]/15 text-[#131313]">
@@ -124,9 +157,9 @@ export default function ContactPage() {
 
         {/* Right - green form panel */}
         <div className="bg-[#c4f24a] p-6 sm:p-12">
-          <h1 className="max-w-[16ch] text-balance text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.05] tracking-[-0.02em] text-[#131313]">
+          <h2 className="max-w-[16ch] text-balance text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.05] tracking-[-0.02em] text-[#131313]">
             Got ideas? We&apos;ve got the skills. Let&apos;s team up.
-          </h1>
+          </h2>
           <p className="mt-4 max-w-[44ch] text-base font-medium text-[#131313]/75 sm:text-lg">
             Tell us more about yourself and what you&apos;ve got in mind. A senior
             team replies within 24 hours - no obligation, no pitch deck.
