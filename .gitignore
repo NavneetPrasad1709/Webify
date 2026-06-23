@@ -44,3 +44,5 @@ next-env.d.ts
 # local dev artifacts (Playwright QA screenshots + debug scripts)
 /shots
 /scripts
+
+.vercel
