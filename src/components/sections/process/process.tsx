@@ -116,7 +116,7 @@ export function Process() {
                     <span className="h-px w-7 bg-[var(--color-accent)]" aria-hidden />
                     Step {step.num}
                   </span>
-                  <h3 className="pin-display pin-grad mt-4 text-[clamp(2.75rem,7vw,5.5rem)] leading-[0.9]">
+                  <h3 className="pin-display pin-grad mt-4 text-[clamp(3.5rem,9vw,7rem)] leading-[0.9]">
                     {step.title}
                   </h3>
                 </div>
