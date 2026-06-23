@@ -87,14 +87,26 @@
   font-weight: 900;
   text-transform: uppercase;
   line-height: 1;
-  transition: color 0.3s;
+  display: inline-block;
+  transform-origin: left center;
+  transition: color 0.3s, transform 0.55s cubic-bezier(0.65, 0.05, 0, 1);
+}
+/* Home hero: 2x logo that animates back to normal on first scroll. */
+.logo-text--hero {
+  transform: scale(2);
+}
+@media (max-width: 640px) {
+  .logo-text--hero {
+    transform: scale(1.55);
+  }
 }
 .logo-star {
-  color: var(--color-primary);
+  /* Brand green (same as the script accent used across the site). */
+  color: #4ade80;
   font-weight: 900;
-  margin-left: 0.04em;
-  vertical-align: 0.18em;
-  font-size: 0.8em;
+  margin-left: 0.06em;
+  vertical-align: 0.04em;
+  font-size: 1.2em;
 }
 .nav-row__right {
   grid-column-gap: 0.625rem;
@@ -109,6 +121,38 @@
   gap: 0.5em;
   margin-right: 1.25em;
   display: flex;
+}
+/* Persistent header CTA (every page except /contact). */
+.nav-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 1.25em;
+  background: var(--color-dark);
+  color: var(--color-neutral-300);
+  border-radius: 999px;
+  padding: 0.55em 1.15em;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  pointer-events: auto;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.nav-cta-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px -8px rgba(99, 102, 241, 0.55);
+}
+.nav-cta-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+@media screen and (max-width: 640px) {
+  .nav-cta-btn {
+    font-size: 0.82rem;
+    padding: 0.5em 0.95em;
+    margin-right: 0.6em;
+  }
 }
 .toggle-text {
   color: var(--color-dark);
@@ -182,10 +226,15 @@
 .nav-overlay-wrapper[data-nav="closed"] {
   display: none;
 }
+/* Full-screen backdrop behind the menu: dark tint + blur of the page behind.
+   The blur lives here (the standard modal-backdrop spot) so it works on every
+   screen size. It fades in with the overlay (autoAlpha) when the menu opens. */
 .overlay {
   z-index: 0;
   cursor: pointer;
-  background-color: #0006;
+  background-color: #00000080;
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
   width: 100%;
   height: 100%;
   position: absolute;
@@ -199,7 +248,8 @@
   flex-flow: column;
   justify-content: space-between;
   align-items: flex-start;
-  width: 35em;
+  /* Full-page menu (was a 35em right-side drawer). */
+  width: 100%;
   max-width: 100%;
   height: 100%;
   margin-left: auto;
@@ -213,9 +263,10 @@
 }
 .backdrop-layer {
   z-index: 0;
-  background-color: var(--color-neutral-300);
-  border-top-left-radius: 1.25em;
-  border-bottom-left-radius: 1.25em;
+  /* Resting menu background = premium z-black (the colored layers below just
+     flash during the staggered slide-in). */
+  background-color: #08080b;
+  /* Full-page menu: no rounded drawer edge. */
   position: absolute;
   inset: 0%;
 }
@@ -224,6 +275,17 @@
 }
 .backdrop-layer.second {
   background-color: var(--color-neutral-100);
+}
+/* Soft ambient glow that fills the open full-page menu's empty space. */
+.menu-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(48% 52% at 34% 72%, rgba(99, 102, 241, 0.18), transparent 72%),
+    radial-gradient(42% 46% at 82% 34%, rgba(139, 92, 246, 0.13), transparent 72%);
 }
 .ambient-background-shapes {
   z-index: 1;
@@ -282,9 +344,9 @@
 }
 .menu-footer-tagline {
   color: var(--color-dark);
-  opacity: 0.55;
+  opacity: 0.6;
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.95rem;
+  font-size: 1.2rem;
   letter-spacing: -0.01em;
 }
 .menu-footer-row {
@@ -296,7 +358,7 @@
 .menu-footer-link {
   color: var(--color-dark);
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 600;
   text-decoration: none;
   transition: opacity 0.3s;
@@ -312,7 +374,110 @@
   color: var(--color-dark);
   opacity: 0.6;
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
+}
+
+/* ---- Right-side CTA panel (fills the full-page menu, drives leads) --------- */
+.menu-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.3em;
+  padding-left: var(--menu-padding);
+  padding-right: var(--menu-padding);
+}
+.menu-cta-kicker {
+  color: var(--color-primary);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.menu-cta-title {
+  color: var(--color-dark);
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: clamp(2.1rem, 3.6vw, 3.4rem);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  max-width: 14ch;
+}
+.menu-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: 0.3em;
+  background: var(--color-dark);
+  color: var(--color-neutral-300);
+  border-radius: 999px;
+  padding: 0.95em 2em;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.menu-cta-btn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 16px 40px -12px rgba(99, 102, 241, 0.55);
+}
+.menu-cta-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+.menu-cta-contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em 1.4em;
+  margin-top: 0.6em;
+}
+.menu-cta-link {
+  color: var(--color-dark);
+  opacity: 0.68;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.25s;
+}
+.menu-cta-link:hover {
+  opacity: 1;
+}
+.menu-cta-link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+/* Desktop: two-column full-page menu. Links + CTA are vertically centered (so
+   the height reads as intentional, not top-crammed); footer sits bottom-left. */
+@media (min-width: 768px) {
+  .menu-content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 28em;
+    grid-template-rows: 1fr auto;
+    column-gap: 4em;
+    row-gap: 2em;
+    align-items: center;
+  }
+  .menu-list {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    gap: 0.35em;
+  }
+  .menu-cta {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    border-left: 1px solid color-mix(in oklab, var(--color-dark) 14%, transparent);
+    padding-left: 3em;
+  }
+  .menu-footer {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: end;
+  }
 }
 .nav-link {
   padding-top: 0.75em;
@@ -417,7 +582,7 @@
 /* Sub-375 phones: the decorative "click me" hint crowds/collides with the
    logo + Menu button. Menu is the primary toggle, so drop the redundant
    hint on the smallest screens. */
-@media screen and (max-width: 374px) {
+@media screen and (max-width: 640px) {
   .nav-toggle-label {
     display: none;
   }

@@ -76,7 +76,7 @@ export function Process() {
            hides cleanly behind it. */
         headerContentWrapperClassName="border-b border-[var(--color-line)] bg-[var(--color-ink)]"
         headerContentLayoutClassName="mx-auto w-full max-w-[1400px] px-6 pb-5 pt-[5.25rem] sm:px-8 lg:px-16"
-        titleClassName="pin-display text-[clamp(2.5rem,7vw,6rem)] leading-none text-[var(--color-bone)]"
+        titleClassName="pin-display text-[clamp(4.5rem,13vw,6.5rem)] leading-none text-[var(--color-bone)]"
         contentLayoutClassName="mx-auto w-full max-w-[1400px] px-6 py-12 sm:px-8 md:py-16 lg:px-16"
       >
         {STEPS.map((step) => {
@@ -86,10 +86,13 @@ export function Process() {
               id={step.id}
               title={
                 <span className="flex items-baseline gap-3 sm:gap-4">
-                  <span className="font-mono text-[0.5em] tracking-widest text-[var(--color-accent)]">
+                  <span className="font-mono text-[0.3em] font-semibold tracking-[0.22em] text-[var(--color-accent)]">
                     {step.num}
                   </span>
-                  <span>{step.title}</span>
+                  <span className="pin-grad relative inline-block">
+                    {step.title}
+                    <span className="pin-underline" aria-hidden />
+                  </span>
                 </span>
               }
             >

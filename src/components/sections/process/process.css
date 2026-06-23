@@ -40,6 +40,24 @@
   display: inline-block;
   flex: none;
 }
+/* Sticky step title: metallic gradient text + a soft accent underline so the
+   large heading reads premium instead of a bare flat-white word. */
+.process .pin-grad {
+  background: linear-gradient(180deg, #ffffff 0%, #a7adba 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.process .pin-underline {
+  position: absolute;
+  left: 0.04em;
+  bottom: -0.12em;
+  height: 0.05em;
+  width: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-accent) 0%, rgba(99, 102, 241, 0.35) 45%, transparent 85%);
+}
 .process .pin-fluid-1 {
   font-size: clamp(3rem, 9vw, 7rem);
 }

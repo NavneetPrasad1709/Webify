@@ -23,38 +23,45 @@ type Service = {
 const SERVICES: Service[] = [
   {
     number: "01",
-    name: "AI Products",
+    name: "AI Solutions",
     description:
       "Agents, copilots, and automation - built to run in production and judged on outcomes, not demos.",
     tone: "indigo",
   },
   {
     number: "02",
-    name: "Web Apps",
+    name: "Web & SaaS",
     description:
-      "Fast, accessible Next.js builds with real performance budgets and motion that serves the story.",
+      "Fast Next.js websites, SaaS platforms, and dashboards - engineered to perform and convert.",
     tone: "slate",
   },
   {
     number: "03",
     name: "Mobile Apps",
     description:
-      "One codebase, a native feel. Cross-platform apps your users open daily - no agency overhead.",
+      "One codebase, a native feel. Cross-platform iOS & Android apps your users open daily.",
     tone: "violet",
   },
   {
     number: "04",
-    name: "Product Design",
+    name: "Design & Branding",
     description:
-      "Research, flows, and design systems - refined until the product feels obvious to use.",
+      "Identity, UI, and design systems - refined until the product feels obvious and the brand inevitable.",
     tone: "slate",
   },
   {
     number: "05",
+    name: "SEO & Marketing",
+    description:
+      "SEO, content, and digital marketing that brings qualified traffic - and turns it into customers.",
+    tone: "indigo",
+  },
+  {
+    number: "06",
     name: "MVP Sprints",
     description:
       "Idea to live in weeks. A real, usable product in front of users - then we iterate.",
-    tone: "indigo",
+    tone: "violet",
   },
 ];
 

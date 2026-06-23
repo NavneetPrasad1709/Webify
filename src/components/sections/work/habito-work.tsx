@@ -190,7 +190,7 @@ export function WorkMarquee() {
         className="font-black uppercase tracking-tight text-[#0d0d0d]"
         style={{ fontSize: "clamp(2.5rem,9vw,7rem)" }}
       >
-        Webify Studio
+        Webify<span style={{ color: "#6366f1" }}>*</span>
       </span>
       <Clover />
     </span>

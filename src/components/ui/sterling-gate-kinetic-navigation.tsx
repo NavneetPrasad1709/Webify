@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { CustomEase } from "gsap/CustomEase";
-import { siteConfig, mailtoHref } from "@/lib/site";
+import { siteConfig, mailtoHref, whatsappHref } from "@/lib/site";
 import "./sterling-gate-kinetic-navigation.css";
 
 // Register GSAP plugins once (SSR-guarded).
@@ -33,6 +34,18 @@ export function Component() {
   const hasInteracted = useRef(false);
   const firstRun = useRef(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const waLink = whatsappHref("Hi Webify - I'd like to talk about a project.");
+
+  // Home hero: the logo starts 2x and animates down to normal on first scroll.
+  const pathname = usePathname();
+  const [atTop, setAtTop] = useState(true);
+  useEffect(() => {
+    const onScroll = () => setAtTop(window.scrollY < 60);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const logoHero = pathname === "/" && atTop;
 
   // ---- Setup: custom ease + per-link ambient-shape hover --------------------
   useEffect(() => {
@@ -165,25 +178,36 @@ export function Component() {
           return;
         }
 
-        const tl = gsap.timeline({ defaults: { ease, duration: 0.7 } });
-        tl.set(navWrap, { display: "block" }).set(menu, { xPercent: 0 }, "<");
+        // Phased open so the link reveal can NEVER race the menu fill:
+        //   t=0      overlay + backdrop panels slide in (the menu "fills")
+        //   t≈0.66s  panels are in -> ALL links rise together (no stagger)
+        // Links are parked below their clipped row (.menu-list-item is
+        // overflow:hidden) from the very first frame, so nothing flashes early.
+        const tl = gsap.timeline();
+        tl.set(navWrap, { display: "block" }, 0);
+        tl.set(menu, { xPercent: 0 }, 0);
+        tl.set(menuLinks, { yPercent: 125 }, 0);
+
+        // Phase 1 — the shell opens.
+        tl.to(overlay, { autoAlpha: 1, duration: 0.4, ease: "power2.out" }, 0);
+        tl.fromTo(
+          bgPanels,
+          { xPercent: 101 },
+          { xPercent: 0, duration: 0.5, stagger: 0.07, ease: "power3.out" },
+          0,
+        );
         if (menuButtonTexts)
-          tl.fromTo(menuButtonTexts, { yPercent: 0 }, { yPercent: -100, stagger: 0.2 });
-        if (menuButtonIcon) tl.fromTo(menuButtonIcon, { rotate: 0 }, { rotate: 315 }, "<");
-        tl.fromTo(overlay, { autoAlpha: 0 }, { autoAlpha: 1 }, "<")
-          .fromTo(bgPanels, { xPercent: 101 }, { xPercent: 0, stagger: 0.12, duration: 0.575 }, "<")
-          .fromTo(
-            menuLinks,
-            { yPercent: 140, rotate: 10 },
-            { yPercent: 0, rotate: 0, stagger: 0.05 },
-            "<+=0.35",
-          );
+          tl.to(menuButtonTexts, { yPercent: -100, duration: 0.5, stagger: 0.12, ease }, 0);
+        if (menuButtonIcon) tl.to(menuButtonIcon, { rotate: 315, duration: 0.5, ease }, 0);
+
+        // Phase 2 — menu is fully open; reveal ALL links at once.
+        tl.to(menuLinks, { yPercent: 0, duration: 0.6, ease: "power3.out" }, 0.66);
         if (fadeTargets.length)
           tl.fromTo(
             fadeTargets,
-            { autoAlpha: 0, yPercent: 50 },
-            { autoAlpha: 1, yPercent: 0, stagger: 0.04, clearProps: "all" },
-            "<+=0.2",
+            { autoAlpha: 0, y: 20 },
+            { autoAlpha: 1, y: 0, duration: 0.4, clearProps: "all" },
+            0.82,
           );
       } else {
         navWrap?.setAttribute("data-nav", "closed");
@@ -213,10 +237,14 @@ export function Component() {
     if (isMenuOpen) {
       hasInteracted.current = true;
       // Defer one frame so the wrapper's display:none is cleared before focus().
+      // preventScroll: the first link is translated off-screen while the menu
+      // animates in - a default focus() would scroll it into view early, making
+      // "About us" pop in alone before the rest. preventScroll keeps a11y focus
+      // without the premature jump.
       const id = requestAnimationFrame(() => {
         containerRef.current
           ?.querySelector<HTMLAnchorElement>(".menu-list .nav-link")
-          ?.focus();
+          ?.focus({ preventScroll: true });
       });
       return () => cancelAnimationFrame(id);
     }
@@ -278,12 +306,19 @@ export function Component() {
             <nav className="nav-row" aria-label="Masthead">
               <Link href="/" aria-label="Webify home" className="nav-logo-row w-inline-block">
                 {/* Heavy wordmark: WEBIFY + accent asterisk. */}
-                <span className="logo-text">
+                <span className={`logo-text${logoHero ? " logo-text--hero" : ""}`}>
                   Webify<span className="logo-star">*</span>
                 </span>
               </Link>
 
               <div className="nav-row__right">
+                {/* Persistent CTA on every page except /contact (you're already there). */}
+                {pathname !== "/contact" ? (
+                  <Link href="/contact" className="nav-cta-btn">
+                    Book a call
+                  </Link>
+                ) : null}
+
                 {/* Handwritten hint (intentional). Decorative + mouse-clickable;
                     aria-hidden so AT isn't given a duplicate of the real toggle
                     below - keyboard/AT users operate the Menu button. */}
@@ -434,6 +469,38 @@ export function Component() {
                   </Link>
                 </li>
               </ul>
+
+              {/* Right-side CTA panel - fills the full-page menu + drives leads. */}
+              <aside className="menu-cta" data-menu-fade>
+                <p className="menu-cta-kicker">Start a project</p>
+                <p className="menu-cta-title">
+                  Got an idea worth <span className="script-accent">building?</span>
+                </p>
+                <Link href="/contact" onClick={closeMenu} className="menu-cta-btn">
+                  Book a free call
+                  <span aria-hidden>&rarr;</span>
+                </Link>
+                <div className="menu-cta-contacts">
+                  <a className="menu-cta-link" href={mailtoHref("Project enquiry")}>
+                    {siteConfig.email}
+                  </a>
+                  {waLink ? (
+                    <a
+                      className="menu-cta-link"
+                      href={waLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      WhatsApp
+                    </a>
+                  ) : null}
+                  {siteConfig.phone ? (
+                    <a className="menu-cta-link" href={`tel:${siteConfig.phone.replace(/[^0-9+]/g, "")}`}>
+                      {siteConfig.phone}
+                    </a>
+                  ) : null}
+                </div>
+              </aside>
 
               {/* Menu footer - brand line + direct contact (eye-pleasing finish). */}
               <div className="menu-footer" data-menu-fade>

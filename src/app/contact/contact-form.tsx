@@ -16,10 +16,10 @@ import { submitContact, type ContactState } from "./actions";
 const initial: ContactState = { ok: false, message: "" };
 
 const fieldBase =
-  "w-full rounded-xl border border-white/12 bg-white/[0.03] py-3.5 text-base text-neutral-50 placeholder:text-neutral-500 transition-all duration-200 focus:border-[var(--accent)] focus:bg-white/[0.05] focus:outline-none focus-visible:outline-none focus:ring-4 focus:ring-[var(--accent-glow)]";
+  "w-full rounded-xl border border-white/20 bg-white/[0.07] py-3.5 text-base text-neutral-50 placeholder:text-neutral-400 transition-all duration-200 focus:border-[var(--accent)] focus:bg-white/[0.11] focus:outline-none focus-visible:outline-none focus:ring-4 focus:ring-[var(--accent-glow)]";
 const withIcon = `${fieldBase} pl-11 pr-4`;
 const plain = `${fieldBase} px-4`;
-const labelCls = "mb-2 block text-sm font-medium text-neutral-200";
+const labelCls = "mb-2 block text-base font-medium text-neutral-200";
 const iconCls =
   "pointer-events-none absolute left-3.5 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-neutral-500";
 

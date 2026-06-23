@@ -7,6 +7,7 @@ import { PageTransition } from "@/components/layout/page-transition";
 import { Component as SiteNavigation } from "@/components/ui/sterling-gate-kinetic-navigation";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { StickyCta } from "@/components/layout/sticky-cta";
+import { LeadPopup } from "@/components/layout/lead-popup";
 import { siteConfig, hasSocials } from "@/lib/site";
 
 const geistSans = Geist({
@@ -142,6 +143,8 @@ export default function RootLayout({
           <SiteFooter />
           {/* Persistent conversion affordance on every page (hidden on /contact) */}
           <StickyCta />
+          {/* First-visit lead magnet (exit-intent / scroll, once per visitor) */}
+          <LeadPopup />
         </SmoothScroll>
       </body>
     </html>

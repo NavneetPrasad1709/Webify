@@ -14,8 +14,8 @@ export const metadata: Metadata = {
 function Block({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="min-w-[180px] flex-1">
-      <p className="mb-2.5 text-base font-bold uppercase tracking-wider">{title}</p>
-      <p className="text-[clamp(1rem,1.6vw,1.3rem)] leading-relaxed opacity-85">{children}</p>
+      <p className="mb-2.5 text-base font-bold uppercase tracking-wider sm:text-lg">{title}</p>
+      <p className="text-[clamp(1.15rem,1.8vw,1.5rem)] leading-relaxed opacity-85">{children}</p>
     </div>
   );
 }
@@ -33,8 +33,8 @@ export default function ServicesPage() {
   return (
     <FlowArt aria-label="Webify services">
       {/* S1 - Services hero */}
-      <FlowSection aria-label="Services" style={{ backgroundColor: "#4f46e5", color: "#fff" }}>
-        <p className="text-xs font-bold uppercase tracking-[0.2em]">01 - Services</p>
+      <FlowSection aria-label="Services" style={{ backgroundColor: "#fd5200", color: "#fff" }}>
+        <p className="text-sm sm:text-base font-bold uppercase tracking-[0.2em]">01 - Services</p>
         <hr className="my-[2vw] border-none border-t border-white/40" />
         <SparklesTitle
           as="h1"
@@ -48,7 +48,7 @@ export default function ServicesPage() {
           <span className="script-accent">Build</span>
         </SparklesTitle>
         <hr className="my-[2vw] border-none border-t border-white/40" />
-        <p className="mt-auto max-w-[55ch] text-[clamp(1rem,2.5vw,2rem)] font-normal leading-relaxed">
+        <p className="mt-auto max-w-[55ch] text-[clamp(1.25rem,2.6vw,2.3rem)] font-normal leading-relaxed">
           Senior-led product teams that design, build, and ship AI products, web
           platforms, and mobile apps - end to end. No account managers, no junior
           hand-offs. You work directly with the people who build.
@@ -57,7 +57,7 @@ export default function ServicesPage() {
 
       {/* S2 - Service blocks (8) */}
       <FlowSection aria-label="What we do" style={{ backgroundColor: "#0a0a0a", color: "#fff" }}>
-        <p className="text-xs font-bold uppercase tracking-[0.2em]">02 - What we do</p>
+        <p className="text-sm sm:text-base font-bold uppercase tracking-[0.2em]">02 - What we do</p>
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <SparklesTitle
           as="h2"
@@ -74,39 +74,39 @@ export default function ServicesPage() {
         </SparklesTitle>
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <div className="flex flex-wrap gap-[3vw]">
-          <Block title="AI Products">
+          <Block title="AI Solutions">
             LLM apps, agents, RAG, and ML features wired into real products people use.
           </Block>
-          <Block title="Web Apps">
-            Next.js platforms, SaaS, dashboards, and sites engineered to perform.
+          <Block title="Website Development">
+            Fast, accessible Next.js websites and web platforms - engineered to perform and convert.
           </Block>
-          <Block title="Mobile Apps">
+          <Block title="Mobile App Development">
             iOS &amp; Android with React Native - one codebase, a native feel.
           </Block>
-          <Block title="Design &amp; UX">
-            Product design and design systems that make software feel inevitable.
+          <Block title="SaaS Development">
+            Multi-tenant SaaS, dashboards, billing, and auth - built to scale calmly.
           </Block>
         </div>
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <div className="flex flex-wrap gap-[3vw]">
+          <Block title="Digital Marketing">
+            Campaigns, content, and funnels that bring qualified traffic and convert it.
+          </Block>
+          <Block title="SEO">
+            Technical &amp; content SEO that ranks you for the terms your buyers actually search.
+          </Block>
+          <Block title="Branding">
+            Identity, voice, and design systems that make you the obvious choice.
+          </Block>
           <Block title="MVP Sprints">
             0→1 in weeks. A working, demo-able, fundable product - fast.
-          </Block>
-          <Block title="Integrations &amp; APIs">
-            Payments, data pipelines, and third-party systems wired in cleanly.
-          </Block>
-          <Block title="AI Automation">
-            Internal tools and workflows that buy back your team&apos;s time.
-          </Block>
-          <Block title="Tech Strategy">
-            Architecture, audits, and fractional-CTO guidance as you scale.
           </Block>
         </div>
       </FlowSection>
 
       {/* S3 - Capabilities / tech stack */}
       <FlowSection aria-label="Capabilities" style={{ backgroundColor: "#f4f1ea", color: "#0a0a0a" }}>
-        <p className="text-xs font-bold uppercase tracking-[0.2em]">03 - Capabilities</p>
+        <p className="text-sm sm:text-base font-bold uppercase tracking-[0.2em]">03 - Capabilities</p>
         <hr className="my-[2vw] border-none border-t border-black/30" />
         <SparklesTitle
           as="h2"
@@ -120,7 +120,7 @@ export default function ServicesPage() {
           <span className="script-accent script-accent-ink">Stack</span>
         </SparklesTitle>
         <hr className="my-[2vw] border-none border-t border-black/30" />
-        <p className="max-w-[55ch] text-[clamp(1rem,2.5vw,2rem)] font-normal leading-relaxed">
+        <p className="max-w-[55ch] text-[clamp(1.25rem,2.6vw,2.3rem)] font-normal leading-relaxed">
           Modern where it matters, boring where it counts - tooling chosen to ship
           fast and scale calmly.
         </p>
@@ -140,7 +140,7 @@ export default function ServicesPage() {
 
       {/* S4 - Engagement models + pricing clarity */}
       <FlowSection aria-label="Engagement and pricing" style={{ backgroundColor: "#1d4ed8", color: "#fff" }}>
-        <p className="text-xs font-bold uppercase tracking-[0.2em]">04 - Engagement &amp; pricing</p>
+        <p className="text-sm sm:text-base font-bold uppercase tracking-[0.2em]">04 - Engagement &amp; pricing</p>
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <SparklesTitle
           as="h2"
@@ -156,7 +156,7 @@ export default function ServicesPage() {
           <span className="script-accent">Engage</span>
         </SparklesTitle>
         <hr className="my-[2vw] border-none border-t border-white/50" />
-        <p className="max-w-[55ch] text-[clamp(1rem,2.5vw,2rem)] font-normal leading-relaxed">
+        <p className="max-w-[55ch] text-[clamp(1.25rem,2.6vw,2.3rem)] font-normal leading-relaxed">
           Clear scope, clear pricing. You always know what you&apos;re paying for -
           and why.
         </p>
@@ -174,7 +174,7 @@ export default function ServicesPage() {
           </Block>
         </div>
         <hr className="my-[2vw] border-none border-t border-white/50" />
-        <p className="mt-auto max-w-[55ch] text-[clamp(0.95rem,1.6vw,1.25rem)] leading-relaxed opacity-90">
+        <p className="mt-auto max-w-[55ch] text-[clamp(1.1rem,1.8vw,1.45rem)] leading-relaxed opacity-90">
           Indicative ranges up front, a fixed quote within 48 hours, and
           GST-compliant invoicing for Indian clients. Pricing in ₹ or $.
         </p>
@@ -182,7 +182,7 @@ export default function ServicesPage() {
 
       {/* S5 - Process timeline */}
       <FlowSection aria-label="Process" style={{ backgroundColor: "#0a0a0a", color: "#fff" }}>
-        <p className="text-xs font-bold uppercase tracking-[0.2em]">05 - Process</p>
+        <p className="text-sm sm:text-base font-bold uppercase tracking-[0.2em]">05 - Process</p>
         <hr className="my-[2vw] border-none border-t border-white/50" />
         <SparklesTitle
           as="h2"
@@ -198,7 +198,7 @@ export default function ServicesPage() {
           <span className="script-accent">Works</span>
         </SparklesTitle>
         <hr className="my-[2vw] border-none border-t border-white/50" />
-        <p className="max-w-[55ch] text-[clamp(1rem,2.5vw,2rem)] font-normal leading-relaxed">
+        <p className="max-w-[55ch] text-[clamp(1.25rem,2.6vw,2.3rem)] font-normal leading-relaxed">
           A tight, senior-led loop - you see working software every single week.
         </p>
         <hr className="my-[2vw] border-none border-t border-white/50" />
@@ -226,7 +226,7 @@ export default function ServicesPage() {
 
       {/* S6 - CTA band */}
       <FlowSection aria-label="Start a project" style={{ backgroundColor: "#4f46e5", color: "#fff" }}>
-        <p className="text-xs font-bold uppercase tracking-[0.2em]">06 - Start</p>
+        <p className="text-sm sm:text-base font-bold uppercase tracking-[0.2em]">06 - Start</p>
         <hr className="my-[2vw] border-none border-t border-white/40" />
         <SparklesTitle
           as="h2"
@@ -243,7 +243,7 @@ export default function ServicesPage() {
         </SparklesTitle>
         <hr className="my-[2vw] border-none border-t border-white/40" />
         <div className="mt-auto flex flex-col gap-6">
-          <p className="max-w-[55ch] text-[clamp(1rem,2.5vw,2rem)] font-normal leading-relaxed">
+          <p className="max-w-[55ch] text-[clamp(1.25rem,2.6vw,2.3rem)] font-normal leading-relaxed">
             Tell us what you&apos;re building. We&apos;ll scope it, price it, and ship
             a working prototype - fast.
           </p>
