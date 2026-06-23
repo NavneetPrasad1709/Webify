@@ -74,7 +74,7 @@ export default function ContactPage() {
 
       <div className="mx-auto grid w-full max-w-6xl overflow-hidden rounded-[2rem] border border-[#131313]/12 bg-white shadow-[0_40px_120px_-40px_rgba(0,0,0,0.35)] lg:grid-cols-[0.85fr_1.15fr]">
         {/* Left - info */}
-        <div className="flex flex-col justify-between gap-12 p-8 sm:p-10">
+        <div className="flex flex-col justify-between gap-10 p-6 sm:p-10">
           <div>
             {/* Logo */}
             <span className="text-2xl font-black uppercase tracking-tight text-[#131313]">
@@ -123,7 +123,7 @@ export default function ContactPage() {
         </div>
 
         {/* Right - green form panel */}
-        <div className="bg-[#c4f24a] p-8 sm:p-12">
+        <div className="bg-[#c4f24a] p-6 sm:p-12">
           <h1 className="max-w-[16ch] text-balance text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.05] tracking-[-0.02em] text-[#131313]">
             Got ideas? We&apos;ve got the skills. Let&apos;s team up.
           </h1>

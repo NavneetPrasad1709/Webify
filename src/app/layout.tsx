@@ -8,6 +8,7 @@ import { Component as SiteNavigation } from "@/components/ui/sterling-gate-kinet
 import { SiteFooter } from "@/components/layout/site-footer";
 import { StickyCta } from "@/components/layout/sticky-cta";
 import { LeadPopup } from "@/components/layout/lead-popup";
+import { ContactModal } from "@/components/contact/contact-modal";
 import { siteConfig, hasSocials } from "@/lib/site";
 
 const geistSans = Geist({
@@ -145,6 +146,8 @@ export default function RootLayout({
           <StickyCta />
           {/* First-visit lead magnet (exit-intent / scroll, once per visitor) */}
           <LeadPopup />
+          {/* Site-wide contact popup - opens from any /contact CTA */}
+          <ContactModal />
         </SmoothScroll>
       </body>
     </html>
