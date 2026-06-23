@@ -78,29 +78,39 @@ export function Process() {
               key={step.id}
               className="grid grid-cols-1 gap-7 border-b border-[var(--color-line)] py-12 sm:gap-9 lg:grid-cols-2 lg:items-start lg:gap-16 lg:py-20"
             >
-              {/* Left - sticky heading */}
-              <div className="lg:sticky lg:top-28 lg:self-start">
-                <span className="font-mono text-[clamp(0.85rem,1.4vw,1.05rem)] font-semibold tracking-[0.2em] text-[var(--color-accent)]">
+              {/* Left - sticky heading + giant faded step numeral */}
+              <div className="relative lg:sticky lg:top-28 lg:self-start">
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute -left-1 -top-6 select-none font-black leading-none text-white/[0.04] sm:-top-10"
+                  style={{ fontSize: "clamp(8rem,20vw,17rem)" }}
+                >
                   {step.num}
                 </span>
-                <h3 className="pin-display pin-grad mt-3 text-[clamp(2.5rem,6.5vw,5rem)] leading-[0.9]">
-                  {step.title}
-                </h3>
+                <div className="relative">
+                  <span className="inline-flex items-center gap-3 font-mono text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-accent)] sm:text-sm">
+                    <span className="h-px w-7 bg-[var(--color-accent)]" aria-hidden />
+                    Step {step.num}
+                  </span>
+                  <h3 className="pin-display pin-grad mt-4 text-[clamp(2.75rem,7vw,5.5rem)] leading-[0.9]">
+                    {step.title}
+                  </h3>
+                </div>
               </div>
 
-              {/* Right - info */}
+              {/* Right - info in a frosted card */}
               <FadeUp>
-                <div>
-                  <p className="max-w-2xl text-[clamp(1.35rem,2.4vw,2rem)] font-light leading-[1.32] text-[var(--color-bone)]">
+                <div className="rounded-[1.75rem] border border-[var(--color-line)] bg-white/[0.025] p-6 backdrop-blur-sm sm:p-9">
+                  <p className="text-[clamp(1.3rem,2.2vw,1.9rem)] font-light leading-[1.35] text-[var(--color-bone)]">
                     {step.lead}
                   </p>
-                  <div className="mt-8 border-t border-[var(--color-line)] pt-6">
-                    <p className="pin-kicker mb-5 text-[var(--color-bone-faint)]">Deliverables</p>
-                    <ul className="space-y-3.5">
+                  <div className="mt-7 border-t border-[var(--color-line)] pt-6">
+                    <p className="pin-kicker mb-4 text-[var(--color-bone-faint)]">Deliverables</p>
+                    <ul className="flex flex-wrap gap-2.5">
                       {step.deliverables.map((d) => (
                         <li
                           key={d}
-                          className="flex items-center gap-4 text-[clamp(1.1rem,1.6vw,1.4rem)] text-[var(--color-bone-dim)]"
+                          className="inline-flex items-center gap-2.5 rounded-full border border-[var(--color-line-strong)] bg-white/[0.03] px-4 py-2 text-[clamp(0.95rem,1.4vw,1.1rem)] text-[var(--color-bone-dim)] transition-colors duration-300 hover:border-[var(--color-accent)] hover:bg-white/[0.07] hover:text-[var(--color-bone)]"
                         >
                           <span
                             className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]"
