@@ -5,6 +5,7 @@ import { useFormStatus } from "react-dom";
 import { usePathname } from "next/navigation";
 import { X, Check, Sparkles, ArrowRight } from "lucide-react";
 import { submitLead, type LeadState } from "./lead-actions";
+import { lockScroll, unlockScroll, isContactModalOpen } from "@/lib/overlay";
 
 /**
  * First-visit lead magnet. Offers a free 5-minute teardown and captures an email
@@ -47,8 +48,11 @@ export function LeadPopup() {
     }
 
     let fired = false;
+    let engaged = false; // has the visitor shown any interest (scrolled)?
     const fire = () => {
       if (fired) return;
+      // Never stack on top of the contact modal - one dialog at a time.
+      if (isContactModalOpen()) return;
       fired = true;
       setOpen(true);
       cleanup();
@@ -59,15 +63,34 @@ export function LeadPopup() {
     };
     const onScroll = () => {
       const max = document.body.scrollHeight - window.innerHeight;
-      if (max > 0 && window.scrollY / max > 0.55) fire();
+      if (max <= 0) return;
+      const ratio = window.scrollY / max;
+      if (ratio > 0.1) engaged = true;
+      if (ratio > 0.55) fire();
     };
-    const timer = window.setTimeout(fire, 25000);
+    // If a CTA opens the contact modal, the popup stands down for this visit.
+    const onContactOpen = () => {
+      fired = true;
+      try {
+        localStorage.setItem(SEEN_KEY, "1");
+      } catch {
+        /* ignore */
+      }
+      cleanup();
+    };
+    // Fallback timer fires only if the visitor actually engaged (scrolled) -
+    // a blind timer on an idle page reads as spam.
+    const timer = window.setTimeout(() => {
+      if (engaged) fire();
+    }, 40000);
     window.addEventListener("mouseout", onMouseOut);
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("webify:open-contact", onContactOpen);
     function cleanup() {
       window.clearTimeout(timer);
       window.removeEventListener("mouseout", onMouseOut);
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("webify:open-contact", onContactOpen);
     }
     return cleanup;
   }, [pathname]);
@@ -85,9 +108,11 @@ export function LeadPopup() {
     markSeen();
   };
 
-  // Focus the email field + wire Escape-to-close when shown.
+  // Focus the email field + wire Escape-to-close when shown. Lock body scroll so
+  // the page can't scroll behind the dialog on mobile.
   useEffect(() => {
     if (!open) return;
+    lockScroll();
     const id = requestAnimationFrame(() => emailRef.current?.focus());
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
@@ -96,6 +121,7 @@ export function LeadPopup() {
     return () => {
       cancelAnimationFrame(id);
       window.removeEventListener("keydown", onKey);
+      unlockScroll();
     };
     // close is stable enough for this open/escape lifecycle; re-running on every
     // render (its only other dep) would needlessly re-bind the listener.
@@ -122,7 +148,7 @@ export function LeadPopup() {
         aria-hidden
       />
 
-      <div className="animate-fade-in-up relative w-full max-w-md overflow-hidden rounded-[1.75rem] border border-[var(--hairline-strong)] bg-[var(--surface-1)] p-7 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)] sm:p-8">
+      <div className="animate-fade-in-up relative w-full max-w-md overflow-hidden rounded-card border border-border bg-card p-7 shadow-e2 sm:p-8">
         {/* accent glow */}
         <div
           aria-hidden
@@ -168,7 +194,7 @@ export function LeadPopup() {
                 no strings, no sales call.
               </p>
 
-              <form action={formAction} className="mt-6 space-y-3" noValidate>
+              <form action={formAction} className="mt-6 space-y-3">
                 {!state.ok && state.message ? (
                   <p role="alert" className="text-sm text-red-300">
                     {state.message}
@@ -181,14 +207,14 @@ export function LeadPopup() {
                   required
                   autoComplete="email"
                   placeholder="you@company.com"
-                  className="w-full rounded-xl border border-white/12 bg-white/[0.03] px-4 py-3 text-base text-neutral-50 placeholder:text-neutral-500 transition-colors focus:border-[var(--accent)] focus:outline-none focus:ring-4 focus:ring-[var(--accent-glow)]"
+                  className="w-full rounded-input border border-white/12 bg-white/3 px-4 py-3.5 text-base text-neutral-50 placeholder:text-neutral-500 transition-colors focus:border-accent focus:outline-none focus:ring-4 focus:ring-(--accent-glow)"
                 />
                 <input
                   name="website"
                   type="text"
                   inputMode="url"
                   placeholder="yoursite.com (optional)"
-                  className="w-full rounded-xl border border-white/12 bg-white/[0.03] px-4 py-3 text-base text-neutral-50 placeholder:text-neutral-500 transition-colors focus:border-[var(--accent)] focus:outline-none focus:ring-4 focus:ring-[var(--accent-glow)]"
+                  className="w-full rounded-input border border-white/12 bg-white/3 px-4 py-3.5 text-base text-neutral-50 placeholder:text-neutral-500 transition-colors focus:border-accent focus:outline-none focus:ring-4 focus:ring-(--accent-glow)"
                 />
                 {/* Honeypot */}
                 <div aria-hidden className="absolute left-[-9999px] top-[-9999px] h-0 w-0 overflow-hidden">

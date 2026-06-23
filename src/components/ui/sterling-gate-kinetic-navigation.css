@@ -43,14 +43,12 @@
   padding-bottom: 1.25em;
   position: fixed;
   inset: 0% 0% auto;
-  /* Transparent bar. A soft top-down scrim keeps the logo + menu legible over
-     media/hero and light sections without a solid frosted bar. */
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.45) 0%,
-    rgba(0, 0, 0, 0.18) 45%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  /* Frosted bar, coloured like the page background (#08080b). Over the near-black
+     hero it reads as transparent; over lighter content scrolling beneath it, the
+     blur + opacity hide the collision so nothing overlaps the logo/menu. Static -
+     no on-scroll change. */
+  background: var(--surface-0);
+  border-bottom: 1px solid var(--hairline);
 }
 .container {
   z-index: 1;
@@ -101,12 +99,33 @@
   }
 }
 .logo-star {
-  /* Brand green (same as the script accent used across the site). */
-  color: #4ade80;
+  /* Brand green - single-sourced from the site script-accent token. */
+  color: var(--accent-script);
   font-weight: 900;
   margin-left: 0.06em;
   vertical-align: 0.04em;
   font-size: 1.2em;
+}
+
+/* ---- Light-route masthead (e.g. /work cream page) -------------------------
+   The transparent bar + soft dark scrim leaves the white wordmark/Menu muddy
+   over a light background. When the page is light AND the menu is closed, flip
+   the masthead to dark ink over a light scrim. When the menu opens the class is
+   removed (the dark overlay is behind the header) so text returns to white. */
+.header--light {
+  /* Solid bar coloured like the cream /work bg (#f3f2ee) - seamless over the
+     hero, covers content scrolling beneath. */
+  background: #f3f2ee;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+.header--light .logo-text,
+.header--light .toggle-text,
+.header--light .nav-close-btn {
+  color: #131313;
+}
+.header--light .logo-star {
+  /* deep green reads on a light background */
+  color: #15803d;
 }
 .nav-row__right {
   grid-column-gap: 0.625rem;

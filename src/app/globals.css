@@ -30,6 +30,13 @@
   --gap: 1.5em;
   --cubic-default: cubic-bezier(0.65, 0.05, 0, 1);
 
+  /* --- Motion system (brief: fast 150 / default 250 / slow 400; ease-out in, ease-in out) --- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --dur-fast: 150ms;
+  --dur: 250ms;
+  --dur-slow: 400ms;
+
   /* --- App shell base (premium near-black "z-black") --- */
   --background: #08080b;
   --foreground: var(--color-neutral-100);
@@ -55,6 +62,11 @@
      border-accent, text-accent-hi) - used across the interior pages. */
   --color-accent: var(--accent);
   --color-accent-hi: var(--accent-hi);
+  /* brand script-green as a first-class utility token (text-accent-script / bg-accent-script) */
+  --color-accent-script: var(--accent-script);
+  /* light surfaces used by /work + cream /services panels (was hardcoded #f3f2ee / #0d0d0d) */
+  --color-surface-light: #f3f2ee;
+  --color-ink: #0d0d0d;
   /* shadcn-style semantic tokens, mapped to the dark palette, so reference
      components built against them (muted / muted-foreground / border / card)
      render exactly as designed instead of falling back to no color. */
@@ -71,6 +83,14 @@
    hidden) keeps vertical scroll + doesn't trap position:fixed / Lenis. */
 html {
   overflow-x: clip;
+}
+
+/* Body scroll-lock while a fixed overlay (contact modal / lead popup) is open -
+   pairs with lenis.stop() in the SmoothScroll provider so nothing scrolls behind
+   the dialog on mobile. See src/lib/overlay.ts. */
+html.overlay-locked,
+html.overlay-locked body {
+  overflow: hidden;
 }
 
 /* --- Craft polish: site-wide focus + numeral + heading details --- */
@@ -96,16 +116,14 @@ html {
    Sized up + tightened so the script word sits on the sans baseline; overrides
    gradient-clip parents via -webkit-text-fill-color. */
 .script-accent {
-  font-family: var(--font-caveat), "Caveat", cursive;
+  /* Content font is Geist site-wide; the accent word keeps the brand green but
+     drops the Caveat script face. (Restore the Caveat font here for the script
+     look.) */
+  font-family: var(--font-geist-sans), sans-serif;
   font-weight: 700;
   font-style: normal;
-  /* script reads best in natural case even inside uppercase headings */
-  text-transform: none;
   color: var(--accent-script);
   -webkit-text-fill-color: var(--accent-script);
-  font-size: 1.15em;
-  line-height: 0.8;
-  padding-inline: 0.04em;
 }
 /* Deep-green variant for light backgrounds (e.g. /work, cream panels). */
 .script-accent-ink {
@@ -167,6 +185,18 @@ html.lenis body {
   --color-landing-text-muted: rgba(255, 255, 255, 0.6);
   --font-inter: var(--font-geist-sans), sans-serif;
   --font-instrument: var(--font-instrument-serif), "Instrument Serif", serif;
+
+  /* --- ONE radius system (brief: pick a scale, use everywhere) ---
+     pill = interactive (buttons/chips), card = panels/surfaces, input = fields.
+     Generates: rounded-pill / rounded-card / rounded-input. */
+  --radius-pill: 9999px;
+  --radius-card: 16px;
+  --radius-input: 12px;
+
+  /* --- Exactly TWO elevation styles (brief: max 2 shadows) ---
+     shadow-e1 = resting card, shadow-e2 = floating/popover. Generates shadow-e1 / shadow-e2. */
+  --shadow-e1: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset, 0 10px 30px -12px rgba(0, 0, 0, 0.55);
+  --shadow-e2: 0 1px 0 0 rgba(255, 255, 255, 0.06) inset, 0 30px 90px -28px rgba(0, 0, 0, 0.72);
 }
 
 /* Gradient display heading - used by the featured-work section */

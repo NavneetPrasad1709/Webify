@@ -46,6 +46,10 @@ export function Component() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
   const logoHero = pathname === "/" && atTop;
+  // Light-background routes (cream /work pages): the masthead needs dark ink for
+  // contrast - but only while the menu is closed (open menu = dark overlay).
+  const lightNav =
+    (pathname === "/work" || pathname.startsWith("/work/")) && !isMenuOpen;
 
   // ---- Setup: custom ease + per-link ambient-shape hover --------------------
   useEffect(() => {
@@ -301,7 +305,7 @@ export function Component() {
   return (
     <div ref={containerRef} className="dark">
       <div className="site-header-wrapper">
-        <header className="header">
+        <header className={`header${lightNav ? " header--light" : ""}`}>
           <div className="container is--full">
             <nav className="nav-row" aria-label="Masthead">
               <Link href="/" aria-label="Webify home" className="nav-logo-row w-inline-block">
@@ -315,7 +319,7 @@ export function Component() {
                 {/* Persistent CTA on every page except /contact (you're already there). */}
                 {pathname !== "/contact" ? (
                   <Link href="/contact" className="nav-cta-btn">
-                    Book a call
+                    Book a free call
                   </Link>
                 ) : null}
 

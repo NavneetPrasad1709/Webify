@@ -7,7 +7,7 @@ import { WavePath } from "@/components/ui/wave-path";
 export function WaveSection() {
   return (
     <section
-      className="relative w-full overflow-hidden py-[clamp(7rem,16vw,12rem)]"
+      className="relative w-full overflow-hidden py-24 sm:py-32"
       aria-label="Our craft"
     >
       <div

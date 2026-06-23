@@ -41,7 +41,7 @@ const WORK_IMAGES = [
 export function ShowcaseSection() {
   return (
     <section className="text-white" aria-label="Recent work">
-      <div className="mx-auto w-full max-w-[1400px] px-6 pb-[clamp(1.5rem,4vw,3rem)] pt-[clamp(6rem,12vw,10rem)] sm:px-10 lg:px-16">
+      <div className="mx-auto w-full max-w-[1400px] px-6 pb-10 pt-24 sm:px-10 sm:pb-12 sm:pt-32 lg:px-16">
         <p className="mb-5 inline-flex items-center font-mono text-[0.72rem] font-medium uppercase tracking-[0.24em] text-white/45">
           <span className="mr-3 inline-block h-[0.55em] w-[0.55em] rotate-45 rounded-[1px] bg-[#6366f1]" />
           The craft

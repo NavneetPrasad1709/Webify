@@ -70,6 +70,7 @@ export function CtaSection() {
     if (!marqueeContainer) return;
 
     let frame = 0;
+    let running = false;
     const updateOpacity = () => {
       const items = marqueeContainer.querySelectorAll(".marquee-item");
       const containerRect = marqueeContainer.getBoundingClientRect();
@@ -87,15 +88,33 @@ export function CtaSection() {
       frame = requestAnimationFrame(updateOpacity);
     };
 
-    frame = requestAnimationFrame(updateOpacity);
-    return () => cancelAnimationFrame(frame);
+    // Perf: only run the per-frame opacity loop while the CTA is on screen, so
+    // it isn't doing layout reads on every frame for the whole rest of the page.
+    // (The visible animation is unchanged.)
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !running) {
+          running = true;
+          frame = requestAnimationFrame(updateOpacity);
+        } else if (!entry.isIntersecting && running) {
+          running = false;
+          cancelAnimationFrame(frame);
+        }
+      },
+      { threshold: 0 },
+    );
+    io.observe(marqueeContainer);
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
     <section
       id="cta"
       aria-label="Start a project"
-      className="flex min-h-screen w-full items-center justify-center overflow-hidden px-6 py-24 text-foreground"
+      className="flex min-h-svh w-full items-center justify-center overflow-hidden px-6 py-24 text-foreground sm:py-32"
     >
       <div className="w-full max-w-7xl animate-fade-in-up">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-24">
@@ -114,28 +133,32 @@ export function CtaSection() {
               call we&apos;ll scope it, price it, and show you exactly how we&apos;d
               ship it - fast, senior-led, and 100% yours to keep.
             </p>
-            <div className="flex flex-wrap gap-4 animate-fade-in-up [animation-delay:600ms]">
-              <Link
-                href="/contact"
-                className="group relative overflow-hidden rounded-md bg-foreground px-6 py-3 font-medium text-background transition-all duration-300 hover:scale-105 hover:shadow-lg"
-              >
-                <span className="relative z-10">BOOK A CALL</span>
-                <div className="absolute inset-0 translate-x-[-200%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-[200%]" />
-              </Link>
-              <Link
-                href="/work"
-                className="group relative overflow-hidden rounded-md border border-white/15 bg-white/[0.04] px-6 py-3 font-medium text-foreground transition-all duration-300 hover:scale-105 hover:bg-white/[0.08] hover:shadow-lg"
-              >
-                <span className="relative z-10">SEE OUR WORK</span>
-                <div className="absolute inset-0 translate-x-[-200%] bg-gradient-to-r from-transparent via-foreground/10 to-transparent transition-transform duration-700 group-hover:translate-x-[200%]" />
-              </Link>
+            <div className="animate-fade-in-up space-y-3 [animation-delay:600ms]">
+              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <Link
+                  href="/contact"
+                  className="group relative inline-flex h-13 items-center justify-center overflow-hidden rounded-pill bg-foreground px-7 font-semibold text-background transition-transform duration-[--dur] ease-[--ease-out] hover:scale-[1.02]"
+                >
+                  <span className="relative z-10">Book your free strategy call</span>
+                  <div className="absolute inset-0 translate-x-[-200%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-[200%]" />
+                </Link>
+                <Link
+                  href="/work"
+                  className="group relative inline-flex h-13 items-center justify-center overflow-hidden rounded-pill border border-border bg-white/4 px-7 font-medium text-foreground transition-colors duration-[--dur] hover:bg-white/8"
+                >
+                  <span className="relative z-10">See our work</span>
+                </Link>
+              </div>
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-landing-text-muted">
+                Free · No obligation · We reply within 24h
+              </p>
             </div>
           </div>
 
           {/* Right - vertical marquee */}
           <div
             ref={marqueeRef}
-            className="relative flex h-[600px] animate-fade-in-up items-center justify-center [animation-delay:400ms] lg:h-[700px]"
+            className="relative flex h-[clamp(320px,52vh,700px)] animate-fade-in-up items-center justify-center [animation-delay:400ms]"
           >
             {/* Mask fades the marquee to transparent at top/bottom so the
                 starfield shows through (instead of solid-black vignettes). */}

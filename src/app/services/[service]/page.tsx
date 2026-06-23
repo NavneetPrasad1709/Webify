@@ -164,7 +164,7 @@ export default async function ServiceLandingPage({
               <li key={step.n} className="bg-[var(--surface-1)] p-7 sm:p-8">
                 <span className="nums text-sm font-semibold text-accent-hi">{step.n}</span>
                 <h3 className="mt-4 text-xl font-semibold text-neutral-50">{step.title}</h3>
-                <p className="mt-2 text-pretty text-sm leading-relaxed text-neutral-400">{step.body}</p>
+                <p className="mt-2 text-pretty text-[15px] leading-relaxed text-neutral-400">{step.body}</p>
               </li>
             ))}
           </ol>

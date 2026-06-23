@@ -17,9 +17,8 @@
   letter-spacing: -0.04em;
 }
 .process .pin-serif {
-  font-family: "Instrument Serif", Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-weight: 600;
   letter-spacing: -0.01em;
 }
 .process .pin-kicker {

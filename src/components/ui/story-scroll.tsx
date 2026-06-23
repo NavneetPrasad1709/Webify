@@ -25,13 +25,17 @@ export const FlowSection: React.FC<FlowSectionProps> = ({
   <section
     data-flow-section
     aria-label={ariaLabel}
-    className={cn("relative min-h-screen w-full overflow-hidden", className)}
+    // Mobile: content-height, scrolls naturally (no pinning, so nothing clips).
+    // Desktop (md+): full-screen panel for the pin-stacking effect.
+    className={cn("relative w-full overflow-hidden md:min-h-screen", className)}
   >
     <div
       data-flow-inner
       className={cn(
-        // pt clears the fixed (transparent) nav; fluid padding scales to mobile.
-        "flow-art-container relative flex min-h-screen w-full flex-col justify-between gap-[clamp(1rem,3vw,1.5rem)] px-[6vw] pb-[8vw] pt-[clamp(6rem,12vw,8.5rem)]",
+        // pt clears the fixed nav; pb-24 keeps the last panel clear of the
+        // floating CTA on mobile. md+ restores the full-height justify-between
+        // layout the pin-stacking expects.
+        "flow-art-container relative flex w-full flex-col gap-[clamp(1.25rem,3vw,1.5rem)] px-[6vw] pb-24 pt-[clamp(6rem,12vw,8.5rem)] md:min-h-screen md:justify-between md:pb-[8vw]",
         "will-change-transform",
       )}
       style={{ transformOrigin: "bottom left", ...style }}
@@ -77,9 +81,11 @@ const FlowArt: React.FC<FlowArtProps> = ({
     if (!root || reducedMotion) return;
 
     const ctx = gsap.context(() => {
-      // Only run the rotate+pin choreography on pointer-fine / larger screens.
       const mm = gsap.matchMedia();
-      mm.add("(min-width: 768px)", () => {
+
+      // Shared choreography. `rotation` = the tilt each panel rises from; `pin`
+      // toggles the stacking pin (desktop only).
+      const setup = (rotation: number, pin: boolean) => {
         const sections = Array.from(
           root.querySelectorAll<HTMLElement>("[data-flow-section]"),
         );
@@ -90,7 +96,7 @@ const FlowArt: React.FC<FlowArtProps> = ({
           const inner = section.querySelector<HTMLElement>(".flow-art-container");
 
           if (inner && i > 0) {
-            gsap.set(inner, { rotation: 30, transformOrigin: "bottom left" });
+            gsap.set(inner, { rotation, transformOrigin: "bottom left" });
             gsap.to(inner, {
               rotation: 0,
               ease: "none",
@@ -103,7 +109,7 @@ const FlowArt: React.FC<FlowArtProps> = ({
             });
           }
 
-          if (i < sections.length - 1) {
+          if (pin && i < sections.length - 1) {
             ScrollTrigger.create({
               trigger: section,
               start: "bottom bottom",
@@ -115,7 +121,15 @@ const FlowArt: React.FC<FlowArtProps> = ({
         });
 
         ScrollTrigger.refresh();
-      });
+      };
+
+      // Desktop: full pin-stacking + 30° rise (panels are min-h-screen, so the
+      // content fits in each pinned screen).
+      mm.add("(min-width: 768px)", () => setup(30, true));
+      // Mobile: a gentle tilt-in only, NO pin. Panels are content-height and
+      // scroll naturally, so nothing is clipped behind a pinned panel or hidden
+      // under the floating CTA.
+      mm.add("(max-width: 767px)", () => setup(6, false));
     }, root);
 
     return () => ctx.revert();

@@ -75,8 +75,9 @@ export function ProjectsSection() {
     <section
       className={cn(
         "relative z-10",
-        "-mt-10 sm:-mt-12 md:-mt-14",
-        "px-4 pt-16 sm:px-6 sm:pt-20 md:px-8 md:pt-24",
+        // consistent section start gap (no negative overlap into the prior
+        // section, so the boundary reads clearly)
+        "px-4 pt-24 sm:px-6 sm:pt-32 md:px-8",
       )}
       aria-label="Featured work"
     >

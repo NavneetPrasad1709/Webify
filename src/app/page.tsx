@@ -4,6 +4,7 @@ import { StatementSection } from "@/components/sections/statement/statement-sect
 import { ProjectsSection } from "@/components/sections/projects/projects-section";
 import { Process } from "@/components/sections/process/process";
 import { ShowcaseSection } from "@/components/sections/showcase/showcase-section";
+import { Testimonials } from "@/components/sections/proof/testimonials";
 import { WaveSection } from "@/components/sections/wave/wave-section";
 import { CtaSection } from "@/components/sections/cta/cta-section";
 
@@ -16,6 +17,9 @@ export default function HomePage() {
     <>
       {/* H2 - Hero (Stellar-style, dark) */}
       <StellarHero />
+
+      {/* H2.5 - Trust bar removed for now; re-add <TrustBar /> from
+          @/components/sections/proof/trust-bar when real metrics/logos are ready. */}
 
       {/* H3 - Services overview */}
       <ServicesSection />
@@ -31,6 +35,9 @@ export default function HomePage() {
 
       {/* H7 - Recent work (zoom parallax) */}
       <ShowcaseSection />
+
+      {/* H7.5 - Social proof (testimonials; placeholder-marked until real) */}
+      <Testimonials />
 
       {/* H8 - Craft interstitial (interactive wave) */}
       <WaveSection />

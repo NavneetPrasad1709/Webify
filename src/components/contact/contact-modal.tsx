@@ -5,6 +5,7 @@ import { useFormStatus } from "react-dom";
 import { X, Check, ArrowRight } from "lucide-react";
 import { submitContact, type ContactState } from "@/app/contact/actions";
 import { mailtoHref, whatsappHref } from "@/lib/site";
+import { lockScroll, unlockScroll, setContactModalOpen } from "@/lib/overlay";
 
 /**
  * Site-wide contact popup. A capture-phase click listener intercepts ANY link to
@@ -17,7 +18,7 @@ import { mailtoHref, whatsappHref } from "@/lib/site";
 const initial: ContactState = { ok: false, message: "" };
 
 const fieldCls =
-  "w-full rounded-xl border border-[#131313]/15 bg-[#f6f6f4] px-4 py-3 text-base text-[#131313] placeholder:text-[#131313]/45 transition-colors focus:border-[#131313] focus:outline-none";
+  "w-full rounded-input border border-[#131313]/15 bg-[#f6f6f4] px-4 py-3.5 text-base text-[#131313] placeholder:text-[#131313]/45 transition-colors focus:border-[#131313] focus:outline-none";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -25,9 +26,9 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#131313] px-6 py-3.5 text-base font-semibold text-white transition-transform hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-60"
+      className="group inline-flex h-13 w-full items-center justify-center gap-2 rounded-pill bg-[#131313] px-6 text-base font-semibold text-white transition-transform duration-[--dur] ease-[--ease-out] hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-60"
     >
-      {pending ? "Sending…" : "Send message"}
+      {pending ? "Sending…" : "Get my reply"}
       {!pending && <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />}
     </button>
   );
@@ -48,9 +49,12 @@ export function ContactModal() {
     return () => window.removeEventListener("webify:open-contact", onOpen);
   }, []);
 
-  // Escape to close + focus the first field on open.
+  // Escape to close + focus the first field on open. While open we lock body
+  // scroll and flag ourselves as the active modal so the lead popup stands down.
   useEffect(() => {
     if (!open) return;
+    setContactModalOpen(true);
+    lockScroll();
     const id = requestAnimationFrame(() => nameRef.current?.focus());
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
@@ -59,6 +63,8 @@ export function ContactModal() {
     return () => {
       cancelAnimationFrame(id);
       window.removeEventListener("keydown", onKey);
+      setContactModalOpen(false);
+      unlockScroll();
     };
   }, [open]);
 
@@ -104,7 +110,7 @@ export function ContactModal() {
         ) : (
           <>
             <span className="text-xl font-black uppercase tracking-tight text-[#131313]">
-              Webify<span className="text-[#4ade80]">*</span>
+              Webify<span className="text-accent-script">*</span>
             </span>
             <h2 className="mt-4 text-2xl font-bold leading-tight tracking-[-0.02em] text-[#131313] sm:text-3xl">
               Let&apos;s build your idea.
@@ -114,7 +120,7 @@ export function ContactModal() {
               obligation.
             </p>
 
-            <form action={formAction} className="mt-6 space-y-3.5" noValidate>
+            <form action={formAction} className="mt-6 space-y-3.5">
               {!state.ok && state.message ? (
                 <p role="alert" className="rounded-lg bg-[#131313] px-4 py-2.5 text-sm font-medium text-[#c4f24a]">
                   {state.message}

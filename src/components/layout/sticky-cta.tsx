@@ -47,7 +47,7 @@ export function StickyCta() {
             className="group relative inline-flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-full bg-white px-6 py-3.5 text-sm font-bold text-black transition-transform duration-300 hover:scale-[1.03] sm:flex-none sm:px-7"
           >
             <span className="relative z-10 inline-flex items-center gap-2">
-              Start a project
+              Get a free strategy call
               <ArrowRight
                 className="h-4 w-4 animate-cta-nudge transition-transform group-hover:translate-x-1"
                 aria-hidden

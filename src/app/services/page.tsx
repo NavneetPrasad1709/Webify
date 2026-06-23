@@ -8,14 +8,34 @@ export const metadata: Metadata = {
   title: "Services",
   description:
     "AI products, web apps, mobile, design & UX, MVP sprints, integrations, automation, and technical strategy - senior-led, end to end. Clear engagement models and transparent pricing.",
+  alternates: { canonical: "/services" },
 };
 
-/** A single capability / step block (mirrors the story-scroll block layout). */
+/**
+ * A single capability / step CARD. Styling is theme-agnostic: the border, fill,
+ * and accent all derive from the panel's own text `currentColor` via color-mix,
+ * so the same card reads correctly on the orange, dark, cream and blue panels.
+ */
 function Block({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <div className="min-w-[180px] flex-1">
-      <p className="mb-2.5 text-base font-bold uppercase tracking-wider sm:text-lg">{title}</p>
-      <p className="text-[clamp(1.15rem,1.8vw,1.5rem)] leading-relaxed opacity-85">{children}</p>
+    <div
+      className="group flex min-w-50 flex-1 flex-col gap-3 rounded-2xl p-5 transition-transform duration-300 ease-out hover:-translate-y-1 sm:gap-3.5 sm:p-6"
+      style={{
+        border: "1px solid color-mix(in srgb, currentColor 16%, transparent)",
+        background: "color-mix(in srgb, currentColor 6%, transparent)",
+      }}
+    >
+      <span
+        aria-hidden
+        className="h-1 w-8 rounded-full transition-all duration-300 ease-out group-hover:w-14"
+        style={{ background: "currentColor", opacity: 0.4 }}
+      />
+      <p className="text-[clamp(1.05rem,1.6vw,1.3rem)] font-bold uppercase tracking-wider">
+        {title}
+      </p>
+      <p className="text-[clamp(1.05rem,1.7vw,1.35rem)] leading-relaxed opacity-75">
+        {children}
+      </p>
     </div>
   );
 }
@@ -73,7 +93,7 @@ export default function ServicesPage() {
           We <span className="script-accent">Ship</span>
         </SparklesTitle>
         <hr className="my-[2vw] border-none border-t border-white/50" />
-        <div className="flex flex-wrap gap-[3vw]">
+        <div className="flex flex-wrap gap-4 sm:gap-5">
           <Block title="AI Solutions">
             LLM apps, agents, RAG, and ML features wired into real products people use.
           </Block>
@@ -88,7 +108,7 @@ export default function ServicesPage() {
           </Block>
         </div>
         <hr className="my-[2vw] border-none border-t border-white/50" />
-        <div className="flex flex-wrap gap-[3vw]">
+        <div className="flex flex-wrap gap-4 sm:gap-5">
           <Block title="Digital Marketing">
             Campaigns, content, and funnels that bring qualified traffic and convert it.
           </Block>
@@ -125,13 +145,13 @@ export default function ServicesPage() {
           fast and scale calmly.
         </p>
         <hr className="my-[2vw] border-none border-t border-black/30" />
-        <div className="flex flex-wrap gap-[3vw]">
+        <div className="flex flex-wrap gap-4 sm:gap-5">
           <Block title="Frontend">Next.js, React, TypeScript, Tailwind, GSAP.</Block>
           <Block title="Backend">Node, Python, Postgres, Redis, REST &amp; tRPC.</Block>
           <Block title="AI / ML">OpenAI, Anthropic, LangChain, vector DBs, fine-tuning.</Block>
         </div>
         <hr className="my-[2vw] border-none border-t border-black/30" />
-        <div className="flex flex-wrap gap-[3vw]">
+        <div className="flex flex-wrap gap-4 sm:gap-5">
           <Block title="Mobile">React Native, Expo, native modules.</Block>
           <Block title="Infra">Vercel, AWS, Docker, CI/CD, observability.</Block>
           <Block title="Quality">Typed end to end, tested, monitored.</Block>
@@ -161,7 +181,7 @@ export default function ServicesPage() {
           and why.
         </p>
         <hr className="my-[2vw] border-none border-t border-white/50" />
-        <div className="flex flex-wrap gap-[3vw]">
+        <div className="flex flex-wrap gap-4 sm:gap-5">
           <Block title="MVP Sprint">
             A working product in 4-6 weeks. Fixed scope, fixed price, agreed before
             we start.
@@ -202,7 +222,7 @@ export default function ServicesPage() {
           A tight, senior-led loop - you see working software every single week.
         </p>
         <hr className="my-[2vw] border-none border-t border-white/50" />
-        <div className="flex flex-wrap gap-[3vw]">
+        <div className="flex flex-wrap gap-4 sm:gap-5">
           <Block title="01 - Discovery">
             We pressure-test the idea, scope the build, and agree on what success looks like.
           </Block>
@@ -214,7 +234,7 @@ export default function ServicesPage() {
           </Block>
         </div>
         <hr className="my-[2vw] border-none border-t border-white/50" />
-        <div className="flex flex-wrap gap-[3vw]">
+        <div className="flex flex-wrap gap-4 sm:gap-5">
           <Block title="04 - Launch">
             Hardening, QA, and a calm production release - on infra built to last.
           </Block>

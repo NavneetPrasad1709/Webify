@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -14,6 +14,27 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
  *   ScrollTrigger.update so pinned / scrubbed animations stay in sync.
  */
 export function SmoothScroll({ children }: { children: ReactNode }) {
+  const lenisRef = useRef<Lenis | null>(null);
+
+  // Scroll-lock listener (always on, even under reduced-motion where there's no
+  // Lenis): an open overlay must not let the page scroll behind it on mobile.
+  useEffect(() => {
+    const lock = () => {
+      document.documentElement.classList.add("overlay-locked");
+      lenisRef.current?.stop();
+    };
+    const unlock = () => {
+      document.documentElement.classList.remove("overlay-locked");
+      lenisRef.current?.start();
+    };
+    window.addEventListener("webify:lock-scroll", lock);
+    window.addEventListener("webify:unlock-scroll", unlock);
+    return () => {
+      window.removeEventListener("webify:lock-scroll", lock);
+      window.removeEventListener("webify:unlock-scroll", unlock);
+    };
+  }, []);
+
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
@@ -30,6 +51,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
 
+    lenisRef.current = lenis;
     lenis.on("scroll", ScrollTrigger.update);
 
     const onTick = (time: number) => lenis.raf(time * 1000);
@@ -40,6 +62,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       gsap.ticker.remove(onTick);
       lenis.off("scroll", ScrollTrigger.update);
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
 

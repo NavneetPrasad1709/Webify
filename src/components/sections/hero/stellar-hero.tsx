@@ -99,37 +99,37 @@ export function StellarHero() {
         <span className="flex h-6 w-6 items-center justify-center rounded border border-white/20">
           <Star className="h-3.5 w-3.5 fill-white text-white" />
         </span>
-        <span className="text-xs font-medium text-white/80 sm:text-sm">
+        <span className="text-[13px] font-medium text-white/80 sm:text-sm">
           Senior-led AI &amp; software - India &amp; worldwide
         </span>
       </div>
 
-      {/* Heading - heavy Archivo, large */}
+      {/* Heading - heavy Archivo, large. States WHAT (AI products) + FOR WHOM
+          (founders & teams) + OUTCOME (ship fast). */}
       <h1
-        className="animate-fade-in-up mx-auto mb-5 max-w-[16ch] text-[clamp(2.5rem,9vw,5.5rem)] font-extrabold leading-[1.02] tracking-tight text-white"
+        className="animate-fade-in-up mx-auto mb-5 max-w-[18ch] text-[clamp(2.5rem,9vw,5.5rem)] font-extrabold leading-[1.02] tracking-tight text-white"
         style={{ animationDelay: "0.3s" }}
       >
-        We build AI-first products
+        AI products for founders
         <br />
-        that <span className="script-accent">actually ship.</span>
+        who need to <span className="script-accent">ship fast.</span>
       </h1>
 
-      {/* Subheading */}
+      {/* Subheading - one line, outcome-led, &lt;20 words */}
       <p
-        className="animate-fade-in-up mx-auto mb-9 max-w-2xl text-lg leading-relaxed text-white/75 opacity-0 sm:text-xl md:text-2xl"
+        className="animate-fade-in-up mx-auto mb-9 max-w-xl text-lg leading-relaxed text-white/75 opacity-0 sm:text-xl"
         style={{ animationDelay: "0.4s" }}
       >
-        The senior engineers and designers who design it are the ones who build
-        and ship it - end to end, no junior hand-offs. For founders who want it
-        done right, and done fast.
+        The senior team that designs your product is the same one that builds and
+        ships it - end to end, no junior hand-offs.
       </p>
 
-      {/* CTA */}
+      {/* CTA - full-width on mobile (thumb-reach), hugs on desktop */}
       <div className="animate-fade-in-up flex flex-col items-center gap-3" style={{ animationDelay: "0.5s" }}>
         <Magnetic>
           <Link
             href="/contact"
-            className="inline-flex rounded-full bg-white px-9 py-4 text-base font-semibold text-black transition-colors hover:bg-white/90 sm:text-lg"
+            className="inline-flex h-13 w-full items-center justify-center rounded-pill bg-white px-9 text-base font-semibold text-black transition-transform duration-[--dur] ease-[--ease-out] hover:scale-[1.02] sm:w-auto sm:text-lg"
           >
             Book a free 30-min call
           </Link>
@@ -139,17 +139,13 @@ export function StellarHero() {
         </p>
       </div>
 
-      {/* Tab bar */}
+      {/* Tab bar - desktop only; on mobile it's decorative clutter above the fold,
+          so we drop it and let the preview overlay auto-cycle on its own. */}
       <div
-        className="animate-fade-in-up mx-auto mb-8 w-full max-w-md rounded-lg bg-white/[0.06] p-1 opacity-0 sm:w-fit sm:max-w-none"
+        className="animate-fade-in-up mx-auto mb-8 hidden w-fit rounded-input bg-white/[0.06] p-1 opacity-0 sm:block"
         style={{ animationDelay: "0.6s" }}
       >
-        <div className="grid grid-cols-2 gap-1 sm:hidden">
-          {TABS.map((t) => (
-            <TabButton key={t.id} tab={t} active={active} onClick={() => setActive(t.id)} />
-          ))}
-        </div>
-        <div className="hidden items-center sm:flex">
+        <div className="flex items-center">
           {TABS.map((t, i) => (
             <div key={t.id} className="flex items-center">
               {i > 0 && <span className="mx-1 h-5 w-px bg-white/10" />}

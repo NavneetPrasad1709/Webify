@@ -166,7 +166,7 @@ export default function AboutPage() {
               </FadeUp>
 
               <FadeUp delay={0.24}>
-                <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.18em] text-neutral-500">
+                <p className="mt-5 font-mono text-xs uppercase tracking-[0.18em] text-neutral-400">
                   Free 30-min call · No obligation · Reply within 24h
                 </p>
               </FadeUp>
@@ -292,7 +292,7 @@ export default function AboutPage() {
                   <h3 className="mt-4 text-xl font-semibold tracking-[-0.01em] text-neutral-50">
                     {step.title}
                   </h3>
-                  <p className="mt-3 text-pretty text-sm leading-relaxed text-neutral-400">
+                  <p className="mt-3 text-pretty text-[15px] leading-relaxed text-neutral-400">
                     {step.body}
                   </p>
                 </li>

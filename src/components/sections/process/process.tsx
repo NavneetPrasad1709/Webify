@@ -69,7 +69,7 @@ export function Process() {
   return (
     <section className="process text-[var(--color-bone)]" aria-label="How we work">
       {/* Intro */}
-      <Container className="pt-[clamp(6rem,12vw,10rem)] pb-[clamp(2rem,5vw,3.5rem)]">
+      <Container className="pt-24 pb-10 sm:pt-32 sm:pb-12">
         <p className="pin-kicker mb-6 text-[var(--color-bone-dim)]">
           <span className="pin-star mr-3" />
           How we work
@@ -80,12 +80,12 @@ export function Process() {
       </Container>
 
       {/* Steps - 50/50 split with a scroll-driven progress rail */}
-      <Container className="pb-[clamp(4rem,10vw,8rem)]">
-        <div ref={railRef} className="relative border-t border-[var(--color-line)] lg:pl-16">
-          {/* Progress rail (desktop) */}
+      <Container className="pb-20 sm:pb-28">
+        <div ref={railRef} className="relative border-t border-[var(--color-line)] pl-7 lg:pl-16">
+          {/* Progress rail (mobile + desktop) */}
           <div
             aria-hidden
-            className="pointer-events-none absolute bottom-0 left-1 top-0 hidden w-px overflow-visible bg-[var(--color-line-strong)] lg:block"
+            className="pointer-events-none absolute bottom-0 left-1 top-0 block w-px overflow-visible bg-[var(--color-line-strong)]"
           >
             <motion.div
               style={{ scaleY: scrollYProgress }}
@@ -100,10 +100,13 @@ export function Process() {
           {STEPS.map((step) => (
             <div
               key={step.id}
-              className="grid grid-cols-1 gap-7 border-b border-[var(--color-line)] py-12 sm:gap-9 lg:grid-cols-2 lg:items-start lg:gap-16 lg:py-20"
+              className="border-b border-[var(--color-line)] py-12 lg:grid lg:grid-cols-2 lg:items-start lg:gap-16 lg:py-20"
             >
-              {/* Left - sticky heading + giant faded step numeral */}
-              <div className="relative lg:sticky lg:top-28 lg:self-start">
+              {/* Left - sticky heading + giant faded step numeral. Pins on mobile
+                  AND desktop; the solid bg keeps the card from showing through it
+                  while it's pinned. (Block layout on mobile gives the sticky
+                  element room to travel; grid restores the 50/50 split on lg.) */}
+              <div className="sticky top-20 z-20 self-start bg-[var(--surface-0)] py-3 lg:top-28 lg:z-auto lg:bg-transparent lg:py-0">
                 <span
                   aria-hidden
                   className="pointer-events-none absolute -left-1 -top-6 select-none font-black leading-none text-white/[0.04] sm:-top-10"
@@ -123,8 +126,8 @@ export function Process() {
               </div>
 
               {/* Right - info in a frosted card */}
-              <FadeUp>
-                <div className="rounded-[1.75rem] border border-[var(--color-line)] bg-white/[0.025] p-6 backdrop-blur-sm sm:p-9">
+              <FadeUp className="mt-7 lg:mt-0">
+                <div className="rounded-[1.75rem] border border-[var(--color-line)] bg-white/[0.04] p-6 sm:p-9">
                   <p className="text-[clamp(1.3rem,2.2vw,1.9rem)] font-light leading-[1.35] text-[var(--color-bone)]">
                     {step.lead}
                   </p>

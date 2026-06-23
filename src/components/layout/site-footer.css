@@ -7,7 +7,7 @@
    ========================================================================== */
 
 .footer-section {
-  background: #0a0a0a;
+  background: var(--surface-0);
   padding: 48px 24px;
   font-family: var(--font-geist-sans), sans-serif;
   color: rgba(255, 255, 255, 0.72);
@@ -48,7 +48,7 @@
   padding: 32px;
   overflow: hidden;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
-  background: #0e0e13;
+  background: var(--surface-1);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -152,7 +152,7 @@
 
 /* ---- Right card (light gray) ---------------------------------------------- */
 .footer-right {
-  background: #0e0e13;
+  background: var(--surface-1);
   border-radius: 28px;
   padding: 40px;
   overflow: visible;
@@ -179,9 +179,10 @@
   height: 96px;
   border-radius: 22px;
   transform: rotate(-10deg);
-  background: linear-gradient(135deg, #5b9ffb 0%, #1e5dd7 55%, #1448be 100%);
-  box-shadow: inset 3px 3px 8px rgba(255, 255, 255, 0.35),
-    inset -3px -3px 12px rgba(0, 0, 0, 0.18), 8px 14px 28px rgba(20, 72, 200, 0.35);
+  /* Brand indigo, subtle 2-colour 135deg gradient + ONE flat elevation
+     (was an off-palette blue with a dated double-inset bevel). */
+  background: linear-gradient(135deg, var(--accent-hi) 0%, var(--accent) 100%);
+  box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -257,7 +258,7 @@
   transition: color 0.2s;
 }
 .footer-col a:hover {
-  color: #818cf8;
+  color: var(--accent-hi);
 }
 
 /* Bottom row */
@@ -317,7 +318,7 @@
 }
 .footer-subscribe-row button {
   padding: 11px 22px;
-  background: #6366f1;
+  background: var(--accent);
   color: #fff;
   font-family: var(--font-geist-sans), sans-serif;
   font-size: 13.5px;
@@ -329,7 +330,7 @@
   transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
 }
 .footer-subscribe-row button:hover {
-  background: #4f46e5;
+  background: var(--accent-hi);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.22);
   transform: translateY(-1px);
 }
@@ -343,7 +344,7 @@
   color: #dc2626;
 }
 .footer-subscribe-msg[data-state="success"] {
-  color: #818cf8;
+  color: var(--accent-hi);
 }
 
 /* ---- Watermark ------------------------------------------------------------ */
@@ -373,7 +374,7 @@
 .footer-section a:focus-visible,
 .footer-section button:focus-visible,
 .footer-section input:focus-visible {
-  outline: 2px solid #818cf8;
+  outline: 2px solid var(--accent-hi);
   outline-offset: 2px;
 }
 

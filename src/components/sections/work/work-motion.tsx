@@ -70,7 +70,7 @@ export function ZoomImage({
   return (
     <div ref={frame} className={`relative overflow-hidden ${className ?? ""}`}>
       <div ref={inner} className="absolute inset-0 will-change-transform">
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
+        <Image src={src} alt={alt} fill sizes={sizes ?? "100vw"} priority={priority} className="object-cover" />
       </div>
     </div>
   );
