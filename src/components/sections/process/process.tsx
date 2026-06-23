@@ -1,7 +1,7 @@
 "use client";
 
-import StickyTabs from "@/components/ui/sticky-section-tabs";
 import { Container } from "@/components/ui/Container";
+import { FadeUp } from "@/components/sections/cta/fade-up";
 import "./process.css";
 
 type Step = {
@@ -50,80 +50,73 @@ const STEPS: Step[] = [
   },
 ];
 
+/**
+ * H6 - "How we work". Mobile-first 50/50 layout: on desktop the step heading
+ * pins on the left (sticky) while its info scrolls on the right, then releases
+ * to the next step - a calm sticky-scroll reveal. On mobile it stacks cleanly
+ * (heading, then info). No decorative underline; metallic gradient headings.
+ */
 export function Process() {
   return (
     <section className="process text-[var(--color-bone)]" aria-label="How we work">
       {/* Intro */}
-      <Container className="pt-[clamp(6rem,12vw,10rem)] pb-[clamp(2.5rem,6vw,4.5rem)]">
+      <Container className="pt-[clamp(6rem,12vw,10rem)] pb-[clamp(2rem,5vw,3.5rem)]">
         <p className="pin-kicker mb-6 text-[var(--color-bone-dim)]">
           <span className="pin-star mr-3" />
           How we work
         </p>
         <h2 className="pin-display pin-fluid-1 max-w-[16ch] leading-[0.95]">
-          A process built for{" "}
-          <span className="script-accent">outcomes.</span>
+          A process built for <span className="script-accent">outcomes.</span>
         </h2>
       </Container>
 
-      {/* Sticky section tabs */}
-      <StickyTabs
-        mainNavHeight="0px"
-        rootClassName="text-[var(--color-bone)]"
-        sectionClassName=""
-        stickyHeaderContainerClassName=""
-        /* Opaque bar (no translucency) so scrolling content can't bleed through;
-           sticks at the very top + clears the transparent nav via pt so content
-           hides cleanly behind it. */
-        headerContentWrapperClassName="border-b border-[var(--color-line)] bg-[var(--color-ink)]"
-        headerContentLayoutClassName="mx-auto w-full max-w-[1400px] px-6 pb-5 pt-[5.25rem] sm:px-8 lg:px-16"
-        titleClassName="pin-display text-[clamp(4.5rem,13vw,6.5rem)] leading-none text-[var(--color-bone)]"
-        contentLayoutClassName="mx-auto w-full max-w-[1400px] px-6 py-12 sm:px-8 md:py-16 lg:px-16"
-      >
-        {STEPS.map((step) => {
-          return (
-            <StickyTabs.Item
+      {/* Steps - 50/50 split, sticky heading on the left */}
+      <Container className="pb-[clamp(4rem,10vw,8rem)]">
+        <div className="border-t border-[var(--color-line)]">
+          {STEPS.map((step) => (
+            <div
               key={step.id}
-              id={step.id}
-              title={
-                <span className="flex items-baseline gap-3 sm:gap-4">
-                  <span className="font-mono text-[0.3em] font-semibold tracking-[0.22em] text-[var(--color-accent)]">
-                    {step.num}
-                  </span>
-                  <span className="pin-grad relative inline-block">
-                    {step.title}
-                    <span className="pin-underline" aria-hidden />
-                  </span>
-                </span>
-              }
+              className="grid grid-cols-1 gap-7 border-b border-[var(--color-line)] py-12 sm:gap-9 lg:grid-cols-2 lg:items-start lg:gap-16 lg:py-20"
             >
-              <div className="grid min-h-[46vh] gap-10 lg:grid-cols-12 lg:gap-16">
-                <div className="lg:col-span-7">
-                  <p className="max-w-3xl text-[clamp(1.75rem,3.4vw,3rem)] font-light leading-[1.28] text-[var(--color-bone)]">
+              {/* Left - sticky heading */}
+              <div className="lg:sticky lg:top-28 lg:self-start">
+                <span className="font-mono text-[clamp(0.85rem,1.4vw,1.05rem)] font-semibold tracking-[0.2em] text-[var(--color-accent)]">
+                  {step.num}
+                </span>
+                <h3 className="pin-display pin-grad mt-3 text-[clamp(2.5rem,6.5vw,5rem)] leading-[0.9]">
+                  {step.title}
+                </h3>
+              </div>
+
+              {/* Right - info */}
+              <FadeUp>
+                <div>
+                  <p className="max-w-2xl text-[clamp(1.35rem,2.4vw,2rem)] font-light leading-[1.32] text-[var(--color-bone)]">
                     {step.lead}
                   </p>
+                  <div className="mt-8 border-t border-[var(--color-line)] pt-6">
+                    <p className="pin-kicker mb-5 text-[var(--color-bone-faint)]">Deliverables</p>
+                    <ul className="space-y-3.5">
+                      {step.deliverables.map((d) => (
+                        <li
+                          key={d}
+                          className="flex items-center gap-4 text-[clamp(1.1rem,1.6vw,1.4rem)] text-[var(--color-bone-dim)]"
+                        >
+                          <span
+                            className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]"
+                            aria-hidden
+                          />
+                          {d}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <aside className="lg:col-span-5 lg:border-l lg:border-[var(--color-line)] lg:pl-16">
-                  <p className="pin-kicker mb-6 text-[var(--color-bone-faint)]">Deliverables</p>
-                  <ul className="space-y-4">
-                    {step.deliverables.map((d) => (
-                      <li
-                        key={d}
-                        className="flex items-center gap-4 text-[clamp(1.15rem,1.6vw,1.5rem)] text-[var(--color-bone-dim)]"
-                      >
-                        <span
-                          className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]"
-                          aria-hidden
-                        />
-                        {d}
-                      </li>
-                    ))}
-                  </ul>
-                </aside>
-              </div>
-            </StickyTabs.Item>
-          );
-        })}
-      </StickyTabs>
+              </FadeUp>
+            </div>
+          ))}
+        </div>
+      </Container>
     </section>
   );
 }
