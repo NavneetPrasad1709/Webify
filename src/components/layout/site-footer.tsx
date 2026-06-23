@@ -20,6 +20,12 @@ const NAV_COLUMN = [
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
+const SERVICES_COLUMN = [
+  { label: "AI Development", href: "/services/ai-development" },
+  { label: "Web Development", href: "/services/web-development" },
+  { label: "Mobile Apps", href: "/services/mobile-app-development" },
+  { label: "SEO", href: "/services/seo" },
+];
 const COMPANY_COLUMN: { label: string; href: string; external?: boolean }[] = [
   { label: "Case Studies", href: "/case-studies" },
   { label: "Privacy Policy", href: "/privacy" },
@@ -158,6 +164,14 @@ export function SiteFooter() {
               <nav className="footer-col" aria-label="Navigation">
                 <p className="footer-col-title">Navigation</p>
                 {NAV_COLUMN.map((l) => (
+                  <Link key={l.label} href={l.href}>
+                    {l.label}
+                  </Link>
+                ))}
+              </nav>
+              <nav className="footer-col" aria-label="Services">
+                <p className="footer-col-title">Services</p>
+                {SERVICES_COLUMN.map((l) => (
                   <Link key={l.label} href={l.href}>
                     {l.label}
                   </Link>

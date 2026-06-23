@@ -235,7 +235,8 @@
 .footer-nav-cols {
   display: flex;
   flex-direction: row;
-  gap: 72px;
+  flex-wrap: wrap;
+  gap: 32px 48px;
 }
 .footer-col-title {
   font-family: "Caveat", cursive;
