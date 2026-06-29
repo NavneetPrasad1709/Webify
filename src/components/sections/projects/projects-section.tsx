@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Lock } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
@@ -13,14 +13,23 @@ import { SparklesTitle } from "@/components/ui/sparkles-title";
  * H5 - Featured work. Sticky-stacking project cards that scale down as the next
  * card slides up, forming a layered deck (sshahaider-style projects deck).
  *
- * The scroll-scale is driven by GSAP ScrollTrigger (synced to our Lenis
- * smooth-scroll) rather than framer's useScroll, which desyncs under Lenis.
- * Sticky offsets clear the fixed nav (~75px). Reduced-motion keeps the sticky
- * stack but skips the scale.
+ * The first card is real, shipped client work (StealthConnect) shown as a
+ * looping in-browser product clip captured from the live site, so the project
+ * reads as alive and in motion. The remaining cards are illustrative capability
+ * tiles - kept honest with no fabricated client names.
  *
- * Images are illustrative reference assets (not client captures) - swap for
- * owned visuals when available.
+ * The scroll-scale is driven by GSAP ScrollTrigger (synced to our Lenis
+ * smooth-scroll). Sticky offsets clear the fixed nav. Reduced-motion keeps the
+ * sticky stack but skips the scale, and the video falls back to its poster.
  */
+interface ProjectVideo {
+  mp4: string;
+  webm: string;
+  poster: string;
+  /** Domain shown in the faux browser chrome. */
+  domain: string;
+}
+
 interface Project {
   number: string;
   name: string;
@@ -28,11 +37,13 @@ interface Project {
   /** When set, the card links to a real case study and shows the "Client" tag. */
   href?: string;
   tag?: string;
-  images: { col1a: string; col1b: string; col2: string };
+  /** Real work: a looping in-browser clip + headline metrics. */
+  video?: ProjectVideo;
+  metrics?: { v: string; l: string }[];
+  /** Illustrative capability tiles use a 3-image grid instead. */
+  images?: { col1a: string; col1b: string; col2: string };
 }
 
-// First card is real, shipped client work (StealthConnect). The rest are
-// illustrative capability tiles - kept honest with no fabricated client names.
 const PROJECTS: Project[] = [
   {
     number: "01",
@@ -40,11 +51,17 @@ const PROJECTS: Project[] = [
     category: "AI Product",
     href: "/work/stealthconnect",
     tag: "Client · Live",
-    images: {
-      col1a: "/work/stealthconnect/s2.png",
-      col1b: "/work/stealthconnect/s3.png",
-      col2: "/work/stealthconnect/cover.png",
+    video: {
+      mp4: "/work/stealthconnect/demo.mp4",
+      webm: "/work/stealthconnect/demo.webm",
+      poster: "/work/stealthconnect/demo-poster.jpg",
+      domain: "stealthconnect.ai",
     },
+    metrics: [
+      { v: "97.2%", l: "verified" },
+      { v: "28 min", l: "avg delivery" },
+      { v: "800M+", l: "contacts" },
+    ],
   },
   {
     number: "02",
@@ -123,6 +140,68 @@ export function ProjectsSection() {
   );
 }
 
+/** Looping in-browser product clip - plays only while on-screen, pauses off-screen
+ *  and for reduced-motion users (poster stays visible). */
+function ProductVideo({ video }: { video: ProjectVideo }) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      v.removeAttribute("autoplay");
+      v.pause();
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) v.play().catch(() => {});
+        else v.pause();
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0c0c11] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.9)] sm:rounded-3xl">
+      {/* Browser chrome */}
+      <div className="flex items-center gap-3 border-b border-white/10 bg-white/[0.03] px-4 py-3">
+        <div className="flex gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+        </div>
+        <div className="flex flex-1 justify-center">
+          <span className="inline-flex items-center gap-1.5 rounded-md bg-white/[0.06] px-3 py-1 text-[11px] font-medium text-white/55">
+            <Lock className="h-3 w-3" aria-hidden />
+            {video.domain}
+          </span>
+        </div>
+        <span className="w-[54px]" aria-hidden />
+      </div>
+
+      {/* The live product, in motion */}
+      <div className="relative aspect-[16/10] w-full">
+        <video
+          ref={ref}
+          className="absolute inset-0 h-full w-full object-cover object-top"
+          poster={video.poster}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+        >
+          <source src={video.webm} type="video/webm" />
+          <source src={video.mp4} type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  );
+}
+
 function ProjectCard({
   project,
   index,
@@ -168,18 +247,14 @@ function ProjectCard({
       ref={card}
       data-cursor="view"
       className={cn(
-        "group sticky overflow-hidden bg-[#0C0C0C]",
-        "border-2 border-[#D7E2EA]",
-        "rounded-[32px] p-4 sm:rounded-[50px] sm:p-6 md:rounded-[60px] md:p-8",
+        "group sticky overflow-hidden",
+        "rounded-[32px] p-4 sm:rounded-[44px] sm:p-6 md:rounded-[52px] md:p-8",
+        "border border-white/10 bg-gradient-to-b from-[#16161c] to-[#0a0a0d]",
+        "shadow-[0_40px_120px_-45px_rgba(0,0,0,0.95)]",
+        "transition-colors duration-500 hover:border-white/20",
       )}
       style={{ top: `calc(5.5rem + ${index * 28}px)` }}
     >
-      {/* Violet accent line — grows from the left on hover */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute left-0 top-0 h-[3px] w-full origin-left scale-x-0 bg-[#8b5cf6] transition-transform duration-500 ease-out group-hover:scale-x-100"
-      />
-
       {/* Whole-card link to the case study (real work only). */}
       {project.href ? (
         <Link
@@ -189,46 +264,79 @@ function ProjectCard({
         />
       ) : null}
 
-      {/* Top row: number + capability label */}
-        <div className="flex flex-wrap items-start justify-between gap-3 sm:gap-4">
-          <div className="flex items-start gap-4 sm:gap-6">
-            <span
-              className="nums font-black leading-none tracking-tight text-[#D7E2EA] [font-family:var(--font-geist-sans)]"
-              style={{ fontSize: "clamp(2.5rem, 6vw, 90px)" }}
-            >
-              {project.number}
-            </span>
-            <div className="flex flex-col items-start pt-1">
-              <div className="mb-2 flex flex-wrap items-center gap-2">
-                <span className="inline-flex w-fit rounded-full border border-[#8b5cf6]/40 bg-[#8b5cf6]/15 px-3 py-1 text-[0.7rem] uppercase tracking-widest text-[#D7E2EA]/80 sm:text-xs">
-                  {project.category}
-                </span>
-                {project.tag ? (
-                  <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-[#4ade80]/40 bg-[#4ade80]/15 px-3 py-1 text-[0.7rem] uppercase tracking-widest text-[#4ade80] sm:text-xs">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#4ade80]" aria-hidden />
-                    {project.tag}
-                  </span>
-                ) : null}
-              </div>
-              <span className="text-xl font-semibold leading-tight text-[#D7E2EA] sm:text-2xl md:text-3xl">
-                {project.name}
-              </span>
-            </div>
-          </div>
+      {/* Violet accent line — grows from the left on hover */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute left-0 top-0 z-20 h-[3px] w-full origin-left scale-x-0 bg-[#8b5cf6] transition-transform duration-500 ease-out group-hover:scale-x-100"
+      />
 
-          {project.href ? (
-            <span className="z-40 hidden items-center gap-1.5 self-center rounded-full border border-[#D7E2EA]/30 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-[#D7E2EA] transition-colors group-hover:border-[#4ade80] group-hover:text-[#4ade80] sm:inline-flex">
-              View case study
-              <ArrowUpRight className="h-4 w-4" />
+      {/* Top row: number + label + (case-study affordance) */}
+      <div className="flex flex-wrap items-start justify-between gap-3 sm:gap-4">
+        <div className="flex items-start gap-4 sm:gap-6">
+          <span
+            className="nums font-black leading-none tracking-tight text-[#E8EEF2] [font-family:var(--font-geist-sans)]"
+            style={{ fontSize: "clamp(2.5rem, 6vw, 90px)" }}
+          >
+            {project.number}
+          </span>
+          <div className="flex flex-col items-start pt-1">
+            <div className="mb-2 flex flex-wrap items-center gap-2">
+              <span className="inline-flex w-fit rounded-full border border-[#8b5cf6]/40 bg-[#8b5cf6]/15 px-3 py-1 text-[0.7rem] uppercase tracking-widest text-[#E8EEF2]/80 sm:text-xs">
+                {project.category}
+              </span>
+              {project.tag ? (
+                <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#4ade80]/40 bg-[#4ade80]/15 px-3 py-1 text-[0.7rem] uppercase tracking-widest text-[#4ade80] sm:text-xs">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#4ade80] opacity-75" />
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#4ade80]" />
+                  </span>
+                  {project.tag}
+                </span>
+              ) : null}
+            </div>
+            <span className="text-xl font-semibold leading-tight text-[#E8EEF2] sm:text-2xl md:text-3xl">
+              {project.name}
             </span>
-          ) : null}
+          </div>
         </div>
 
-        {/* Bottom row: 40% / 60% image grid */}
+        {project.href ? (
+          <span className="hidden items-center gap-1.5 self-center rounded-full border border-white/20 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-[#E8EEF2] transition-colors group-hover:border-[#4ade80] group-hover:text-[#4ade80] sm:inline-flex">
+            View case study
+            <ArrowUpRight className="h-4 w-4" />
+          </span>
+        ) : null}
+      </div>
+
+      {/* Body: video product-window (real work) or 3-image grid (capabilities) */}
+      {project.video ? (
+        <div className="mt-5 sm:mt-7">
+          <ProductVideo video={project.video} />
+          {project.metrics ? (
+            <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 sm:mt-6">
+              {project.metrics.map((m, i) => (
+                <span key={m.l} className="inline-flex items-center gap-3">
+                  {i > 0 ? (
+                    <span className="h-3.5 w-px bg-white/15" aria-hidden />
+                  ) : null}
+                  <span className="inline-flex items-baseline gap-1.5">
+                    <span className="text-base font-bold text-white sm:text-lg">
+                      {m.v}
+                    </span>
+                    <span className="text-[0.7rem] uppercase tracking-wider text-white/45 sm:text-xs">
+                      {m.l}
+                    </span>
+                  </span>
+                </span>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      ) : project.images ? (
         <div className="mt-5 flex gap-3 sm:mt-6 sm:gap-6 md:gap-8">
           <div className="flex w-[40%] flex-col gap-3 sm:gap-6 md:gap-8">
             <div
-              className="relative w-full overflow-hidden rounded-[20px] sm:rounded-[40px] md:rounded-[50px]"
+              className="relative w-full overflow-hidden rounded-[20px] border border-white/10 sm:rounded-[34px] md:rounded-[40px]"
               style={{ height: "clamp(80px, 9vw, 130px)" }}
             >
               <Image
@@ -240,7 +348,7 @@ function ProjectCard({
               />
             </div>
             <div
-              className="relative w-full overflow-hidden rounded-[20px] sm:rounded-[40px] md:rounded-[50px]"
+              className="relative w-full overflow-hidden rounded-[20px] border border-white/10 sm:rounded-[34px] md:rounded-[40px]"
               style={{ height: "clamp(100px, 12vw, 165px)" }}
             >
               <Image
@@ -253,7 +361,7 @@ function ProjectCard({
             </div>
           </div>
 
-          <div className="relative w-[60%] overflow-hidden rounded-[20px] sm:rounded-[40px] md:rounded-[50px]">
+          <div className="relative w-[60%] overflow-hidden rounded-[20px] border border-white/10 sm:rounded-[34px] md:rounded-[40px]">
             <Image
               src={project.images.col2}
               alt={`${project.name} - cover`}
@@ -263,6 +371,7 @@ function ProjectCard({
             />
           </div>
         </div>
-      </div>
+      ) : null}
+    </div>
   );
 }
