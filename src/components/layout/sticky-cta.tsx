@@ -28,7 +28,7 @@ export function StickyCta() {
 
   return (
     <div
-      aria-hidden={!shown}
+      inert={!shown}
       className={`pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-4 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] transition-all duration-500 sm:inset-x-auto sm:right-6 sm:bottom-6 sm:justify-end sm:px-0 sm:pb-0 ${
         shown ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-8 opacity-0"
       }`}

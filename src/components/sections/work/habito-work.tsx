@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { FadeUp } from "@/components/sections/cta/fade-up";
 import { ScrollZoom } from "@/components/sections/work/work-motion";
-import { WorkCapabilitiesStack } from "@/components/sections/work/work-capabilities-stack";
+import { WorkCapabilitiesAccordion } from "@/components/sections/work/work-capabilities-accordion";
 import { SparklesTitle } from "@/components/ui/sparkles-title";
 
 /**
@@ -108,27 +108,11 @@ export function WorkStatement() {
 
 /* --------------------------------------------------------- Capabilities --- */
 export function WorkShowcase() {
+  // Capabilities as a Textura-style accordion: one open at a time, hairline
+  // separators that draw in on scroll, large site typography.
   return (
     <section aria-label="What we build" className="pb-8">
-      <Container>
-        <FadeUp>
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-black/45">
-            Capabilities
-          </p>
-          <SparklesTitle
-            as="h2"
-            className="mt-4 max-w-[14ch] font-black uppercase leading-[0.95] tracking-tight text-[#0d0d0d] text-[clamp(2rem,7vw,4.5rem)]"
-            beamClassName="mx-0 mr-auto mt-1 max-w-[22rem]"
-            sparkleColor="#4f46e5"
-            density={32}
-          >
-            Six ways we <span className="script-accent script-accent-ink">ship.</span>
-          </SparklesTitle>
-        </FadeUp>
-      </Container>
-
-      {/* Sticky-stacking capability deck (full-width; cards self-center). */}
-      <WorkCapabilitiesStack />
+      <WorkCapabilitiesAccordion />
     </section>
   );
 }

@@ -135,6 +135,93 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* --- Premium upgrade: custom cursor (DESKTOP / fine-pointer only; touch keeps
+   its native cursor automatically), brand text selection, and a slim scrollbar. */
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none;
+  }
+}
+::selection {
+  background: #7c3aed;
+  color: #fff;
+}
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: #7c3aed;
+  border-radius: 99px;
+}
+
+/* Custom cursor element (see src/components/ui/custom-cursor.tsx). Position is
+   driven by rAF transform; only size/colour transition. Hidden on touch. */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: #fff;
+  /* difference blend = always visible (white on dark, black on light pages). */
+  mix-blend-mode: difference;
+  pointer-events: none;
+  will-change: transform;
+  transition: width 0.28s ease, height 0.28s ease, background-color 0.28s ease,
+    opacity 0.2s ease;
+}
+.custom-cursor.is-hover {
+  width: 48px;
+  height: 48px;
+}
+.custom-cursor.is-view {
+  width: 76px;
+  height: 76px;
+  background: #7c3aed;
+}
+.custom-cursor.is-hidden {
+  opacity: 0;
+}
+.custom-cursor__label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #fff;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.custom-cursor.is-view .custom-cursor__label {
+  opacity: 1;
+}
+@media (hover: none), (pointer: coarse) {
+  .custom-cursor {
+    display: none;
+  }
+}
+
+/* RevealText word wrapper — clips the word; small bottom padding so descenders
+   (g, y, p) aren't clipped, with matching negative margin to keep layout intact. */
+.reveal-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+  /* proportional inter-word gap (the trailing space collapses inside an
+     overflow:hidden inline-block, so restore spacing here). */
+  margin-right: 0.25em;
 }
 
 /* Site-wide animated starfield background lives in ./starfield.css
@@ -197,6 +284,31 @@ html.lenis body {
      shadow-e1 = resting card, shadow-e2 = floating/popover. Generates shadow-e1 / shadow-e2. */
   --shadow-e1: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset, 0 10px 30px -12px rgba(0, 0, 0, 0.55);
   --shadow-e2: 0 1px 0 0 rgba(255, 255, 255, 0.06) inset, 0 30px 90px -28px rgba(0, 0, 0, 0.72);
+}
+
+/* Hero word gradient (white -> violet) for the load-in headline reveal. */
+.hero-grad-text {
+  background-image: linear-gradient(180deg, #ffffff 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Slow-drifting violet glow behind the final CTA (freezes under reduced-motion
+   via the global block). */
+.cta-blob {
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 60%);
+  filter: blur(40px);
+  animation: cta-blob 8s ease-in-out infinite alternate;
+}
+@keyframes cta-blob {
+  from {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    transform: translate(-35%, -62%) scale(1.25);
+  }
 }
 
 /* Gradient display heading - used by the featured-work section */

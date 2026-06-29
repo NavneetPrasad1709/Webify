@@ -21,8 +21,8 @@ export function Testimonials() {
             Teams that shipped with us.
           </h2>
           {!hasRealTestimonials && (
-            <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.2em] text-white/30">
-              Sample testimonials — replace with real client quotes before launch
+            <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.2em] text-white/55">
+              Sample testimonials, replace with real client quotes before launch
             </p>
           )}
         </FadeUp>
@@ -32,7 +32,7 @@ export function Testimonials() {
             <FadeUp key={i} delay={i * 0.08}>
               <figure className="relative flex h-full flex-col rounded-card border border-border bg-card p-6 shadow-e1 sm:p-7">
                 {t.placeholder && (
-                  <span className="absolute right-4 top-4 rounded-pill border border-border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-white/35">
+                  <span className="absolute right-4 top-4 rounded-pill border border-border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-white/55">
                     Placeholder
                   </span>
                 )}

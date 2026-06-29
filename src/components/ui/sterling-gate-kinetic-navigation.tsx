@@ -50,6 +50,8 @@ export function Component() {
   // contrast - but only while the menu is closed (open menu = dark overlay).
   const lightNav =
     (pathname === "/work" || pathname.startsWith("/work/")) && !isMenuOpen;
+  // Frosted blur + border once scrolled off the top (transparent over the hero).
+  const scrolled = !atTop && !isMenuOpen;
 
   // ---- Setup: custom ease + per-link ambient-shape hover --------------------
   useEffect(() => {
@@ -305,7 +307,11 @@ export function Component() {
   return (
     <div ref={containerRef} className="dark">
       <div className="site-header-wrapper">
-        <header className={`header${lightNav ? " header--light" : ""}`}>
+        <header
+          className={`header${
+            lightNav ? " header--light" : scrolled ? " header--scrolled" : ""
+          }`}
+        >
           <div className="container is--full">
             <nav className="nav-row" aria-label="Masthead">
               <Link href="/" aria-label="Webify home" className="nav-logo-row w-inline-block">

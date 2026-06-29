@@ -43,12 +43,20 @@
   padding-bottom: 1.25em;
   position: fixed;
   inset: 0% 0% auto;
-  /* Frosted bar, coloured like the page background (#08080b). Over the near-black
-     hero it reads as transparent; over lighter content scrolling beneath it, the
-     blur + opacity hide the collision so nothing overlaps the logo/menu. Static -
-     no on-scroll change. */
-  background: var(--surface-0);
-  border-bottom: 1px solid var(--hairline);
+  /* Transparent over the hero; .header--scrolled frosts it once you scroll so
+     content can't show through behind the logo/menu. */
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.4s ease, border-color 0.4s ease,
+    backdrop-filter 0.4s ease;
+}
+
+/* Scrolled: blur + semi-opaque bg (covers content scrolling beneath) + hairline. */
+.header--scrolled {
+  background: rgba(8, 8, 11, 0.97);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border-bottom-color: var(--hairline);
 }
 .container {
   z-index: 1;
@@ -156,11 +164,31 @@
   text-decoration: none;
   white-space: nowrap;
   pointer-events: auto;
+  position: relative;
+  overflow: hidden;
   transition: transform 0.25s, box-shadow 0.25s;
 }
 .nav-cta-btn:hover {
   transform: scale(1.05);
   box-shadow: 0 12px 30px -8px rgba(99, 102, 241, 0.55);
+}
+/* Shimmer sweep on hover */
+.nav-cta-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 70%
+  );
+  transform: translateX(-130%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+.nav-cta-btn:hover::after {
+  transform: translateX(130%);
 }
 .nav-cta-btn:focus-visible {
   outline: 2px solid var(--color-primary);
@@ -176,7 +204,7 @@
 .toggle-text {
   color: var(--color-dark);
   opacity: 0.8;
-  font-family: Caveat, cursive, Georgia, serif;
+  font-family: var(--font-geist-sans), sans-serif;
   font-size: 1.6rem;
   font-weight: 700;
   white-space: nowrap;
@@ -512,10 +540,11 @@
 .nav-link-text {
   z-index: 1;
   text-transform: uppercase;
-  font-family: "PP Neue Corp Tight", Arial, sans-serif;
+  font-family: var(--font-geist-sans), sans-serif;
   font-size: clamp(3rem, 10vw, 5.625em);
-  font-weight: 700;
-  line-height: 0.75;
+  font-weight: 800;
+  line-height: 0.85;
+  white-space: nowrap;
   transition: transform 0.55s cubic-bezier(0.65, 0.05, 0, 1);
   position: relative;
   text-shadow: 0px 1em 0px var(--color-neutral-200);
@@ -585,10 +614,10 @@
     border-bottom-left-radius: 0;
   }
   .menu-list-item {
-    height: 4.5em;
+    height: 3.2em;
   }
   .nav-link-text {
-    font-size: 4em;
+    font-size: clamp(2rem, 8.5vw, 3rem);
   }
 }
 @media screen and (max-width: 479px) {

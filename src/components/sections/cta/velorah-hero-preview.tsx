@@ -28,7 +28,7 @@ export function VelorahHeroPreview() {
       <div className="relative z-10 flex items-center justify-between px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4">
         <span
           className="text-sm tracking-tight text-white sm:text-base md:text-lg"
-          style={{ fontFamily: "'Instrument Serif', serif" }}
+          style={{ fontFamily: "var(--font-geist-sans), sans-serif" }}
         >
           Velorah<sup className="text-[0.5em]">®</sup>
         </span>
@@ -56,7 +56,7 @@ export function VelorahHeroPreview() {
       <div className="relative z-10 flex flex-col items-center px-3 pt-3 pb-6 text-center sm:px-4 sm:pt-5 md:pt-7">
         <h1
           className="animate-fade-rise max-w-[90%] text-lg font-normal leading-[0.95] tracking-[-0.03em] text-white sm:text-2xl md:text-3xl lg:text-4xl"
-          style={{ fontFamily: "'Instrument Serif', serif" }}
+          style={{ fontFamily: "var(--font-geist-sans), sans-serif" }}
         >
           Where <em className="not-italic text-white/55">dreams</em> rise{" "}
           <em className="not-italic text-white/55">through the silence.</em>

@@ -14,7 +14,7 @@ import { CtaSection } from "@/components/sections/cta/cta-section";
  */
 export default function HomePage() {
   return (
-    <>
+    <main>
       {/* H2 - Hero (Stellar-style, dark) */}
       <StellarHero />
 
@@ -44,6 +44,6 @@ export default function HomePage() {
 
       {/* H9 - Final CTA */}
       <CtaSection />
-    </>
+    </main>
   );
 }

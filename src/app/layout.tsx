@@ -5,6 +5,7 @@ import "./starfield.css";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import { PageTransition } from "@/components/layout/page-transition";
 import { Component as SiteNavigation } from "@/components/ui/sterling-gate-kinetic-navigation";
+import { CustomCursor } from "@/components/ui/custom-cursor";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { StickyCta } from "@/components/layout/sticky-cta";
 import { LeadPopup } from "@/components/layout/lead-popup";
@@ -102,6 +103,8 @@ export default function RootLayout({
           <div className="stars stars-md" />
           <div className="stars stars-lg" />
         </div>
+        {/* Textura-style custom cursor (desktop only; renders nothing on touch) */}
+        <CustomCursor />
         {/* Preconnect to the media/font CDNs (Next hoists <link> to <head>) */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

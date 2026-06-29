@@ -117,7 +117,7 @@
   z-index: 1;
 }
 .footer-social-label {
-  font-family: "Caveat", cursive;
+  font-family: var(--font-geist-sans), sans-serif;
   font-size: 17px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
@@ -222,7 +222,7 @@
   stroke-linejoin: round;
 }
 .lucky-text {
-  font-family: "Caveat", cursive;
+  font-family: var(--font-geist-sans), sans-serif;
   font-size: 20px;
   font-weight: 600;
   color: #9ca3af;
@@ -240,7 +240,7 @@
   gap: 32px 48px;
 }
 .footer-col-title {
-  font-family: "Caveat", cursive;
+  font-family: var(--font-geist-sans), sans-serif;
   font-size: 24px;
   font-weight: 600;
   font-style: italic;

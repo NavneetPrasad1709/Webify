@@ -2,9 +2,24 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 import { Star, Sparkles, Globe, Smartphone, PenTool, Check } from "lucide-react";
 import { Magnetic } from "@/components/ui/magnetic";
 import "./stellar-hero.css";
+
+// Headline split into words for the load-in reveal; tone drives the accent.
+const HEADLINE: { t: string; tone?: "violet" | "green" }[] = [
+  { t: "AI", tone: "violet" },
+  { t: "products", tone: "violet" },
+  { t: "for" },
+  { t: "founders" },
+  { t: "who" },
+  { t: "need" },
+  { t: "to" },
+  { t: "ship", tone: "green" },
+  { t: "fast.", tone: "green" },
+];
+const HERO_EASE = [0.76, 0, 0.24, 1] as const;
 
 /**
  * H2 - Hero (Stellar layout, dark + Webify content). Senior-led AI & software
@@ -50,6 +65,7 @@ const OVERLAYS: Record<TabId, { title: string; sub: string; items: string[] }> =
 export function StellarHero() {
   const [active, setActive] = useState<TabId>("ai");
   const videoRef = useRef<HTMLVideoElement>(null);
+  const reduce = useReducedMotion();
 
   // Keep the decorative background video OFF the LCP/critical path: paint a dark
   // fill immediately, then lazy-attach the source after first paint (and never,
@@ -104,28 +120,44 @@ export function StellarHero() {
         </span>
       </div>
 
-      {/* Heading - heavy Archivo, large. States WHAT (AI products) + FOR WHOM
-          (founders & teams) + OUTCOME (ship fast). */}
+      {/* Heading - giant, cinematic word-by-word reveal on load. */}
       <h1
-        className="animate-fade-in-up mx-auto mb-5 max-w-[18ch] text-[clamp(2.5rem,9vw,5.5rem)] font-extrabold leading-[1.02] tracking-tight text-white"
-        style={{ animationDelay: "0.3s" }}
+        className="mx-auto mb-5 max-w-[16ch] text-[clamp(3rem,9vw,8rem)] font-extrabold leading-[0.95] tracking-[-0.04em] text-white"
+        aria-label="AI products for founders who need to ship fast."
       >
-        AI products for founders
-        <br />
-        who need to <span className="script-accent">ship fast.</span>
+        {HEADLINE.map((w, i) => (
+          <span key={i} aria-hidden className="reveal-word">
+            <motion.span
+              className={
+                w.tone === "violet"
+                  ? "hero-grad-text"
+                  : w.tone === "green"
+                    ? "script-accent"
+                    : undefined
+              }
+              style={{ display: "inline-block", willChange: "transform" }}
+              initial={reduce ? { y: 0 } : { y: "110%" }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.9, delay: 0.15 + i * 0.08, ease: HERO_EASE }}
+            >
+              {w.t}
+            </motion.span>
+            {i < HEADLINE.length - 1 ? " " : ""}
+          </span>
+        ))}
       </h1>
 
       {/* Subheading - one line, outcome-led, &lt;20 words */}
       <p
         className="animate-fade-in-up mx-auto mb-9 max-w-xl text-lg leading-relaxed text-white/75 opacity-0 sm:text-xl"
-        style={{ animationDelay: "0.4s" }}
+        style={{ animationDelay: "1.5s" }}
       >
         The senior team that designs your product is the same one that builds and
         ships it - end to end, no junior hand-offs.
       </p>
 
       {/* CTA - full-width on mobile (thumb-reach), hugs on desktop */}
-      <div className="animate-fade-in-up flex flex-col items-center gap-3" style={{ animationDelay: "0.5s" }}>
+      <div className="animate-fade-in-up flex flex-col items-center gap-3" style={{ animationDelay: "1.7s" }}>
         <Magnetic>
           <Link
             href="/contact"
@@ -134,7 +166,7 @@ export function StellarHero() {
             Book a free 30-min call
           </Link>
         </Magnetic>
-        <p className="mb-12 font-mono text-[11px] uppercase tracking-[0.18em] text-white/45">
+        <p className="mb-12 font-mono text-[11px] uppercase tracking-[0.18em] text-white/60">
           No obligation · Reply within 24h
         </p>
       </div>
@@ -172,7 +204,7 @@ export function StellarHero() {
         />
         <div key={active} className="animate-fade-in-overlay absolute inset-0 bg-black/45">
           <div className="animate-slide-up-overlay absolute left-1/2 top-1/2 w-[min(92%,420px)] rounded-2xl border border-white/10 bg-[#0c0c11]/85 p-5 text-left shadow-[0_30px_70px_-20px_rgba(0,0,0,0.7)] backdrop-blur-xl sm:p-6">
-            <h3 className="text-lg font-bold text-white sm:text-xl">{o.title}</h3>
+            <p className="text-lg font-bold text-white sm:text-xl">{o.title}</p>
             <p className="mt-1 text-xs text-white/50 sm:text-sm">{o.sub}</p>
             <ul className="mt-4 space-y-2.5 text-sm text-white/75 sm:text-base">
               {o.items.map((it) => (

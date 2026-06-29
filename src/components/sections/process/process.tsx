@@ -115,7 +115,7 @@ export function Process() {
                   {step.num}
                 </span>
                 <div className="relative">
-                  <span className="inline-flex items-center gap-3 font-mono text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-accent)] sm:text-sm">
+                  <span className="inline-flex items-center gap-3 font-mono text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-accent-hi)] sm:text-sm">
                     <span className="h-px w-7 bg-[var(--color-accent)]" aria-hidden />
                     Step {step.num}
                   </span>
@@ -132,7 +132,7 @@ export function Process() {
                     {step.lead}
                   </p>
                   <div className="mt-7 border-t border-[var(--color-line)] pt-6">
-                    <p className="pin-kicker mb-4 text-[var(--color-bone-faint)]">Deliverables</p>
+                    <p className="pin-kicker mb-4 text-[var(--color-bone-dim)]">Deliverables</p>
                     <ul className="flex flex-wrap gap-2.5">
                       {step.deliverables.map((d) => (
                         <li

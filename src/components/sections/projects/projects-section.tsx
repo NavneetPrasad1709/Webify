@@ -149,13 +149,20 @@ function ProjectCard({
   return (
     <div
       ref={card}
+      data-cursor="view"
       className={cn(
-        "sticky overflow-hidden bg-[#0C0C0C]",
+        "group sticky overflow-hidden bg-[#0C0C0C]",
         "border-2 border-[#D7E2EA]",
         "rounded-[32px] p-4 sm:rounded-[50px] sm:p-6 md:rounded-[60px] md:p-8",
       )}
       style={{ top: `calc(5.5rem + ${index * 28}px)` }}
     >
+      {/* Violet accent line — grows from the left on hover */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute left-0 top-0 h-[3px] w-full origin-left scale-x-0 bg-[#8b5cf6] transition-transform duration-500 ease-out group-hover:scale-x-100"
+      />
+
       {/* Top row: number + capability label */}
         <div className="flex flex-wrap items-start justify-between gap-3 sm:gap-4">
           <div className="flex items-start gap-4 sm:gap-6">
@@ -165,8 +172,8 @@ function ProjectCard({
             >
               {project.number}
             </span>
-            <div className="flex flex-col pt-1">
-              <span className="text-[0.7rem] uppercase tracking-widest text-[#D7E2EA]/60 sm:text-xs">
+            <div className="flex flex-col items-start pt-1">
+              <span className="mb-2 inline-flex w-fit rounded-full border border-[#8b5cf6]/40 bg-[#8b5cf6]/15 px-3 py-1 text-[0.7rem] uppercase tracking-widest text-[#D7E2EA]/80 sm:text-xs">
                 {project.category}
               </span>
               <span className="text-xl font-semibold leading-tight text-[#D7E2EA] sm:text-2xl md:text-3xl">
@@ -188,7 +195,7 @@ function ProjectCard({
                 alt={`${project.name} - image 1`}
                 fill
                 sizes="40vw"
-                className="object-cover"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
             <div
@@ -200,7 +207,7 @@ function ProjectCard({
                 alt={`${project.name} - image 2`}
                 fill
                 sizes="40vw"
-                className="object-cover"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
           </div>
@@ -211,7 +218,7 @@ function ProjectCard({
               alt={`${project.name} - cover`}
               fill
               sizes="(max-width: 640px) 60vw, 42vw"
-              className="object-cover"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
           </div>
         </div>

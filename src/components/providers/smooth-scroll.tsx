@@ -46,9 +46,9 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     ScrollTrigger.config({ ignoreMobileResize: true });
 
     const lenis = new Lenis({
-      duration: 1.1,
+      // frame-rate-independent smoothing — Textura-style premium glide
+      lerp: 0.08,
       smoothWheel: true,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
 
     lenisRef.current = lenis;

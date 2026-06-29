@@ -42,7 +42,7 @@ export function ShowcaseSection() {
   return (
     <section className="text-white" aria-label="Recent work">
       <div className="mx-auto w-full max-w-[1400px] px-6 pb-10 pt-24 sm:px-10 sm:pb-12 sm:pt-32 lg:px-16">
-        <p className="mb-5 inline-flex items-center font-mono text-[0.72rem] font-medium uppercase tracking-[0.24em] text-white/45">
+        <p className="mb-5 inline-flex items-center font-mono text-[0.72rem] font-medium uppercase tracking-[0.24em] text-white/60">
           <span className="mr-3 inline-block h-[0.55em] w-[0.55em] rotate-45 rounded-[1px] bg-[#6366f1]" />
           The craft
         </p>

@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { ReactNode, useEffect, useRef } from "react";
 import { SparklesTitle } from "@/components/ui/sparkles-title";
+import { Magnetic } from "@/components/ui/magnetic";
 
 interface VerticalMarqueeProps {
   children: ReactNode;
@@ -114,9 +115,14 @@ export function CtaSection() {
     <section
       id="cta"
       aria-label="Start a project"
-      className="flex min-h-svh w-full items-center justify-center overflow-hidden px-6 py-24 text-foreground sm:py-32"
+      className="relative flex min-h-svh w-full items-center justify-center overflow-hidden px-6 py-24 text-foreground sm:py-32"
     >
-      <div className="w-full max-w-7xl animate-fade-in-up">
+      {/* Slow-moving violet glow behind the CTA */}
+      <div
+        aria-hidden
+        className="cta-blob pointer-events-none absolute left-1/2 top-1/2 h-[60vw] w-[60vw] max-h-[680px] max-w-[680px] rounded-full"
+      />
+      <div className="relative z-10 w-full max-w-7xl animate-fade-in-up">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-24">
           {/* Left - CTA copy */}
           <div className="max-w-xl space-y-8">
@@ -135,13 +141,15 @@ export function CtaSection() {
             </p>
             <div className="animate-fade-in-up space-y-3 [animation-delay:600ms]">
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Link
-                  href="/contact"
-                  className="group relative inline-flex h-13 items-center justify-center overflow-hidden rounded-pill bg-foreground px-7 font-semibold text-background transition-transform duration-[--dur] ease-[--ease-out] hover:scale-[1.02]"
-                >
-                  <span className="relative z-10">Book your free strategy call</span>
-                  <div className="absolute inset-0 translate-x-[-200%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-[200%]" />
-                </Link>
+                <Magnetic>
+                  <Link
+                    href="/contact"
+                    className="group relative inline-flex h-13 items-center justify-center overflow-hidden rounded-pill bg-foreground px-7 font-semibold text-background transition-transform duration-[--dur] ease-[--ease-out] hover:scale-[1.02]"
+                  >
+                    <span className="relative z-10">Book your free strategy call</span>
+                    <div className="absolute inset-0 translate-x-[-200%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-[200%]" />
+                  </Link>
+                </Magnetic>
                 <Link
                   href="/work"
                   className="group relative inline-flex h-13 items-center justify-center overflow-hidden rounded-pill border border-border bg-white/4 px-7 font-medium text-foreground transition-colors duration-[--dur] hover:bg-white/8"
