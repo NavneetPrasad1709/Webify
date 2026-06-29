@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
@@ -5,6 +6,7 @@ import { FadeUp } from "@/components/sections/cta/fade-up";
 import { ScrollZoom } from "@/components/sections/work/work-motion";
 import { WorkCapabilitiesAccordion } from "@/components/sections/work/work-capabilities-accordion";
 import { SparklesTitle } from "@/components/ui/sparkles-title";
+import { getCaseStudy } from "@/lib/work";
 
 /**
  * /work - light "BRAND SELECTED WORKS" layout (Habito-style reference), reframed
@@ -28,8 +30,8 @@ export function WorkHero() {
               </p>
               <p className="mt-4 text-pretty text-lg font-medium leading-snug text-[#0d0d0d] sm:text-xl">
                 We&apos;re a senior-led studio shipping AI products, web platforms,
-                and mobile apps end to end. Public case studies are on the way - until
-                then, here&apos;s exactly what we build and how.
+                and mobile apps end to end. Our first public case study is live below -
+                here&apos;s the work, and exactly how we build.
               </p>
               <Link
                 href="/contact"
@@ -79,6 +81,75 @@ export function WorkHero() {
             </dl>
           </FadeUp>
         </div>
+      </Container>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------- Featured --- */
+export function WorkFeatured() {
+  const study = getCaseStudy("stealthconnect");
+  if (!study) return null;
+
+  return (
+    <section aria-label="Featured work" className="pt-6 sm:pt-10">
+      <Container>
+        <FadeUp>
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-black/50">
+            Featured work
+          </p>
+        </FadeUp>
+        <FadeUp delay={0.05}>
+          <Link
+            href={`/work/${study.slug}`}
+            className="group mt-5 grid gap-7 overflow-hidden rounded-[28px] border border-black/10 bg-white p-5 transition-colors hover:border-black/30 sm:p-6 md:grid-cols-2 md:items-center md:gap-10 md:p-7"
+          >
+            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-black/10">
+              <Image
+                src={study.cover.src}
+                alt={study.cover.alt}
+                fill
+                sizes="(max-width: 768px) 100vw, 40rem"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              />
+            </div>
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-full border border-black/15 px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-black/60">
+                  {study.discipline}
+                </span>
+                <span className="rounded-full bg-[#0d0d0d] px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-[#f3f2ee]">
+                  Client · Live
+                </span>
+              </div>
+              <h2
+                className="mt-4 font-black uppercase leading-[0.95] tracking-tight text-[#0d0d0d]"
+                style={{ fontSize: "clamp(2rem,6vw,3.25rem)" }}
+              >
+                {study.name}
+              </h2>
+              <p className="mt-3 max-w-[34ch] text-pretty text-lg font-medium leading-snug text-black/70">
+                {study.tagline}
+              </p>
+              <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-4 border-t border-black/10 pt-5">
+                {study.metrics.map((m) => (
+                  <div key={m.label} className="min-w-0">
+                    <dd className="text-2xl font-black tracking-tight text-[#0d0d0d] sm:text-3xl">
+                      {m.value}
+                    </dd>
+                    <dt className="mt-1 max-w-[18ch] text-xs leading-snug text-black/55">
+                      {m.label}
+                    </dt>
+                  </div>
+                ))}
+              </dl>
+              <span className="mt-6 inline-flex items-center gap-1.5 text-base font-semibold text-[#0d0d0d]">
+                View case study
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </span>
+            </div>
+          </Link>
+        </FadeUp>
       </Container>
     </section>
   );

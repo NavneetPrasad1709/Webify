@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
@@ -23,14 +25,29 @@ interface Project {
   number: string;
   name: string;
   category: string;
+  /** When set, the card links to a real case study and shows the "Client" tag. */
+  href?: string;
+  tag?: string;
   images: { col1a: string; col1b: string; col2: string };
 }
 
-// Capability tiles (illustrative visuals - not client work). Reframed from the
-// reference's placeholder "client" cards so nothing implies work we can't verify.
+// First card is real, shipped client work (StealthConnect). The rest are
+// illustrative capability tiles - kept honest with no fabricated client names.
 const PROJECTS: Project[] = [
   {
     number: "01",
+    name: "StealthConnect — verified LinkedIn contacts in 30 min",
+    category: "AI Product",
+    href: "/work/stealthconnect",
+    tag: "Client · Live",
+    images: {
+      col1a: "/work/stealthconnect/s2.png",
+      col1b: "/work/stealthconnect/s3.png",
+      col2: "/work/stealthconnect/cover.png",
+    },
+  },
+  {
+    number: "02",
     name: "Agents, copilots & automation",
     category: "AI Products",
     images: {
@@ -43,7 +60,7 @@ const PROJECTS: Project[] = [
     },
   },
   {
-    number: "02",
+    number: "03",
     name: "Next.js sites & web apps",
     category: "Web Platforms",
     images: {
@@ -56,7 +73,7 @@ const PROJECTS: Project[] = [
     },
   },
   {
-    number: "03",
+    number: "04",
     name: "iOS & Android, one codebase",
     category: "Mobile Apps",
     images: {
@@ -163,6 +180,15 @@ function ProjectCard({
         className="pointer-events-none absolute left-0 top-0 h-[3px] w-full origin-left scale-x-0 bg-[#8b5cf6] transition-transform duration-500 ease-out group-hover:scale-x-100"
       />
 
+      {/* Whole-card link to the case study (real work only). */}
+      {project.href ? (
+        <Link
+          href={project.href}
+          aria-label={`View case study: ${project.name}`}
+          className="absolute inset-0 z-30"
+        />
+      ) : null}
+
       {/* Top row: number + capability label */}
         <div className="flex flex-wrap items-start justify-between gap-3 sm:gap-4">
           <div className="flex items-start gap-4 sm:gap-6">
@@ -173,14 +199,29 @@ function ProjectCard({
               {project.number}
             </span>
             <div className="flex flex-col items-start pt-1">
-              <span className="mb-2 inline-flex w-fit rounded-full border border-[#8b5cf6]/40 bg-[#8b5cf6]/15 px-3 py-1 text-[0.7rem] uppercase tracking-widest text-[#D7E2EA]/80 sm:text-xs">
-                {project.category}
-              </span>
+              <div className="mb-2 flex flex-wrap items-center gap-2">
+                <span className="inline-flex w-fit rounded-full border border-[#8b5cf6]/40 bg-[#8b5cf6]/15 px-3 py-1 text-[0.7rem] uppercase tracking-widest text-[#D7E2EA]/80 sm:text-xs">
+                  {project.category}
+                </span>
+                {project.tag ? (
+                  <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-[#4ade80]/40 bg-[#4ade80]/15 px-3 py-1 text-[0.7rem] uppercase tracking-widest text-[#4ade80] sm:text-xs">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#4ade80]" aria-hidden />
+                    {project.tag}
+                  </span>
+                ) : null}
+              </div>
               <span className="text-xl font-semibold leading-tight text-[#D7E2EA] sm:text-2xl md:text-3xl">
                 {project.name}
               </span>
             </div>
           </div>
+
+          {project.href ? (
+            <span className="z-40 hidden items-center gap-1.5 self-center rounded-full border border-[#D7E2EA]/30 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-[#D7E2EA] transition-colors group-hover:border-[#4ade80] group-hover:text-[#4ade80] sm:inline-flex">
+              View case study
+              <ArrowUpRight className="h-4 w-4" />
+            </span>
+          ) : null}
         </div>
 
         {/* Bottom row: 40% / 60% image grid */}

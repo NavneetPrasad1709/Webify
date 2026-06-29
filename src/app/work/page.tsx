@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site";
 import {
   WorkHero,
+  WorkFeatured,
   WorkStatement,
   WorkShowcase,
   WorkPartners,
@@ -38,6 +39,7 @@ export default function WorkPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <WorkHero />
+      <WorkFeatured />
       <WorkStatement />
       <WorkShowcase />
       <WorkPartners />
