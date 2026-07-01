@@ -221,10 +221,10 @@ export function StellarHero() {
       {/* Video + per-tab overlay, framed as a centered gallery plate with an
           animated gradient ring (WebGL hint). */}
       <div
-        className="hero-video-frame animate-fade-in-up relative mx-auto max-w-4xl rounded-3xl opacity-0"
+        className="hero-video-frame animate-fade-in-up relative mx-auto w-full rounded-3xl opacity-0"
         style={{ animationDelay: "0.7s" }}
       >
-        <div className="relative h-[360px] overflow-hidden rounded-3xl border border-white/10 bg-[#0c0c11] sm:h-[440px] md:h-[500px]">
+        <div className="relative aspect-[16/10] max-h-[36rem] min-h-[20rem] w-full overflow-hidden rounded-3xl border border-white/10 bg-[#0c0c11] sm:min-h-[24rem]">
           <video
             ref={videoRef}
             autoPlay
