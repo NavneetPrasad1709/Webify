@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { Star, Sparkles, LayoutDashboard, Smartphone, Rocket, Check } from "lucide-react";
+import { Sparkles, LayoutDashboard, Smartphone, Rocket, Check } from "lucide-react";
 import { Magnetic } from "@/components/ui/magnetic";
 import "./stellar-hero.css";
 
@@ -117,37 +117,52 @@ export function StellarHero() {
   const o = OVERLAYS[active];
 
   return (
-    <section className="stellar-hero relative w-full overflow-hidden px-5 pb-20 pt-24 text-center sm:px-6 sm:pb-28 sm:pt-28">
+    <section className="stellar-hero relative w-full overflow-hidden px-5 pb-20 pt-28 text-center sm:px-6 sm:pb-28 sm:pt-36">
       {/* Futuristic ambient bloom behind the headline (pure CSS, reduced-motion safe). */}
       <div className="hero-aurora" aria-hidden />
 
       <div className="relative z-10 mx-auto max-w-7xl">
-      {/* Badge */}
+      {/* Availability pill - a calm, real studio signal */}
       <div
-        className="animate-fade-in-up mb-7 inline-flex items-center gap-2"
+        className="animate-fade-in-up mb-6 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-3.5 py-1.5 backdrop-blur-sm"
         style={{ animationDelay: "0.2s" }}
       >
-        <span className="flex h-6 w-6 items-center justify-center rounded border border-white/20">
-          <Star className="h-3.5 w-3.5 fill-white text-white" />
+        <span className="relative flex h-2 w-2">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400/60 motion-reduce:hidden" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
         </span>
-        <span className="text-[13px] font-medium text-white/80 sm:text-sm">
-          Animated &amp; 3D web studio - senior-led, India &amp; worldwide
+        <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-white/70 sm:text-xs">
+          Available for new projects
         </span>
       </div>
 
-      {/* Heading - giant, cinematic word-by-word reveal on load. */}
+      {/* Gradient hairline divider */}
+      <motion.div
+        aria-hidden
+        className="mx-auto mb-8 h-px w-16 bg-gradient-to-r from-transparent via-violet-500/50 to-green-400/50"
+        initial={reduce ? false : { scaleX: 0, opacity: 0 }}
+        animate={{ scaleX: 1, opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.3, ease: HERO_EASE }}
+        style={{ transformOrigin: "center" }}
+      />
+
+      {/* Heading - giant, cinematic word-by-word reveal on load. Lit from within
+          by two unclipped radial blooms (children of the h1, not the clipped
+          reveal wrappers) so the accents glow softly with no rectangle. */}
       <h1
-        className="mx-auto mb-5 max-w-[16ch] text-[clamp(3rem,9vw,8rem)] font-extrabold leading-[0.95] tracking-[-0.04em] text-white"
+        className="relative isolate mx-auto mb-6 max-w-[15ch] text-[clamp(3rem,9vw,8rem)] font-bold leading-[0.92] tracking-[-0.045em] text-white [text-wrap:balance]"
         aria-label="Websites nobody builds better."
       >
+        <span aria-hidden className="headline-bloom headline-bloom--violet" />
+        <span aria-hidden className="headline-bloom headline-bloom--green" />
         {HEADLINE.map((w, i) => (
           <span key={i} aria-hidden className="reveal-word">
             <motion.span
               className={
                 w.tone === "violet"
-                  ? "hero-grad-text hero-glow-violet"
+                  ? "hero-grad-text"
                   : w.tone === "green"
-                    ? "script-accent hero-glow-green"
+                    ? "script-accent"
                     : undefined
               }
               style={{ display: "inline-block", willChange: "transform" }}
@@ -162,14 +177,14 @@ export function StellarHero() {
         ))}
       </h1>
 
-      {/* Subheading - names the flagship + the full range */}
+      {/* Subheading - one narrow, even-breaking measure */}
       <p
-        className="animate-fade-in-up mx-auto mb-9 max-w-2xl text-lg leading-relaxed text-white/75 opacity-0 sm:text-xl"
+        className="animate-fade-in-up mx-auto mb-9 max-w-xl text-pretty text-base leading-[1.65] text-white/65 opacity-0 sm:text-lg"
         style={{ animationDelay: "1.1s" }}
       >
         Award-level animated and 3D sites are our flagship - plus fast SaaS
         products, smart mobile apps, and landing pages that convert. Designed and
-        shipped by the same senior team.
+        shipped by one senior team.
       </p>
 
       {/* CTA - full-width on mobile (thumb-reach), hugs on desktop */}
@@ -203,9 +218,10 @@ export function StellarHero() {
         </div>
       </div>
 
-      {/* Video + per-tab overlay, wrapped in an animated gradient frame (WebGL hint). */}
+      {/* Video + per-tab overlay, framed as a centered gallery plate with an
+          animated gradient ring (WebGL hint). */}
       <div
-        className="hero-video-frame animate-fade-in-up relative rounded-3xl opacity-0"
+        className="hero-video-frame animate-fade-in-up relative mx-auto max-w-4xl rounded-3xl opacity-0"
         style={{ animationDelay: "0.7s" }}
       >
         <div className="relative h-[360px] overflow-hidden rounded-3xl border border-white/10 bg-[#0c0c11] sm:h-[440px] md:h-[500px]">
@@ -248,6 +264,11 @@ export function StellarHero() {
         <span aria-hidden className="h-4 w-px bg-white/15" />
         <span>First public client shipped: StealthConnect</span>
       </div>
+
+      {/* Editorial index line - a quiet studio finish */}
+      <p className="mt-8 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-white/35">
+        Animated &amp; 3D web studio · India / Worldwide · Senior-led
+      </p>
       </div>
     </section>
   );

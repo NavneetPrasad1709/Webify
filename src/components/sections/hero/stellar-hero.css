@@ -40,12 +40,40 @@
    All pure CSS/transform - no new deps - and disabled under reduced-motion.
    ========================================================================== */
 
-/* Accent words glow softly, so the boast reads lit from within. */
-.stellar-hero .hero-glow-violet {
-  filter: drop-shadow(0 0 26px rgba(139, 92, 246, 0.4));
+/* The accent words are lit from within by unclipped radial blooms that live in
+   the h1's own stacking context (z-index:-1) - NOT inside the .reveal-word
+   overflow:hidden wrappers, so the glow stays soft and round with no clipped
+   rectangle. (This replaces the old per-word drop-shadow, which the reveal
+   wrapper's overflow:hidden was chopping into a hard box.) */
+.stellar-hero h1 {
+  position: relative;
+  isolation: isolate;
 }
-.stellar-hero .hero-glow-green {
-  filter: drop-shadow(0 0 26px rgba(74, 222, 128, 0.34));
+.stellar-hero .headline-bloom {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 9999px;
+  filter: blur(44px);
+  animation: headline-bloom-breathe 7s ease-in-out infinite alternate;
+}
+.stellar-hero .headline-bloom--violet {
+  left: 2%;
+  top: 0.02em;
+  width: clamp(180px, 26vw, 340px);
+  height: 0.9em;
+  background: radial-gradient(closest-side, rgba(139, 92, 246, 0.5), transparent 72%);
+}
+.stellar-hero .headline-bloom--green {
+  right: 6%;
+  bottom: 0.06em;
+  width: clamp(160px, 22vw, 300px);
+  height: 0.9em;
+  background: radial-gradient(closest-side, rgba(74, 222, 128, 0.4), transparent 72%);
+}
+@keyframes headline-bloom-breathe {
+  from { transform: scale(1); opacity: 0.5; }
+  to { transform: scale(1.06); opacity: 0.62; }
 }
 
 /* Ambient violet -> green bloom behind the headline. */
@@ -59,7 +87,7 @@
   transform: translateX(-50%);
   pointer-events: none;
   background:
-    radial-gradient(42% 46% at 42% 30%, rgba(139, 92, 246, 0.2), transparent 70%),
+    radial-gradient(42% 46% at 42% 30%, rgba(139, 92, 246, 0.16), transparent 70%),
     radial-gradient(38% 42% at 62% 44%, rgba(74, 222, 128, 0.12), transparent 72%);
   filter: blur(46px);
   animation: hero-aurora-drift 15s ease-in-out infinite alternate;
@@ -104,7 +132,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .stellar-hero .hero-aurora,
-  .stellar-hero .hero-video-frame::before {
+  .stellar-hero .hero-video-frame::before,
+  .stellar-hero .headline-bloom {
     animation: none;
   }
 }
