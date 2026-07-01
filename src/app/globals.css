@@ -170,52 +170,31 @@ body {
   z-index: 9999;
   display: grid;
   place-items: center;
-  width: 30px;
-  height: 30px;
+  width: 12px;
+  height: 12px;
   border-radius: 9999px;
-  border: 1.5px solid #fff;
+  background: #fff;
   /* difference blend = always visible (white on dark, black on light pages). */
   mix-blend-mode: difference;
   pointer-events: none;
   will-change: transform;
-  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-    height 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease,
-    border-color 0.3s ease, opacity 0.25s ease;
-}
-/* Precise inner dot - tracks tighter than the ring (premium two-part cursor). */
-.custom-cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  width: 5px;
-  height: 5px;
-  border-radius: 9999px;
-  background: #fff;
-  mix-blend-mode: difference;
-  pointer-events: none;
-  will-change: transform;
-  transition: opacity 0.25s ease;
+  transition: width 0.28s ease, height 0.28s ease, background-color 0.28s ease,
+    opacity 0.2s ease;
 }
 .custom-cursor.is-hover {
-  width: 58px;
-  height: 58px;
+  width: 48px;
+  height: 48px;
 }
 .custom-cursor.is-view {
-  width: 96px;
-  height: 96px;
+  width: 76px;
+  height: 76px;
   background: #7c3aed;
-  border-color: transparent;
-  mix-blend-mode: normal;
 }
-.custom-cursor.is-hidden,
-.custom-cursor.is-hidden-zone,
-.custom-cursor-dot.is-hidden,
-.custom-cursor-dot.is-hidden-zone {
+.custom-cursor.is-hidden {
   opacity: 0;
 }
 .custom-cursor__label {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: #fff;
@@ -227,8 +206,7 @@ body {
   opacity: 1;
 }
 @media (hover: none), (pointer: coarse) {
-  .custom-cursor,
-  .custom-cursor-dot {
+  .custom-cursor {
     display: none;
   }
 }

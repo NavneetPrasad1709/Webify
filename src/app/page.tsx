@@ -1,5 +1,4 @@
 import { StellarHero } from "@/components/sections/hero/stellar-hero";
-import { MaskStatement } from "@/components/sections/statement/mask-statement";
 import { ServicesSection } from "@/components/sections/services/services-section";
 import { StatementSection } from "@/components/sections/statement/statement-section";
 import { ProjectsSection } from "@/components/sections/projects/projects-section";
@@ -19,8 +18,8 @@ export default function HomePage() {
       {/* H2 - Hero (Stellar-style, dark) */}
       <StellarHero />
 
-      {/* H2.5 - Mask-reveal studio statement (cursor spotlight proof-of-craft) */}
-      <MaskStatement />
+      {/* H2.5 - Trust bar removed for now; re-add <TrustBar /> from
+          @/components/sections/proof/trust-bar when real metrics/logos are ready. */}
 
       {/* H3 - Services overview */}
       <ServicesSection />
