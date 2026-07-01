@@ -139,10 +139,15 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* --- Premium upgrade: custom cursor (DESKTOP / fine-pointer only; touch keeps
-   its native cursor automatically), brand text selection, and a slim scrollbar. */
+/* --- Cursor affordance. The NATIVE cursor stays visible everywhere (familiar +
+   easy to read); we only hide it over clickable elements, where a ring / "View"
+   pill appears instead to signal what's interactive. Plus brand selection + a
+   slim scrollbar. */
 @media (hover: hover) and (pointer: fine) {
-  * {
+  a,
+  button,
+  [role="button"],
+  [data-cursor] {
     cursor: none;
   }
 }
@@ -161,8 +166,10 @@ body {
   border-radius: 99px;
 }
 
-/* Custom cursor element (see src/components/ui/custom-cursor.tsx). Position is
-   driven by rAF transform; only size/colour transition. Hidden on touch. */
+/* Cursor affordance (see src/components/ui/custom-cursor.tsx). Invisible by
+   default - the native arrow shows. A hollow ring fades in over links/buttons,
+   and a violet "View" pill appears over project cards, so what's clickable is
+   obvious. Position is driven by rAF transform. Hidden on touch. */
 .custom-cursor {
   position: fixed;
   top: 0;
@@ -170,31 +177,32 @@ body {
   z-index: 9999;
   display: grid;
   place-items: center;
-  width: 12px;
-  height: 12px;
+  width: 44px;
+  height: 44px;
   border-radius: 9999px;
-  background: #fff;
-  /* difference blend = always visible (white on dark, black on light pages). */
+  border: 1.5px solid #fff;
+  /* difference blend = visible on light + dark pages. */
   mix-blend-mode: difference;
+  opacity: 0; /* hidden until the pointer is over an interactive element */
   pointer-events: none;
   will-change: transform;
-  transition: width 0.28s ease, height 0.28s ease, background-color 0.28s ease,
-    opacity 0.2s ease;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    height 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease,
+    border-color 0.3s ease, opacity 0.25s ease;
 }
 .custom-cursor.is-hover {
-  width: 48px;
-  height: 48px;
+  opacity: 1;
 }
 .custom-cursor.is-view {
-  width: 76px;
-  height: 76px;
+  opacity: 1;
+  width: 92px;
+  height: 92px;
   background: #7c3aed;
-}
-.custom-cursor.is-hidden {
-  opacity: 0;
+  border-color: transparent;
+  mix-blend-mode: normal;
 }
 .custom-cursor__label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: #fff;

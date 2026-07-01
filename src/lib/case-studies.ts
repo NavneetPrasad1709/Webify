@@ -35,6 +35,47 @@ const U = (id: string) =>
 
 export const CASE_STUDIES: CaseStudyEntry[] = [
   {
+    slug: "evergreen",
+    title: "EverGreen - a luxury real-estate studio site",
+    client: "Self-initiated build",
+    category: "Web Design · Live",
+    year: 2026,
+    summary:
+      "The 'Luxory Homes' project: a complete luxury architecture & real-estate brand - EverGreen - designed and shipped end to end, from a type-led, editorial home page to a scroll-choreographed residences gallery. Live and public on Next.js.",
+    cover: {
+      src: "/work/luxory-homes/cover.jpg",
+      alt: "EverGreen home page - 'Homes built to last' over a modern architectural residence",
+    },
+    results: [
+      { value: "~1.1s", label: "LCP, photo-led hero" },
+      { value: "Live", label: "shipped on Vercel" },
+    ],
+    problem: [
+      "Luxury real-estate sites tend to look the same - stock templates, timid typography, and stiff galleries that make premium homes feel ordinary.",
+      "We set our own brief: design and ship a complete, believable luxury-property brand - EverGreen - with the editorial confidence of a print title and the performance of a modern web app.",
+    ],
+    approach: [
+      "Lead with type and space - an oversized condensed display face, generous whitespace, and a warm cream-and-forest-green palette give every section the calm authority of a monograph.",
+      "Let the architecture breathe, and choreograph the scroll: full-bleed photography, a staggered residences grid, and reveals that use motion to guide the eye rather than distract it.",
+    ],
+    build: {
+      paragraphs: [
+        "Built on Next.js with every image run through the framework's optimizer, so the cinematic photography loads sharp without stalling the page - mobile-first and fluid from phone to wide desktop.",
+        "A full studio narrative is designed and wired end to end - hero, studio intro, a four-home residences gallery, a numbered services list, awards, client stories, a journal, an FAQ, and contact - each with its own scroll-triggered motion.",
+      ],
+      stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "GSAP", "Vercel"],
+    },
+    outcome: [
+      "EverGreen ships as a live, public site you can scroll end to end - a complete luxury real-estate brand that holds a largest-contentful-paint around 1.1 seconds despite a photography-led hero.",
+      "It doubles as proof of range: the same studio behind an AI product can design and ship a premium, editorial brand experience with equal polish.",
+    ],
+    metrics: [
+      { value: "~1.1s", label: "Largest contentful paint" },
+      { value: "9", label: "Sections, choreographed on scroll" },
+      { value: "Live", label: "Public on Vercel" },
+    ],
+  },
+  {
     slug: "aura-ai-brand-copilot",
     title: "Aura - an AI brand-identity copilot",
     client: "Personal project",

@@ -13,10 +13,11 @@ import { SparklesTitle } from "@/components/ui/sparkles-title";
  * H5 - Featured work. Sticky-stacking project cards that scale down as the next
  * card slides up, forming a layered deck (sshahaider-style projects deck).
  *
- * The first card is real, shipped client work (StealthConnect) shown as a
- * looping in-browser product clip captured from the live site, so the project
- * reads as alive and in motion. The remaining cards are illustrative capability
- * tiles - kept honest with no fabricated client names.
+ * The first two cards are real, shipped work - a client AI product
+ * (StealthConnect) and a self-initiated luxury real-estate design build
+ * (EverGreen) - each shown as a looping in-browser product clip captured from
+ * the live site, so the work reads as alive and in motion. The remaining cards
+ * are illustrative capability tiles - kept honest with no fabricated clients.
  *
  * The scroll-scale is driven by GSAP ScrollTrigger (synced to our Lenis
  * smooth-scroll). Sticky offsets clear the fixed nav. Reduced-motion keeps the
@@ -65,6 +66,24 @@ const PROJECTS: Project[] = [
   },
   {
     number: "02",
+    name: "EverGreen — a luxury real-estate studio, shipped",
+    category: "Web Design",
+    href: "/work/evergreen",
+    tag: "Design build · Live",
+    video: {
+      mp4: "/work/luxory-homes/demo.mp4",
+      webm: "/work/luxory-homes/demo.webm",
+      poster: "/work/luxory-homes/demo-poster.jpg",
+      domain: "luxory-homes.vercel.app",
+    },
+    metrics: [
+      { v: "~1.1s", l: "LCP" },
+      { v: "9", l: "sections" },
+      { v: "Live", l: "on Vercel" },
+    ],
+  },
+  {
+    number: "03",
     name: "Agents, copilots & automation",
     category: "AI Products",
     images: {
@@ -77,7 +96,7 @@ const PROJECTS: Project[] = [
     },
   },
   {
-    number: "03",
+    number: "04",
     name: "Next.js sites & web apps",
     category: "Web Platforms",
     images: {
@@ -90,7 +109,7 @@ const PROJECTS: Project[] = [
     },
   },
   {
-    number: "04",
+    number: "05",
     name: "iOS & Android, one codebase",
     category: "Mobile Apps",
     images: {

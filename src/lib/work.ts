@@ -8,7 +8,7 @@
  * the /work case-study pages light up automatically.
  */
 
-export type Discipline = "AI Product" | "Web App" | "Mobile App";
+export type Discipline = "AI Product" | "Web App" | "Web Design" | "Mobile App";
 
 export interface CaseStudyImage {
   src: string;
@@ -99,6 +99,57 @@ export const CASE_STUDIES: readonly CaseStudy[] = [
       {
         src: "/work/stealthconnect/s3.png",
         alt: "StealthConnect 'Why' section - verified-not-estimated, 30-minute turnaround, and pay-per-result feature cards",
+      },
+    ],
+  },
+  {
+    slug: "evergreen",
+    name: "EverGreen",
+    client: "Self-initiated build",
+    discipline: "Web Design",
+    kind: "Personal",
+    year: "2026",
+    tagline: "A luxury real-estate studio's site, designed and shipped end to end.",
+    summary:
+      "EverGreen is a self-initiated design build - the 'Luxory Homes' project - a complete luxury architecture & real-estate brand taken from blank canvas to a live, production-grade site: editorial display type, cinematic photography, and scroll-choreographed motion, shipped on Next.js.",
+    cover: {
+      src: "/work/luxory-homes/cover.jpg",
+      alt: "EverGreen home page - an oversized 'Homes built to last' headline over a modern architectural residence, in the studio's warm cream and forest-green identity",
+    },
+    liveUrl: "https://luxory-homes.vercel.app/",
+    problem: [
+      "Luxury real-estate sites tend to look the same - stock templates, timid typography, and stiff galleries that make premium homes feel ordinary. A studio selling 'built to last' needs a site that feels as considered as the architecture it represents.",
+      "We set our own brief: design and ship a complete, believable luxury-property brand - EverGreen - with the editorial confidence of a print title and the performance of a modern web app.",
+    ],
+    approach: [
+      "Lead with type and space. An oversized condensed display face, generous whitespace, and a warm cream-and-forest-green palette give every section the calm authority of a monograph.",
+      "Let the architecture breathe. Full-bleed photography and a staggered residences grid put the homes first, with motion used to reveal - never to distract.",
+      "Choreograph the scroll. Section reveals, headlines that resolve from a blur, and a running 'Architecture · Interiors · Real Estate' marquee keep the page feeling alive while it stays fast.",
+    ],
+    build: {
+      paragraphs: [
+        "The site is built on Next.js, with every image served through the framework's optimizer so the cinematic photography loads sharp without stalling the page. Layout is mobile-first and fluid from phone to wide desktop.",
+        "A full studio narrative is designed and wired end to end - hero, studio intro, a four-home residences gallery, a numbered services list, awards, client stories, a journal, an FAQ, and contact - each with its own scroll-triggered motion.",
+      ],
+      stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "GSAP", "Vercel"],
+    },
+    outcome: [
+      "EverGreen ships as a live, public site you can scroll end to end - a complete luxury real-estate brand that holds a largest-contentful-paint around 1.1 seconds despite a photography-led hero.",
+      "It's proof of range: the same studio behind an AI product (StealthConnect) can design and ship a premium, editorial brand experience with equal polish.",
+    ],
+    metrics: [
+      { value: "~1.1s", label: "Largest contentful paint, on a photography-led hero" },
+      { value: "9", label: "Sections choreographed on scroll, hero to contact" },
+      { value: "Live", label: "Shipped to production on Vercel" },
+    ],
+    gallery: [
+      {
+        src: "/work/luxory-homes/residences.jpg",
+        alt: "EverGreen residences gallery - a staggered grid of four homes (The Pinnacle at Highland Park, Azure Bay Residence, Cedar Ridge Retreat, The Monterey Modern), each with a 'See full project' link",
+      },
+      {
+        src: "/work/luxory-homes/services.jpg",
+        alt: "EverGreen services - a numbered editorial list from Acquisition & Advisory to Development & Management, each row tagged with its disciplines",
       },
     ],
   },
