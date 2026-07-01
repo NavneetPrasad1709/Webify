@@ -103,7 +103,8 @@ export function SiteFooter() {
           </video>
 
           <div className="footer-logo">
-            <span className="footer-logo-mark">W</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/icon.svg" alt="" className="footer-logo-img" width={36} height={36} />
             <span className="footer-logo-name">Webify</span>
           </div>
 

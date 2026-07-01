@@ -1,0 +1,43 @@
+<svg viewBox="0 0 660 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#16161c"/>
+      <stop offset="100%" stop-color="#08080b"/>
+    </linearGradient>
+    <linearGradient id="wgrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8385f5"/>
+      <stop offset="55%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#4ade80"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.38"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <g>
+    <rect x="0" y="0" width="200" height="200" rx="44" fill="url(#bg)"/>
+    <rect x="0" y="0" width="200" height="200" rx="44" fill="url(#glow)"/>
+    <rect x="1.5" y="1.5" width="197" height="197" rx="42.5" fill="none" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1.5"/>
+
+    <polyline points="46,68 74,150 100,102 126,150 154,68"
+              fill="none" stroke="#000000" stroke-opacity="0.5"
+              stroke-width="21" stroke-linecap="round" stroke-linejoin="round"
+              transform="translate(4,5)"/>
+
+    <polyline points="46,66 73,146 100,100 127,146 154,66"
+              fill="none" stroke="url(#wgrad)"
+              stroke-width="21" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <polyline points="46,66 73,146 100,100 127,146 154,66"
+              fill="none" stroke="#ffffff" stroke-opacity="0.22"
+              stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"
+              transform="translate(-1.4,-1.8)"/>
+
+    <circle cx="157" cy="52" r="7" fill="#4ade80"/>
+  </g>
+
+  <text x="234" y="128" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700"
+        font-size="92" letter-spacing="-2" fill="#f5f5f5">Webify</text>
+  <circle cx="628" cy="64" r="8" fill="#4ade80"/>
+</svg>

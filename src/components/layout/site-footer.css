@@ -85,6 +85,13 @@
   color: #fff;
   letter-spacing: -0.02em;
 }
+.footer-logo-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  display: block;
+  flex: none;
+}
 .footer-logo-name {
   font-family: var(--font-geist-sans), sans-serif;
   font-size: 22px;

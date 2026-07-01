@@ -85,6 +85,29 @@
   text-decoration: none;
   display: flex;
 }
+/* Brand lockup: icon tile + wordmark scale together (home-hero 2x -> 1). */
+.nav-logo-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  transform-origin: left center;
+  transition: transform 0.55s cubic-bezier(0.65, 0.05, 0, 1);
+}
+.nav-logo-lockup--hero {
+  transform: scale(2);
+}
+@media (max-width: 640px) {
+  .nav-logo-lockup--hero {
+    transform: scale(1.55);
+  }
+}
+.nav-logo-mark {
+  width: 1.9rem;
+  height: 1.9rem;
+  flex: none;
+  display: block;
+  border-radius: 0.42rem;
+}
 .logo-text {
   color: var(--color-dark);
   font-family: var(--font-geist-sans), sans-serif;

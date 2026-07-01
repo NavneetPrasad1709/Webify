@@ -315,9 +315,14 @@ export function Component() {
           <div className="container is--full">
             <nav className="nav-row" aria-label="Masthead">
               <Link href="/" aria-label="Webify home" className="nav-logo-row w-inline-block">
-                {/* Heavy wordmark: WEBIFY + accent asterisk. */}
-                <span className={`logo-text${logoHero ? " logo-text--hero" : ""}`}>
-                  Webify<span className="logo-star">*</span>
+                {/* Brand lockup: icon tile (theme-agnostic) + heavy wordmark.
+                    Both scale together for the home-hero 2x -> 1 shrink. */}
+                <span className={`nav-logo-lockup${logoHero ? " nav-logo-lockup--hero" : ""}`}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/icon.svg" alt="" className="nav-logo-mark" width={40} height={40} />
+                  <span className="logo-text">
+                    Webify<span className="logo-star">*</span>
+                  </span>
                 </span>
               </Link>
 
