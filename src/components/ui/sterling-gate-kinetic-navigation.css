@@ -98,7 +98,7 @@
 }
 @media (max-width: 640px) {
   .nav-logo-lockup--hero {
-    transform: scale(1.55);
+    transform: scale(1.2);
   }
 }
 .nav-logo-mark {
