@@ -34,3 +34,77 @@
     opacity: 1 !important;
   }
 }
+
+/* ============================================================================
+   Futuristic accents for the "Websites nobody builds better." hero identity.
+   All pure CSS/transform - no new deps - and disabled under reduced-motion.
+   ========================================================================== */
+
+/* Accent words glow softly, so the boast reads lit from within. */
+.stellar-hero .hero-glow-violet {
+  filter: drop-shadow(0 0 26px rgba(139, 92, 246, 0.4));
+}
+.stellar-hero .hero-glow-green {
+  filter: drop-shadow(0 0 26px rgba(74, 222, 128, 0.34));
+}
+
+/* Ambient violet -> green bloom behind the headline. */
+.stellar-hero .hero-aurora {
+  position: absolute;
+  top: -12%;
+  left: 50%;
+  z-index: 0;
+  width: min(1100px, 120%);
+  height: 70%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background:
+    radial-gradient(42% 46% at 42% 30%, rgba(139, 92, 246, 0.2), transparent 70%),
+    radial-gradient(38% 42% at 62% 44%, rgba(74, 222, 128, 0.12), transparent 72%);
+  filter: blur(46px);
+  animation: hero-aurora-drift 15s ease-in-out infinite alternate;
+}
+@keyframes hero-aurora-drift {
+  from { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.82; }
+  to { transform: translateX(-47%) translateY(2%) scale(1.08); opacity: 1; }
+}
+
+/* Rotating gradient ring around the preview - hints at WebGL without a 3D engine. */
+@property --hero-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.stellar-hero .hero-video-frame::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--hero-angle),
+    transparent 0deg,
+    transparent 200deg,
+    rgba(139, 92, 246, 0.85) 285deg,
+    rgba(74, 222, 128, 0.85) 335deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: hero-frame-rotate 6s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+@keyframes hero-frame-rotate {
+  to { --hero-angle: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stellar-hero .hero-aurora,
+  .stellar-hero .hero-video-frame::before {
+    animation: none;
+  }
+}

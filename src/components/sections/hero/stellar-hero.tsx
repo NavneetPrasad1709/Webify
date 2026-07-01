@@ -3,67 +3,79 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { Star, Sparkles, Globe, Smartphone, PenTool, Check } from "lucide-react";
+import { Star, Sparkles, LayoutDashboard, Smartphone, Rocket, Check } from "lucide-react";
 import { Magnetic } from "@/components/ui/magnetic";
 import "./stellar-hero.css";
 
 // Headline split into words for the load-in reveal; tone drives the accent.
+// The boast resolves last: violet "Websites" leads, green "better." lands the payoff.
 const HEADLINE: { t: string; tone?: "violet" | "green" }[] = [
-  { t: "AI", tone: "violet" },
-  { t: "products", tone: "violet" },
-  { t: "for" },
-  { t: "founders" },
-  { t: "who" },
-  { t: "need" },
-  { t: "to" },
-  { t: "ship", tone: "green" },
-  { t: "fast.", tone: "green" },
+  { t: "Websites", tone: "violet" },
+  { t: "nobody" },
+  { t: "builds" },
+  { t: "better.", tone: "green" },
 ];
 const HERO_EASE = [0.76, 0, 0.24, 1] as const;
 
 /**
- * H2 - Hero (Stellar layout, dark + Webify content). Senior-led AI & software
- * product team - agency positioning (not a SaaS product). Archivo font, heavy
- * large headline. No internal nav (global Sterling Gate nav stays).
+ * H2 - Hero (Stellar layout, dark + Webify content). Senior-led creative-dev +
+ * product studio. Flagship: award-level animated & 3D websites; plus SaaS, mobile
+ * apps, and landing pages. No internal nav (global Sterling Gate nav stays).
  * Note: the background video is a reference/stock asset - swap for an owned clip.
  */
 const VIDEO_SRC =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260319_165750_358b1e72-c921-48b7-aaac-f200994f32fb.mp4";
 
 const TABS = [
-  { id: "ai", label: "AI Products", icon: Sparkles },
-  { id: "web", label: "Web Apps", icon: Globe },
-  { id: "mobile", label: "Mobile", icon: Smartphone },
-  { id: "design", label: "Design", icon: PenTool },
+  { id: "web", label: "Animated Web", icon: Sparkles },
+  { id: "saas", label: "SaaS Products", icon: LayoutDashboard },
+  { id: "mobile", label: "Mobile Apps", icon: Smartphone },
+  { id: "landing", label: "Landing Pages", icon: Rocket },
 ] as const;
 
 type TabId = (typeof TABS)[number]["id"];
 
 const OVERLAYS: Record<TabId, { title: string; sub: string; items: string[] }> = {
-  ai: {
-    title: "AI products",
-    sub: "Agents, copilots & automation",
-    items: ["Models running in production", "RAG & data pipelines", "Judged on outcomes, not demos"],
-  },
   web: {
-    title: "Web platforms",
-    sub: "Sites & web apps",
-    items: ["Next.js, performance-budgeted", "Accessible (WCAG)", "Built to convert"],
+    title: "Animated & 3D websites",
+    sub: "Our flagship - the futuristic web nobody builds better.",
+    items: [
+      "WebGL, shaders & scroll-driven 3D that stay buttery on real devices",
+      "Hand-tuned motion & kinetic type, easing down to the frame",
+      "60fps as a rule, not a hope - performance budgeted from commit one",
+    ],
+  },
+  saas: {
+    title: "SaaS product UI",
+    sub: "Advanced interfaces, best-in-class performance under load.",
+    items: [
+      "Complex dashboards & flows that stay fast at scale",
+      "Design systems built for a real team, not a one-off screen",
+      "Shipped live for StealthConnect, our first public AI SaaS client",
+    ],
   },
   mobile: {
     title: "Mobile apps",
-    sub: "iOS & Android",
-    items: ["One codebase, native feel", "Offline-ready", "Daily-use quality"],
+    sub: "Smart, native-grade feel.",
+    items: [
+      "Fluid, gesture-led UI that feels instant in the hand",
+      "One design language across web and app",
+      "Considered states - loading, empty & error handled with care",
+    ],
   },
-  design: {
-    title: "Product design",
-    sub: "Research → system → product",
-    items: ["Strategy & research", "Design systems", "Prototypes that test"],
+  landing: {
+    title: "Landing pages",
+    sub: "High-converting, built to sell.",
+    items: [
+      "Story-led scroll & motion tuned to one decisive action",
+      "Sub-second loads, WCAG-clean, SEO-ready",
+      "Copy, design & dev in one tight senior loop - launch in days",
+    ],
   },
 };
 
 export function StellarHero() {
-  const [active, setActive] = useState<TabId>("ai");
+  const [active, setActive] = useState<TabId>("web");
   const videoRef = useRef<HTMLVideoElement>(null);
   const reduce = useReducedMotion();
 
@@ -105,8 +117,11 @@ export function StellarHero() {
   const o = OVERLAYS[active];
 
   return (
-    <section className="stellar-hero w-full px-5 pb-20 pt-24 text-center sm:px-6 sm:pb-28 sm:pt-28">
-      <div className="mx-auto max-w-7xl">
+    <section className="stellar-hero relative w-full overflow-hidden px-5 pb-20 pt-24 text-center sm:px-6 sm:pb-28 sm:pt-28">
+      {/* Futuristic ambient bloom behind the headline (pure CSS, reduced-motion safe). */}
+      <div className="hero-aurora" aria-hidden />
+
+      <div className="relative z-10 mx-auto max-w-7xl">
       {/* Badge */}
       <div
         className="animate-fade-in-up mb-7 inline-flex items-center gap-2"
@@ -116,29 +131,29 @@ export function StellarHero() {
           <Star className="h-3.5 w-3.5 fill-white text-white" />
         </span>
         <span className="text-[13px] font-medium text-white/80 sm:text-sm">
-          Senior-led AI &amp; software - India &amp; worldwide
+          Animated &amp; 3D web studio - senior-led, India &amp; worldwide
         </span>
       </div>
 
       {/* Heading - giant, cinematic word-by-word reveal on load. */}
       <h1
         className="mx-auto mb-5 max-w-[16ch] text-[clamp(3rem,9vw,8rem)] font-extrabold leading-[0.95] tracking-[-0.04em] text-white"
-        aria-label="AI products for founders who need to ship fast."
+        aria-label="Websites nobody builds better."
       >
         {HEADLINE.map((w, i) => (
           <span key={i} aria-hidden className="reveal-word">
             <motion.span
               className={
                 w.tone === "violet"
-                  ? "hero-grad-text"
+                  ? "hero-grad-text hero-glow-violet"
                   : w.tone === "green"
-                    ? "script-accent"
+                    ? "script-accent hero-glow-green"
                     : undefined
               }
               style={{ display: "inline-block", willChange: "transform" }}
               initial={reduce ? { y: 0 } : { y: "110%" }}
               animate={{ y: 0 }}
-              transition={{ duration: 0.9, delay: 0.15 + i * 0.08, ease: HERO_EASE }}
+              transition={{ duration: 0.9, delay: 0.15 + i * 0.1, ease: HERO_EASE }}
             >
               {w.t}
             </motion.span>
@@ -147,23 +162,24 @@ export function StellarHero() {
         ))}
       </h1>
 
-      {/* Subheading - one line, outcome-led, &lt;20 words */}
+      {/* Subheading - names the flagship + the full range */}
       <p
-        className="animate-fade-in-up mx-auto mb-9 max-w-xl text-lg leading-relaxed text-white/75 opacity-0 sm:text-xl"
-        style={{ animationDelay: "1.5s" }}
+        className="animate-fade-in-up mx-auto mb-9 max-w-2xl text-lg leading-relaxed text-white/75 opacity-0 sm:text-xl"
+        style={{ animationDelay: "1.1s" }}
       >
-        The senior team that designs your product is the same one that builds and
-        ships it - end to end, no junior hand-offs.
+        Award-level animated and 3D sites are our flagship - plus fast SaaS
+        products, smart mobile apps, and landing pages that convert. Designed and
+        shipped by the same senior team.
       </p>
 
       {/* CTA - full-width on mobile (thumb-reach), hugs on desktop */}
-      <div className="animate-fade-in-up flex flex-col items-center gap-3" style={{ animationDelay: "1.7s" }}>
+      <div className="animate-fade-in-up flex flex-col items-center gap-3" style={{ animationDelay: "1.3s" }}>
         <Magnetic>
           <Link
             href="/contact"
             className="inline-flex h-13 w-full items-center justify-center rounded-pill bg-white px-9 text-base font-semibold text-black transition-transform duration-[--dur] ease-[--ease-out] hover:scale-[1.02] sm:w-auto sm:text-lg"
           >
-            Book a free 30-min call
+            Start your build
           </Link>
         </Magnetic>
         <p className="mb-12 font-mono text-[11px] uppercase tracking-[0.18em] text-white/60">
@@ -187,48 +203,50 @@ export function StellarHero() {
         </div>
       </div>
 
-      {/* Video + per-tab overlay */}
+      {/* Video + per-tab overlay, wrapped in an animated gradient frame (WebGL hint). */}
       <div
-        className="animate-fade-in-up relative h-[360px] overflow-hidden rounded-3xl border border-white/10 bg-[#0c0c11] opacity-0 sm:h-[440px] md:h-[500px]"
+        className="hero-video-frame animate-fade-in-up relative rounded-3xl opacity-0"
         style={{ animationDelay: "0.7s" }}
       >
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="none"
-          aria-hidden
-          className="h-full w-full object-cover"
-        />
-        <div key={active} className="animate-fade-in-overlay absolute inset-0 bg-black/45">
-          <div className="animate-slide-up-overlay absolute left-1/2 top-1/2 w-[min(92%,420px)] rounded-2xl border border-white/10 bg-[#0c0c11]/85 p-5 text-left shadow-[0_30px_70px_-20px_rgba(0,0,0,0.7)] backdrop-blur-xl sm:p-6">
-            <p className="text-lg font-bold text-white sm:text-xl">{o.title}</p>
-            <p className="mt-1 text-xs text-white/50 sm:text-sm">{o.sub}</p>
-            <ul className="mt-4 space-y-2.5 text-sm text-white/75 sm:text-base">
-              {o.items.map((it) => (
-                <li key={it} className="flex items-center gap-3">
-                  <Check className="h-4 w-4 shrink-0 text-[#6366f1]" />
-                  {it}
-                </li>
-              ))}
-            </ul>
+        <div className="relative h-[360px] overflow-hidden rounded-3xl border border-white/10 bg-[#0c0c11] sm:h-[440px] md:h-[500px]">
+          <video
+            ref={videoRef}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="none"
+            aria-hidden
+            className="h-full w-full object-cover"
+          />
+          <div key={active} className="animate-fade-in-overlay absolute inset-0 bg-black/45">
+            <div className="animate-slide-up-overlay absolute left-1/2 top-1/2 w-[min(92%,420px)] rounded-2xl border border-white/10 bg-[#0c0c11]/85 p-5 text-left shadow-[0_30px_70px_-20px_rgba(0,0,0,0.7)] backdrop-blur-xl sm:p-6">
+              <p className="text-lg font-bold text-white sm:text-xl">{o.title}</p>
+              <p className="mt-1 text-xs text-white/50 sm:text-sm">{o.sub}</p>
+              <ul className="mt-4 space-y-2.5 text-sm text-white/75 sm:text-base">
+                {o.items.map((it) => (
+                  <li key={it} className="flex items-center gap-3">
+                    <Check className="h-4 w-4 shrink-0 text-[#8b5cf6]" />
+                    {it}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Honest capability strip (no fabricated client logos - swap for real,
-          permissioned logos once a public engagement exists). */}
+          permissioned logos once more public engagements exist). */}
       <div
         className="animate-fade-in-up mt-16 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm font-medium text-white/55 opacity-0 sm:mt-20 sm:gap-x-8 sm:text-base"
         style={{ animationDelay: "0.8s" }}
       >
-        <span>You talk to the senior who builds it</span>
+        <span>Senior-led, no junior hand-offs</span>
         <span aria-hidden className="h-4 w-px bg-white/15" />
-        <span>Shipped end to end - design to production</span>
+        <span>Flagship: the best animated &amp; 3D sites</span>
         <span aria-hidden className="h-4 w-px bg-white/15" />
-        <span>Your code &amp; IP, 100% yours</span>
+        <span>First public client shipped: StealthConnect</span>
       </div>
       </div>
     </section>
