@@ -203,20 +203,43 @@ export default function ContactSection({
           })}
         </div>
 
-        {/* What happens next - process strip */}
-        <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">
-          {[
-            ["01", "Intro call", "Reply in 24 hours, call within 48"],
-            ["02", "Scope + quote", "Fixed price within 3 working days"],
-            ["03", "Design + build", "Weekly sprints with a shared board"],
-            ["04", "Launch", "30-day post-launch support included"],
-          ].map(([n, t, d]) => (
-            <div key={n} className="rounded-xl bg-fill-light p-5">
-              <p className="eyebrow text-gray-mid">{n}</p>
-              <p className="mt-2 font-semibold text-ink">{t}</p>
-              <p className="mt-1 text-sm text-black font-medium">{d}</p>
-            </div>
-          ))}
+        {/* How we work - a clear four-step flow so a new client understands
+            the engagement at a glance. Cobalt numbered nodes on a connector
+            line read as a sequence, not four loose cards. */}
+        <div className="mt-16 md:mt-24">
+          <div className="mb-10 flex flex-col items-center gap-3 text-center md:mb-14">
+            <p className="eyebrow text-primary">HOW WE WORK</p>
+            <h2 className="text-2xl font-bold tracking-tight text-ink md:text-3xl">
+              From first message to launch, in four steps
+            </h2>
+          </div>
+
+          <div className="relative grid grid-cols-1 gap-y-10 sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-4">
+            {/* Connector line: runs through the node centers, desktop only */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-[12.5%] right-[12.5%] top-8 hidden h-0.5 bg-border-soft lg:block"
+            />
+            {[
+              ["01", "Intro call", "Reply in 24 hours, call within 48."],
+              ["02", "Scope + quote", "Fixed price within 3 working days."],
+              ["03", "Design + build", "Weekly sprints with a shared board."],
+              ["04", "Launch", "30-day post-launch support included."],
+            ].map(([n, t, d]) => (
+              <div
+                key={n}
+                className="group relative flex flex-col items-center text-center"
+              >
+                <div className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full bg-primary font-mono text-lg font-bold text-white shadow-[0_10px_30px_-8px_rgba(0,81,255,0.55)] ring-4 ring-white transition-transform duration-300 group-hover:-translate-y-1">
+                  {n}
+                </div>
+                <h3 className="mt-5 text-lg font-bold text-ink">{t}</h3>
+                <p className="mt-2 max-w-[24ch] text-sm font-medium leading-relaxed text-black">
+                  {d}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Image + form */}
