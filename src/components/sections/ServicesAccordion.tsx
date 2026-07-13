@@ -35,13 +35,15 @@ export default function ServicesAccordion() {
     const ctx = gsap.context(() => {
       gsap.fromTo(".svc-head", revealFrom, {
         ...revealTo,
-        scrollTrigger: { trigger: ".svc-head", start: "top 85%" },
+        duration: 0.6,
+        scrollTrigger: { trigger: ".svc-head", start: "top 88%" },
       });
       gsap.utils.toArray<HTMLElement>(".svc-row").forEach((row, i) => {
         gsap.fromTo(row, revealFrom, {
           ...revealTo,
-          delay: Math.min(i, 2) * 0.06,
-          scrollTrigger: { trigger: row, start: "top 90%" },
+          duration: 0.6,
+          delay: Math.min(i, 2) * 0.04,
+          scrollTrigger: { trigger: row, start: "top 92%" },
         });
       });
     }, sectionRef);
