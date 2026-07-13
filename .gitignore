@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Brand masters and source media kept at the project root, not shipped
+/Founder.png
+/Webify*.png
+/Webify-*.png
+/template-home-banner-original.mp4
+/.claude/
