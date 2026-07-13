@@ -6,9 +6,13 @@ import type { NextConfig } from "next";
    - 'self' covers Vercel Analytics, which loads from /_vercel/insights/.
    - frame-ancestors 'none' replaces X-Frame-Options in modern browsers;
      both are sent for older ones. */
+const isDev = process.env.NODE_ENV === "development";
+
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  // React dev mode needs eval() for debugging (callstack reconstruction,
+  // HMR); production React never calls eval, so the flag is dev-only.
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "media-src 'self'",
