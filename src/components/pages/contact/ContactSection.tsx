@@ -161,7 +161,7 @@ export default function ContactSection({
         <div className="mx-auto mb-14 md:mb-24 flex max-w-[775px] flex-col items-center gap-5 text-center">
           <p className="eyebrow">CONTACT</p>
           <h1 className="contact-title display-1">REACH OUT TODAY</h1>
-          <p className="max-w-md text-base text-black font-medium">
+          <p className="text-base text-black font-medium">
             Tell us about your project. Our team replies within 24 hours.
           </p>
         </div>
