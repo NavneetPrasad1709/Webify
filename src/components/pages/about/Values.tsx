@@ -12,9 +12,8 @@ function ValuePill({ item }: { item: ValueItem }) {
   const [open, setOpen] = useState(false);
 
   return (
-    // The active pill lifts above its neighbours (and above the grain layer)
-    // so its info card sits cleanly on top instead of tangling with the pill
-    // outlines behind it.
+    // The active pill lifts above its neighbours so its info card sits cleanly
+    // on top instead of tangling with the pill outlines behind it.
     <div
       className={`group relative mx-3 py-4 hover:z-40 focus-within:z-40 ${
         open ? "z-40" : ""

@@ -169,22 +169,6 @@ button:not(:disabled),
 /* Hover-pause is opt-in per marquee via the component's pauseOnHover prop;
    decorative marquees (footer wordmark) keep moving. */
 
-/* Global film grain - subtle photographic texture over everything.
-   Pre-rendered PNG tile: the previous inline feTurbulence SVG made the
-   browser rasterize a live filter on a permanent compositing layer. */
-.grain-overlay {
-  position: fixed;
-  inset: 0;
-  /* Above page content (which tops out at z-20) but below the nav, popovers,
-     and photo surfaces that opt above it, so grain never speckles a face or
-     a white info card. */
-  z-index: 30;
-  pointer-events: none;
-  opacity: 0.05;
-  background-image: url("/assets/grain.png");
-  background-size: 160px 160px;
-}
-
 /* Word-scrub baseline: words start at full-contrast color but faded, GSAP
    scrubs opacity up. Opacity (not color) keeps the text-color standard intact
    and animates on the compositor. */

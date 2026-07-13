@@ -112,7 +112,6 @@ export default function RootLayout({
           <Footer />
           <ScrollTop />
         </SmoothScroll>
-        <div className="grain-overlay" aria-hidden="true" />
         <Analytics />
       </body>
     </html>
