@@ -26,7 +26,6 @@ export const blogCategories = [
   "UI/UX Design",
   "Web Design",
   "Insights",
-  "Innovation",
   "Design Systems",
 ] as const;
 
@@ -63,7 +62,7 @@ export const posts: BlogPost[] = [
     description: "Aligning user experience with performance, retention, and scalability.",
     date: "March 17, 2026",
     author: "Webify Team",
-    category: "Branding",
+    category: "UI/UX Design",
     thumb: "/assets/blog/thumb-design-decisions-that-directly-impact-revenue.webp",
     hero: "/assets/blog/design-decisions-that-directly-impact-revenue-hero.webp",
     blocks: [
@@ -76,7 +75,7 @@ export const posts: BlogPost[] = [
       { type: "h2", text: "Consistent Branding Builds Trust" },
       { type: "p", text: "Consistency in typography, colors, and UI patterns communicates professionalism and reliability. Users are more likely to trust and engage with brands that feel cohesive." },
       { type: "list", ordered: false, items: ["Impact: Trust reduces friction during purchase decisions or subscription sign-ups.", "Example: E-commerce sites with consistent branding across landing pages and checkout see fewer cart abandonments."] },
-      { type: "image", src: "/assets/blog/building-strong-brand-identities-from-strategy-hero.webp", alt: "Abstract gradient of blue light and deep shadow, illustrating how color and contrast direct user attention" },
+      { type: "image", src: "/assets/blog/design-decisions-that-directly-impact-revenue-hero.webp", alt: "Abstract interface shapes in blue light and shadow, illustrating how color and contrast direct user attention" },
       { type: "h2", text: "Strategic Use of Color and Contrast" },
       { type: "p", text: "Color isn’t just about aesthetics. It’s a tool that guides user attention, communicates hierarchy, and influences decision-making. By strategically using color and contrast, designers can create interfaces that feel intuitive, emphasize critical actions, and even boost conversions. Use high-contrast colors for call-to-action buttons to make them immediately visible. This ensures users know exactly where to click, reducing friction in the conversion process." },
       { type: "h2", text: "Mobile-First Design Captures Revenue Opportunities" },
@@ -92,8 +91,8 @@ export const posts: BlogPost[] = [
     date: "March 31, 2026",
     author: "Webify Team",
     category: "Design Systems",
-    thumb: "/assets/blog/thumb-dsigning-experiences-that-scale-with-growth.webp",
-    hero: "/assets/blog/dsigning-experiences-that-scale-with-growth-hero.webp",
+    thumb: "/assets/blog/thumb-designing-experiences-that-scale-with-growth.webp",
+    hero: "/assets/blog/designing-experiences-that-scale-with-growth-hero.webp",
     blocks: [
       { type: "lede", text: "Products change faster than designs. Experiences that scale are built on flexible foundations: clear architecture, consistent components, and content structures that welcome growth instead of resisting it." },
       { type: "h2", text: "Introduction" },
@@ -102,7 +101,7 @@ export const posts: BlogPost[] = [
       { type: "p", text: "Information architecture is the load-bearing wall of any digital experience. Before debating visual style, map how content is organized, named, and reached. A clear hierarchy absorbs new sections without redesign; a vague one demands surgery every quarter. Test navigation labels with real users early, because renaming a top-level section after launch is expensive, but living with a confusing one costs conversions every single day." },
       { type: "h2", text: "Components That Flex Without Breaking" },
       { type: "p", text: "A scalable component accepts change: longer headlines, translated strings, missing images, new variants. Design components around content ranges rather than perfect mockup data, and define how each one degrades when reality is messier than the design file. Teams that stress-test components early ship new features by composition, while teams that design to the happy path rebuild the same cards and forms over and over." },
-      { type: "image", src: "/assets/blog/dsigning-experiences-that-scale-with-growth-hero.webp", alt: "Designing experiences that scale with growth" },
+      { type: "image", src: "/assets/blog/designing-experiences-that-scale-with-growth-hero.webp", alt: "Designing experiences that scale with growth" },
       { type: "h2", text: "Plan for Content You Do Not Have Yet" },
       { type: "p", text: "Growth means content nobody has written yet: more products, more locales, more case studies. Structured content models keep that future manageable. When every article, feature page, and testimonial follows a defined shape, adding the fiftieth is as safe as adding the fifth. The alternative, free-form pages, feels faster for a month and then turns every site-wide change into a manual audit." },
       { type: "h2", text: "Iterate Without Breaking Trust" },
@@ -117,7 +116,7 @@ export const posts: BlogPost[] = [
     description: "How to structure project presentations that clearly communicate value, process, and results.",
     date: "April 12, 2026",
     author: "Webify Team",
-    category: "Design Systems",
+    category: "Insights",
     thumb: "/assets/blog/thumb-designing-case-studies-that-convert-clients.webp",
     hero: "/assets/blog/designing-case-studies-that-convert-clients-hero.webp",
     blocks: [
@@ -143,7 +142,7 @@ export const posts: BlogPost[] = [
     description: "A practical breakdown of creating reusable components that maintain consistency as products grow.",
     date: "April 26, 2026",
     author: "Webify Team",
-    category: "Innovation",
+    category: "Design Systems",
     thumb: "/assets/blog/thumb-building-a-scalable-design-system-from-scratch.webp",
     hero: "/assets/blog/building-a-scalable-design-system-from-scratch-hero.webp",
     blocks: [
@@ -221,7 +220,7 @@ export const posts: BlogPost[] = [
     description: "How strategic positioning shapes visual identity systems that remain consistent and scalable over time.",
     date: "June 5, 2026",
     author: "Webify Team",
-    category: "UI/UX Design",
+    category: "Branding",
     thumb: "/assets/blog/thumb-building-strong-brand-identities-from-strategy.webp",
     hero: "/assets/blog/building-strong-brand-identities-from-strategy-hero.webp",
     blocks: [
@@ -247,7 +246,7 @@ export const posts: BlogPost[] = [
     description: "Exploring how usability, clarity, and responsiveness determine whether users stay engaged or leave.",
     date: "June 19, 2026",
     author: "Webify Team",
-    category: "Branding",
+    category: "UI/UX Design",
     thumb: "/assets/blog/thumb-why-user-experience-defines-product-success.avif",
     hero: "/assets/blog/why-user-experience-defines-product-success-hero.webp",
     blocks: [

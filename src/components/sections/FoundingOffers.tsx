@@ -66,8 +66,10 @@ export default function FoundingOffers() {
         className="pointer-events-none sticky top-[22vh] z-0 px-5 text-center"
       >
         <p className="eyebrow mb-4 text-gray-mid">FOUNDING CLIENTS</p>
-        <h2 className="display-2 text-ink">BE ONE OF OUR</h2>
-        <h2 className="display-2 text-primary">FIRST CLIENTS</h2>
+        <h2 className="display-2">
+          <span className="block text-ink">BE ONE OF OUR</span>
+          <span className="block text-primary">FIRST CLIENTS</span>
+        </h2>
       </div>
 
       <div

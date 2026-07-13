@@ -15,15 +15,15 @@ function Block({ block }: { block: ArticleBlock }) {
   switch (block.type) {
     case "lede":
       return (
-        <h2 className="article-block max-w-[720px] mx-auto text-[20px] md:text-[24px] font-bold tracking-tight leading-snug">
+        <p className="article-block max-w-[720px] mx-auto text-[20px] md:text-[24px] font-bold tracking-tight leading-snug">
           {block.text}
-        </h2>
+        </p>
       );
     case "h2":
       return (
-        <h3 className="article-block max-w-[720px] mx-auto mt-12 text-[22px] md:text-[26px] font-bold tracking-tight leading-tight">
+        <h2 className="article-block max-w-[720px] mx-auto mt-12 text-[22px] md:text-[26px] font-bold tracking-tight leading-tight">
           {block.text}
-        </h3>
+        </h2>
       );
     case "p":
       return (

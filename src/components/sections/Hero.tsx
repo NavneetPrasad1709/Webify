@@ -165,7 +165,7 @@ export default function Hero() {
           <span className="hero-line block">
             <span
               ref={wordRef}
-              className="inline-block whitespace-nowrap text-[clamp(40px,8.6vw,124px)]"
+              className="inline-block whitespace-nowrap text-[clamp(30px,8.6vw,124px)]"
             >
               {ROTATING[word]}
               <span className="text-primary">.</span>

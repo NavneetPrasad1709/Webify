@@ -2,7 +2,7 @@
 
 export const aboutHero = {
   tag: "WHO WE ARE",
-  title: "Story Builders",
+  title: "A Founding Studio",
   cta: "Start a Project",
   video: "/assets/about/hero-banner.mp4",
   poster: "/assets/about/hero-banner-poster.jpg",
@@ -10,7 +10,7 @@ export const aboutHero = {
 
 export const aboutIntro = {
   tag: "ABOUT US",
-  text: "Every project tells a story, and at Webify, we make sure it’s unforgettable. From concept to creation, we bring ideas to life with design, strategy, and experiences that resonate with people.",
+  text: "Webify is new, and says so. No borrowed case studies, no rented logos: one senior builder who designs and ships every project end to end, from the first call to launch.",
 };
 
 /* The real founder: the studio's verifiable human trust anchor. Facts only,
@@ -107,15 +107,15 @@ export const methodology = {
   items: [
     {
       title: "Research & Discovery",
-      text: "Gather insights about brands, audience, and goals.",
+      text: "Gather insights about your brand, audience, and goals.",
     },
     {
       title: "Concept Development",
-      text: "Brainstorm and refine creative concepts for project clarity.",
+      text: "Refine creative concepts until the direction is clear.",
     },
     {
       title: "Production & Execution",
-      text: "Executing designs with accuracy, creativity, and adherence to client objectives ensures optimal project outcomes.",
+      text: "Build with precision, creativity, and your objectives in view.",
     },
   ],
 };

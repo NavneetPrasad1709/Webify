@@ -8,5 +8,9 @@ export const metadata: Metadata = {
 };
 
 export default function NotFound() {
-  return <NotFoundSection />;
+  return (
+    <main>
+      <NotFoundSection />
+    </main>
+  );
 }

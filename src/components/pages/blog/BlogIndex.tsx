@@ -45,7 +45,7 @@ export default function BlogIndex() {
     >
       {/* Header */}
       <div className="blog-index-header max-w-6xl mx-auto flex flex-col items-center text-center">
-        <p className="eyebrow text-gray-mid">News &amp; Insights</p>
+        <p className="eyebrow text-gray-mid">BLOG</p>
         <h1 className="display-1 mt-5">
           <span className="block">News &amp;</span>
           <span className="block">Insights</span>

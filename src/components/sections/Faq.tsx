@@ -76,7 +76,7 @@ export default function Faq() {
               Talk to a human. We reply within 24 hours.
             </p>
             <PillButton href="/contact" className="mt-6">
-              Let&apos;s Talk
+              Let’s Talk
             </PillButton>
           </div>
         </div>

@@ -356,9 +356,9 @@ export default function ContactSection({
               <p className="text-base text-ink">{card.number}</p>
               <div className="flex flex-col items-start gap-6 md:gap-[30px]">
                 <div className="flex flex-col gap-4">
-                  <h6 className="text-[22px] md:text-[26px] lg:text-[30px] font-semibold leading-tight tracking-[-0.02em]">
+                  <h2 className="text-[22px] md:text-[26px] lg:text-[30px] font-semibold leading-tight tracking-[-0.02em]">
                     {card.title}
-                  </h6>
+                  </h2>
                   <p className="max-w-[562px] text-base leading-relaxed text-ink">{card.text}</p>
                 </div>
                 <PillButton tone="dark" href={card.href}>

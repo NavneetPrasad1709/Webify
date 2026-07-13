@@ -46,9 +46,9 @@ export default function NotFoundSection() {
           className="w-[200px] max-w-full opacity-0 md:w-[249px]"
         />
         <div data-404-reveal className="mt-8 flex flex-col items-center opacity-0 md:mt-10">
-          <h5 className="text-center text-2xl font-bold tracking-tight text-ink md:text-[32px] md:leading-tight">
-            Oops! This Page Lost Its Power.
-          </h5>
+          <h1 className="text-center text-2xl font-bold tracking-tight text-ink md:text-[32px] md:leading-tight">
+            This page does not exist.
+          </h1>
           <div className="mt-8">
             <PillButton href="/" tone="blue">
               Back to Homepage

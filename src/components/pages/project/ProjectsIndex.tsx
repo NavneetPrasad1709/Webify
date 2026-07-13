@@ -57,11 +57,8 @@ export default function ProjectsIndex() {
     >
       {/* Section title */}
       <div data-proj-title className="mx-auto max-w-[1320px] text-center">
-        <p className="eyebrow text-gray-mid">PORTFOLIO PROJECT</p>
-        <h1
-          className="display-1 mt-4 text-ink"
-          style={{ fontSize: "clamp(48px,7vw,100px)", lineHeight: 0.9 }}
-        >
+        <p className="eyebrow text-gray-mid">CONCEPT PORTFOLIO</p>
+        <h1 className="display-3 mt-4 text-ink">
           <span className="block">SELECTED</span>
           <span className="block">WORKS</span>
         </h1>

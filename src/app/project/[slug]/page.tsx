@@ -30,5 +30,9 @@ export default async function ProjectSinglePage({
   const project = getProject(slug);
   if (!project) notFound();
 
-  return <ProjectSingle project={project} next={getNextProject(slug)} />;
+  return (
+    <main>
+      <ProjectSingle project={project} next={getNextProject(slug)} />
+    </main>
+  );
 }

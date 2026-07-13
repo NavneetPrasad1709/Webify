@@ -107,9 +107,9 @@ export default function Journey() {
           <div className="grid gap-16 md:grid-cols-3 md:gap-4">
             {journey.items.map((item) => (
               <div key={item.year} className="relative">
-                <h4 className="text-[clamp(28px,2.4vw,36px)] font-bold tracking-tight">
+                <h3 className="text-[clamp(28px,2.4vw,36px)] font-bold tracking-tight">
                   {item.year}
-                </h4>
+                </h3>
 
                 <div className="relative mt-8 pl-10">
                   <div className="h-4 w-4 rounded-[2px] bg-primary" />

@@ -258,7 +258,7 @@ export default function Nav() {
             href="/contact"
             className="ml-1 rounded-full bg-white px-5 py-2 text-xs font-bold uppercase tracking-wider text-ink transition hover:bg-primary hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
-            Let&apos;s Talk
+            Let’s Talk
           </Link>
         </nav>
 
@@ -270,7 +270,7 @@ export default function Nav() {
           onClick={() => setOpen(false)}
           className="rounded-full bg-white px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-ink transition hover:bg-primary hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
-          Let&apos;s Talk
+          Let’s Talk
         </Link>
         <button
           ref={toggleRef}
