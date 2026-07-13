@@ -5,10 +5,10 @@ import { gsap, revealFrom, revealTo } from "@/lib/anim";
 import Marquee from "@/components/ui/Marquee";
 import { valuesSection, type ValueItem } from "@/lib/pages/about";
 
-/* Value pill (template pattern): an outline capsule that reveals a white
-   info card on hover / focus / tap. The active pill's wrapper lifts above all
-   its neighbours (z-50) so the card floats cleanly on top instead of tangling
-   with the pill outlines behind it. */
+/* Value pill (template pattern): a dim outline capsule that brightens to white
+   on hover / focus and reveals a white info card that slides up into place.
+   The active pill's wrapper lifts above its neighbours (z-50) so the card
+   floats cleanly on top instead of tangling with the outlines behind it. */
 function ValuePill({ item }: { item: ValueItem }) {
   const [open, setOpen] = useState(false);
 
@@ -23,23 +23,21 @@ function ValuePill({ item }: { item: ValueItem }) {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         onBlur={() => setOpen(false)}
-        className="inline-block rounded-full border border-primary-lite px-9 py-4 text-[clamp(20px,2.4vw,42px)] font-bold uppercase tracking-tight text-white transition-colors duration-300 group-hover:border-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:px-14 md:py-6"
+        className="inline-block rounded-full border border-primary-lite px-9 py-4 text-[clamp(20px,2.4vw,42px)] font-bold uppercase tracking-tight text-primary-lite transition-colors duration-300 group-hover:border-white group-hover:text-white focus-visible:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:px-14 md:py-6"
       >
         {item.name}
       </button>
 
-      {/* Info card: floats below the pill, offset right (template layout).
-          Hidden until hover / keyboard focus / tap; md+ only. */}
+      {/* Info card: slides up (translate-y) and fades in below the pill,
+          offset right, matching the template. Hidden until hover/focus/tap. */}
       <div
-        className={`pointer-events-none absolute left-[55%] top-full z-10 mt-4 hidden w-[320px] min-h-[175px] flex-col justify-between rounded-2xl bg-white p-6 shadow-[0_28px_70px_-24px_rgba(0,0,0,0.55)] transition-opacity duration-300 md:flex ${
+        className={`pointer-events-none absolute left-[60%] top-full z-10 mt-4 hidden w-[320px] min-h-[175px] flex-col justify-between rounded-2xl bg-white p-6 shadow-[0_28px_70px_-24px_rgba(0,0,0,0.55)] transition-[opacity,transform] duration-300 ease-out md:flex ${
           open
-            ? "opacity-100"
-            : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
+            ? "translate-y-0 opacity-100"
+            : "translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100"
         }`}
       >
-        <p className="font-mono text-base font-semibold text-primary">
-          {item.number}
-        </p>
+        <p className="font-mono text-lg font-bold text-ink">{item.number}</p>
         <p className="text-[15px] leading-relaxed text-black">{item.text}</p>
       </div>
 
