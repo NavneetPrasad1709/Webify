@@ -28,7 +28,8 @@ function ArrowIcon({ open }: { open: boolean }) {
 export default function ServicesAccordion() {
   const sectionRef = useRef<HTMLElement>(null);
   const bodyRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [open, setOpen] = useState<number>(0);
+  // All rows start closed; the visitor opens what interests them.
+  const [open, setOpen] = useState<number>(-1);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -137,7 +138,7 @@ export default function ServicesAccordion() {
                     bodyRefs.current[i] = el;
                   }}
                   className="overflow-hidden"
-                  style={{ height: i === 0 ? "auto" : 0 }}
+                  style={{ height: 0 }}
                 >
                   <div className="grid gap-8 pb-10 pl-1 md:grid-cols-[1fr_1.05fr] md:gap-12 md:pb-14 md:pl-16">
                     {/* Sub-services + CTA - CTA hugs the media's bottom edge
