@@ -215,7 +215,7 @@ export default function Hero() {
             <h2 className="text-[26px] font-semibold leading-snug tracking-tight text-white">
               Webify <span className="text-gray-soft">is a</span> Senior-Led{" "}
               <span className="text-gray-soft">Design &amp; Engineering</span>{" "}
-              Studio
+              Company
             </h2>
             <div className="mt-6">
               <PillButton tone="blue" href="/contact">
@@ -230,7 +230,7 @@ export default function Hero() {
       <p className="absolute bottom-10 left-5 z-10 max-w-xs text-[13px] font-bold uppercase leading-snug text-white md:bottom-12 md:left-10">
         <span className="block overflow-hidden">
           <span className="hero-line block">
-            WEBIFY is a SENIOR-LED STUDIO
+            WEBIFY is a SENIOR-LED COMPANY
           </span>
         </span>
         <span className="block overflow-hidden">

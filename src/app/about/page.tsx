@@ -10,7 +10,7 @@ import CtaBand from "@/components/sections/CtaBand";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Every project tells a story, and at Webify, we make sure it’s unforgettable. The method, principles, and road ahead for the studio.",
+    "Every project tells a story, and at Webify, we make sure it’s unforgettable. The method, principles, and road ahead for the company.",
 };
 
 export default function AboutPage() {

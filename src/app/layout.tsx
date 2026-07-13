@@ -28,12 +28,12 @@ const dmMono = DM_Mono({
 });
 
 const description =
-  "Webify is a senior-led design and engineering studio shipping brand systems, product design, and web experiences built for clarity, pace, and scale.";
+  "Webify is a senior-led design and engineering company shipping brand systems, product design, and web experiences built for clarity, pace, and scale.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://webify.org.in"),
   title: {
-    default: "Webify | Senior-Led Design & Engineering Studio",
+    default: "Webify | Senior-Led Design & Engineering Company",
     template: "%s | Webify",
   },
   description,
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/",
-    title: "Webify | Senior-Led Design & Engineering Studio",
+    title: "Webify | Senior-Led Design & Engineering Company",
     description,
   },
   twitter: { card: "summary_large_image" },

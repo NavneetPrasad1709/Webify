@@ -12,7 +12,7 @@ export default function TermsPage() {
     <LegalPage eyebrow="LEGAL" title="Terms of Service" updated="12 July 2026">
       <LegalSection title="Who we are">
         <p>
-          Webify is a senior-led design and engineering studio founded by
+          Webify is a senior-led design and engineering company founded by
           Navneet Prasad, at Tech Zone IV, Greater Noida, Uttar Pradesh 201318,
           working remotely with clients worldwide. These terms describe how
           our engagements work. The written quote for your project is the
@@ -50,7 +50,7 @@ export default function TermsPage() {
 
       <LegalSection title="Portfolio and confidentiality">
         <p>
-          Concept builds on this site are self-initiated studio work and are
+          Concept builds on this site are self-initiated in-house work and are
           labeled as such. Client work is shown publicly only with the
           client&apos;s permission. Anything you share with us during a
           project stays confidential.

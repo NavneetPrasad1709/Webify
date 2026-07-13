@@ -66,7 +66,7 @@ export default function PrivacyPage() {
 
       <LegalSection title="Who we are">
         <p>
-          Webify is a senior-led design and engineering studio founded by
+          Webify is a senior-led design and engineering company founded by
           Navneet Prasad, at Tech Zone IV, Greater Noida, Uttar Pradesh 201318,
           working with clients worldwide. For anything about this policy,
           email{" "}

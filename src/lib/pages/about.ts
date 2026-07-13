@@ -2,7 +2,7 @@
 
 export const aboutHero = {
   tag: "WHO WE ARE",
-  title: "A Founding Studio",
+  title: "A Founding Company",
   cta: "Start a Project",
   video: "/assets/about/hero-banner.mp4",
   poster: "/assets/about/hero-banner-poster.jpg",
@@ -77,7 +77,7 @@ export const journey = {
   items: [
     {
       year: "DAY ONE",
-      label: "A senior-only studio",
+      label: "A senior-only company",
       text: "Webify starts with senior craft only: every project is designed and built by experienced hands, no juniors learning on your budget.",
       image: "/assets/about/year-one.webp",
       alt: "Four colleagues gathered around a laptop, looking engaged and smiling during a discussion in a bright office.",

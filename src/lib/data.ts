@@ -12,7 +12,7 @@ export const socialLinks = [
    the homepage sections read those canonical sources directly. */
 
 export const impactsParagraph =
-  "Webify is a senior-led design and engineering studio built to ship websites and products that grow revenue, for founders and product leaders who value precision, speed, and outcomes. Digital systems that scale without adding operational drag. Strategy, design, and execution from one senior team.";
+  "Webify is a senior-led design and engineering company built to ship websites and products that grow revenue, for founders and product leaders who value precision, speed, and outcomes. Digital systems that scale without adding operational drag. Strategy, design, and execution from one senior team.";
 
 export const stats: {
   value: number;
@@ -44,7 +44,7 @@ export const foundingOffers: {
   {
     tag: "FOUNDING PRICING",
     title: "Founding-client rates, locked for 12 months",
-    body: "Early clients keep our launch pricing for a full year. As the studio grows and rates rise, yours stay exactly where they started.",
+    body: "Early clients keep our launch pricing for a full year. As the company grows and rates rise, yours stay exactly where they started.",
     tone: "blue",
   },
   {
@@ -116,7 +116,7 @@ export const pricingPlans: PricingPlan[] = [
 export const faqs: { q: string; a: string }[] = [
   {
     q: "Do you work with international clients?",
-    a: "Yes. We are a remote-first studio set up to work with clients worldwide, across North America, Europe, the Middle East, and beyond. We run projects async-first with clear documentation and schedule calls in overlapping hours, so time zones rarely slow anything down.",
+    a: "Yes. We are a remote-first company set up to work with clients worldwide, across North America, Europe, the Middle East, and beyond. We run projects async-first with clear documentation and schedule calls in overlapping hours, so time zones rarely slow anything down.",
   },
   {
     q: "How does the creative process work?",
