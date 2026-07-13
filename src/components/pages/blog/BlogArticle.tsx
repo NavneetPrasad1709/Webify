@@ -27,7 +27,7 @@ function Block({ block }: { block: ArticleBlock }) {
       );
     case "p":
       return (
-        <p className="article-block max-w-[720px] mx-auto mt-4 text-[15px] md:text-base leading-[1.8] text-black font-medium">
+        <p className="article-block max-w-[720px] mx-auto mt-4 text-[17px] md:text-[18px] leading-[1.85] text-black font-medium">
           {block.text}
         </p>
       );
@@ -39,13 +39,13 @@ function Block({ block }: { block: ArticleBlock }) {
       );
     case "list":
       return block.ordered ? (
-        <ol className="article-block max-w-[720px] mx-auto mt-5 list-decimal pl-5 space-y-2 text-[15px] md:text-base leading-[1.8] text-black font-medium">
+        <ol className="article-block max-w-[720px] mx-auto mt-5 list-decimal pl-5 space-y-2.5 text-[17px] md:text-[18px] leading-[1.85] text-black font-medium">
           {block.items.map((item) => (
             <li key={item}>{item}</li>
           ))}
         </ol>
       ) : (
-        <ul className="article-block max-w-[720px] mx-auto mt-5 list-disc pl-5 space-y-2 text-[15px] md:text-base leading-[1.8] text-black font-medium">
+        <ul className="article-block max-w-[720px] mx-auto mt-5 list-disc pl-5 space-y-2.5 text-[17px] md:text-[18px] leading-[1.85] text-black font-medium">
           {block.items.map((item) => (
             <li key={item}>{item}</li>
           ))}

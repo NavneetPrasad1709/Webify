@@ -332,7 +332,7 @@ export default function Nav() {
           className="absolute bottom-10 left-5 flex flex-col gap-5 md:left-10"
         >
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-widest text-gray-soft">
+            <p className="font-mono text-[12px] uppercase tracking-widest text-gray-soft">
               EMAIL
             </p>
             <a
@@ -344,7 +344,7 @@ export default function Nav() {
             </a>
           </div>
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-widest text-gray-soft">
+            <p className="font-mono text-[12px] uppercase tracking-widest text-gray-soft">
               LOCATION
             </p>
             <p className="mt-1 text-[15px] font-medium text-white">

@@ -77,7 +77,7 @@ export default function ProjectSingle({
   }, []);
 
   const richHeading = "text-[18px] font-extrabold tracking-tight text-ink md:text-[20px]";
-  const richBody = "mt-3 text-[15px] leading-[1.7] text-black font-medium md:text-base";
+  const richBody = "mt-3 text-base leading-[1.75] text-black font-medium md:text-[17px]";
 
   return (
     <section
@@ -100,7 +100,7 @@ export default function ProjectSingle({
             </h1>
             <p
               data-ps-load
-              className="mt-6 max-w-[560px] text-[15px] leading-[1.7] text-black font-medium md:text-base"
+              className="mt-6 max-w-[560px] text-base leading-[1.75] text-black font-medium md:text-[17px]"
             >
               {project.description}
             </p>
@@ -151,7 +151,7 @@ export default function ProjectSingle({
           <div data-ps-reveal className="mt-10">
             <h2 className={richHeading}>{projectSections.challenge}</h2>
             <p className={richBody}>{project.challenge}</p>
-            <ul className="mt-5 list-disc space-y-2 pl-5 text-[15px] leading-[1.7] text-black font-medium md:text-base">
+            <ul className="mt-5 list-disc space-y-2.5 pl-5 text-base leading-[1.75] text-black font-medium md:text-[17px]">
               {project.challengePoints.map((point, i) => (
                 <li key={i}>{point}</li>
               ))}

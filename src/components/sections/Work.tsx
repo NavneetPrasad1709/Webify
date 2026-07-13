@@ -168,7 +168,7 @@ export default function Work() {
 
               {/* Top-left - honest date chip (matches the reference's date box) */}
               <div className="absolute left-6 top-6 z-20 rounded-lg bg-white px-3.5 py-2 shadow-sm md:left-10 md:top-10">
-                <p className="text-[11px] uppercase tracking-wide text-gray-mid">Date</p>
+                <p className="text-[12px] uppercase tracking-wide text-gray-mid">Date</p>
                 <p className="text-[15px] font-semibold leading-tight">{p.year}</p>
               </div>
 
@@ -187,7 +187,7 @@ export default function Work() {
                   href={`/project/${slug}`}
                   className="w-max rounded-lg bg-white px-3.5 py-2"
                 >
-                  <p className="text-[11px] uppercase tracking-wide text-gray-mid">Concept Build</p>
+                  <p className="text-[12px] uppercase tracking-wide text-gray-mid">Concept Build</p>
                   <p className="text-[15px] font-semibold leading-tight">View Project</p>
                 </Link>
               </div>

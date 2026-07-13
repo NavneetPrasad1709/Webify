@@ -134,7 +134,7 @@ function CmsMock() {
           key={r.t}
           className="grid grid-cols-[2fr_1fr_auto] items-center gap-3 border-b border-white/5 py-2.5"
         >
-          <span className="truncate text-[11px] font-medium text-white/80">{r.t}</span>
+          <span className="truncate text-[12px] font-medium text-white/80">{r.t}</span>
           <span className="font-mono text-[10px] text-white/40">{r.d}</span>
           <span className={`h-6 w-9 rounded bg-gradient-to-br ${r.g}`} />
         </div>

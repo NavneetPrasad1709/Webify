@@ -95,14 +95,14 @@ export default function Blog() {
                 className="rounded-xl object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
               />
             </span>
-            <p className="mt-5 text-[13px]">
+            <p className="mt-5 text-sm">
               <span className="font-bold">Published</span>{" "}
               <span className="font-medium text-black">{p.date}</span>
             </p>
             <h3 className="mt-2 text-[22px] font-extrabold tracking-tight leading-snug transition-colors duration-300 group-hover:text-primary">
               {p.title}
             </h3>
-            <p className="mt-2 text-sm text-black font-medium">{p.description}</p>
+            <p className="mt-2 text-[15px] leading-relaxed text-black font-medium">{p.description}</p>
           </Link>
         ))}
       </div>

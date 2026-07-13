@@ -78,7 +78,7 @@ export default function ProjectsIndex() {
                 href={`/project/${p.slug}`}
                 className="w-max rounded-lg bg-white px-3.5 py-2"
               >
-                <p className="text-[11px] uppercase tracking-wide text-gray-mid">
+                <p className="text-[12px] uppercase tracking-wide text-gray-mid">
                   Concept Build
                 </p>
                 <p className="text-[15px] font-semibold leading-tight">

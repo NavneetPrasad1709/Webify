@@ -91,14 +91,14 @@ export default function BlogIndex() {
                 className="rounded-xl object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
               />
             </div>
-            <div className="flex items-center gap-2 mt-5 text-[13px]">
+            <div className="flex items-center gap-2 mt-5 text-sm">
               <span className="font-bold">Published</span>
               <span className="font-medium text-black">{p.date}</span>
             </div>
             <h2 className="mt-2 text-[22px] font-extrabold tracking-tight leading-snug">
               {p.title}
             </h2>
-            <p className="mt-2 text-sm text-black font-medium">{p.description}</p>
+            <p className="mt-2 text-[15px] leading-relaxed text-black font-medium">{p.description}</p>
           </Link>
         ))}
       </div>

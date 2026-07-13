@@ -201,7 +201,7 @@ export default function Brands() {
                     className="orbit-ico h-[58%] w-[58%]"
                     style={{ WebkitMaskImage: `url(/assets/stack/${t.slug}.svg)`, maskImage: `url(/assets/stack/${t.slug}.svg)` }}
                   />
-                  <span className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-ink px-2 py-1 text-[11px] font-medium text-white opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100">
+                  <span className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-ink px-2 py-1 text-[12px] font-medium text-white opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100">
                     {t.label}
                   </span>
                 </div>

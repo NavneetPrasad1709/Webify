@@ -197,7 +197,7 @@ export default function ServicesBand() {
                       {s.title}
                     </h3>
                     <p
-                      className={`mt-1.5 font-mono text-[11px] uppercase tracking-widest transition-colors duration-300 ${
+                      className={`mt-1.5 font-mono text-[12px] uppercase tracking-widest transition-colors duration-300 ${
                         dimmed ? "text-white/25" : "text-lime"
                       }`}
                     >
@@ -225,7 +225,7 @@ export default function ServicesBand() {
 
         {/* Footer CTA bar */}
         <div className="sb-fade mt-14 flex flex-col items-start gap-5 border-t border-white/15 pt-8 md:mt-20 md:flex-row md:items-center md:justify-between">
-          <p className="font-mono text-[11px] uppercase tracking-widest text-white/55">
+          <p className="font-mono text-[12px] uppercase tracking-widest text-white/55">
             A senior replies within 24 hours.
           </p>
           <PillButton tone="white" href="/contact">
