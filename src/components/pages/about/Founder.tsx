@@ -34,7 +34,7 @@ export default function Founder() {
       <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-[minmax(0,440px)_1fr] md:gap-16">
         <div
           data-founder-photo
-          className="relative aspect-[5/6] overflow-hidden rounded-card bg-fill-light"
+          className="relative z-[35] aspect-[5/6] overflow-hidden rounded-card bg-fill-light"
         >
           <Image
             src={founder.image}

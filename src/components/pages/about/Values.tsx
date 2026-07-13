@@ -12,7 +12,14 @@ function ValuePill({ item }: { item: ValueItem }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="group relative mx-3 py-4">
+    // The active pill lifts above its neighbours (and above the grain layer)
+    // so its info card sits cleanly on top instead of tangling with the pill
+    // outlines behind it.
+    <div
+      className={`group relative mx-3 py-4 hover:z-40 focus-within:z-40 ${
+        open ? "z-40" : ""
+      }`}
+    >
       <button
         type="button"
         aria-expanded={open}
@@ -23,9 +30,10 @@ function ValuePill({ item }: { item: ValueItem }) {
         {item.name}
       </button>
 
-      {/* Description card: hover, keyboard focus, or tap */}
+      {/* Description card: centered under the pill, mt gap so it clears the
+          pill border; hover, keyboard focus, or tap. */}
       <div
-        className={`pointer-events-none absolute left-[65%] top-full z-50 hidden w-[320px] min-h-[175px] flex-col justify-between rounded-2xl bg-white p-6 shadow-xl transition-opacity duration-300 md:flex ${
+        className={`pointer-events-none absolute left-1/2 top-full mt-3 hidden w-[320px] min-h-[160px] -translate-x-1/2 flex-col justify-between rounded-2xl bg-white p-6 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.5)] transition-opacity duration-300 md:flex ${
           open
             ? "opacity-100"
             : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
