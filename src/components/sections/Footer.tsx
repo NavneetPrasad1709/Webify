@@ -100,7 +100,7 @@ export default function Footer() {
               />
               <p className="mt-7 text-base font-medium leading-relaxed text-black">
                 Senior-led design and engineering company. Websites and products
-                that grow revenue, built end to end by the founder.
+                that grow revenue, built end to end by our in-house team.
               </p>
               <p className="eyebrow mt-7 text-ink">EST. 2026</p>
             </div>

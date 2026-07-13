@@ -12,7 +12,7 @@ export const socialLinks = [
    the homepage sections read those canonical sources directly. */
 
 export const impactsParagraph =
-  "Webify is a senior-led design and engineering company built to ship websites and products that grow revenue, for founders and product leaders who value precision, speed, and outcomes. Digital systems that scale without adding operational drag. Strategy, design, and execution from one senior team.";
+  "Webify is a senior-led design and engineering company built to ship websites and products that grow revenue, for founders and product leaders who value precision, speed, and outcomes. Digital systems that scale without adding operational drag. Strategy, design, and execution from one in-house team of engineers and designers.";
 
 export const stats: {
   value: number;
@@ -38,7 +38,7 @@ export const foundingOffers: {
   {
     tag: "DIRECT ACCESS",
     title: "You work with the people who build",
-    body: "No account managers, no relay layer. The senior designing and coding your product is in the room on every call, from kickoff to launch.",
+    body: "No account managers, no relay layer. The developers and designers building your product are in the room on every call, from kickoff to launch.",
     tone: "light",
   },
   {
@@ -102,7 +102,7 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Product",
-    blurb: "For a web app or product, designed and engineered by one senior team.",
+    blurb: "For a web app or product, designed and engineered by our in-house team.",
     timeline: "Scoped per build",
     features: [
       "Everything in Website",

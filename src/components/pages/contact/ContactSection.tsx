@@ -162,8 +162,7 @@ export default function ContactSection({
           <p className="eyebrow">CONTACT</p>
           <h1 className="contact-title display-1">REACH OUT TODAY</h1>
           <p className="max-w-md text-base text-black font-medium">
-            Tell us about your project. Navneet, the founder, replies within 24
-            hours.
+            Tell us about your project. Our team replies within 24 hours.
           </p>
         </div>
 

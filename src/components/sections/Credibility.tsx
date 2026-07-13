@@ -14,7 +14,7 @@ const PILLARS = [
   },
   {
     title: "Reply within 24 hours",
-    body: "A senior answers, with no sales layer in between.",
+    body: "A senior team member answers, with no sales layer in between.",
   },
   {
     title: "You own everything",

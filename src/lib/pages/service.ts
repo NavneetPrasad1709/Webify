@@ -264,7 +264,7 @@ export const listingHero = {
   eyebrow: "Our Services",
   titleLines: ["Services", "That Deliver"],
   subtitle:
-    "One senior team for strategy, design, build, and everything after launch.",
+    "One in-house team of developers and designers for strategy, design, build, and everything after launch.",
   ctaLabel: "Start a Project",
   ctaHref: "/contact",
 };

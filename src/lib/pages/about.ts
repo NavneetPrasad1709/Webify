@@ -10,7 +10,7 @@ export const aboutHero = {
 
 export const aboutIntro = {
   tag: "ABOUT US",
-  text: "Webify is new, and says so. No borrowed case studies, no rented logos: one senior builder who designs and ships every project end to end, from the first call to launch.",
+  text: "Webify is new, and says so. No borrowed case studies, no rented logos: a team of software developers and UI/UX designers who design and ship every project end to end, from the first call to launch.",
 };
 
 /* The real founder: the studio's verifiable human trust anchor. Facts only,
@@ -18,8 +18,8 @@ export const aboutIntro = {
 export const founder = {
   tag: "FOUNDER",
   name: "Navneet Prasad",
-  role: "Founder, Design & Engineering",
-  bio: "Webify is one senior builder, end to end. Navneet designs and engineers every project personally: strategy, interface, and code, with no account managers and no handoffs. You talk to the person doing the work, from the first call to launch and through the 30-day support window after it.",
+  role: "Founder & Lead Engineer",
+  bio: "Navneet founded Webify and leads its team of software developers and UI/UX designers. Every project is designed and built in-house, with no account managers and no handoffs, so you work directly with the people doing the work, from the first call to launch and through the 30-day support window after it.",
   address: "Tech Zone IV, Greater Noida, Uttar Pradesh 201318",
   reach: "Remote-first, working with clients worldwide",
   email: "contact@webify.org.in",
@@ -77,8 +77,8 @@ export const journey = {
   items: [
     {
       year: "DAY ONE",
-      label: "A senior-only company",
-      text: "Webify starts with senior craft only: every project is designed and built by experienced hands, no juniors learning on your budget.",
+      label: "A senior-led team",
+      text: "Webify runs as a senior-led team of developers and designers, so every project is built by experienced hands with senior review on everything that ships.",
       image: "/assets/about/year-one.webp",
       alt: "Four colleagues gathered around a laptop, looking engaged and smiling during a discussion in a bright office.",
     },
@@ -140,7 +140,7 @@ export const valuesSection = {
       {
         name: "EXCELLENCE",
         number: "02",
-        text: "Senior craft on every screen: no juniors learning on your budget, no detail left unresolved.",
+        text: "Senior-led craft on every screen: experienced developers and designers, with review on every detail before it ships.",
       },
       {
         name: "VISION",
