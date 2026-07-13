@@ -158,7 +158,12 @@ export default function Values() {
             direction={i % 2 === 0 ? "right" : "left"}
             duration={42}
             pauseOnHover
-            className="!overflow-visible"
+            /* relative + hover z-lift raises the whole hovered ROW above the
+               rows below it. Each marquee row is its own transform stacking
+               context, so a pill's own z-index can only win inside its row;
+               the row itself must outrank the next row for the card to sit on
+               top of the pills beneath it. */
+            className="relative !overflow-visible hover:z-30 focus-within:z-30"
           >
             {row.map((item) => (
               <ValuePill key={item.name} item={item} />
