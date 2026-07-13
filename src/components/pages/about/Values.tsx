@@ -15,7 +15,7 @@ function ValuePill({ item }: { item: ValueItem }) {
 
   return (
     <div
-      className={`group relative mx-2.5 py-3 md:mx-3 ${
+      className={`group relative mx-[10px] py-2 md:mx-[15px] ${
         open ? "z-50" : "hover:z-50 focus-within:z-50"
       }`}
     >
@@ -25,7 +25,7 @@ function ValuePill({ item }: { item: ValueItem }) {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         onBlur={() => setOpen(false)}
-        className={`inline-block rounded-full border px-9 py-4 text-[clamp(20px,2.4vw,42px)] font-bold uppercase tracking-tight transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:px-14 md:py-6 ${
+        className={`inline-block rounded-full border px-8 py-4 text-[clamp(30px,5vw,64px)] font-extrabold uppercase leading-none tracking-[-0.02em] transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:px-[50px] md:py-[30px] ${
           open
             ? "border-ink bg-ink text-white"
             : "border-primary-lite text-primary-lite group-hover:border-ink group-hover:bg-ink group-hover:text-white group-focus-within:border-ink group-focus-within:bg-ink group-focus-within:text-white"
@@ -37,15 +37,13 @@ function ValuePill({ item }: { item: ValueItem }) {
       {/* Info card: slides up and fades in below the pill, offset right,
           matching the template. Hidden until hover / focus / tap. */}
       <div
-        className={`pointer-events-none absolute left-[60%] top-full z-10 mt-4 hidden w-[320px] min-h-[175px] flex-col justify-between rounded-2xl bg-white p-6 shadow-[0_28px_70px_-24px_rgba(0,0,0,0.55)] transition-[opacity,transform] duration-300 ease-out md:flex ${
+        className={`pointer-events-none absolute left-[60%] top-full z-10 mt-2 hidden w-[320px] min-h-[175px] flex-col justify-between rounded-[10px] bg-white p-5 shadow-[0_28px_70px_-24px_rgba(0,0,0,0.55)] transition-[opacity,transform] duration-300 ease-out md:flex ${
           open
             ? "translate-y-0 opacity-100"
             : "translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100"
         }`}
       >
-        <p className="font-mono text-base font-semibold text-ink">
-          {item.number}
-        </p>
+        <p className="text-base font-semibold text-ink">{item.number}</p>
         <p className="text-[15px] leading-relaxed text-black">{item.text}</p>
       </div>
 
