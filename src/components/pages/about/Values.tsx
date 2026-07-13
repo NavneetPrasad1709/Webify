@@ -1,14 +1,15 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap, revealFrom, revealTo } from "@/lib/anim";
 import Marquee from "@/components/ui/Marquee";
 import { valuesSection, type ValueItem } from "@/lib/pages/about";
 
-/* Value pill (template pattern): a dim outline capsule that brightens to white
-   on hover / focus and reveals a white info card that slides up into place.
-   The active pill's wrapper lifts above its neighbours (z-50) so the card
-   floats cleanly on top instead of tangling with the outlines behind it. */
+/* Value pill (template pattern): a dim outline capsule that fills black with
+   white text on direct hover / focus and reveals a white info card that slides
+   up into place. The active pill's wrapper lifts above its neighbours (z-50)
+   so the card floats cleanly on top of the outlines behind it. Text colour is
+   also driven by a cursor-proximity glow (see the band effect below). */
 function ValuePill({ item }: { item: ValueItem }) {
   const [open, setOpen] = useState(false);
 
@@ -20,16 +21,21 @@ function ValuePill({ item }: { item: ValueItem }) {
     >
       <button
         type="button"
+        data-value-pill
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         onBlur={() => setOpen(false)}
-        className="inline-block rounded-full border border-primary-lite px-9 py-4 text-[clamp(20px,2.4vw,42px)] font-bold uppercase tracking-tight text-primary-lite transition-colors duration-300 group-hover:border-white group-hover:text-white focus-visible:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:px-14 md:py-6"
+        className={`inline-block rounded-full border px-9 py-4 text-[clamp(20px,2.4vw,42px)] font-bold uppercase tracking-tight transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:px-14 md:py-6 ${
+          open
+            ? "border-ink bg-ink text-white"
+            : "border-primary-lite text-primary-lite group-hover:border-ink group-hover:bg-ink group-hover:text-white group-focus-within:border-ink group-focus-within:bg-ink group-focus-within:text-white"
+        }`}
       >
         {item.name}
       </button>
 
-      {/* Info card: slides up (translate-y) and fades in below the pill,
-          offset right, matching the template. Hidden until hover/focus/tap. */}
+      {/* Info card: slides up and fades in below the pill, offset right,
+          matching the template. Hidden until hover / focus / tap. */}
       <div
         className={`pointer-events-none absolute left-[60%] top-full z-10 mt-4 hidden w-[320px] min-h-[175px] flex-col justify-between rounded-2xl bg-white p-6 shadow-[0_28px_70px_-24px_rgba(0,0,0,0.55)] transition-[opacity,transform] duration-300 ease-out md:flex ${
           open
@@ -37,7 +43,9 @@ function ValuePill({ item }: { item: ValueItem }) {
             : "translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100"
         }`}
       >
-        <p className="font-mono text-lg font-bold text-ink">{item.number}</p>
+        <p className="font-mono text-base font-semibold text-ink">
+          {item.number}
+        </p>
         <p className="text-[15px] leading-relaxed text-black">{item.text}</p>
       </div>
 
@@ -53,6 +61,7 @@ function ValuePill({ item }: { item: ValueItem }) {
 
 export default function Values() {
   const ref = useRef<HTMLElement>(null);
+  const bandRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -72,6 +81,61 @@ export default function Values() {
     return () => ctx.revert();
   }, []);
 
+  /* Cursor-proximity glow (template signature): pills near the cursor
+     interpolate their text colour from dim primary-lite to bright white.
+     Fine pointers only; the direct-hover black fill is handled in CSS and
+     wins because the closest pill lands at ~white anyway. */
+  useEffect(() => {
+    const band = bandRef.current;
+    if (!band || !window.matchMedia("(pointer: fine)").matches) return;
+
+    const DIM = [135, 173, 255]; // --color-primary-lite
+    const BRIGHT = [255, 255, 255];
+    const RADIUS = 300;
+    let raf = 0;
+    let mx = 0;
+    let my = 0;
+
+    const paint = () => {
+      raf = 0;
+      const pills = band.querySelectorAll<HTMLElement>("[data-value-pill]");
+      // Read all rects first, then write, to avoid layout thrashing.
+      const rects: { el: HTMLElement; cx: number; cy: number }[] = [];
+      pills.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        rects.push({ el, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+      });
+      for (const { el, cx, cy } of rects) {
+        const d = Math.hypot(mx - cx, my - cy);
+        const t = Math.max(0, 1 - d / RADIUS);
+        const f = t * t; // sharper falloff
+        const c = DIM.map((v, i) => Math.round(v + (BRIGHT[i] - v) * f));
+        el.style.color = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
+      }
+    };
+
+    const onMove = (e: MouseEvent) => {
+      mx = e.clientX;
+      my = e.clientY;
+      if (!raf) raf = requestAnimationFrame(paint);
+    };
+    const onLeave = () => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+      band
+        .querySelectorAll<HTMLElement>("[data-value-pill]")
+        .forEach((el) => (el.style.color = ""));
+    };
+
+    band.addEventListener("mousemove", onMove);
+    band.addEventListener("mouseleave", onLeave);
+    return () => {
+      band.removeEventListener("mousemove", onMove);
+      band.removeEventListener("mouseleave", onLeave);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
   return (
     // overflow-x-clip stops the marquee causing horizontal scroll while still
     // letting the hover cards spill downward (overflow-y stays visible).
@@ -86,6 +150,7 @@ export default function Values() {
 
       {/* Full-bleed blue band: alternating marquee rows of value pills */}
       <div
+        ref={bandRef}
         data-values-band
         className="flex flex-col gap-6 bg-primary py-16 md:gap-8 md:py-24"
       >
