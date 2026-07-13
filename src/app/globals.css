@@ -33,14 +33,24 @@ body {
   background: var(--color-ink);
   color: var(--color-fill-light);
   font-family: var(--font-inter-display), Arial, sans-serif;
-  /* Pin Inter's optical-size axis to its Display master (opsz 32). This is what
-     makes the single variable file render as Inter Display everywhere; opsz is
-     inherited, wght is still driven by font-weight utilities. */
-  font-optical-sizing: none;
-  font-variation-settings: "opsz" 32;
+  /* Let the variable font pick its optical master by rendered size: body
+     copy gets Inter's text-optimized design (open apertures, readable at
+     15-18px) while display sizes automatically reach the Display master
+     (opsz 32). Pinning opsz 32 globally set PARAGRAPHS in headline-cut
+     letterforms, which is why body text read poorly at any size. */
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: clip;
+}
+
+/* Keep the big type explicitly on the Display master so headlines never
+   drift, whatever size the clamp lands on. */
+.display-1,
+.display-2,
+.display-3,
+.heading-3 {
+  font-variation-settings: "opsz" 32;
 }
 
 /* Tailwind v4 preflight sets cursor: default on buttons; restore pointer affordance. */
