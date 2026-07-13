@@ -53,7 +53,7 @@ export default function ServicesAccordion() {
       if (!el) return;
       gsap.to(el, {
         height: i === open ? "auto" : 0,
-        duration: 0.55,
+        duration: 0.38,
         ease: "power3.inOut",
       });
     });
@@ -67,11 +67,11 @@ export default function ServicesAccordion() {
       gsap.fromTo(
         media,
         { filter: "blur(10px)", opacity: 0.6 },
-        { filter: "blur(0px)", opacity: 1, duration: 0.55, ease: "power2.out" }
+        { filter: "blur(0px)", opacity: 1, duration: 0.4, ease: "power2.out" }
       );
     }
 
-    gsap.delayedCall(0.6, () => ScrollTrigger.refresh());
+    gsap.delayedCall(0.42, () => ScrollTrigger.refresh());
   }, [open]);
 
   return (
