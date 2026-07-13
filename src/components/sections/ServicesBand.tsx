@@ -51,9 +51,30 @@ function ConvertViz() {
 }
 
 const SITUATIONS = [
-  { n: "01", title: "Launching", body: "Idea to a live, senior-built product.", Viz: LaunchViz, href: "/contact?topic=Starting%20from%20zero" },
-  { n: "02", title: "Outgrowing", body: "A clean stack your team controls.", Viz: OutgrowViz, href: "/contact?topic=Rebuild%20our%20current%20site" },
-  { n: "03", title: "Converting", body: "Rebuilt to turn visitors into customers.", Viz: ConvertViz, href: "/contact?topic=Site%20that%20does%20not%20convert" },
+  {
+    n: "01",
+    title: "Launching",
+    who: "For founders with a first product",
+    body: "From idea to a live, senior-built product, without hiring a team.",
+    Viz: LaunchViz,
+    href: "/contact?topic=Starting%20from%20zero",
+  },
+  {
+    n: "02",
+    title: "Outgrowing",
+    who: "For teams on a stack that fights back",
+    body: "Your next site on a clean stack your own team controls.",
+    Viz: OutgrowViz,
+    href: "/contact?topic=Rebuild%20our%20current%20site",
+  },
+  {
+    n: "03",
+    title: "Converting",
+    who: "For sites with traffic that stalls",
+    body: "Design and copy rebuilt to turn visitors into buyers.",
+    Viz: ConvertViz,
+    href: "/contact?topic=Site%20that%20does%20not%20convert",
+  },
 ];
 
 export default function ServicesBand() {
@@ -134,7 +155,7 @@ export default function ServicesBand() {
       <div className="mx-auto w-[min(92%,1180px)] py-24 md:py-32">
         {/* Header */}
         <div className="max-w-3xl">
-          <p className="sb-fade eyebrow text-primary-lite">WHO WE&apos;RE BUILT FOR</p>
+          <p className="sb-fade eyebrow text-lime">WHO WE&apos;RE BUILT FOR</p>
           <h2 className="sb-head mt-6 text-[clamp(30px,4vw,54px)] font-bold leading-[1.05] tracking-tight text-white">
             {HEADING.map((w, i) => (
               <span key={i} className="sb-hw mr-[0.24em] inline-block">{w}</span>
@@ -162,18 +183,27 @@ export default function ServicesBand() {
                 <div className="flex items-center gap-5 md:gap-8">
                   <span
                     className={`font-mono text-sm tabular-nums tracking-widest transition-colors duration-300 ${
-                      active ? "text-white" : dimmed ? "text-white/25" : "text-primary-lite"
+                      active ? "text-white" : dimmed ? "text-white/25" : "text-lime"
                     }`}
                   >
                     {s.n}
                   </span>
-                  <h3
-                    className={`text-[clamp(30px,5.4vw,68px)] font-extrabold uppercase leading-[1.02] tracking-tight transition-[color,transform] duration-300 group-hover:md:translate-x-3 ${
-                      active ? "text-white" : dimmed ? "text-white/25" : "text-white/55"
-                    }`}
-                  >
-                    {s.title}
-                  </h3>
+                  <span className="min-w-0">
+                    <h3
+                      className={`text-[clamp(30px,5.4vw,68px)] font-extrabold uppercase leading-[1.02] tracking-tight transition-[color,transform] duration-300 group-hover:md:translate-x-3 ${
+                        active ? "text-white" : dimmed ? "text-white/25" : "text-white/55"
+                      }`}
+                    >
+                      {s.title}
+                    </h3>
+                    <p
+                      className={`mt-1.5 font-mono text-[11px] uppercase tracking-widest transition-colors duration-300 ${
+                        dimmed ? "text-white/25" : "text-lime"
+                      }`}
+                    >
+                      {s.who}
+                    </p>
+                  </span>
                   <span
                     className={`ml-auto hidden max-w-[15rem] text-right text-sm text-white transition-opacity duration-300 lg:block ${
                       active ? "opacity-100" : "opacity-0"
@@ -184,8 +214,8 @@ export default function ServicesBand() {
                 </div>
 
                 {/* Inline diagram + copy for touch / no-hover */}
-                <div className="sb-inline mt-5 grid grid-cols-[1fr_auto] items-end gap-4 md:hidden">
-                  <p className="text-[15px] leading-relaxed text-white/65">{s.body}</p>
+                <div className="sb-inline mt-5 grid grid-cols-[1fr_auto] items-end gap-4 [@media(hover:hover)]:hidden">
+                  <p className="text-[15px] leading-relaxed text-white">{s.body}</p>
                   <div className="sb-inline-draw h-16 w-28 shrink-0"><s.Viz /></div>
                 </div>
               </Link>
