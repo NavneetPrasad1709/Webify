@@ -20,30 +20,13 @@ export default function ProjectsIndex() {
         { ...revealTo, stagger: 0.12, delay: 0.1 },
       );
 
-      // Card entrance + image parallax
+      // Card entrance (the hero video supplies its own motion, so no
+      // zoom-parallax on the visual, which would crop the sides).
       gsap.utils.toArray<HTMLElement>("[data-proj-card]").forEach((card) => {
         gsap.fromTo(card, revealFrom, {
           ...revealTo,
           scrollTrigger: { trigger: card, start: "top 85%" },
         });
-
-        const visual = card.querySelector<HTMLElement>("[data-proj-visual]");
-        if (visual) {
-          gsap.fromTo(
-            visual,
-            { scale: 1.15 },
-            {
-              scale: 1,
-              ease: "none",
-              scrollTrigger: {
-                trigger: card,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true,
-              },
-            },
-          );
-        }
       });
     }, sectionRef);
 
@@ -56,7 +39,7 @@ export default function ProjectsIndex() {
       className="bg-white px-5 pb-10 pt-32 text-ink md:px-10 md:pt-40"
     >
       {/* Section title */}
-      <div data-proj-title className="mx-auto max-w-[1560px] text-center">
+      <div data-proj-title className="mx-auto max-w-[1720px] text-center">
         <p className="eyebrow text-gray-mid">SELECTED WORK</p>
         <h1 className="display-3 mt-4 text-ink">
           <span className="block">SELECTED</span>
@@ -65,12 +48,12 @@ export default function ProjectsIndex() {
       </div>
 
       {/* Project rows */}
-      <div className="mx-auto mt-16 flex max-w-[1560px] flex-col gap-6 md:mt-24 md:gap-8">
+      <div className="mx-auto mt-16 flex max-w-[1720px] flex-col gap-6 md:mt-24 md:gap-8">
         {projectDetails.map((p) => (
           <article
             key={p.slug}
             data-proj-card
-            className="relative grid grid-cols-1 gap-6 rounded-card bg-fill-light p-6 md:grid-cols-[1fr_minmax(0,560px)_1fr] md:items-center md:gap-8 md:p-10"
+            className="relative grid grid-cols-1 gap-6 rounded-card bg-fill-light p-6 md:grid-cols-[1fr_minmax(0,680px)_1fr] md:items-center md:gap-8 md:p-10"
           >
             {/* Left - live-build chip */}
             <div className="order-2 flex items-end gap-3 self-end md:order-1">

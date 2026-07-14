@@ -69,19 +69,8 @@ export default function Work() {
           );
         }
 
-        // Image pans vertically inside its frame - smooth translate parallax.
-        const visual = card.querySelector<HTMLElement>("[data-work-visual]");
-        if (visual) {
-          gsap.fromTo(
-            visual,
-            { yPercent: 0 },
-            {
-              yPercent: -16,
-              ease: "none",
-              scrollTrigger: { trigger: wrap, start: "top bottom", end: "bottom top", scrub: 1 },
-            }
-          );
-        }
+        // No vertical pan on the visual: the hero video has its own motion,
+        // and a pan on a full-frame video would reveal empty space or crop.
       });
 
       // Recede the pinned title as the card stack scrolls past: fade + scale
@@ -146,7 +135,7 @@ export default function Work() {
             >
               <article
                 data-work-card
-                className="relative mx-auto flex w-[min(94%,1440px)] flex-col gap-6 rounded-card bg-fill-light p-6 shadow-[0_30px_90px_-40px_rgba(0,0,0,0.45)] will-change-transform md:min-h-[62vh] md:p-10"
+                className="relative mx-auto flex w-[min(96%,1560px)] flex-col gap-6 rounded-card bg-fill-light p-6 shadow-[0_30px_90px_-40px_rgba(0,0,0,0.45)] will-change-transform md:min-h-[62vh] md:p-10"
               >
               {/* Center - visual (in flow on mobile, absolutely centered on md+).
                   Hover scale lives on the frame; GSAP pans the img vertically. */}
@@ -163,7 +152,7 @@ export default function Work() {
                     playsInline
                     preload="none"
                     poster={p.image}
-                    className="absolute inset-x-0 top-0 h-[135%] w-full object-cover will-change-transform"
+                    className="h-full w-full object-cover will-change-transform"
                   >
                     <source src={p.video} type="video/mp4" />
                   </video>

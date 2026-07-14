@@ -130,13 +130,12 @@ export default function ProjectSingle({
         <div className="mt-12 overflow-hidden rounded-card md:mt-16">
           <div className="aspect-[8/5] w-full md:aspect-[2/1]">
             <video
-              data-ps-parallax
               autoPlay
               muted
               loop
               playsInline
               poster={project.image}
-              className="h-full w-full object-cover will-change-transform"
+              className="h-full w-full object-cover"
             >
               <source src={project.video} type="video/mp4" />
             </video>
