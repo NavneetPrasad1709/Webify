@@ -143,7 +143,7 @@ export default function Work() {
                 href={`/project/${slug}`}
                 className="group/visual block w-full overflow-hidden rounded-xl shadow-[0_20px_60px_rgba(0,0,0,.12)] md:absolute md:inset-0 md:m-auto md:h-max md:w-[46%]"
               >
-                <div className="relative aspect-[8/5] w-full overflow-hidden transition-transform duration-500 ease-out group-hover/visual:scale-[1.02]">
+                <div className="relative aspect-[1908/908] w-full overflow-hidden transition-transform duration-500 ease-out group-hover/visual:scale-[1.02]">
                   <video
                     data-work-visual
                     autoPlay

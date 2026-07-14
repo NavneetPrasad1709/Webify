@@ -128,7 +128,7 @@ export default function ProjectSingle({
 
         {/* Hero image */}
         <div className="mt-12 overflow-hidden rounded-card md:mt-16">
-          <div className="aspect-[8/5] w-full md:aspect-[2/1]">
+          <div className="aspect-[1908/908] w-full">
             <video
               autoPlay
               muted

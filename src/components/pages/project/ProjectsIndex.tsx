@@ -75,7 +75,7 @@ export default function ProjectsIndex() {
               href={`/project/${p.slug}`}
               className="order-1 block overflow-hidden rounded-xl shadow-[0_16px_44px_rgba(0,0,0,.12)] md:order-2"
             >
-              <div className="aspect-[8/5] w-full">
+              <div className="aspect-[1908/908] w-full">
                 <video
                   data-proj-visual
                   autoPlay
