@@ -46,3 +46,6 @@ next-env.d.ts
 /Webify-*.png
 /template-home-banner-original.mp4
 /.claude/
+_rec.js
+_*.js
+_frames/
