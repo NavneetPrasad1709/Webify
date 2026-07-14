@@ -1,9 +1,8 @@
-/* /project + /project/[slug] content for the six self-initiated concept builds.
-   Every project here is honestly-labeled concept work: briefs Webify set for
-   itself to demonstrate craft, not client engagements. Each concept carries
-   its own narrative (overview, challenge, solution, outcome), scope counters,
-   meta rows, and body image. Section headings and the "Craft at a Glance"
-   block are shared across projects. */
+/* /project + /project/[slug] content for Webify's live builds. Each project
+   here is a real, deployed site Webify designed and built end to end to show
+   how it works across an industry (SaaS, healthcare, real estate). The
+   businesses shown inside the demos are illustrative; the design and
+   engineering are real and live, and each project links to the running site. */
 
 export interface ProjectMetaRow {
   label: string;
@@ -22,8 +21,10 @@ export interface ProjectDetail {
   name: string;
   year: string;
   image: string;
-  /** Mid-page concept-build image; each project uses its own cover asset. */
+  /** Mid-page build image; each project uses its own cover asset. */
   bodyImage: string;
+  /** The running site, so anyone can click through and use the real build. */
+  liveUrl: string;
   description: string;
   meta: ProjectMetaRow[];
   overview: string;
@@ -40,315 +41,168 @@ export const projectSections = {
   overview: "Project Overview",
   challenge: "The Challenge",
   solution: "The Solution",
-  results: "What It Demonstrates",
+  results: "The Result",
 };
 
 export const projectCraft = {
   heading: "Craft at a Glance",
-  body: "Webify designs and ships websites, brand systems, and product interfaces for SaaS, fintech, and e-commerce teams. Each engagement pairs a dedicated designer and developer, weekly sprints, and a component-driven build that stays easy to maintain long after launch.",
+  body: "Webify designs and builds websites, brand systems, and product interfaces end to end. Each build pairs senior design and engineering, a component-driven front end, and a responsive, fast, SEO-ready result that stays easy to maintain long after launch. The projects below are live, so you can click through and use them yourself.",
 };
 
 /** Fallback body image for any project without its own asset. */
-export const projectBodyImage = "/assets/project/project-single-image.webp";
+export const projectBodyImage = "/assets/project/vexel-ai.webp";
 
 export const projectDetails: ProjectDetail[] = [
   {
-    slug: "averon-platform",
-    name: "Averon Platform",
+    slug: "vexel-ai",
+    name: "Vexel AI",
     year: "2026",
-    image: "/assets/averon.webp",
-    bodyImage: "/assets/averon.webp",
+    image: "/assets/project/vexel-ai.webp",
+    bodyImage: "/assets/project/vexel-ai-body.webp",
+    liveUrl: "https://saas.webify.org.in/",
     description:
-      "Averon is a concept for a cloud-based analytics platform that helps small and mid-sized businesses visualize operational and financial data in one centralized dashboard.",
+      "A conversion-first marketing site and product dashboard UI for an AI sales-agent SaaS, designed and built to turn a complex product into a clear, fast, credible first impression.",
     meta: [
-      { label: "Category", value: "SaaS Platform" },
-      { label: "Industry", value: "Business Intelligence" },
-      { label: "Timeline", value: "5 Weeks" },
-      { label: "Type", value: "Self-initiated concept" },
+      { label: "Category", value: "SaaS Product" },
+      { label: "Industry", value: "AI / Sales Automation" },
+      { label: "Scope", value: "Marketing site + dashboard UI" },
+      { label: "Type", value: "Live build" },
     ],
     overview:
-      "We designed Averon as a self-initiated concept: a cloud analytics platform that helps small and mid-sized businesses see operational and financial data in one place. The build explores how a structured layout system, refined visual patterns, and a scalable component library keep a data-dense dashboard easy to navigate, interpret, and act on as a product grows.",
+      "Vexel is a live build for an AI sales-agent SaaS: a marketing site that sells the product in seconds and a dashboard interface that shows it in action. The work covers a dark, high-contrast brand system, a clear feature narrative (answer, qualify, convert), transparent pricing tiers, and a product UI that reads as a real tool rather than a stock screenshot.",
     challenge:
-      "The brief we set ourselves reflects a familiar pattern: analytics interfaces that grow feature by feature without a consistent structure, until users face a wall of metrics on login and start working around the product instead of with it.",
+      "SaaS landing pages fail when they explain the technology instead of the outcome. The brief was to make an AI product feel simple and trustworthy on the first scroll, then back it up with an interface that looks like software a team would actually open every day.",
     challengePoints: [
-      "Overcrowded dashboards that make important metrics difficult to identify",
-      "Navigation that requires multiple steps to reach frequently used reports",
-      "Inconsistent UI elements across different sections of a product",
-      "Limited responsiveness that reduces usability on tablets and smaller screens",
-      "Dated visual styling that erodes user confidence in the accuracy of the data",
+      "Communicating a complex AI workflow without a wall of jargon",
+      "Making a new product feel credible and enterprise-ready",
+      "A pricing section that removes hesitation instead of adding it",
+      "A dashboard UI convincing enough to carry the demo",
+      "Fast load and clean motion on a visually rich dark theme",
     ],
     solution:
-      "We built the concept around a clear information hierarchy: a structured grid that surfaces headline metrics first, streamlined navigation that puts frequent reports one click away, and a component system that keeps every screen visually and functionally consistent. The interface is designed for desktop and tablet so teams get the same experience wherever they work.",
+      "We led with the outcome, not the tech: a single sharp headline, a three-step feature story, and social-proof and security cues placed exactly where doubt appears. Pricing is laid out for quick comparison with one recommended tier. The dashboard UI was designed as a real component system (sidebar, metric cards, tables, charts) so the product feels tangible, and the whole site ships responsive and quick.",
     results:
-      "The layout is built so key metrics surface first, core reporting flows take fewer steps, and every screen reads as part of one product. The component library means new modules can be added without redesigning from scratch, the same standard we would bring to any client dashboard engagement.",
-    features: [
-      {
-        value: 8,
-        suffix: "+",
-        label: "Dashboard Modules Designed",
-        body: "Core modules, from financial overviews to operations reporting, composed on one structured grid.",
-      },
-      {
-        value: 30,
-        suffix: "+",
-        label: "Components in the System",
-        body: "Cards, charts, tables, and controls documented once and reused across every screen of the concept.",
-      },
-      {
-        value: 5,
-        suffix: "",
-        label: "Weeks From Brief to Concept",
-        body: "The full dashboard system was scoped, designed, and documented inside a five-week self-set sprint.",
-      },
-    ],
-  },
-  {
-    slug: "solvix-brand",
-    name: "Solvix Brand",
-    year: "2026",
-    image: "/assets/solvix.webp",
-    bodyImage: "/assets/solvix.webp",
-    description:
-      "Solvix is a concept brand identity system for a B2B consultancy, spanning logo, guidelines, and a modular marketing site.",
-    meta: [
-      { label: "Category", value: "Brand Identity" },
-      { label: "Industry", value: "Consulting" },
-      { label: "Timeline", value: "3 Weeks" },
-      { label: "Type", value: "Self-initiated concept" },
-    ],
-    overview:
-      "We designed Solvix as a concept brand system to show how a B2B consultancy can run one recognizable visual language across proposals, decks, and the web without a designer in the room. The system spans a logo suite, documented guidelines, and a modular marketing site.",
-    challenge:
-      "The scenario we designed for is common: a consultancy that grows faster than its brand, where every office produces its own materials and nothing on the marketing side matches the quality of the actual work.",
-    challengePoints: [
-      "Inconsistent logo usage across decks, proposals, and social channels",
-      "No documented guidelines, so every asset gets rebuilt from scratch",
-      "Color and type choices that vary between offices and partners",
-      "A marketing site that undersells the caliber of the firm's client work",
-      "No reusable templates for proposals, case studies, or reports",
-    ],
-    solution:
-      "We designed a single confident wordmark with a supporting system of color, type, and layout rules, documented in guidelines a whole firm could follow. A modular marketing site and a library of proposal and case study templates show how every touchpoint can come from the same system.",
-    results:
-      "The system is built so on-brand materials take hours, not days: proposals, decks, and the site share one visual language, and the guidelines document is written to keep new hires and external vendors consistent without rounds of review.",
-    features: [
-      {
-        value: 40,
-        suffix: "+",
-        label: "Brand Assets Designed",
-        body: "Logo suite, templates, social kits, and collateral designed as one coordinated package.",
-      },
-      {
-        value: 3,
-        suffix: "",
-        label: "Weeks From Brief to Finished System",
-        body: "A focused sprint covered strategy, design, documentation, and the marketing site build without scope drift.",
-      },
-      {
-        value: 1,
-        suffix: "",
-        label: "Reusable Design System",
-        body: "Every asset draws from a single documented system, so future materials stay consistent without redesign.",
-      },
-    ],
-  },
-  {
-    slug: "luminary-studio",
-    name: "Luminary Studio",
-    year: "2026",
-    image: "/assets/luminary.webp",
-    bodyImage: "/assets/luminary.webp",
-    description:
-      "Luminary Studio is a concept portfolio platform for a photography collective, built around large imagery and effortless browsing.",
-    meta: [
-      { label: "Category", value: "Portfolio Platform" },
-      { label: "Industry", value: "Photography" },
-      { label: "Timeline", value: "10 Weeks" },
-      { label: "Type", value: "Self-initiated concept" },
-    ],
-    overview:
-      "We designed Luminary Studio as a concept portfolio platform for a photography collective, built to put large imagery first. The build covers an editorial gallery system, an automated image delivery pipeline, and a lightweight CMS designed so photographers can publish new work themselves in minutes.",
-    challenge:
-      "The scenario the concept answers: a collective whose work is scattered across personal sites and social profiles, on a shared site that buckles under full-resolution uploads.",
-    challengePoints: [
-      "Full-resolution uploads that make gallery pages painfully slow to load",
-      "No consistent structure, so every photographer's section looks different",
-      "Publishing new work that requires a developer for every update",
-      "A weak mobile experience for an audience that browses mostly on phones",
-      "No clear inquiry path for booking or licensing work",
-    ],
-    solution:
-      "We designed an editorial gallery system around large, uninterrupted imagery and an image pipeline that generates responsive sizes automatically, so pages stay fast without sacrificing quality. A simple CMS lets each photographer upload, order, and caption their own galleries, and a structured inquiry flow is designed to turn viewers into bookings.",
-    results:
-      "The system is built so galleries load quickly on any connection while showing the work at full visual quality, new shoots can go live the day they are edited, and mobile browsing matches the desktop experience. Inquiries route through one structured form instead of scattered messages.",
+      "A live product site that reads clearly in one scroll, a pricing layout built to convert, and a dashboard interface that makes the product feel real. Visit it and the flow speaks for itself.",
     features: [
       {
         value: 6,
         suffix: "",
-        label: "Responsive Sizes Per Image",
-        body: "The automated pipeline renders every upload at six sizes, so each device receives a right-sized file.",
-      },
-      {
-        value: 12,
-        suffix: "+",
-        label: "Gallery Layouts Designed",
-        body: "Editorial layouts covering full-bleed features, grids, and photo essays, all drawn from one consistent system.",
+        label: "Marketing Sections",
+        body: "Hero, feature story, security, integrations, pricing, and CTA, composed as one coherent narrative.",
       },
       {
         value: 3,
         suffix: "",
-        label: "Core Flows Designed End to End",
-        body: "Browsing, publishing, and inquiry flows designed in full, from gallery view to structured booking form.",
+        label: "Pricing Tiers Designed",
+        body: "A free, pro, and enterprise layout built for fast comparison with one clear recommendation.",
+      },
+      {
+        value: 100,
+        suffix: "%",
+        label: "Responsive & Live",
+        body: "Deployed, fast, and fully responsive from wide desktop down to mobile.",
       },
     ],
   },
   {
-    slug: "arcstone-portfolio",
-    name: "Arcstone Portfolio",
+    slug: "dental-health",
+    name: "Dental Health",
     year: "2026",
-    image: "/assets/arcstone.webp",
-    bodyImage: "/assets/arcstone.webp",
+    image: "/assets/project/dental-health.webp",
+    bodyImage: "/assets/project/dental-health-body.webp",
+    liveUrl: "https://webify-dentist.vercel.app/",
     description:
-      "Arcstone is a concept portfolio and lead generation site for an architecture practice, pairing editorial layouts with fast performance.",
+      "A clean, conversion-focused website for a modern dental practice, built to turn local searches into booked appointments.",
     meta: [
-      { label: "Category", value: "Portfolio Website" },
-      { label: "Industry", value: "Architecture" },
-      { label: "Timeline", value: "6 Weeks" },
-      { label: "Type", value: "Self-initiated concept" },
+      { label: "Category", value: "Local Business" },
+      { label: "Industry", value: "Healthcare / Dental" },
+      { label: "Scope", value: "Marketing site + booking flow" },
+      { label: "Type", value: "Live build" },
     ],
     overview:
-      "We designed Arcstone as a concept portfolio and lead generation site for an architecture practice, pairing editorial project layouts with fast performance. The self-set brief: present built work with the same rigor a practice brings to its buildings, and turn that attention into qualified inquiries.",
+      "Dental Health is a live build for a local dental practice: a warm, trustworthy site whose whole job is to get a visitor from first click to a booked appointment. It pairs confident typography and real photography with a clear service list, provider profiles, reviews, and a booking call to action that follows the visitor down the page.",
     challenge:
-      "The scenario is one many practices know: the strongest projects hidden in PDF portfolios sent on request, while the website shows a dated grid of small thumbnails.",
+      "A local healthcare site lives or dies on trust and speed to booking. Most practice sites bury services, hide the phone number, and make appointments feel like paperwork. The brief was the opposite: build trust fast and put booking one tap away everywhere.",
     challengePoints: [
-      "Project documentation locked in PDFs instead of on the website",
-      "Photography presented in small crops that flatten the work",
-      "A dated design that misrepresents a contemporary practice",
-      "No clear route from viewing a project to starting a conversation",
-      "Slow load times on the image-heavy pages that matter most",
+      "Establishing trust for a healthcare brand in the first few seconds",
+      "Making services and credentials easy to scan, not read",
+      "Keeping a Book Online action within reach on every screen",
+      "Reassurance signals (insurance, same-day, financing) placed early",
+      "A fast, accessible experience for every age of patient",
     ],
     solution:
-      "We designed editorial case study layouts that give each project room: full-bleed photography, drawings, and concise narrative in a consistent structure. Projects are filterable by type and scale, every page ends in a clear inquiry prompt, and the build is tuned so large imagery loads fast.",
+      "The hero pairs a strong local claim with a smiling patient photo and two reassurance lines, with Book Online and a phone number immediately visible. Services are chip-scannable, provider profiles add real faces, and reviews plus insurance and financing notes answer objections before they are asked. The booking action is persistent, and the layout stays clean and quick on any device.",
     results:
-      "The concept is built to work as a practice's primary portfolio: full case studies replace PDFs sent on request, image-heavy pages stay fast, and the contact flow is structured to capture project type and budget so every inquiry arrives qualified.",
+      "A practice site built around a single job, booking, with trust signals and a call to action on every screen. It is live and ready to turn local traffic into appointments.",
     features: [
       {
-        value: 5,
-        suffix: "",
-        label: "Case Study Templates Designed",
-        body: "Editorial layouts that give full-bleed photography, drawings, and concise narrative one consistent, repeatable structure.",
+        value: 6,
+        suffix: "+",
+        label: "Services Presented",
+        body: "Preventive, cosmetic, whitening, implants, orthodontics, and emergency care, each scannable at a glance.",
       },
       {
         value: 1,
-        suffix: "",
-        label: "Inquiry Flow Designed End to End",
-        body: "A structured contact flow that captures project type and budget before the first conversation.",
+        suffix: "-tap",
+        label: "Booking, Everywhere",
+        body: "A Book Online action that stays within reach from the hero to the footer.",
       },
       {
-        value: 6,
-        suffix: "",
-        label: "Weeks From Brief to Concept",
-        body: "Design and build of the full site system inside a six-week self-set sprint.",
+        value: 100,
+        suffix: "%",
+        label: "Responsive & Live",
+        body: "Deployed, accessible, and fully responsive for patients on any device.",
       },
     ],
   },
   {
-    slug: "helix-agency",
-    name: "Helix Agency",
+    slug: "evergreen-studio",
+    name: "EverGreen Studio",
     year: "2026",
-    image: "/assets/helix.webp",
-    bodyImage: "/assets/helix.webp",
+    image: "/assets/project/evergreen-studio.webp",
+    bodyImage: "/assets/project/evergreen-studio-body.webp",
+    liveUrl: "https://webify-luxory-homes.vercel.app/",
     description:
-      "Helix is a concept agency website with case studies, careers, and a modular CMS built for daily updates.",
+      "An elegant, photography-led website for a luxury architecture and real-estate studio, built to make restraint feel premium.",
     meta: [
-      { label: "Category", value: "Agency Website" },
-      { label: "Industry", value: "Creative Services" },
-      { label: "Timeline", value: "5 Weeks" },
-      { label: "Type", value: "Self-initiated concept" },
+      { label: "Category", value: "Real Estate" },
+      { label: "Industry", value: "Architecture / Luxury" },
+      { label: "Scope", value: "Brand site + portfolio" },
+      { label: "Type", value: "Live build" },
     ],
     overview:
-      "We designed Helix as a concept agency website with case studies, careers, and a modular CMS built for daily updates. The build covers design, front end, and a content model that lets non-technical editors assemble new pages from a library of tested blocks.",
+      "EverGreen is a live build for a luxury architecture and real-estate studio, where the design has to feel as considered as the homes. Large architectural photography leads every screen, the type is quiet and confident, and the layout uses generous space and numbered sections so the work, not the interface, is the star.",
     challenge:
-      "The scenario: an agency whose static site routes every case study, hire, and announcement through a developer, leaving the site permanently out of date.",
+      "Luxury reads as restraint. A high-end property brand can not look like a listings portal; it has to feel editorial, unhurried, and expensive. The brief was to let the architecture breathe while still guiding a serious buyer toward the work and the enquiry.",
     challengePoints: [
-      "Every content change requiring a developer and a deploy",
-      "Case studies that run months behind the agency's actual portfolio",
-      "Careers listings managed through third-party links instead of on-site",
-      "Pages assembled ad hoc, with no consistent component structure",
-      "No preview workflow, so editors publish without seeing the result",
+      "Making a site feel premium through restraint, not decoration",
+      "Letting full-bleed photography carry the experience",
+      "A property and services structure that stays elegant, not listy",
+      "Quiet, confident typography and generous whitespace",
+      "Guiding a high-intent visitor to enquire without hard selling",
     ],
     solution:
-      "We built a library of modular CMS blocks: heroes, case study sections, team grids, job listings, and more, each designed to work in any combination. Editors can assemble and preview pages themselves, case studies follow a repeatable template, and the careers section runs entirely on the site.",
+      "We built the site around the photography: full-bleed imagery, a restrained neutral palette, and large display type used sparingly. Services and residences are organised with numbered, grid-based sections that read like an editorial spread, and the enquiry path is calm and always present. The result feels like the brand it represents, elevated and deliberate.",
     results:
-      "The system is built so case studies and job openings can go live the day they are ready: the block library keeps every new page on-brand without design oversight, and developers stay out of the content loop entirely.",
+      "A property brand site that feels editorial and expensive, where the architecture leads and every section is composed with restraint. It is live and ready to explore.",
     features: [
-      {
-        value: 18,
-        suffix: "+",
-        label: "Modular CMS Blocks",
-        body: "A library of tested content blocks lets editors assemble on-brand pages in any combination.",
-      },
-      {
-        value: 5,
-        suffix: "",
-        label: "Page Types Composed From Blocks",
-        body: "Home, case studies, careers, about, and contact, all assembled from the same block library.",
-      },
-      {
-        value: 5,
-        suffix: "",
-        label: "Weeks From Brief to Concept",
-        body: "Design, build, CMS setup, and demo content shipped inside a five-week self-set sprint.",
-      },
-    ],
-  },
-  {
-    slug: "vireon-design",
-    name: "Vireon Design",
-    year: "2026",
-    image: "/assets/vireon.webp",
-    bodyImage: "/assets/vireon.webp",
-    description:
-      "Vireon is a concept SaaS product design system covering dashboard UX, documented components, and data visualization patterns.",
-    meta: [
-      { label: "Category", value: "SaaS Product Design" },
-      { label: "Industry", value: "Data Analytics" },
-      { label: "Timeline", value: "7 Weeks" },
-      { label: "Type", value: "Self-initiated concept" },
-    ],
-    overview:
-      "We designed Vireon as a concept product design system for a B2B analytics product: dashboard UX, a tokenized design system, and a dedicated set of data visualization patterns. The build shows how order comes to a fast-grown interface, and what a system both designers and engineers can build with looks like.",
-    challenge:
-      "The starting scenario: years of rapid shipping leaving a product with dozens of one-off screens and no shared language between design and engineering.",
-    challengePoints: [
-      "Charts styled differently on every screen, making data hard to compare",
-      "Components rebuilt ad hoc, multiplying design and engineering effort",
-      "Dense screens with no consistent hierarchy or spacing rules",
-      "Slow handoff, with engineers interpreting each mockup from scratch",
-      "No documentation, so conventions live in individual heads",
-    ],
-    solution:
-      "We built a tokenized design system: documented components, spacing and type scales, and a dedicated set of data visualization patterns covering an analytics product's core chart types. Dashboard templates show how the pieces compose, and everything ships with usage guidance for both designers and engineers.",
-    results:
-      "The system is built so new screens start from components instead of a blank canvas: charts read consistently across the product, handoff moves from redline documents to shared components, and the documentation is written so a team could extend the system on their own.",
-    features: [
-      {
-        value: 60,
-        suffix: "+",
-        label: "Documented Components",
-        body: "From buttons to complex data tables, every component ships with states, tokens, and usage guidance.",
-      },
       {
         value: 4,
         suffix: "",
-        label: "Dashboard Templates Composed",
-        body: "Full-page templates showing how components, tokens, and chart patterns compose into real screens.",
+        label: "Core Services",
+        body: "Acquisition, architecture, interiors, and development, each given a clear, elegant section.",
       },
       {
-        value: 9,
-        suffix: "+",
-        label: "Data Visualization Patterns",
-        body: "A dedicated chart library covers an analytics product's core visualization needs with consistent, accessible styling.",
+        value: 1,
+        suffix: "",
+        label: "Photography-Led System",
+        body: "A full-bleed imagery and type system built so the work stays the focus on every screen.",
+      },
+      {
+        value: 100,
+        suffix: "%",
+        label: "Responsive & Live",
+        body: "Deployed and fully responsive, holding its composure from cinema-wide to mobile.",
       },
     ],
   },

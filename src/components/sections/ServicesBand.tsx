@@ -163,7 +163,7 @@ export default function ServicesBand() {
           </h2>
           <p className="sb-fade mt-6 max-w-xl text-[15px] leading-relaxed text-white md:text-base">
             Whichever one is yours, you work directly with the senior team that designs
-            and builds it. No logos yet, we launched in 2026.
+            and builds it. See our live builds, we launched in 2026.
           </p>
         </div>
 

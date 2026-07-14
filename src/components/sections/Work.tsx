@@ -180,14 +180,14 @@ export default function Work() {
                 <RollingText label="View" em={1.2} delayStep={26} />
               </Link>
 
-              {/* Bottom-left - bar + concept-build chip */}
+              {/* Bottom-left - bar + live-build chip */}
               <div className="flex flex-wrap items-center gap-3 md:absolute md:bottom-10 md:left-10 md:flex-nowrap">
                 <span aria-hidden className="h-[44px] w-[3px] rounded-full bg-ink/80" />
                 <Link
                   href={`/project/${slug}`}
                   className="w-max rounded-lg bg-white px-3.5 py-2"
                 >
-                  <p className="text-[12px] uppercase tracking-wide text-gray-mid">Concept Build</p>
+                  <p className="text-[12px] uppercase tracking-wide text-gray-mid">Live Build</p>
                   <p className="text-[15px] font-semibold leading-tight">View Project</p>
                 </Link>
               </div>

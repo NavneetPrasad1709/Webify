@@ -12,7 +12,7 @@ import {
 import PillButton from "@/components/ui/PillButton";
 import RollingText from "@/components/ui/RollingText";
 
-/** /project/[slug] - narrative body for a single self-initiated concept build. */
+/** /project/[slug] - narrative body for a single live build. */
 export default function ProjectSingle({
   project,
   next,
@@ -104,6 +104,11 @@ export default function ProjectSingle({
             >
               {project.description}
             </p>
+            <div data-ps-load className="mt-8">
+              <PillButton tone="dark" href={project.liveUrl}>
+                Visit Live Site
+              </PillButton>
+            </div>
           </div>
 
           <div data-ps-load className="self-end">
@@ -136,12 +141,14 @@ export default function ProjectSingle({
 
         {/* Rich text - overview + challenge */}
         <div className="mx-auto mt-16 max-w-[820px] md:mt-24">
-          {/* Honest labeling: these projects are studio concepts, not client work. */}
+          {/* Honest labeling: a real, live build. The business shown in the
+              demo is illustrative; the design and engineering are ours. */}
           <div data-ps-reveal className="mb-10">
-            <p className="eyebrow text-gray-mid">SELF-INITIATED CONCEPT BUILD</p>
+            <p className="eyebrow text-gray-mid">LIVE BUILD</p>
             <p className="mt-2 text-sm text-black font-medium">
-              The kind of engagement we take on for clients, designed and built
-              in-house to show how we work.
+              A real, deployed site we designed and built end to end. The
+              business in the demo is illustrative, the craft is live: click
+              through and use it yourself.
             </p>
           </div>
           <div data-ps-reveal>
@@ -165,7 +172,7 @@ export default function ProjectSingle({
             <img
               data-ps-parallax
               src={project.bodyImage || projectBodyImage}
-              alt={`${project.name} concept build detail`}
+              alt={`${project.name} live build detail`}
               loading="lazy"
               decoding="async"
               className="h-full w-full object-cover will-change-transform"

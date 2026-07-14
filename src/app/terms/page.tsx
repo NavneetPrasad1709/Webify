@@ -50,8 +50,9 @@ export default function TermsPage() {
 
       <LegalSection title="Portfolio and confidentiality">
         <p>
-          Concept builds on this site are self-initiated in-house work and are
-          labeled as such. Client work is shown publicly only with the
+          The showcase builds on this site are self-initiated in-house work
+          designed and built by Webify; the businesses shown in them are
+          illustrative. Client work is shown publicly only with the
           client&apos;s permission. Anything you share with us during a
           project stays confidential.
         </p>

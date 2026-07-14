@@ -57,7 +57,7 @@ export default function ProjectsIndex() {
     >
       {/* Section title */}
       <div data-proj-title className="mx-auto max-w-[1320px] text-center">
-        <p className="eyebrow text-gray-mid">CONCEPT PORTFOLIO</p>
+        <p className="eyebrow text-gray-mid">SELECTED WORK</p>
         <h1 className="display-3 mt-4 text-ink">
           <span className="block">SELECTED</span>
           <span className="block">WORKS</span>
@@ -72,14 +72,14 @@ export default function ProjectsIndex() {
             data-proj-card
             className="relative grid grid-cols-1 gap-6 rounded-card bg-fill-light p-6 md:grid-cols-[1fr_minmax(0,460px)_1fr] md:items-center md:gap-8 md:p-10"
           >
-            {/* Left - concept-build chip */}
+            {/* Left - live-build chip */}
             <div className="order-2 flex items-end gap-3 self-end md:order-1">
               <Link
                 href={`/project/${p.slug}`}
                 className="w-max rounded-lg bg-white px-3.5 py-2"
               >
                 <p className="text-[12px] uppercase tracking-wide text-gray-mid">
-                  Concept Build
+                  Live Build
                 </p>
                 <p className="text-[15px] font-semibold leading-tight">
                   View Project
