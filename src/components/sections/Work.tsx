@@ -146,7 +146,7 @@ export default function Work() {
             >
               <article
                 data-work-card
-                className="relative mx-auto flex w-[min(94%,1240px)] flex-col gap-6 rounded-card bg-fill-light p-6 shadow-[0_30px_90px_-40px_rgba(0,0,0,0.45)] will-change-transform md:min-h-[62vh] md:p-10"
+                className="relative mx-auto flex w-[min(94%,1440px)] flex-col gap-6 rounded-card bg-fill-light p-6 shadow-[0_30px_90px_-40px_rgba(0,0,0,0.45)] will-change-transform md:min-h-[62vh] md:p-10"
               >
               {/* Center - visual (in flow on mobile, absolutely centered on md+).
                   Hover scale lives on the frame; GSAP pans the img vertically. */}
@@ -155,14 +155,18 @@ export default function Work() {
                 className="group/visual block w-full overflow-hidden rounded-xl shadow-[0_20px_60px_rgba(0,0,0,.12)] md:absolute md:inset-0 md:m-auto md:h-max md:w-[46%]"
               >
                 <div className="relative aspect-[8/5] w-full overflow-hidden transition-transform duration-500 ease-out group-hover/visual:scale-[1.02]">
-                  <img
+                  <video
                     data-work-visual
-                    src={p.image}
-                    alt={p.name}
-                    loading="lazy"
-                    decoding="async"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="none"
+                    poster={p.image}
                     className="absolute inset-x-0 top-0 h-[135%] w-full object-cover will-change-transform"
-                  />
+                  >
+                    <source src={p.video} type="video/mp4" />
+                  </video>
                 </div>
               </Link>
 

@@ -56,7 +56,7 @@ export default function ProjectsIndex() {
       className="bg-white px-5 pb-10 pt-32 text-ink md:px-10 md:pt-40"
     >
       {/* Section title */}
-      <div data-proj-title className="mx-auto max-w-[1320px] text-center">
+      <div data-proj-title className="mx-auto max-w-[1560px] text-center">
         <p className="eyebrow text-gray-mid">SELECTED WORK</p>
         <h1 className="display-3 mt-4 text-ink">
           <span className="block">SELECTED</span>
@@ -65,12 +65,12 @@ export default function ProjectsIndex() {
       </div>
 
       {/* Project rows */}
-      <div className="mx-auto mt-16 flex max-w-[1320px] flex-col gap-6 md:mt-24 md:gap-8">
+      <div className="mx-auto mt-16 flex max-w-[1560px] flex-col gap-6 md:mt-24 md:gap-8">
         {projectDetails.map((p) => (
           <article
             key={p.slug}
             data-proj-card
-            className="relative grid grid-cols-1 gap-6 rounded-card bg-fill-light p-6 md:grid-cols-[1fr_minmax(0,460px)_1fr] md:items-center md:gap-8 md:p-10"
+            className="relative grid grid-cols-1 gap-6 rounded-card bg-fill-light p-6 md:grid-cols-[1fr_minmax(0,560px)_1fr] md:items-center md:gap-8 md:p-10"
           >
             {/* Left - live-build chip */}
             <div className="order-2 flex items-end gap-3 self-end md:order-1">
@@ -93,14 +93,18 @@ export default function ProjectsIndex() {
               className="order-1 block overflow-hidden rounded-xl shadow-[0_16px_44px_rgba(0,0,0,.12)] md:order-2"
             >
               <div className="aspect-[8/5] w-full">
-                <img
+                <video
                   data-proj-visual
-                  src={p.image}
-                  alt={p.name}
-                  loading="lazy"
-                  decoding="async"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                  poster={p.image}
                   className="h-full w-full object-cover will-change-transform"
-                />
+                >
+                  <source src={p.video} type="video/mp4" />
+                </video>
               </div>
             </Link>
 

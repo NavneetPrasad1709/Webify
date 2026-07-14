@@ -129,13 +129,17 @@ export default function ProjectSingle({
         {/* Hero image */}
         <div className="mt-12 overflow-hidden rounded-card md:mt-16">
           <div className="aspect-[8/5] w-full md:aspect-[2/1]">
-            <img
+            <video
               data-ps-parallax
-              src={project.image}
-              alt={project.name}
-              fetchPriority="high"
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster={project.image}
               className="h-full w-full object-cover will-change-transform"
-            />
+            >
+              <source src={project.video} type="video/mp4" />
+            </video>
           </div>
         </div>
 

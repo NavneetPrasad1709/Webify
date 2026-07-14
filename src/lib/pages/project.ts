@@ -21,6 +21,8 @@ export interface ProjectDetail {
   name: string;
   year: string;
   image: string;
+  /** 3-second hero loop of the live site; `image` is its poster/fallback. */
+  video: string;
   /** Mid-page build image; each project uses its own cover asset. */
   bodyImage: string;
   /** The running site, so anyone can click through and use the real build. */
@@ -58,6 +60,7 @@ export const projectDetails: ProjectDetail[] = [
     name: "Vexel AI",
     year: "2026",
     image: "/assets/project/vexel-ai.webp",
+    video: "/assets/project/vexel-ai.mp4",
     bodyImage: "/assets/project/vexel-ai-body.webp",
     liveUrl: "https://saas.webify.org.in/",
     description:
@@ -109,6 +112,7 @@ export const projectDetails: ProjectDetail[] = [
     name: "Dental Health",
     year: "2026",
     image: "/assets/project/dental-health.webp",
+    video: "/assets/project/dental-health.mp4",
     bodyImage: "/assets/project/dental-health-body.webp",
     liveUrl: "https://webify-dentist.vercel.app/",
     description:
@@ -160,6 +164,7 @@ export const projectDetails: ProjectDetail[] = [
     name: "EverGreen Studio",
     year: "2026",
     image: "/assets/project/evergreen-studio.webp",
+    video: "/assets/project/evergreen-studio.mp4",
     bodyImage: "/assets/project/evergreen-studio-body.webp",
     liveUrl: "https://webify-luxory-homes.vercel.app/",
     description:
