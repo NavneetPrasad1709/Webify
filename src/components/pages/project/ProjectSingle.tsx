@@ -10,6 +10,7 @@ import {
   projectSections,
 } from "@/lib/pages/project";
 import PillButton from "@/components/ui/PillButton";
+import LazyVideo from "@/components/ui/LazyVideo";
 import RollingText from "@/components/ui/RollingText";
 
 /** /project/[slug] - narrative body for a single live build. */
@@ -129,16 +130,11 @@ export default function ProjectSingle({
         {/* Hero image */}
         <div className="mt-12 overflow-hidden rounded-card md:mt-16">
           <div className="aspect-[1908/908] w-full">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
+            <LazyVideo
+              src={project.video}
               poster={project.image}
               className="h-full w-full object-cover"
-            >
-              <source src={project.video} type="video/mp4" />
-            </video>
+            />
           </div>
         </div>
 

@@ -12,6 +12,7 @@ import CtaBand from "@/components/sections/CtaBand";
 import Pricing from "@/components/sections/Pricing";
 import Faq from "@/components/sections/Faq";
 import Blog from "@/components/sections/Blog";
+import LocalReach from "@/components/sections/LocalReach";
 
 const faqJsonLd = {
   "@context": "https://schema.org",
@@ -42,6 +43,7 @@ export default function Home() {
       <Pricing />
       <Faq />
       <Blog />
+      <LocalReach />
       <CtaBand />
     </main>
   );

@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { preload } from "react-dom";
 import { gsap, revealFrom, revealTo } from "@/lib/anim";
 import { socialLinks } from "@/lib/data";
 import PillButton from "@/components/ui/PillButton";
 import RollingText from "@/components/ui/RollingText";
+import LazyVideo from "@/components/ui/LazyVideo";
 
 /* Rotating build targets - each must read naturally after "We Build". */
 /* Only build targets the studio actually sells (see /service). */
@@ -25,6 +27,9 @@ const TICKER = [
 ];
 
 export default function Hero() {
+  // The poster is the homepage LCP image: hint it into the head early.
+  preload("/assets/hero-poster.jpg", { as: "image", fetchPriority: "high" });
+
   const sectionRef = useRef<HTMLElement>(null);
   const shardsRef = useRef<HTMLDivElement>(null);
   const headRef = useRef<HTMLHeadingElement>(null);
@@ -127,18 +132,15 @@ export default function Hero() {
       ref={sectionRef}
       className="relative min-h-svh overflow-hidden bg-ink"
     >
-      {/* Background: hero video + vignette + top gradient */}
+      {/* Background: hero video + vignette + top gradient. The poster is the
+          LCP image, so it is preloaded; the 1.9 MB video only starts fetching
+          after hydration via LazyVideo. */}
       <div ref={shardsRef} className="absolute -inset-y-12 inset-x-0" aria-hidden="true">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
+        <LazyVideo
+          src="/assets/hero.mp4"
           poster="/assets/hero-poster.jpg"
           className="h-full w-full object-cover"
-        >
-          <source src="/assets/hero.mp4" type="video/mp4" />
-        </video>
+        />
       </div>
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,#0d0d0d_100%)]"

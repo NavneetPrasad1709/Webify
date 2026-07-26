@@ -221,8 +221,8 @@ The strongest weak area: real hamburger menu, fluid clamp() type, iOS-safe 16px 
 - [x] PARTIAL: blog cards, index thumbs, and founder photo on next/image (fill + sizes); GSAP-animated media kept as <img> with lazy/priority hints (converting them needs visual QA of the parallax effects). Remaining: hero-adjacent and service imagery.
 - [x] Replace all internal `<a>` with `next/link` (also fixes the ESLint error and full-page reloads).
 - [ ] Cut first-load JS from ~800 kB toward 150 kB: server components for static sections, dynamic imports below the fold, isolate animation in leaf client components.
-- [ ] Gate the About page's ~2.1 MB of autoplay video with the ServiceListing pattern; serve a smaller mobile hero rendition and respect save-data.
-- [ ] Subset the 344 kB Inter variable font to latin (~230 kB saving on the critical path).
+- [x] PARTIAL (26 Jul 2026): all autoplay videos site-wide (hero, about, work, project index/detail) now use a shared LazyVideo component: preload="none", IntersectionObserver play/pause, save-data + reduced-motion keep the poster. Remaining: smaller mobile renditions of the source files.
+- [x] (26 Jul 2026) Inter now served via next/font/google latin subset (~73 kB on the critical path, was 344 kB); local InterVariable.woff2 deleted.
 
 **Accessibility (WCAG 2.2 AA)**
 - [ ] Add a pause/stop control for autoplaying content (~14 videos/marquees/tickers; SC 2.2.2).

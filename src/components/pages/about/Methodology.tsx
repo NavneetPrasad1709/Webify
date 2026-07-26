@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useRef } from "react";
 import { gsap, revealFrom, revealTo } from "@/lib/anim";
+import LazyVideo from "@/components/ui/LazyVideo";
 import { methodology } from "@/lib/pages/about";
 
 export default function Methodology() {
@@ -50,14 +51,10 @@ export default function Methodology() {
         >
           {/* Left: looping studio video */}
           <div data-method-video className="overflow-hidden rounded-card">
-            <video
+            <LazyVideo
               className="h-full max-h-[300px] w-full object-cover md:max-h-none"
               src={methodology.video}
               poster={methodology.poster}
-              autoPlay
-              muted
-              loop
-              playsInline
             />
           </div>
 

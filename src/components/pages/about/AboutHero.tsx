@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 import { gsap, revealFrom, revealTo } from "@/lib/anim";
 import PillButton from "@/components/ui/PillButton";
+import LazyVideo from "@/components/ui/LazyVideo";
 import { aboutHero } from "@/lib/pages/about";
 
 export default function AboutHero() {
@@ -58,14 +59,10 @@ export default function AboutHero() {
 
       {/* Full-bleed banner video */}
       <div data-hero-banner className="w-full overflow-hidden">
-        <video
+        <LazyVideo
           className="h-[42vh] w-full object-cover md:h-[78vh]"
           src={aboutHero.video}
           poster={aboutHero.poster}
-          autoPlay
-          muted
-          loop
-          playsInline
         />
       </div>
     </section>

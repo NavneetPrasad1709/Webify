@@ -6,6 +6,7 @@ import { gsap, revealFrom, revealTo } from "@/lib/anim";
 import { projectDetails } from "@/lib/pages/project";
 import PillButton from "@/components/ui/PillButton";
 import RollingText from "@/components/ui/RollingText";
+import LazyVideo from "@/components/ui/LazyVideo";
 
 /** /project - "SELECTED WORKS" index of the six portfolio projects. */
 export default function ProjectsIndex() {
@@ -76,18 +77,12 @@ export default function ProjectsIndex() {
               className="order-1 block overflow-hidden rounded-xl shadow-[0_16px_44px_rgba(0,0,0,.12)] md:order-2"
             >
               <div className="aspect-[1908/908] w-full">
-                <video
+                <LazyVideo
                   data-proj-visual
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="none"
+                  src={p.video}
                   poster={p.image}
                   className="h-full w-full object-cover will-change-transform"
-                >
-                  <source src={p.video} type="video/mp4" />
-                </video>
+                />
               </div>
             </Link>
 

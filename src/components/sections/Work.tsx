@@ -6,6 +6,7 @@ import { gsap } from "@/lib/anim";
 import { projectDetails } from "@/lib/pages/project";
 import PillButton from "@/components/ui/PillButton";
 import RollingText from "@/components/ui/RollingText";
+import LazyVideo from "@/components/ui/LazyVideo";
 
 export default function Work() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -144,18 +145,12 @@ export default function Work() {
                 className="group/visual block w-full overflow-hidden rounded-xl shadow-[0_20px_60px_rgba(0,0,0,.12)] md:absolute md:inset-0 md:m-auto md:h-max md:w-[46%]"
               >
                 <div className="relative aspect-[1908/908] w-full overflow-hidden transition-transform duration-500 ease-out group-hover/visual:scale-[1.02]">
-                  <video
+                  <LazyVideo
                     data-work-visual
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="none"
+                    src={p.video}
                     poster={p.image}
                     className="h-full w-full object-cover will-change-transform"
-                  >
-                    <source src={p.video} type="video/mp4" />
-                  </video>
+                  />
                 </div>
               </Link>
 
