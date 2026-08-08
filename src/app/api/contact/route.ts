@@ -17,6 +17,13 @@
  * fill ("website"), and per-IP rate limiting (in-memory per instance).
  */
 
+import { BOOKING_URL, SITE_URL } from "@/lib/site";
+import {
+  clientConfirmationEmail,
+  leadNotificationEmail,
+  type LeadEmail,
+} from "@/lib/emails";
+
 const INBOX = "contact@webify.org.in";
 
 const LIMIT_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
@@ -82,27 +89,83 @@ function leadText(lead: Lead): string {
     .join("\n");
 }
 
+/** Shape the templates expect, with sensible text for skipped fields. */
+function toEmailLead(lead: Lead): LeadEmail {
+  return {
+    firstName: lead.firstName,
+    companyName: lead.companyName,
+    email: lead.email,
+    projectType: lead.projectType || "Not specified",
+    timeline: lead.timeline || "Not specified",
+    message: lead.message,
+  };
+}
+
+function acknowledgementText(lead: Lead): string {
+  return [
+    `Hi ${lead.firstName},`,
+    "",
+    "Thanks for getting in touch. Your message reached us, and a senior team member replies within 24 hours.",
+    "",
+    `If you would rather talk sooner, pick a time for a free 20 minute intro call: ${BOOKING_URL}`,
+    "",
+    "What you sent:",
+    lead.message,
+    "",
+    "Navneet Prasad",
+    "Founder, Webify",
+    INBOX,
+  ].join("\n");
+}
+
 async function deliver(lead: Lead): Promise<"sent" | "unconfigured" | "failed"> {
   const subject = `New project inquiry from ${lead.firstName} (${lead.companyName})`;
 
   if (process.env.RESEND_API_KEY) {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        // webify.org.in is a verified Resend domain, so leads arrive from the
-        // studio's own address instead of a third-party sender.
-        from: "Webify Leads <leads@webify.org.in>",
-        to: [INBOX],
-        reply_to: lead.email,
-        subject,
-        text: leadText(lead),
-      }),
+    const send = (payload: Record<string, unknown>) =>
+      fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+    // 1) The lead itself. This one decides whether the request succeeded.
+    const res = await send({
+      // webify.org.in is a verified Resend domain, so leads arrive from the
+      // studio's own address instead of a third-party sender.
+      from: "Webify Leads <leads@webify.org.in>",
+      to: [INBOX],
+      reply_to: lead.email,
+      subject,
+      text: leadText(lead),
+      html: leadNotificationEmail(toEmailLead(lead), SITE_URL),
     });
-    return res.ok ? "sent" : "failed";
+    if (!res.ok) return "failed";
+
+    // 2) Confirmation to the sender. Best effort: a failed acknowledgement
+    //    must never lose a lead that already arrived.
+    try {
+      await send({
+        from: "Webify <hello@webify.org.in>",
+        to: [lead.email],
+        reply_to: INBOX,
+        subject: "Thanks for reaching out to Webify",
+        text: acknowledgementText(lead),
+        html: clientConfirmationEmail(
+          toEmailLead(lead),
+          SITE_URL,
+          BOOKING_URL,
+          INBOX
+        ),
+      });
+    } catch {
+      // ignore
+    }
+
+    return "sent";
   }
 
   if (process.env.WEB3FORMS_ACCESS_KEY) {
