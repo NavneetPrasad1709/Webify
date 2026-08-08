@@ -50,10 +50,14 @@ function ChannelIcon({ icon }: { icon: "calendar" | "email" | "location" }) {
   );
 }
 
-/* Web3Forms access key. Public by design (their dashboard states it is safe in
-   client-side code) and required in the browser: the free plan rejects
-   server-side submissions. Unset locally falls back to /api/contact. */
-const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+/* Web3Forms access key, required in the browser: the free plan rejects
+   server-side submissions. Safe to keep in source. Web3Forms issues it as a
+   public key ("you can use it in client side code"), and a NEXT_PUBLIC_ env
+   var would be inlined into this same public bundle anyway, so the exposure
+   is identical while the literal removes a deploy-time dependency. The env
+   var still wins if set, so rotating the key needs no code change. */
+const WEB3FORMS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "0ee32ca7-b451-4557-9a79-09149da9db82";
 
 const fieldClasses =
   "w-full min-h-[54px] rounded-lg border border-border-soft bg-fill-light px-4 py-3.5 text-base text-ink placeholder:text-gray-deep outline-none transition-colors duration-300 focus:border-primary";
