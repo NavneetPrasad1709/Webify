@@ -1,0 +1,367 @@
+"use client";
+
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { track } from "@vercel/analytics";
+import { BOOKING_URL } from "@/lib/site";
+import { useLeadSubmit } from "@/lib/use-lead-submit";
+
+/**
+ * Floating lead capture.
+ *
+ * The site's only form lives at the end of a page most visitors never reach.
+ * Someone who arrived from a profile or a proposal link, read two sections and
+ * decided we might be worth a conversation currently has to go looking for the
+ * way to say so. This puts it one click away from anywhere.
+ *
+ * It runs the same delivery pipeline as the contact page through
+ * useLeadSubmit, so there is one honeypot, one fallback rule and one set of
+ * analytics properties. Only three fields are asked for: the API treats
+ * company, service and timeline as optional, and a popup that wants six
+ * answers is a popup nobody finishes.
+ *
+ * Restraint is deliberate. It opens itself once per session, only after the
+ * visitor has read something, never on the contact page, and never again once
+ * dismissed.
+ */
+
+const DISMISS_KEY = "wf-lead-popup";
+const AUTO_OPEN_SCROLL = 0.4; // fraction of the page read
+const AUTO_OPEN_DELAY_MS = 25000;
+
+export default function LeadPopup() {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const firstFieldRef = useRef<HTMLInputElement>(null);
+  const successRef = useRef<HTMLParagraphElement>(null);
+  const autoOpenedRef = useRef(false);
+
+  const { submit, submitted, sending, error } = useLeadSubmit("popup");
+
+  // The contact page is this form, at full size. Two of them is noise.
+  const enabled = pathname !== "/contact";
+
+  const dismiss = useCallback(() => {
+    setOpen(false);
+    try {
+      sessionStorage.setItem(DISMISS_KEY, "1");
+    } catch {
+      // Storage throws in lockdown modes. Losing the memory of a dismissal is
+      // a far smaller problem than the exception it would otherwise raise.
+    }
+  }, []);
+
+  /* Auto-open once, and only for someone who has actually engaged: either
+     they have read 40% of the page or they have been here nearly half a
+     minute. A popup that fires on arrival interrupts the one thing the site
+     is trying to do. */
+  useEffect(() => {
+    if (!enabled) return;
+    let seen = false;
+    try {
+      seen = Boolean(sessionStorage.getItem(DISMISS_KEY));
+    } catch {
+      seen = false;
+    }
+    if (seen) return;
+
+    let timer = 0;
+    const fire = () => {
+      if (autoOpenedRef.current) return;
+      autoOpenedRef.current = true;
+      setOpen(true);
+      track("lead_popup_auto_open", { path: pathname });
+      cleanup();
+    };
+
+    const onScroll = () => {
+      const max = document.body.scrollHeight - window.innerHeight;
+      if (max > 0 && window.scrollY / max >= AUTO_OPEN_SCROLL) fire();
+    };
+
+    const cleanup = () => {
+      window.removeEventListener("scroll", onScroll);
+      window.clearTimeout(timer);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    timer = window.setTimeout(fire, AUTO_OPEN_DELAY_MS);
+    return cleanup;
+  }, [enabled, pathname]);
+
+  /* Escape closes, Tab stays inside, and focus lands somewhere useful in both
+     directions. A panel that traps a keyboard user is worse than no panel. */
+  useEffect(() => {
+    if (!open) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        dismiss();
+        triggerRef.current?.focus();
+        return;
+      }
+      if (e.key !== "Tab" || !panelRef.current) return;
+      const focusables = Array.from(
+        panelRef.current.querySelectorAll<HTMLElement>(
+          "a[href], button, input, textarea"
+        )
+      ).filter((el) => !el.hasAttribute("disabled") && el.tabIndex !== -1);
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    const id = requestAnimationFrame(() => firstFieldRef.current?.focus());
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      cancelAnimationFrame(id);
+    };
+  }, [open, dismiss]);
+
+  // The form is replaced by the success message, so focus has to follow it.
+  useEffect(() => {
+    if (submitted) successRef.current?.focus();
+  }, [submitted]);
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (sending) return;
+    void submit(
+      Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>
+    );
+  }
+
+  /* The closed panel and the trigger are identical on the server and the
+     first client paint, so there is nothing to defer: everything that could
+     differ (the dismissal memory, the auto-open) happens inside effects. */
+  if (!enabled) return null;
+
+  const field =
+    "w-full rounded-lg border border-white/20 bg-white/[0.06] px-3.5 py-3 text-[15px] text-white placeholder:text-white/45 transition-colors duration-200 hover:border-white/35 focus:border-primary-lite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-lite";
+
+  return (
+    <div
+      data-lead-popup-root
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-[90] flex flex-col items-end gap-3 p-4 md:p-6">
+      <div
+        ref={panelRef}
+        id="lead-popup"
+        role="dialog"
+        aria-modal="false"
+        aria-label="Start a project"
+        aria-hidden={!open}
+        data-lead-popup
+        data-open={open}
+        className="pointer-events-auto w-full max-w-[22.5rem] overflow-hidden rounded-2xl border border-white/12 bg-ink shadow-[0_24px_70px_rgba(0,0,0,0.55)]"
+      >
+        <div className="relative p-5 md:p-6">
+          <button
+            type="button"
+            onClick={dismiss}
+            tabIndex={open ? 0 : -1}
+            aria-label="Close"
+            className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-white/55 transition-colors duration-200 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-lite"
+          >
+            <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden="true">
+              <path
+                d="M3 3l10 10M13 3L3 13"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+              />
+            </svg>
+          </button>
+
+          {submitted ? (
+            <div className="flex flex-col gap-4 py-2">
+              <span className="w-max rounded-full bg-lime px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-ink">
+                Message sent
+              </span>
+              <p
+                ref={successRef}
+                tabIndex={-1}
+                className="text-[19px] font-extrabold leading-tight tracking-tight text-white outline-none"
+              >
+                Got it. A senior replies within 24 hours.
+              </p>
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                tabIndex={open ? 0 : -1}
+                className="flex min-h-11 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-primary-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-lite"
+              >
+                Skip the Wait, Book a Call
+              </a>
+            </div>
+          ) : (
+            <>
+              <span className="inline-flex rounded-full bg-lime px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-ink">
+                Founding project spots
+              </span>
+              <p className="mt-3.5 pr-6 text-[19px] font-extrabold leading-[1.2] tracking-tight text-white">
+                Tell us what you are building.
+              </p>
+              <p className="mt-2 text-[13.5px] leading-relaxed text-white/70">
+                Three fields, no sales call, no deck. A senior team member
+                replies within 24 hours.
+              </p>
+
+              <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-2.5">
+                {/* Honeypot: invisible to humans, irresistible to bots */}
+                <div className="hidden" aria-hidden="true">
+                  <label htmlFor="popup-website">Website</label>
+                  <input
+                    id="popup-website"
+                    name="website"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
+
+                <label htmlFor="popup-first-name" className="sr-only">
+                  First name
+                </label>
+                <input
+                  ref={firstFieldRef}
+                  id="popup-first-name"
+                  name="first-name"
+                  type="text"
+                  required
+                  maxLength={100}
+                  autoComplete="given-name"
+                  placeholder="First name"
+                  tabIndex={open ? 0 : -1}
+                  className={field}
+                />
+
+                <label htmlFor="popup-email" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  id="popup-email"
+                  name="email"
+                  type="email"
+                  required
+                  maxLength={254}
+                  autoComplete="email"
+                  placeholder="Email address"
+                  tabIndex={open ? 0 : -1}
+                  className={field}
+                />
+
+                <label htmlFor="popup-message" className="sr-only">
+                  What you are building
+                </label>
+                <textarea
+                  id="popup-message"
+                  name="message"
+                  required
+                  minLength={10}
+                  maxLength={5000}
+                  rows={3}
+                  placeholder="What are you building?"
+                  tabIndex={open ? 0 : -1}
+                  className={`${field} resize-none`}
+                />
+
+                <button
+                  type="submit"
+                  disabled={sending}
+                  tabIndex={open ? 0 : -1}
+                  className="mt-1 min-h-11 rounded-full bg-primary px-5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-primary-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-lite disabled:pointer-events-none disabled:opacity-60"
+                >
+                  {sending ? "Sending..." : "Send Message"}
+                </button>
+
+                {error ? (
+                  /* Deliberately not "email us instead": if this failed, the
+                     mail path may be what failed. */
+                  <p role="alert" className="text-center text-[12.5px] text-white">
+                    Something went wrong on our side.{" "}
+                    <a
+                      href={BOOKING_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      tabIndex={open ? 0 : -1}
+                      className="text-primary-lite underline underline-offset-2"
+                    >
+                      Book a call instead
+                    </a>
+                    .
+                  </p>
+                ) : (
+                  <p className="text-center text-[12.5px] text-white/60">
+                    Takes 30 seconds. Or{" "}
+                    <a
+                      href={BOOKING_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      tabIndex={open ? 0 : -1}
+                      className="text-white/85 underline underline-offset-2 transition-colors duration-200 hover:text-white"
+                    >
+                      book a 20 minute call
+                    </a>
+                    .
+                  </p>
+                )}
+              </form>
+            </>
+          )}
+        </div>
+      </div>
+
+      <button
+        ref={triggerRef}
+        type="button"
+        aria-expanded={open}
+        aria-controls="lead-popup"
+        onClick={() => {
+          if (open) {
+            dismiss();
+          } else {
+            setOpen(true);
+            track("lead_popup_open", { path: pathname });
+          }
+        }}
+        /* Lime, not cobalt: this button floats over black sections, white
+           sections and the cobalt band, and a cobalt pill disappears
+           entirely on the last of those. Lime is the one brand colour that
+           holds on all three. */
+        className="pointer-events-auto flex h-14 items-center gap-2.5 rounded-full bg-lime pl-5 pr-6 text-sm font-bold text-ink shadow-[0_12px_32px_rgba(0,0,0,0.35)] transition-[background-color,transform] duration-200 hover:bg-white active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime"
+      >
+        <svg viewBox="0 0 20 20" className="h-4 w-4 shrink-0" aria-hidden="true">
+          {open ? (
+            <path
+              d="M4 4l12 12M16 4L4 16"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          ) : (
+            <path
+              d="M2.5 4.5h15v11h-15zM2.5 5l7.5 5 7.5-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.7"
+              strokeLinejoin="round"
+            />
+          )}
+        </svg>
+        {open ? "Close" : "Start a Project"}
+      </button>
+    </div>
+  );
+}

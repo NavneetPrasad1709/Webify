@@ -16,9 +16,12 @@ export const stats: {
   accent: boolean;
   decimals?: number;
 }[] = [
+  /* Suffixes stay one character. "-day" belonged to the label, not the
+     numeral: at 88px it wrapped onto a second line, which pushed that one
+     label out of line with the other three and left a hole under the rest. */
   { value: 24, suffix: "h", label: "Reply time on every inquiry", accent: false },
   { value: 2, suffix: "", label: "Revision rounds per deliverable", accent: true },
-  { value: 30, suffix: "-day", label: "Post-launch support window", accent: false },
+  { value: 30, suffix: "", label: "Days of post-launch support", accent: false },
   { value: 100, suffix: "%", label: "Senior-led, zero handoffs", accent: true },
 ];
 

@@ -178,9 +178,43 @@ export default function ServicesBand() {
                 href={s.href}
                 onMouseEnter={() => fineRef.current && setHover(i)}
                 onMouseLeave={() => setHover(null)}
-                className="sb-item group block border-t border-white/15 py-7 transition-colors duration-300 last:border-b md:py-9"
+                className="sb-item group block border-t border-white/15 transition-colors duration-300 last:border-b"
               >
-                <div className="flex items-center gap-5 md:gap-8">
+                {/* Mobile owns its own layout rather than squeezing the desktop
+                    row. Cramming a number, a 68px title, a qualifier and a
+                    diagram onto one line left the title fighting for width and
+                    the copy reading as one dense block. Here each answer to
+                    "is this me?" gets its own line, in the order it is asked:
+                    which situation, who it is for, what we do about it. */}
+                <div className="sb-inline py-8 md:hidden">
+                  <div className="flex items-start justify-between gap-4">
+                    <span className="font-mono text-[13px] tabular-nums tracking-widest text-lime">
+                      {s.n}
+                    </span>
+                    <span className="sb-inline-draw h-11 w-[4.5rem] shrink-0">
+                      <s.Viz />
+                    </span>
+                  </div>
+                  <h3 className="mt-4 text-[clamp(32px,9vw,44px)] font-extrabold uppercase leading-[0.98] tracking-tight text-white">
+                    {s.title}
+                  </h3>
+                  {/* Sentence case, not letterspaced mono: this is the line a
+                      visitor uses to recognise themselves, so it has to be the
+                      easiest thing on the row to read. */}
+                  <p className="mt-3 text-[15px] font-semibold leading-snug text-lime">
+                    {s.who}
+                  </p>
+                  <p className="mt-2.5 max-w-[36ch] text-[15px] leading-relaxed text-white">
+                    {s.body}
+                  </p>
+                  <span className="mt-5 inline-block text-[13px] font-semibold text-white underline decoration-lime decoration-2 underline-offset-4">
+                    Talk about this
+                  </span>
+                </div>
+
+                {/* Desktop: the template's reveal row, where the body copy
+                    arrives in the cursor-following panel instead. */}
+                <div className="hidden items-center gap-8 py-9 md:flex">
                   <span
                     className={`font-mono text-sm tabular-nums tracking-widest transition-colors duration-300 ${
                       active ? "text-white" : dimmed ? "text-white/70" : "text-lime"
@@ -190,15 +224,15 @@ export default function ServicesBand() {
                   </span>
                   <span className="min-w-0">
                     <h3
-                      className={`text-[clamp(30px,5.4vw,68px)] font-extrabold uppercase leading-[1.02] tracking-tight transition-[color,transform] duration-300 group-hover:md:translate-x-3 ${
+                      className={`text-[clamp(38px,5.4vw,68px)] font-extrabold uppercase leading-[1.02] tracking-tight transition-[color,transform] duration-300 group-hover:translate-x-3 ${
                         active ? "text-white" : dimmed ? "text-white/70" : "text-white"
                       }`}
                     >
                       {s.title}
                     </h3>
                     <p
-                      className={`mt-1.5 font-mono text-[12px] uppercase tracking-widest transition-colors duration-300 ${
-                        dimmed ? "text-white/25" : "text-lime"
+                      className={`mt-2 text-[15px] font-semibold leading-snug transition-colors duration-300 ${
+                        dimmed ? "text-white/70" : "text-lime"
                       }`}
                     >
                       {s.who}
@@ -211,12 +245,6 @@ export default function ServicesBand() {
                   >
                     {s.body}
                   </span>
-                </div>
-
-                {/* Inline diagram + copy for touch / no-hover */}
-                <div className="sb-inline mt-5 grid grid-cols-[1fr_auto] items-end gap-4 [@media(hover:hover)]:hidden">
-                  <p className="text-[15px] leading-relaxed text-white">{s.body}</p>
-                  <div className="sb-inline-draw h-16 w-28 shrink-0"><s.Viz /></div>
                 </div>
               </Link>
             );

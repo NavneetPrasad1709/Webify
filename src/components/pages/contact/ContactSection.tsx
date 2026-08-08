@@ -1,11 +1,11 @@
 "use client";
 
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef } from "react";
 import Link from "next/link";
-import { track } from "@vercel/analytics";
 import PillButton from "@/components/ui/PillButton";
 import { BOOKING_URL } from "@/lib/site";
 import { useReveal } from "@/lib/reveal";
+import { useLeadSubmit } from "@/lib/use-lead-submit";
 import {
   contactChannels,
   formFields,
@@ -51,15 +51,6 @@ function ChannelIcon({ icon }: { icon: "calendar" | "email" | "location" }) {
   );
 }
 
-/* Web3Forms access key, required in the browser: the free plan rejects
-   server-side submissions. Safe to keep in source. Web3Forms issues it as a
-   public key ("you can use it in client side code"), and a NEXT_PUBLIC_ env
-   var would be inlined into this same public bundle anyway, so the exposure
-   is identical while the literal removes a deploy-time dependency. The env
-   var still wins if set, so rotating the key needs no code change. */
-const WEB3FORMS_KEY =
-  process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "0ee32ca7-b451-4557-9a79-09149da9db82";
-
 /* Border is #767676 rather than the near-invisible soft token: at 1.18:1 the
    field was not perceivable as a control at all. The UA outline is replaced
    rather than removed, so keyboard users keep a visible focus target. */
@@ -74,9 +65,9 @@ export default function ContactSection({
 }) {
   const sectionRef = useRef<HTMLElement>(null);
   const successRef = useRef<HTMLParagraphElement>(null);
-  const [submitted, setSubmitted] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [error, setError] = useState(false);
+  /* Delivery is shared with the popup form so the honeypot, the fallback
+     gating and the analytics properties cannot drift apart. */
+  const { submit, submitted, sending, error } = useLeadSubmit("contact-page");
 
   // The form unmounts on success, so focus would otherwise fall back to
   // <body> and a keyboard user would lose their place entirely.
@@ -90,102 +81,12 @@ export default function ContactSection({
      --reveal-delay on each element. */
   useReveal(sectionRef);
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (sending) return;
-    const data = Object.fromEntries(new FormData(e.currentTarget)) as Record<
-      string,
-      string
-    >;
-    setError(false);
-    setSending(true);
-
-    // Honeypot: bots fill this, humans never see it. Show success and drop it.
-    if (data.website) {
-      setSubmitted(true);
-      setSending(false);
-      return;
-    }
-
-    // Declared out here so the catch block can report how the send died.
-    // 0 means the request never reached the server at all.
-    let status = 0;
-    let usedFallback = false;
-
-    try {
-      let ok = false;
-
-      // 1) Preferred path: the server route, which sends through Resend from
-      //    the studio's own verified domain. Returns 503 when unconfigured.
-      try {
-        const res = await fetch("/api/contact", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
-        status = res.status;
-        ok = res.ok;
-      } catch {
-        ok = false;
-      }
-
-      // A 4xx is the server rejecting this submission on purpose: a honeypot
-      // hit, a validation failure, or the rate limiter. Retrying it through
-      // Web3Forms would let the browser overrule every protection the route
-      // exists to apply, so only transport failures and 5xx fall through.
-      const serverRejected = status >= 400 && status < 500;
-
-      // 2) Fallback: post to Web3Forms from the browser, so a missing or
-      //    broken server key never silently costs a lead.
-      if (!ok && !serverRejected && WEB3FORMS_KEY) {
-        // Web3Forms accepts submissions from the browser only (its free plan
-        // rejects server-side calls), and its access key is public by design.
-        // JSON is required: the endpoint rejects multipart form data.
-        const res = await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            access_key: WEB3FORMS_KEY,
-            subject: data["company-name"]
-              ? `New project inquiry from ${data["first-name"]} (${data["company-name"]})`
-              : `New project inquiry from ${data["first-name"]}`,
-            from_name: "Webify Website",
-            // Web3Forms uses this as the reply-to, so replies reach the lead.
-            email: data.email,
-            Name: data["first-name"],
-            Company: data["company-name"],
-            "What they need": data["project-type"] || "Not specified",
-            Timeline: data.timeline || "Not specified",
-            Message: data.message,
-            botcheck: "",
-          }),
-        });
-        ok = res.ok && (await res.json()).success === true;
-        if (ok) usedFallback = true;
-      }
-
-      if (!ok) throw new Error("delivery failed");
-      setSubmitted(true);
-      // Properties matter more than the event: without them there is no way
-      // to tell which page, service or delivery path produced a lead.
-      track("lead_submitted", {
-        topic: data["project-type"] || "none",
-        timeline: data.timeline || "none",
-        via: usedFallback ? "web3forms" : "resend",
-      });
-    } catch {
-      setError(true);
-      // A lead that fails both paths is otherwise invisible: the visitor sees
-      // an error and the studio never learns anyone tried.
-      track("lead_failed", {
-        stage: status === 0 ? "network" : String(status),
-      });
-    } finally {
-      setSending(false);
-    }
+    void submit(
+      Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>
+    );
   }
 
   return (

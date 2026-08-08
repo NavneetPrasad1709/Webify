@@ -85,28 +85,32 @@ export default function Impacts() {
         <SplitWords text={impactsParagraph} wordClassName="scrub-word" />
       </p>
 
+      {/* A rule above each figure rather than a border below the label. The
+          old bottom border sat at the foot of a grid row sized by the tallest
+          cell, so three of the four columns carried a gap of dead space
+          between their label and their line. Anchoring to the top also means
+          labels of different lengths can no longer knock the rules out of
+          alignment with each other. */}
       <div
         ref={gridRef}
-        className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-14"
+        className="mt-20 grid grid-cols-2 gap-x-8 gap-y-12 sm:gap-x-10 lg:grid-cols-4"
       >
-        {stats.map((stat, i) => {
+        {stats.map((stat) => {
           const decimals = stat.decimals ?? 0;
-          // Top squares alternate by index; underlines stay uniform brand blue.
-          const squareBlue = i % 2 === 1;
           return (
-            <div
-              key={stat.label}
-              className="impact-stat border-b border-primary pb-8"
-            >
-              <div
-                className={`mb-6 h-[10px] w-[10px] ${
-                  squareBlue
-                    ? "bg-primary"
-                    : "bg-fill-dark border border-line-dark"
-                }`}
+            <div key={stat.label} className="impact-stat relative pt-7">
+              <span
                 aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-px bg-white/15"
               />
-              <div className="text-[clamp(48px,6vw,88px)] font-extrabold tracking-tight tabular-nums leading-[0.9]">
+              {/* Short cobalt segment on every column: the same mark each
+                  time, where the old squares alternated grey and blue on
+                  nothing more than the loop index. */}
+              <span
+                aria-hidden="true"
+                className="absolute left-0 top-0 h-px w-10 bg-primary"
+              />
+              <p className="flex items-baseline whitespace-nowrap text-[clamp(46px,6vw,84px)] font-extrabold leading-[0.85] tracking-[-0.03em] tabular-nums">
                 {/* Ships the real figure, not 0: without JS the section
                     otherwise claims zero of everything, and the count-up
                     tween starts from 0 on trigger anyway. */}
@@ -117,9 +121,15 @@ export default function Impacts() {
                 >
                   {stat.value.toFixed(decimals)}
                 </span>
-                {stat.suffix}
-              </div>
-              <p className="text-white text-base mt-2">{stat.label}</p>
+                {stat.suffix ? (
+                  <span className="text-[0.44em] font-extrabold tracking-tight text-primary">
+                    {stat.suffix}
+                  </span>
+                ) : null}
+              </p>
+              <p className="mt-4 max-w-[20ch] text-[15px] font-medium leading-snug text-white md:text-base">
+                {stat.label}
+              </p>
             </div>
           );
         })}

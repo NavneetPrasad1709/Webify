@@ -7,6 +7,7 @@ import Nav from "@/components/sections/Nav";
 import Footer from "@/components/sections/Footer";
 import Preloader from "@/components/ui/Preloader";
 import ScrollTop from "@/components/ui/ScrollTop";
+import LeadPopup from "@/components/ui/LeadPopup";
 import { SITE_URL } from "@/lib/site";
 
 // Inter Display — next/font self-hosts a latin-subset variable file (wght +
@@ -152,6 +153,7 @@ export default function RootLayout({
           {children}
           <Footer />
           <ScrollTop />
+          <LeadPopup />
         </SmoothScroll>
         <Analytics />
       </body>

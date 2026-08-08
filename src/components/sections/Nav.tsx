@@ -130,6 +130,9 @@ export default function Nav() {
   useEffect(() => {
     openRef.current = open;
     document.body.style.overflow = open ? "hidden" : "";
+    // Lets the floating lead panel hide itself rather than hover over the
+    // menu curtain, which sits below it in the stacking order.
+    document.documentElement.dataset.menuOpen = open ? "true" : "false";
 
     /* The curtain, the per-line masks and the meta block are all driven by
        the data-open attribute in globals.css. Expressing the choreography as
