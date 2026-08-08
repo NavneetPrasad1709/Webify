@@ -24,7 +24,25 @@ import {
   type LeadEmail,
 } from "@/lib/emails";
 
-const INBOX = "contact@webify.org.in";
+/**
+ * The address printed on the site. Mail to it only arrives once the domain
+ * has working email hosting.
+ */
+const PUBLIC_INBOX = "contact@webify.org.in";
+
+/**
+ * Where leads are actually delivered, and the address clients reply to.
+ * Deliberately separate from PUBLIC_INBOX: a hard-bouncing recipient loses
+ * the lead silently, because Resend accepts the send and only later drops it
+ * (the API still answers 200, so the route cannot detect it at request time).
+ * Comma-separated; set LEAD_INBOX to a mailbox that receives, and point it
+ * back at the public address once the domain's email is live.
+ */
+const INBOX_LIST = (process.env.LEAD_INBOX ?? PUBLIC_INBOX)
+  .split(",")
+  .map((address) => address.trim())
+  .filter(Boolean);
+const INBOX = INBOX_LIST[0] ?? PUBLIC_INBOX;
 
 const LIMIT_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
 const LIMIT_MAX = 5; // submissions per IP per window
@@ -137,7 +155,7 @@ async function deliver(lead: Lead): Promise<"sent" | "unconfigured" | "failed"> 
       // webify.org.in is a verified Resend domain, so leads arrive from the
       // studio's own address instead of a third-party sender.
       from: "Webify Leads <leads@webify.org.in>",
-      to: [INBOX],
+      to: INBOX_LIST,
       reply_to: lead.email,
       subject,
       text: leadText(lead),

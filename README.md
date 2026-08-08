@@ -28,9 +28,16 @@ form shows its "email us directly" fallback):
 | --- | --- | --- |
 | `NEXT_PUBLIC_WEB3FORMS_KEY` | [web3forms.com](https://web3forms.com) | Browser. Free plan; the key is public by design and the free plan rejects server-side calls. |
 | `RESEND_API_KEY` | [resend.com](https://resend.com) | Server (`/api/contact`). Used when no client key is set. |
+| `LEAD_INBOX` | — | Server. Comma-separated addresses leads are delivered to, and the address clients reply to. Defaults to `contact@webify.org.in`. |
 
 `NEXT_PUBLIC_*` values are inlined at build time, so a redeploy is
 required after changing the Web3Forms key.
+
+`LEAD_INBOX` exists because a bouncing recipient loses a lead in silence:
+Resend answers 200, accepts the message, and drops it afterwards, so the
+route cannot tell at request time. Point it at a mailbox that provably
+receives mail, and move it back to the public address once the domain's
+email hosting is verified.
 
 ## Where things live
 
