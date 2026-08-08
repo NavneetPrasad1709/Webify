@@ -1,5 +1,7 @@
 /** Static content for the /contact page. Contact details from webify.org.in. */
 
+import { BOOKING_URL } from "@/lib/site";
+
 export type ContactChannel = {
   label: string;
   value: string;
@@ -12,8 +14,9 @@ export type ContactChannel = {
 export const contactChannels: ContactChannel[] = [
   {
     label: "Book a Call",
-    value: "Free intro call, no obligation",
-    href: "mailto:contact@webify.org.in?subject=Book%20a%20call",
+    value: "Free 20 minutes, pick a time",
+    href: BOOKING_URL,
+    external: true,
     icon: "calendar",
   },
   {
