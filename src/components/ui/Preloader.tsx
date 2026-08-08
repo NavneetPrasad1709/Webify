@@ -1,16 +1,20 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
-import { gsap } from "@/lib/anim";
 
 /** Must match the total of the wf-veil-lift fallback in globals.css. */
 const VEIL_FALLBACK_MS = 1400;
 
-/** Brand intro on page load: icon breathes in, wordmark follows, veil lifts. */
+/**
+ * Brand intro on page load: icon breathes in, wordmark follows, veil lifts.
+ *
+ * Every frame of that is CSS. This component only decides whether the intro
+ * should play at all, which is the one thing CSS cannot know. It deliberately
+ * imports no animation library: mounted in the root layout, a gsap import
+ * here pulled 121 kB in front of first paint on every route on the site.
+ */
 export default function Preloader() {
   const ref = useRef<HTMLDivElement>(null);
-  const iconRef = useRef<HTMLImageElement>(null);
-  const logoRef = useRef<HTMLImageElement>(null);
 
   useLayoutEffect(() => {
     const veil = ref.current;
@@ -27,8 +31,6 @@ export default function Preloader() {
       seen = false;
     }
 
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     // Almost nobody reaches this site by typing the address. They arrive from
     // a profile, a proposal link or a campaign, already deciding whether we
     // are worth ten more seconds, and a logo animation spends those seconds
@@ -41,41 +43,23 @@ export default function Preloader() {
       document.referrer !== "" &&
       !document.referrer.startsWith(window.location.origin);
 
-    // If hydration took longer than the CSS fallback, the veil has already
-    // lifted. Re-running the timeline here would pull it back over the page.
+    // Past the CSS fallback the veil has already lifted on its own; hiding it
+    // now simply removes it from the tree.
     const tooLate = performance.now() > VEIL_FALLBACK_MS;
 
-    if (seen || reduce || fromCampaign || fromElsewhere || tooLate) {
+    if (seen || fromCampaign || fromElsewhere || tooLate) {
       veil.style.animation = "none";
       veil.style.display = "none";
       return;
     }
 
-    // Hand control to GSAP now that we know it arrived in time.
-    veil.style.animation = "none";
-
-    const ctx = gsap.context(() => {
-      gsap
-        .timeline()
-        .fromTo(
-          iconRef.current,
-          { scale: 0.7, autoAlpha: 0 },
-          { scale: 1, autoAlpha: 1, duration: 0.24, ease: "power3.out" }
-        )
-        .fromTo(
-          logoRef.current,
-          { y: 26, autoAlpha: 0, filter: "blur(6px)" },
-          { y: 0, autoAlpha: 1, filter: "blur(0px)", duration: 0.26, ease: "power3.out" },
-          "-=0.1"
-        )
-        .to(
-          ref.current,
-          { yPercent: -100, duration: 0.34, ease: "power4.inOut" },
-          "-=0.08"
-        )
-        .set(ref.current, { display: "none" });
-    }, ref);
-    return () => ctx.revert();
+    // Let the CSS timeline finish, then take the veil out of the layout so it
+    // can never intercept a click.
+    const done = () => {
+      veil.style.display = "none";
+    };
+    veil.addEventListener("animationend", done, { once: true });
+    return () => veil.removeEventListener("animationend", done);
   }, []);
 
   return (
@@ -93,7 +77,7 @@ export default function Preloader() {
             the first thing fetched on every cold visit and it renders at
             192 px at most. */}
         <img
-          ref={iconRef}
+          data-intro-icon
           src="/assets/brand/webify-icon-dark-384.webp"
           alt=""
           width={384}
@@ -102,7 +86,7 @@ export default function Preloader() {
           className="h-36 w-auto md:h-48"
         />
         <img
-          ref={logoRef}
+          data-intro-word
           src="/assets/brand/webify-logo-white-480.webp"
           alt=""
           width={480}

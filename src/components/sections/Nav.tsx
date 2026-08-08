@@ -1,9 +1,8 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { gsap, ScrollTrigger } from "@/lib/anim";
 import RollingText from "@/components/ui/RollingText";
 import { BOOKING_URL } from "@/lib/site";
 
@@ -21,11 +20,13 @@ const NAV_LINKS = [
 function RollLink({
   label,
   href,
+  index,
   tabIndex,
   onClick,
 }: {
   label: string;
   href: string;
+  index: number;
   tabIndex: number;
   onClick: () => void;
 }) {
@@ -35,6 +36,7 @@ function RollLink({
       onClick={onClick}
       tabIndex={tabIndex}
       data-nav-line
+      style={{ "--nav-i": index } as React.CSSProperties}
       className="display-2 group block text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
     >
       <RollingText label={label} secondClassName="text-primary" />
@@ -52,7 +54,7 @@ export default function Nav() {
   const navRef = useRef<HTMLElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
-  const tlRef = useRef<gsap.core.Timeline | null>(null);
+  const [barHidden, setBarHidden] = useState(false);
   const openRef = useRef(false);
   const hasOpenedRef = useRef(false);
   const hiddenRef = useRef(false);
@@ -95,89 +97,49 @@ export default function Nav() {
     };
   }, [pathname]);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      // Park the ink curtain offstage left; the open/close timelines below
-      // own every subsequent move.
-      gsap.set(overlayRef.current, { xPercent: -100, autoAlpha: 0 });
+  /* Hide the bar on the way down past 120px, bring it back on any upward
+     scroll. This used to be a ScrollTrigger, which is a heavy dependency for
+     comparing two numbers, and it is the reason gsap loaded on every route. */
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let raf = 0;
 
-      // Hide nav when scrolling down past 120px, reveal on any upward scroll.
-      ScrollTrigger.create({
-        start: 0,
-        end: "max",
-        onUpdate: (self) => {
-          if (openRef.current) return;
-          const shouldHide = self.direction === 1 && window.scrollY > 120;
-          if (shouldHide === hiddenRef.current) return;
-          hiddenRef.current = shouldHide;
-          gsap.to(navRef.current, {
-            yPercent: shouldHide ? -120 : 0,
-            duration: 0.4,
-            ease: "power2.out",
-            overwrite: "auto",
-          });
-        },
-      });
-    }, navRef);
-    return () => ctx.revert();
+    const evaluate = () => {
+      raf = 0;
+      const y = window.scrollY;
+      const goingDown = y > lastY;
+      lastY = y;
+      if (openRef.current) return;
+      const shouldHide = goingDown && y > 120;
+      if (shouldHide === hiddenRef.current) return;
+      hiddenRef.current = shouldHide;
+      setBarHidden(shouldHide);
+    };
+
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(evaluate);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     openRef.current = open;
     document.body.style.overflow = open ? "hidden" : "";
 
-    const overlay = overlayRef.current;
-    if (overlay) {
-      const lines = overlay.querySelectorAll("[data-nav-line]");
-      const meta = overlay.querySelector("[data-nav-meta]");
-      // Guard against rapid toggling: retire whatever choreography is mid-flight
-      // and let the new timeline pick elements up from their current positions.
-      tlRef.current?.kill();
-
-      if (open) {
-        hasOpenedRef.current = true;
-        // Always surface the bar while the menu is open.
-        hiddenRef.current = false;
-        gsap.to(navRef.current, {
-          yPercent: 0,
-          duration: 0.4,
-          ease: "power2.out",
-          overwrite: "auto",
-        });
-        // ENTRANCE - template grammar: ink curtain wipes in from the left,
-        // links rise through their line masks top-down, meta fades in last.
-        tlRef.current = gsap
-          .timeline({ defaults: { overwrite: "auto" } })
-          .set(overlay, { autoAlpha: 1 }, 0)
-          .set(lines, { yPercent: 110 }, 0)
-          .set(meta, { autoAlpha: 0, y: 12 }, 0)
-          .to(overlay, { xPercent: 0, duration: 0.45, ease: "power3.out" }, 0)
-          .to(lines, {
-            yPercent: 0,
-            duration: 0.5,
-            ease: "power3.out",
-            stagger: 0.07,
-          })
-          .to(
-            meta,
-            { autoAlpha: 1, y: 0, duration: 0.35, ease: "power2.out" },
-            "-=0.3", // ~0.2s after the last link line starts rising
-          );
-      } else if (hasOpenedRef.current) {
-        // EXIT - inverted grammar: links drop out of their masks bottom-first,
-        // meta fades concurrently, and only then the curtain wipes out left.
-        tlRef.current = gsap
-          .timeline({ defaults: { overwrite: "auto" } })
-          .to(lines, {
-            yPercent: 110,
-            duration: 0.25,
-            ease: "power2.in",
-            stagger: { each: 0.05, from: "end" },
-          })
-          .to(meta, { autoAlpha: 0, duration: 0.2, ease: "power1.out" }, 0)
-          .to(overlay, { xPercent: -100, duration: 0.4, ease: "power3.in" })
-          .set(overlay, { autoAlpha: 0 });
-      }
+    /* The curtain, the per-line masks and the meta block are all driven by
+       the data-open attribute in globals.css. Expressing the choreography as
+       transitions rather than a timeline means the whole menu costs nothing
+       on routes nobody opens it on, which is all of them until a click. */
+    if (open) {
+      hasOpenedRef.current = true;
+      // The bar is forced visible while the menu is open by the render below;
+      // this only keeps the scroll tracker's view of it in step.
+      hiddenRef.current = false;
     }
 
     // Focus management: move focus into the open menu, trap Tab inside it,
@@ -225,6 +187,8 @@ export default function Nav() {
     <>
       <header
         ref={navRef}
+        data-nav-bar
+        data-hidden={barHidden && !open}
         className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-5 py-5 md:px-10"
       >
         <Link href="/" onClick={() => setOpen(false)}>
@@ -303,7 +267,9 @@ export default function Nav() {
         aria-modal={open || undefined}
         aria-label="Menu"
         aria-hidden={!open}
-        className="invisible fixed inset-0 z-40 overflow-hidden bg-ink"
+        data-nav-overlay
+        data-open={open}
+        className="fixed inset-0 z-40 flex flex-col overflow-hidden bg-ink"
       >
         {/* Brand watermark behind the menu links */}
         <img
@@ -312,14 +278,15 @@ export default function Nav() {
           aria-hidden="true"
           className="pointer-events-none absolute -bottom-[10%] -right-[6%] h-[70vh] w-auto opacity-[0.05]"
         />
-        <nav className="flex h-full flex-col items-start justify-center gap-3 px-5 md:px-10">
-          {NAV_LINKS.map((link) => (
+        <nav className="flex flex-1 flex-col items-start justify-center gap-3 overflow-y-auto px-5 pt-24 pb-6 md:px-10">
+          {NAV_LINKS.map((link, i) => (
             // Per-line clip mask: the link rises through this window on open
             // and drops back down through it on close.
             <span key={link.label} className="block overflow-hidden">
               <RollLink
                 label={link.label}
                 href={link.href}
+                index={i}
                 tabIndex={open ? 0 : -1}
                 onClick={() => setOpen(false)}
               />
@@ -330,7 +297,7 @@ export default function Nav() {
         {/* Meta block: quiet two-tier contact facts, bottom-left of the curtain */}
         <div
           data-nav-meta
-          className="absolute bottom-10 left-5 flex flex-col gap-5 md:left-10"
+          className="flex shrink-0 flex-col gap-3.5 px-5 pb-8 md:gap-5 md:px-10 md:pb-10"
         >
           <div>
             <p className="font-mono text-[12px] uppercase tracking-widest text-gray-soft">

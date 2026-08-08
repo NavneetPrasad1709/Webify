@@ -1,30 +1,17 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
-import { gsap } from "@/lib/anim";
+import { useRef } from "react";
 import PillButton from "@/components/ui/PillButton";
+import { useReveal } from "@/lib/reveal";
 
+/* Next includes the not-found boundary in every route's client tree, so this
+   component's imports are the whole site's imports. Its gsap import was the
+   last thing pulling 121 kB of animation library onto /privacy and /terms,
+   pages that render no animation at all. Three staggered fades do not need a
+   timeline engine. */
 export default function NotFoundSection() {
   const ref = useRef<HTMLElement>(null);
-
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        "[data-404-reveal]",
-        { y: 40, opacity: 0, filter: "blur(5px)" },
-        {
-          y: 0,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 1,
-          ease: "power3.out",
-          stagger: 0.15,
-          delay: 0.2,
-        }
-      );
-    }, ref);
-    return () => ctx.revert();
-  }, []);
+  useReveal(ref);
 
   return (
     <section
@@ -36,16 +23,23 @@ export default function NotFoundSection() {
           src="/assets/brand/webify-icon-light-384.webp"
           alt=""
           aria-hidden="true"
-          data-404-reveal
-          className="mb-6 h-12 w-auto opacity-0"
+          width={384}
+          height={323}
+          data-reveal=""
+          className="mb-6 h-12 w-auto"
         />
         <img
           src="/assets/404/404.svg"
           alt="404"
-          data-404-reveal
-          className="w-[200px] max-w-full opacity-0 md:w-[249px]"
+          data-reveal=""
+          style={{ "--reveal-delay": "150ms" } as React.CSSProperties}
+          className="w-[200px] max-w-full md:w-[249px]"
         />
-        <div data-404-reveal className="mt-8 flex flex-col items-center opacity-0 md:mt-10">
+        <div
+          data-reveal=""
+          style={{ "--reveal-delay": "300ms" } as React.CSSProperties}
+          className="mt-8 flex flex-col items-center md:mt-10"
+        >
           <h1 className="text-center text-2xl font-bold tracking-tight text-ink md:text-[32px] md:leading-tight">
             This page does not exist.
           </h1>

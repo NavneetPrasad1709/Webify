@@ -506,9 +506,28 @@ LocalBusiness schema, NAP and address stay exactly where they were.
 - [ ] The team claim: eleven surfaces say team, one human is named, and three
       stock photos sit beside the claim. Needs an owner decision, not a
       unilateral rewrite.
-- [ ] JS diet. Still ~938 kB raw on every route. Nav and Preloader both import
-      GSAP directly and both mount in the root layout, so dynamic-importing
-      SmoothScroll alone achieves nothing; splitting has to start there.
+**JS diet, done 9 Aug 2026.** Five components in the root layout tree
+pulled gsap onto every route: SmoothScroll, Preloader, Nav, Footer (through
+PillButton) and NotFoundSection, which Next includes in every route's client
+tree. All five now run on IntersectionObserver, CSS transitions and a plain
+rAF loop. `src/lib/scroll-bridge.ts` inverts the last dependency: gsap
+registers ScrollTrigger's update and refresh there, and SmoothScroll drives
+them if and when they appear, so routes that animate wire themselves together
+and routes that do not never load the library.
+
+| Route | Before | After | gsap |
+| --- | --- | --- | --- |
+| /privacy, /terms | 816 kB | 682 kB | gone |
+| /contact | 831 kB | 696 kB | gone |
+| / | 939 kB | 919 kB | still used |
+| /about | 851 kB | 832 kB | still used |
+
+- [ ] Finish the JS diet on the remaining routes. The homepage, /about,
+      /service, /project and /blog still load gsap because their sections
+      genuinely animate with it (32 files import `@/lib/anim`). Converting
+      the plain fade-and-rise reveals among them to `useReveal` would drop
+      another ~120 kB from each; the scrub and parallax effects should stay
+      on gsap.
 - [ ] Service page videos: 6.07 MB on /service, 3x to 7x encoder waste.
 - [ ] hero.mp4 mobile rendition.
 - [ ] Distinct FAQ set for /service with FAQPage schema.

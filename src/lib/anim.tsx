@@ -2,8 +2,17 @@
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { registerScrollBridge } from "@/lib/scroll-bridge";
 
 gsap.registerPlugin(ScrollTrigger);
+
+/* Announce ScrollTrigger to SmoothScroll without SmoothScroll having to
+   import gsap. Only routes that pull this module in pay for the library, and
+   they are exactly the routes that animate. */
+registerScrollBridge({
+  update: () => ScrollTrigger.update(),
+  refresh: () => ScrollTrigger.refresh(),
+});
 
 export { gsap, ScrollTrigger };
 

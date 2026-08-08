@@ -1,11 +1,11 @@
 "use client";
 
-import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { track } from "@vercel/analytics";
-import { gsap } from "@/lib/anim";
 import PillButton from "@/components/ui/PillButton";
 import { BOOKING_URL } from "@/lib/site";
+import { useReveal } from "@/lib/reveal";
 import {
   contactChannels,
   formFields,
@@ -84,73 +84,11 @@ export default function ContactSection({
     if (submitted) successRef.current?.focus();
   }, [submitted]);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      // Headline load-in
-      gsap.fromTo(
-        ".contact-title",
-        { y: 40, opacity: 0, filter: "blur(6px)" },
-        { y: 0, opacity: 1, filter: "blur(0px)", duration: 1, ease: "power3.out", delay: 0.1 }
-      );
-
-      // Contact channel cards - blur rise, staggered
-      gsap.fromTo(
-        ".channel-card",
-        { y: 40, opacity: 0, filter: "blur(5px)" },
-        {
-          y: 0,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 0.9,
-          ease: "power3.out",
-          stagger: 0.12,
-          scrollTrigger: { trigger: ".channel-grid", start: "top 85%" },
-        }
-      );
-
-      // Portrait image - slides down into its clipped frame
-      gsap.fromTo(
-        ".contact-img",
-        { yPercent: -120, scale: 1.2 },
-        {
-          yPercent: 0,
-          scale: 1,
-          duration: 1.4,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".contact-content", start: "top 75%" },
-        }
-      );
-
-      // Form fields - fade in, staggered
-      gsap.fromTo(
-        ".field-wrap",
-        { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 0.8,
-          ease: "power2.out",
-          stagger: 0.08,
-          scrollTrigger: { trigger: ".contact-form", start: "top 80%" },
-        }
-      );
-
-      // Routing cards
-      gsap.fromTo(
-        ".routing-card",
-        { y: 40, opacity: 0, filter: "blur(5px)" },
-        {
-          y: 0,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 0.9,
-          ease: "power3.out",
-          stagger: 0.15,
-          scrollTrigger: { trigger: ".routing-grid", start: "top 85%" },
-        }
-      );
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+  /* Reveals run on IntersectionObserver, not GSAP. This is the page the whole
+     site exists to deliver someone to, and it was carrying 121 kB of
+     animation library for five fades and a stagger. Delays come from
+     --reveal-delay on each element. */
+  useReveal(sectionRef);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -256,7 +194,7 @@ export default function ContactSection({
         {/* Header */}
         <div className="mx-auto mb-14 md:mb-24 flex max-w-[775px] flex-col items-center gap-5 text-center">
           <p className="eyebrow">CONTACT</p>
-          <h1 className="contact-title display-1">REACH OUT TODAY</h1>
+          <h1 data-reveal="" className="contact-title display-1">REACH OUT TODAY</h1>
           <p className="text-base text-black font-medium">
             Tell us about your project. Our team replies within 24 hours.
           </p>
@@ -265,7 +203,7 @@ export default function ContactSection({
         {/* Contact channels: whole card is the action; hover lift + cobalt
             title shift replace the retired arrow badge (no-arrow rule) */}
         <div className="channel-grid grid grid-cols-1 gap-4 md:grid-cols-3">
-          {contactChannels.map((c) => {
+          {contactChannels.map((c, i) => {
             const inner = (
               <span className="flex items-center gap-5">
                 <span className="flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-lg bg-white">
@@ -282,7 +220,7 @@ export default function ContactSection({
             const cardClasses =
               "channel-card group flex items-center justify-between rounded-2xl bg-fill-light p-5 transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary md:p-6";
             return c.href.startsWith("/") ? (
-              <Link key={c.label} href={c.href} className={cardClasses}>
+              <Link key={c.label} href={c.href} data-reveal="" style={{ "--reveal-delay": `${i * 110}ms` } as React.CSSProperties} className={cardClasses}>
                 {inner}
               </Link>
             ) : (
@@ -291,7 +229,7 @@ export default function ContactSection({
                 href={c.href}
                 target={c.external ? "_blank" : undefined}
                 rel={c.external ? "noreferrer" : undefined}
-                className={cardClasses}
+                data-reveal="" style={{ "--reveal-delay": `${i * 110}ms` } as React.CSSProperties} className={cardClasses}
               >
                 {inner}
               </a>
@@ -346,6 +284,7 @@ export default function ContactSection({
               alt="Navneet Prasad, founder of Webify"
               loading="lazy"
               decoding="async"
+              data-reveal=""
               className="contact-img h-64 w-full object-cover sm:h-96 lg:h-full"
             />
           </div>
@@ -493,9 +432,11 @@ export default function ContactSection({
 
         {/* Sales / support routing */}
         <div className="routing-grid mt-16 md:mt-28 grid grid-cols-1 gap-4 md:grid-cols-2">
-          {routingCards.map((card) => (
+          {routingCards.map((card, i) => (
             <div
               key={card.number}
+              data-reveal=""
+              style={{ "--reveal-delay": `${i * 140}ms` } as React.CSSProperties}
               className="routing-card flex flex-col items-start justify-between gap-10 md:gap-[60px] rounded-2xl bg-fill-light p-6 md:p-[30px]"
             >
               <p className="text-base text-ink">{card.number}</p>

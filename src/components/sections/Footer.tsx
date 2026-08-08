@@ -1,50 +1,20 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useRef } from "react";
 import Link from "next/link";
-import { gsap, revealFrom, revealTo } from "@/lib/anim";
 import Marquee from "@/components/ui/Marquee";
 import PillButton from "@/components/ui/PillButton";
 import { footerNav } from "@/lib/data";
 import { BOOKING_URL } from "@/lib/site";
+import { useReveal } from "@/lib/reveal";
 
+/* The footer renders on every route, including the two legal pages that
+   animate nothing, so its imports are the whole site's imports. Two fade-and-
+   rise reveals are not worth 121 kB of ScrollTrigger: they run on
+   IntersectionObserver and a CSS transition instead. */
 export default function Footer() {
   const ref = useRef<HTMLElement>(null);
-
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      gsap.fromTo(
-        "[data-footer-marquee]",
-        revealFrom,
-        {
-          ...revealTo,
-          scrollTrigger: {
-            trigger: "[data-footer-marquee]",
-            start: "top 80%",
-            once: true,
-          },
-        }
-      );
-
-      // Bottom card settles in as the footer arrives.
-      if (!reduce) {
-        gsap.fromTo(
-          "[data-footer-bottom]",
-          { y: 24, autoAlpha: 0 },
-          {
-            y: 0,
-            autoAlpha: 1,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: { trigger: "[data-footer-bottom]", start: "top 96%", once: true },
-          }
-        );
-      }
-    }, ref);
-    return () => ctx.revert();
-  }, []);
+  useReveal(ref);
 
   return (
     <footer ref={ref} className="bg-white px-5 pb-5 pt-5 text-ink">
@@ -52,7 +22,7 @@ export default function Footer() {
           rounded cards stack with aligned curves and an even white frame. */}
       <div id="contact" className="mx-auto max-w-[1400px] overflow-hidden rounded-card-lg bg-fill-light">
         {/* Giant marquee - edges melt into the card */}
-        <div data-footer-marquee className="footer-marquee-fade py-14 md:py-20">
+        <div data-footer-marquee data-reveal="" className="footer-marquee-fade py-14 md:py-20">
           <Marquee duration={28}>
             <span
               className="display-1 flex items-center gap-10 whitespace-nowrap px-8 text-ink"
@@ -63,8 +33,8 @@ export default function Footer() {
                 src="/assets/brand/webify-icon-light-384.webp"
                 alt=""
                 aria-hidden="true"
-                width={963}
-                height={810}
+                width={384}
+                height={323}
                 loading="lazy"
                 decoding="async"
                 className="inline-block h-[0.72em] w-auto"
@@ -79,8 +49,8 @@ export default function Footer() {
                 src="/assets/brand/webify-icon-light-384.webp"
                 alt=""
                 aria-hidden="true"
-                width={963}
-                height={810}
+                width={384}
+                height={323}
                 loading="lazy"
                 decoding="async"
                 className="inline-block h-[0.72em] w-auto"
@@ -109,8 +79,8 @@ export default function Footer() {
               <img
                 src="/assets/brand/webify-logo-black-480.webp"
                 alt="Webify"
-                width={1849}
-                height={677}
+                width={480}
+                height={176}
                 loading="lazy"
                 decoding="async"
                 className="h-14 w-auto object-contain"
@@ -184,6 +154,7 @@ export default function Footer() {
         <div className="px-4 pb-4 md:px-6 md:pb-6">
           <div
             data-footer-bottom
+            data-reveal=""
             className="flex flex-col justify-between gap-4 rounded-2xl bg-white px-6 py-5 text-[15px] font-medium text-black md:flex-row md:items-center md:px-8"
           >
             <p className="flex items-center gap-2.5">
@@ -191,8 +162,8 @@ export default function Footer() {
                 src="/assets/brand/webify-icon-light-384.webp"
                 alt=""
                 aria-hidden="true"
-                width={963}
-                height={810}
+                width={384}
+                height={323}
                 loading="lazy"
                 decoding="async"
                 className="h-5 w-auto"
