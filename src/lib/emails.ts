@@ -21,7 +21,6 @@ export type LeadEmail = {
 
 const INK = "#000000";
 const COBALT = "#0051ff";
-const COBALT_DEEP = "#0041cc";
 const LIME = "#f3f696";
 const FILL = "#f3f3f3";
 const BORDER = "#e6e6e6";
