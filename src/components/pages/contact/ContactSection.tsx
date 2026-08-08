@@ -161,7 +161,22 @@ export default function ContactSection({
     try {
       let ok = false;
 
-      if (WEB3FORMS_KEY) {
+      // 1) Preferred path: the server route, which sends through Resend from
+      //    the studio's own verified domain. Returns 503 when unconfigured.
+      try {
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        ok = res.ok;
+      } catch {
+        ok = false;
+      }
+
+      // 2) Fallback: post to Web3Forms from the browser, so a missing or
+      //    broken server key never silently costs a lead.
+      if (!ok && WEB3FORMS_KEY) {
         // Web3Forms accepts submissions from the browser only (its free plan
         // rejects server-side calls), and its access key is public by design.
         // JSON is required: the endpoint rejects multipart form data.
@@ -186,15 +201,6 @@ export default function ContactSection({
           }),
         });
         ok = res.ok && (await res.json()).success === true;
-      } else {
-        // No client key configured: fall back to the server route, which
-        // delivers through Resend when RESEND_API_KEY is set.
-        const res = await fetch("/api/contact", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
-        ok = res.ok;
       }
 
       if (!ok) throw new Error("delivery failed");

@@ -93,7 +93,9 @@ async function deliver(lead: Lead): Promise<"sent" | "unconfigured" | "failed"> 
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Webify Leads <onboarding@resend.dev>",
+        // webify.org.in is a verified Resend domain, so leads arrive from the
+        // studio's own address instead of a third-party sender.
+        from: "Webify Leads <leads@webify.org.in>",
         to: [INBOX],
         reply_to: lead.email,
         subject,
