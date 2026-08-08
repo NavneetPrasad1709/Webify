@@ -1,9 +1,11 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
+import Link from "next/link";
 import { gsap, revealFrom, revealTo } from "@/lib/anim";
 import PillButton from "@/components/ui/PillButton";
 import { single, type ServiceEntry } from "@/lib/pages/service";
+import { getProject } from "@/lib/pages/project";
 
 /* Process-card badge icons (traced from the source SVGs) */
 function ProcessIcon({ name }: { name: "flask" | "orbit" | "cube" }) {
@@ -77,6 +79,10 @@ function BlueArrow() {
 
 export default function ServiceSingle({ service }: { service: ServiceEntry }) {
   const sectionRef = useRef<HTMLElement>(null);
+
+  const relatedProject = service.relatedProject
+    ? getProject(service.relatedProject)
+    : undefined;
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -339,6 +345,42 @@ export default function ServiceSingle({ service }: { service: ServiceEntry }) {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* ------------------------------------------------ related work */}
+        {relatedProject && (
+          <div className="mt-14 md:mt-[60px]">
+            <Link
+              data-ss-reveal
+              href={`/project/${relatedProject.slug}`}
+              className="group flex flex-col gap-6 rounded-2xl bg-fill-light p-6 md:flex-row md:items-end md:justify-between md:p-[30px]"
+            >
+              <div>
+                <p className="eyebrow text-gray-deep">Related Work</p>
+                <h2 className="mt-3 text-[26px] font-semibold leading-[1.2] tracking-[-0.02em] transition-colors duration-300 group-hover:text-primary md:text-[30px]">
+                  {relatedProject.name}
+                </h2>
+                <p className="mt-3 max-w-[560px] leading-[1.3] text-black font-medium">
+                  A self-initiated concept build that shows this service in
+                  practice. It is live, click through and use it.
+                </p>
+              </div>
+              <p className="font-medium text-ink">View the Project</p>
+            </Link>
+          </div>
+        )}
+
+        {/* ------------------------------------------------ closing cta */}
+        <div
+          data-ss-reveal
+          className="mt-14 flex flex-col items-center gap-5 text-center md:mt-[60px]"
+        >
+          <p className="text-base font-medium text-black">
+            Based in Greater Noida, working across Delhi NCR and worldwide.
+          </p>
+          <PillButton tone="blue" href="/contact">
+            Start a Project
+          </PillButton>
         </div>
       </div>
     </section>

@@ -184,7 +184,7 @@ The strongest weak area: real hamburger menu, fluid clamp() type, iOS-safe 16px 
 - [x] **Fix the business-model contradictions.** FAQ 4 sells subscriptions, FAQ 5 offers nonexistent "Growth/Scale" plans (`src/lib/data.ts:148-155`), About Retention card sells month-to-month (`src/lib/pages/about.ts:31-38`). Use the rewrites above.
 - [x] **Delete the invented percentage stats** (48%, 59%, 45%) animating as data on all nine service pages (`src/lib/pages/service.ts:358-376`). Replace with your real commitments (24h reply, 2 rounds, 30-day support).
 - [x] **Add /privacy and /terms pages** and link them from the footer and the form's "your details stay private" microcopy. You collect PII from EU visitors with no legal layer (GDPR/DPDP exposure).
-- [ ] **Fix the JS-gated preloader.** The server-rendered opaque overlay hides all content on every route until hydration; without JS the page is permanently black (`Preloader.tsx:50`). Add a noscript/CSS fallback that always lifts the veil.
+- [x] (26 Jul 2026) **Fix the JS-gated preloader.** Noscript style fallback added: `<noscript><style>[data-preloader]{display:none}</style></noscript>` in `Preloader.tsx`; no-JS visitors now see the page.
 - [x] **Fix the SplitWords space-collapse bug.** The homepage Impacts paragraph renders with words run together (`src/lib/anim.tsx:23`).
 - [x] **Resolve the ® question.** Verify actual trademark registration; if unregistered, strip ® from all copy and re-export the logo artwork without it (s.107 Trade Marks Act exposure; also check clearance given prior "Webify" use).
 
@@ -213,7 +213,8 @@ The strongest weak area: real hamburger menu, fluid clamp() type, iOS-safe 16px 
 - [x] Add `src/app/robots.ts` (allow all, disallow /api/, point to sitemap).
 - [x] Set `metadataBase`, add openGraph + twitter blocks, design a 1200x630 OG image.
 - [x] Add JSON-LD: Organization + WebSite in layout; Service, Article, BreadcrumbList, FAQPage per page type.
-- [ ] Add title template (`%s | Webify`) and rewrite titles around winnable keywords ("Fixed-Price Web Design & Development" beats "Service - Webify").
+- [x] (26 Jul 2026) Title template + keyword titles: all six page-metadata files rewritten to 50-60 char titles with service keyword + Delhi NCR/Greater Noida, unique 140-160 char descriptions; per-service titles via metaTitles map in `service/[slug]/page.tsx`.
+- [x] (26 Jul 2026) Canonical host aligned to `https://www.webify.org.in` (live apex 308s to www): `SITE_URL` in `src/lib/site.ts` now drives metadataBase, sitemap, robots, and every JSON-LD @id/url. Zero non-www absolute URLs remain in src/.
 - [x] Add canonicals (`alternates: { canonical: './' }` after metadataBase).
 - [x] Unique meta description per service page (use each `service.blurb`; the copy already exists).
 
@@ -227,8 +228,8 @@ The strongest weak area: real hamburger menu, fluid clamp() type, iOS-safe 16px 
 **Accessibility (WCAG 2.2 AA)**
 - [ ] Add a pause/stop control for autoplaying content (~14 videos/marquees/tickers; SC 2.2.2).
 - [ ] Fix contrast on blue sections (measured 1.53:1 to 3.56:1; use pure white on #0051ff; SC 1.4.3).
-- [ ] Honor `prefers-reduced-motion` in Lenis, CSS marquees, and remaining GSAP timelines (use `gsap.matchMedia()`).
-- [ ] Add a skip-to-content link.
+- [x] PARTIAL (26 Jul 2026): Lenis now skipped entirely under reduced motion (native scroll); CSS marquees stop with duplicate copy hidden. Remaining: Hero infinite ticker + idle card float GSAP loops.
+- [x] (26 Jul 2026) Skip-to-content link in layout (`href="#main"`, sr-only until focused); `id="main"` on every route's `<main>`.
 - [x] Trap focus in the mobile menu; set page content inert while open; restore focus on close.
 - [ ] Announce form success/error with `role="status"` / `role="alert"` (SC 4.1.3).
 
@@ -292,7 +293,7 @@ The strongest weak area: real hamburger menu, fluid clamp() type, iOS-safe 16px 
 - [ ] Darken gray-mid token to pass 4.5:1; fix placeholder contrast; mirror hover reveals with focus.
 - [x] Main landmarks added to /project, /project/[slug], 404; heading hierarchy fixed (404 h1, contact cards h2, blog lede p + sections h2, Journey years h3, FoundingOffers single h2).
 - [x] Fix inverted blog article heading semantics (lede as `<p>`, sections as `<h2>`).
-- [ ] Add internal linking: related work on service pages, service-used on projects, contextual links in posts.
+- [x] (26 Jul 2026) Internal linking: projects carry `serviceSlug` (Service meta row links to /service); services carry optional `relatedProject` ("Related Work" concept-build card, only where honest); 4 blog posts link their related service. ServiceSingle also gained a closing CTA with the Greater Noida location line.
 
 ### Low Priority
 
@@ -302,7 +303,7 @@ The strongest weak area: real hamburger menu, fluid clamp() type, iOS-safe 16px 
 - [x] Rename the "dsigning" asset files; fix the reused blog hero image in post 2.
 - [ ] Machine-readable blog dates (`<time dateTime>`, ISO in data, Article JSON-LD dates).
 - [ ] Blog category filter into the URL (?category=).
-- [ ] Footer services column: generate from the services array (currently lists 5 of 9).
+- [x] (26 Jul 2026) Footer services column generated from the services array (all 9, labels from source with compact overrides for SEO/App Development). Dead `href="#"` social pills fully removed from data.ts + Hero.
 - [x] `generateMetadata` fallback titles for unknown slugs ("Project Not Found - Webify").
 - [x] Cache-Control headers for /assets (max-age=31536000 immutable).
 - [ ] Stop the Brands orbit rAF when off-screen; remove its dead animation classes and false cursor-pointer.
@@ -382,7 +383,7 @@ Owned research (annual "State of fixed-price web engineering" style report: Capg
 - [x] Rewrite FAQ 4/5 and the About Retention card
 - [x] Delete the 48/59/45% service-page stats
 - [x] Resolve the ® claim
-- [ ] Fix the preloader no-JS black screen
+- [x] Fix the preloader no-JS black screen (26 Jul 2026)
 - [x] Fix the SplitWords spacing bug
 - [x] Ship /privacy and /terms
 - [ ] Commit the repo, add remote + CI
@@ -408,7 +409,7 @@ Owned research (annual "State of fixed-price web engineering" style report: Capg
 - [ ] Pricing in the nav + price anchors on service pages (DEFERRED until dollar amounts return after the first 10 projects)
 - [x] CTAs on /project, /about; mobile header CTA
 - [x] sitemap.ts + robots.ts + JSON-LD + title template + canonicals
-- [ ] Internal linking between services, projects, blog
+- [x] Internal linking between services, projects, blog (26 Jul 2026)
 - [ ] Newsletter capture + bylined posts
 - [ ] Awwwards/CSSDA/FWA submissions
 - [ ] Site teardown article series

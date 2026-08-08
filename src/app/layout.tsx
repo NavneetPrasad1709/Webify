@@ -7,6 +7,7 @@ import Nav from "@/components/sections/Nav";
 import Footer from "@/components/sections/Footer";
 import Preloader from "@/components/ui/Preloader";
 import ScrollTop from "@/components/ui/ScrollTop";
+import { SITE_URL } from "@/lib/site";
 
 // Inter Display — next/font self-hosts a latin-subset variable file (wght +
 // opsz axes) at build time, ~90 kB vs the 344 kB full InterVariable.woff2 it
@@ -34,7 +35,7 @@ const description =
   "Senior-led web design and development company in Greater Noida, building websites, SaaS products, and web apps for Delhi NCR businesses and clients worldwide.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://webify.org.in"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: defaultTitle,
     template: "%s | Webify",
@@ -64,11 +65,11 @@ const jsonLd = {
   "@graph": [
     {
       "@type": ["Organization", "ProfessionalService"],
-      "@id": "https://webify.org.in/#organization",
+      "@id": `${SITE_URL}/#organization`,
       name: "Webify",
-      url: "https://webify.org.in",
-      logo: "https://webify.org.in/icon.png",
-      image: "https://webify.org.in/opengraph-image.png",
+      url: SITE_URL,
+      logo: `${SITE_URL}/icon.png`,
+      image: `${SITE_URL}/opengraph-image.png`,
       email: "contact@webify.org.in",
       description,
       foundingDate: "2026",
@@ -109,8 +110,8 @@ const jsonLd = {
     {
       "@type": "WebSite",
       name: "Webify",
-      url: "https://webify.org.in",
-      publisher: { "@id": "https://webify.org.in/#organization" },
+      url: SITE_URL,
+      publisher: { "@id": `${SITE_URL}/#organization` },
     },
   ],
 };
@@ -126,6 +127,12 @@ export default function RootLayout({
         className={`${interDisplay.variable} ${dmMono.variable} antialiased`}
         suppressHydrationWarning
       >
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[300] focus:rounded-full focus:bg-primary focus:px-6 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
+        >
+          Skip to content
+        </a>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

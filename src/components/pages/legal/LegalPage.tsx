@@ -35,7 +35,7 @@ export default function LegalPage({
   children: ReactNode;
 }) {
   return (
-    <main>
+    <main id="main">
       <section className="bg-white px-5 pb-24 pt-32 text-ink md:px-10 md:pb-32 md:pt-40">
         <div className="mx-auto max-w-[820px]">
           <p className="eyebrow text-gray-mid">{eyebrow}</p>

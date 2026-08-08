@@ -13,6 +13,10 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
     const lenis = new Lenis({
       lerp: 0.1,
       wheelMultiplier: 1,
@@ -43,9 +47,7 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
   // sections (services accordion, work deck, reveals) fire at stale
   // positions.
   useEffect(() => {
-    const lenis = lenisRef.current;
-    if (!lenis) return;
-    lenis.scrollTo(0, { immediate: true, force: true });
+    lenisRef.current?.scrollTo(0, { immediate: true, force: true });
     const id = requestAnimationFrame(() => ScrollTrigger.refresh());
     return () => cancelAnimationFrame(id);
   }, [pathname]);

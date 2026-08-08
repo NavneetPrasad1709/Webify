@@ -6,14 +6,14 @@ import Faq from "@/components/sections/Faq";
 import CtaBand from "@/components/sections/CtaBand";
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Web Design & Development Services in Delhi NCR",
   description:
-    "Webify helps brands scale with high-performing websites, sleek UI/UX design, and powerful digital solutions built for growth.",
+    "Website development, e-commerce stores, CRM systems, branding, and SEO. Fixed-price projects from Webify, a studio in Greater Noida serving Delhi NCR.",
 };
 
 export default function ServicePage() {
   return (
-    <main>
+    <main id="main">
       <ServiceHero />
       <ServiceListing />
       <TechStack />

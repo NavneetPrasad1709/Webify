@@ -15,6 +15,8 @@ export interface BlogPost {
   date: string;
   author: string;
   category: string;
+  /** Slug of the /service entry this post most directly relates to. */
+  relatedService?: string;
   thumb: string;
   hero: string;
   blocks: ArticleBlock[];
@@ -37,6 +39,7 @@ export const posts: BlogPost[] = [
     date: "April 21, 2026",
     author: "Webify Team",
     category: "Web Design",
+    relatedService: "landing-page",
     thumb: "/assets/project/vexel-ai.webp",
     hero: "/assets/project/vexel-ai.webp",
     blocks: [
@@ -61,6 +64,7 @@ export const posts: BlogPost[] = [
     date: "April 14, 2026",
     author: "Webify Team",
     category: "Web Design",
+    relatedService: "website-development",
     thumb: "/assets/project/dental-health.webp",
     hero: "/assets/project/dental-health.webp",
     blocks: [
@@ -85,6 +89,7 @@ export const posts: BlogPost[] = [
     date: "April 7, 2026",
     author: "Webify Team",
     category: "Branding",
+    relatedService: "branding-design",
     thumb: "/assets/project/evergreen-studio.webp",
     hero: "/assets/project/evergreen-studio.webp",
     blocks: [
@@ -293,6 +298,7 @@ export const posts: BlogPost[] = [
     date: "June 5, 2026",
     author: "Webify Team",
     category: "Branding",
+    relatedService: "branding-design",
     thumb: "/assets/blog/thumb-building-strong-brand-identities-from-strategy.webp",
     hero: "/assets/blog/building-strong-brand-identities-from-strategy-hero.webp",
     blocks: [

@@ -3,7 +3,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { preload } from "react-dom";
 import { gsap, revealFrom, revealTo } from "@/lib/anim";
-import { socialLinks } from "@/lib/data";
 import PillButton from "@/components/ui/PillButton";
 import RollingText from "@/components/ui/RollingText";
 import LazyVideo from "@/components/ui/LazyVideo";
@@ -38,7 +37,6 @@ export default function Hero() {
   const cardWrapRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const cardFloatRef = useRef<HTMLDivElement>(null);
-  const socialRef = useRef<HTMLDivElement>(null);
   const wordRef = useRef<HTMLSpanElement>(null);
   const [word, setWord] = useState(0);
 
@@ -66,16 +64,6 @@ export default function Hero() {
         cardFloatRef.current,
         { y: -8 },
         { y: 8, duration: 3, ease: "sine.inOut", yoyo: true, repeat: -1 }
-      );
-
-      /* Social pills stagger in. */
-      const pills = socialRef.current
-        ? Array.from(socialRef.current.children)
-        : [];
-      gsap.fromTo(
-        pills,
-        revealFrom,
-        { ...revealTo, delay: 1.0, stagger: 0.08 }
       );
 
       /* Scroll parallax - layers depart at different rates. */
@@ -241,23 +229,6 @@ export default function Hero() {
           </span>
         </span>
       </p>
-
-      {/* Bottom-right: social pills (template home-button-wrapper) */}
-      <div
-        ref={socialRef}
-        className="absolute bottom-10 right-10 z-10 hidden items-center gap-2 lg:flex"
-      >
-        {socialLinks.map((s) => (
-          <a
-            key={s.label}
-            href={s.href}
-            className="flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[.06] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white backdrop-blur transition-colors duration-300 hover:bg-white/15"
-          >
-            <img src={s.icon} alt="" className="h-3.5 w-3.5 object-contain" />
-            {s.label}
-          </a>
-        ))}
-      </div>
     </section>
   );
 }

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import ContactSection from "@/components/pages/contact/ContactSection";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: "Contact a Web Development Company in Delhi NCR",
   description:
-    "Talk directly to the senior team that designs and builds. Based in Greater Noida, serving Delhi NCR and clients worldwide. Replies within 24 hours.",
+    "Write to Webify, a web development company in Greater Noida serving Delhi NCR. You talk directly to the people who design and build. Replies within 24 hours.",
 };
 
 export default async function ContactPage({
@@ -14,7 +14,7 @@ export default async function ContactPage({
 }) {
   const { topic } = await searchParams;
   return (
-    <main>
+    <main id="main">
       <ContactSection defaultTopic={typeof topic === "string" ? topic.slice(0, 120) : ""} />
     </main>
   );

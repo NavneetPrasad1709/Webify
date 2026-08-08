@@ -8,14 +8,14 @@ import Values from "@/components/pages/about/Values";
 import CtaBand from "@/components/sections/CtaBand";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About Our Web Design Studio in Greater Noida",
   description:
-    "Every project tells a story, and at Webify, we make sure it’s unforgettable. The method, principles, and road ahead for the company.",
+    "Webify is a web design and development studio in Greater Noida. Meet the founder, read the working method, and see where the company is headed next.",
 };
 
 export default function AboutPage() {
   return (
-    <main>
+    <main id="main">
       <AboutHero />
       <AboutIntro />
       <Founder />

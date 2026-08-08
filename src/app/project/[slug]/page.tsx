@@ -31,7 +31,7 @@ export default async function ProjectSinglePage({
   if (!project) notFound();
 
   return (
-    <main>
+    <main id="main">
       <ProjectSingle project={project} next={getNextProject(slug)} />
     </main>
   );

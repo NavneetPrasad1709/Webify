@@ -5,7 +5,13 @@
  * inbox; with neither set the route returns 503 so the form shows its
  * honest "email us directly" fallback instead of a false success.
  *   - RESEND_API_KEY        (resend.com; sends via the Resend API)
- *   - WEB3FORMS_ACCESS_KEY  (web3forms.com; forwards to the account inbox)
+ *   - WEB3FORMS_ACCESS_KEY  (web3forms.com; PAID plans only, see below)
+ *
+ * Note: Web3Forms rejects server-side submissions on its free plan ("use our
+ * API in client side"), so the contact form posts to Web3Forms directly from
+ * the browser using NEXT_PUBLIC_WEB3FORMS_KEY and never reaches this route.
+ * This route stays the delivery path for Resend, and for Web3Forms Pro
+ * (which allows server-side calls from an allowlisted IP).
  *
  * Abuse protection: field allowlist + validation, a honeypot field bots
  * fill ("website"), and per-IP rate limiting (in-memory per instance).

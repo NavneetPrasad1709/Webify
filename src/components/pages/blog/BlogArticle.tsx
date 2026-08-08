@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useLayoutEffect, useRef } from "react";
 import { gsap, revealFrom, revealTo } from "@/lib/anim";
 import type { ArticleBlock, BlogPost } from "@/lib/pages/blog";
+import { getService } from "@/lib/pages/service";
 import PillButton from "@/components/ui/PillButton";
 
 export interface BlogArticleProps {
@@ -68,6 +69,10 @@ function Block({ block }: { block: ArticleBlock }) {
 
 export default function BlogArticle({ post, next }: BlogArticleProps) {
   const sectionRef = useRef<HTMLElement>(null);
+
+  const relatedService = post.relatedService
+    ? getService(post.relatedService)
+    : undefined;
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -160,6 +165,17 @@ export default function BlogArticle({ post, next }: BlogArticleProps) {
           <PillButton tone="blue" href="/contact">
             Start a Project
           </PillButton>
+          {relatedService && (
+            <p className="text-base font-medium text-black">
+              Related service:{" "}
+              <Link
+                href={`/service/${relatedService.slug}`}
+                className="font-bold hover:text-primary transition-colors"
+              >
+                {relatedService.title}
+              </Link>
+            </p>
+          )}
         </div>
 
         {/* Next article */}

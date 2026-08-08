@@ -1,12 +1,7 @@
 /* Content from the licensed template, rebranded to Webify.
    Template's original typos ("Sverage", "FREQUENLTY", "Dsigning") fixed for production. */
 
-export const socialLinks = [
-  { label: "Instagram", href: "#", icon: "/assets/ig-light.svg" },
-  { label: "Medium", href: "#", icon: "/assets/m-light.svg" },
-  { label: "Twitter X", href: "#", icon: "/assets/x-light.svg" },
-  { label: "LinkedIn", href: "#", icon: "/assets/ln-light.svg" },
-];
+import { services } from "@/lib/pages/service";
 
 /* Project and blog card data lives in src/lib/pages/project.ts and blog.ts;
    the homepage sections read those canonical sources directly. */
@@ -136,6 +131,12 @@ export const faqs: { q: string; a: string }[] = [
   },
 ];
 
+/** Compact footer labels where the full service title is too long for the column. */
+const footerServiceLabels: Record<string, string> = {
+  seo: "SEO",
+  "app-development": "App Development",
+};
+
 export const footerNav: { title: string; links: { label: string; href: string }[] }[] = [
   {
     title: "Pages",
@@ -150,13 +151,10 @@ export const footerNav: { title: string; links: { label: string; href: string }[
   },
   {
     title: "Services",
-    links: [
-      { label: "Website Development", href: "/service/website-development" },
-      { label: "Branding & Design", href: "/service/branding-design" },
-      { label: "E-commerce", href: "/service/e-commerce" },
-      { label: "App Development", href: "/service/app-development" },
-      { label: "SEO", href: "/service/seo" },
-    ],
+    links: services.map((s) => ({
+      label: footerServiceLabels[s.slug] ?? s.title,
+      href: `/service/${s.slug}`,
+    })),
   },
 ];
 

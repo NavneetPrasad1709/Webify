@@ -22,12 +22,15 @@ npx tsc --noEmit && npx eslint .
 ## Environment
 
 The contact form delivers leads when ONE of these is set (otherwise the
-API returns 503 and the form shows an email fallback):
+form shows its "email us directly" fallback):
 
-| Variable | Provider |
-| --- | --- |
-| `RESEND_API_KEY` | [resend.com](https://resend.com) |
-| `WEB3FORMS_ACCESS_KEY` | [web3forms.com](https://web3forms.com) |
+| Variable | Provider | Where it runs |
+| --- | --- | --- |
+| `NEXT_PUBLIC_WEB3FORMS_KEY` | [web3forms.com](https://web3forms.com) | Browser. Free plan; the key is public by design and the free plan rejects server-side calls. |
+| `RESEND_API_KEY` | [resend.com](https://resend.com) | Server (`/api/contact`). Used when no client key is set. |
+
+`NEXT_PUBLIC_*` values are inlined at build time, so a redeploy is
+required after changing the Web3Forms key.
 
 ## Where things live
 

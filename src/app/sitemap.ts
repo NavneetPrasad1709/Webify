@@ -2,8 +2,9 @@ import type { MetadataRoute } from "next";
 import { services } from "@/lib/pages/service";
 import { projectDetails } from "@/lib/pages/project";
 import { posts } from "@/lib/pages/blog";
+import { SITE_URL } from "@/lib/site";
 
-const BASE = "https://webify.org.in";
+const BASE = SITE_URL;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [

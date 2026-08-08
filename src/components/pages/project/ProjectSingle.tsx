@@ -9,6 +9,7 @@ import {
   projectCraft,
   projectSections,
 } from "@/lib/pages/project";
+import { getService } from "@/lib/pages/service";
 import PillButton from "@/components/ui/PillButton";
 import LazyVideo from "@/components/ui/LazyVideo";
 import RollingText from "@/components/ui/RollingText";
@@ -80,6 +81,8 @@ export default function ProjectSingle({
   const richHeading = "text-[18px] font-extrabold tracking-tight text-ink md:text-[20px]";
   const richBody = "mt-3 text-base leading-[1.7] text-black font-medium md:text-[17px]";
 
+  const service = getService(project.serviceSlug);
+
   return (
     <section
       ref={sectionRef}
@@ -117,13 +120,24 @@ export default function ProjectSingle({
               <div
                 key={row.label}
                 className={`flex items-center justify-between border-t border-ink/10 py-4 ${
-                  i === project.meta.length - 1 ? "border-b" : ""
+                  i === project.meta.length - 1 && !service ? "border-b" : ""
                 }`}
               >
                 <p className="eyebrow text-gray-mid">{row.label}</p>
                 <p className="text-[15px] font-semibold">{row.value}</p>
               </div>
             ))}
+            {service && (
+              <div className="flex items-center justify-between border-b border-t border-ink/10 py-4">
+                <p className="eyebrow text-gray-mid">Service</p>
+                <Link
+                  href={`/service/${service.slug}`}
+                  className="text-[15px] font-semibold transition-colors duration-300 hover:text-primary"
+                >
+                  {service.title}
+                </Link>
+              </div>
+            )}
           </div>
         </div>
 

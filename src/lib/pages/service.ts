@@ -28,6 +28,8 @@ export type ServiceEntry = {
   deliverables?: string[];
   /** Project timeline shown in the process cards; falls back to the shared value. */
   timeline?: string;
+  /** Slug of a live concept build on /project that demonstrates this service. */
+  relatedProject?: string;
 };
 
 export const services: ServiceEntry[] = [
@@ -56,6 +58,7 @@ export const services: ServiceEntry[] = [
       "Launch Support & Handover Documentation",
     ],
     timeline: "4-8 Weeks",
+    relatedProject: "vexel-ai",
   },
   {
     slug: "branding-design",
@@ -83,6 +86,7 @@ export const services: ServiceEntry[] = [
       "Marketing Collateral & Social Templates",
     ],
     timeline: "3-5 Weeks",
+    relatedProject: "evergreen-studio",
   },
   {
     slug: "crm-system",
@@ -157,6 +161,7 @@ export const services: ServiceEntry[] = [
       "Post-Launch Conversion Review",
     ],
     timeline: "2-3 Weeks",
+    relatedProject: "vexel-ai",
   },
   {
     slug: "website-support",

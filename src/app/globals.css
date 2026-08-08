@@ -166,6 +166,19 @@ button:not(:disabled),
 .animate-marquee-right {
   animation: marquee-right var(--marquee-duration, 30s) linear infinite;
 }
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-left,
+  .animate-marquee-right {
+    animation: none;
+  }
+  /* The track holds two copies of the content for the seamless loop; with the
+     animation off the second copy would sit visibly beside the first, so hide
+     the aria-hidden duplicate and let the single copy read statically. */
+  .animate-marquee-left > [aria-hidden="true"],
+  .animate-marquee-right > [aria-hidden="true"] {
+    display: none;
+  }
+}
 /* Hover-pause is opt-in per marquee via the component's pauseOnHover prop;
    decorative marquees (footer wordmark) keep moving. */
 

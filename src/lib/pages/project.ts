@@ -27,6 +27,8 @@ export interface ProjectDetail {
   bodyImage: string;
   /** The running site, so anyone can click through and use the real build. */
   liveUrl: string;
+  /** The service this build demonstrates, links to /service/[slug]. */
+  serviceSlug: string;
   description: string;
   meta: ProjectMetaRow[];
   overview: string;
@@ -63,6 +65,7 @@ export const projectDetails: ProjectDetail[] = [
     video: "/assets/project/vexel-ai.mp4",
     bodyImage: "/assets/project/vexel-ai-body.webp",
     liveUrl: "https://saas.webify.org.in/",
+    serviceSlug: "website-development",
     description:
       "A conversion-first marketing site and product dashboard UI for an AI sales-agent SaaS, designed and built to turn a complex product into a clear, fast, credible first impression.",
     meta: [
@@ -115,6 +118,7 @@ export const projectDetails: ProjectDetail[] = [
     video: "/assets/project/dental-health.mp4",
     bodyImage: "/assets/project/dental-health-body.webp",
     liveUrl: "https://webify-dentist.vercel.app/",
+    serviceSlug: "website-development",
     description:
       "A clean, conversion-focused website for a modern dental practice, built to turn local searches into booked appointments.",
     meta: [
@@ -167,6 +171,7 @@ export const projectDetails: ProjectDetail[] = [
     video: "/assets/project/evergreen-studio.mp4",
     bodyImage: "/assets/project/evergreen-studio-body.webp",
     liveUrl: "https://webify-luxory-homes.vercel.app/",
+    serviceSlug: "branding-design",
     description:
       "An elegant, photography-led website for a luxury architecture and real-estate studio, built to make restraint feel premium.",
     meta: [

@@ -50,6 +50,11 @@ function ChannelIcon({ icon }: { icon: "calendar" | "email" | "location" }) {
   );
 }
 
+/* Web3Forms access key. Public by design (their dashboard states it is safe in
+   client-side code) and required in the browser: the free plan rejects
+   server-side submissions. Unset locally falls back to /api/contact. */
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+
 const fieldClasses =
   "w-full min-h-[54px] rounded-lg border border-border-soft bg-fill-light px-4 py-3.5 text-base text-ink placeholder:text-gray-deep outline-none transition-colors duration-300 focus:border-primary";
 
@@ -135,16 +140,60 @@ export default function ContactSection({
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (sending) return;
-    const data = Object.fromEntries(new FormData(e.currentTarget));
+    const data = Object.fromEntries(new FormData(e.currentTarget)) as Record<
+      string,
+      string
+    >;
     setError(false);
     setSending(true);
+
+    // Honeypot: bots fill this, humans never see it. Show success and drop it.
+    if (data.website) {
+      setSubmitted(true);
+      setSending(false);
+      return;
+    }
+
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error();
+      let ok = false;
+
+      if (WEB3FORMS_KEY) {
+        // Web3Forms accepts submissions from the browser only (its free plan
+        // rejects server-side calls), and its access key is public by design.
+        // JSON is required: the endpoint rejects multipart form data.
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_KEY,
+            subject: `New project inquiry from ${data["first-name"]} (${data["company-name"]})`,
+            from_name: "Webify Website",
+            // Web3Forms uses this as the reply-to, so replies reach the lead.
+            email: data.email,
+            Name: data["first-name"],
+            Company: data["company-name"],
+            "What they need": data["project-type"] || "Not specified",
+            Timeline: data.timeline || "Not specified",
+            Message: data.message,
+            botcheck: "",
+          }),
+        });
+        ok = res.ok && (await res.json()).success === true;
+      } else {
+        // No client key configured: fall back to the server route, which
+        // delivers through Resend when RESEND_API_KEY is set.
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        ok = res.ok;
+      }
+
+      if (!ok) throw new Error("delivery failed");
       setSubmitted(true);
       track("lead_submitted");
     } catch {

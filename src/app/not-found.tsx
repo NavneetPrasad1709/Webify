@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <main>
+    <main id="main">
       <NotFoundSection />
     </main>
   );

@@ -47,24 +47,29 @@ export default function Preloader() {
   }, []);
 
   return (
-    <div
-      ref={ref}
-      data-preloader
-      className="fixed inset-0 z-[200] flex flex-col items-center justify-center gap-10 bg-ink"
-      aria-hidden="true"
-    >
-      <img
-        ref={iconRef}
-        src="/assets/webify-icon-dark.png"
-        alt=""
-        className="h-36 w-auto md:h-48"
-      />
-      <img
-        ref={logoRef}
-        src="/assets/webify-logo-white.png"
-        alt=""
-        className="h-20 w-auto max-w-[85vw] object-contain md:h-[120px]"
-      />
-    </div>
+    <>
+      <noscript>
+        <style>{`[data-preloader]{display:none !important}`}</style>
+      </noscript>
+      <div
+        ref={ref}
+        data-preloader
+        className="fixed inset-0 z-[200] flex flex-col items-center justify-center gap-10 bg-ink"
+        aria-hidden="true"
+      >
+        <img
+          ref={iconRef}
+          src="/assets/webify-icon-dark.png"
+          alt=""
+          className="h-36 w-auto md:h-48"
+        />
+        <img
+          ref={logoRef}
+          src="/assets/webify-logo-white.png"
+          alt=""
+          className="h-20 w-auto max-w-[85vw] object-contain md:h-[120px]"
+        />
+      </div>
+    </>
   );
 }

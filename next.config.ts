@@ -17,7 +17,9 @@ const csp = [
   "img-src 'self' data: blob:",
   "media-src 'self'",
   "font-src 'self'",
-  "connect-src 'self'",
+  // api.web3forms.com: the contact form submits to it from the browser
+  // (its free plan rejects server-side calls).
+  "connect-src 'self' https://api.web3forms.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
