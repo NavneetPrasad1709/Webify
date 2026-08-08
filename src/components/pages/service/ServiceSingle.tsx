@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import Link from "next/link";
 import { gsap, revealFrom, revealTo } from "@/lib/anim";
 import PillButton from "@/components/ui/PillButton";
+import { BOOKING_URL } from "@/lib/site";
 import { single, type ServiceEntry } from "@/lib/pages/service";
 import { getProject } from "@/lib/pages/project";
 
@@ -79,6 +80,10 @@ function BlueArrow() {
 
 export default function ServiceSingle({ service }: { service: ServiceEntry }) {
   const sectionRef = useRef<HTMLElement>(null);
+
+  /* Carry the page the visitor was reading into the form, so they do not
+     have to retype what they just spent five minutes on. */
+  const contactHref = `/contact?topic=${encodeURIComponent(service.title)}`;
 
   const relatedProject = service.relatedProject
     ? getProject(service.relatedProject)
@@ -209,7 +214,7 @@ export default function ServiceSingle({ service }: { service: ServiceEntry }) {
                 className="flex max-w-[284px] flex-col gap-10 rounded-2xl bg-fill-light p-5"
               >
                 <p className="leading-[1.3] text-ink">{single.overviewBoxText}</p>
-                <PillButton tone="blue" href="/contact" className="w-max">
+                <PillButton tone="blue" href={contactHref} className="w-max">
                   Start a Project
                 </PillButton>
               </div>
@@ -256,7 +261,7 @@ export default function ServiceSingle({ service }: { service: ServiceEntry }) {
                 <p className="text-[22px] font-semibold leading-[1.3] tracking-[-0.02em] md:text-[28px]">
                   {single.processNote}
                 </p>
-                <PillButton tone="blue" href="/contact">
+                <PillButton tone="blue" href={contactHref}>
                   Start a Project
                 </PillButton>
               </div>
@@ -376,11 +381,17 @@ export default function ServiceSingle({ service }: { service: ServiceEntry }) {
           className="mt-14 flex flex-col items-center gap-5 text-center md:mt-[60px]"
         >
           <p className="text-base font-medium text-black">
-            Based in Greater Noida, working across Delhi NCR and worldwide.
+            Working remotely with clients worldwide, with evening IST hours
+            held for calls across US timezones.
           </p>
-          <PillButton tone="blue" href="/contact">
-            Start a Project
-          </PillButton>
+          <div className="flex flex-wrap justify-center gap-3">
+            <PillButton tone="blue" href={BOOKING_URL}>
+              Book a 20 Minute Call
+            </PillButton>
+            <PillButton tone="dark" href={contactHref}>
+              Start a Project
+            </PillButton>
+          </div>
         </div>
       </div>
     </section>

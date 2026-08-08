@@ -33,7 +33,7 @@ export default function NotFoundSection() {
     >
       <div className="mx-auto flex w-full max-w-[40rem] flex-col items-center text-center">
         <img
-          src="/assets/webify-icon-light.png"
+          src="/assets/brand/webify-icon-light-384.webp"
           alt=""
           aria-hidden="true"
           data-404-reveal

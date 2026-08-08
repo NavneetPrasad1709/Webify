@@ -6,6 +6,7 @@ import { gsap, revealFrom, revealTo } from "@/lib/anim";
 import Marquee from "@/components/ui/Marquee";
 import PillButton from "@/components/ui/PillButton";
 import { footerNav } from "@/lib/data";
+import { BOOKING_URL } from "@/lib/site";
 
 export default function Footer() {
   const ref = useRef<HTMLElement>(null);
@@ -59,9 +60,13 @@ export default function Footer() {
             >
               WORK WITH <span className="text-primary">WEBIFY</span>
               <img
-                src="/assets/webify-icon-light.png"
+                src="/assets/brand/webify-icon-light-384.webp"
                 alt=""
                 aria-hidden="true"
+                width={963}
+                height={810}
+                loading="lazy"
+                decoding="async"
                 className="inline-block h-[0.72em] w-auto"
               />
             </span>
@@ -71,18 +76,26 @@ export default function Footer() {
             >
               WORK WITH <span className="text-primary">WEBIFY</span>
               <img
-                src="/assets/webify-icon-light.png"
+                src="/assets/brand/webify-icon-light-384.webp"
                 alt=""
                 aria-hidden="true"
+                width={963}
+                height={810}
+                loading="lazy"
+                decoding="async"
                 className="inline-block h-[0.72em] w-auto"
               />
             </span>
           </Marquee>
         </div>
 
-        {/* Primary CTA pill */}
-        {/* Primary CTA pill */}
-        <div className="flex justify-center pb-10">
+        {/* Two CTAs, booking first: a short call is a much cheaper yes than a
+            form for a visitor who arrived here from a profile or a proposal
+            and has never spoken to us. */}
+        <div className="flex flex-wrap justify-center gap-3 pb-10">
+          <PillButton tone="blue" href={BOOKING_URL}>
+            Book a 20 Minute Call
+          </PillButton>
           <PillButton tone="dark" href="/contact">
             Start a Project
           </PillButton>
@@ -94,8 +107,12 @@ export default function Footer() {
           <div className="grid gap-12 pb-20 pt-12 sm:grid-cols-2 sm:gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-8">
             <div className="max-w-[34ch] sm:col-span-2 lg:col-span-1">
               <img
-                src="/assets/webify-logo-black.png"
+                src="/assets/brand/webify-logo-black-480.webp"
                 alt="Webify"
+                width={1849}
+                height={677}
+                loading="lazy"
+                decoding="async"
                 className="h-14 w-auto object-contain"
               />
               <p className="mt-7 text-base font-medium leading-relaxed text-black">
@@ -132,6 +149,16 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
+                  <a
+                    href={BOOKING_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-navlink text-xl font-semibold"
+                  >
+                    <span>Book a 20 minute call</span>
+                  </a>
+                </li>
+                <li>
                   <p className="text-base font-medium leading-7 text-ink">
                     Replies within 24 hours
                   </p>
@@ -160,7 +187,16 @@ export default function Footer() {
             className="flex flex-col justify-between gap-4 rounded-2xl bg-white px-6 py-5 text-[15px] font-medium text-black md:flex-row md:items-center md:px-8"
           >
             <p className="flex items-center gap-2.5">
-              <img src="/assets/webify-icon-light.png" alt="" aria-hidden="true" className="h-5 w-auto" />
+              <img
+                src="/assets/brand/webify-icon-light-384.webp"
+                alt=""
+                aria-hidden="true"
+                width={963}
+                height={810}
+                loading="lazy"
+                decoding="async"
+                className="h-5 w-auto"
+              />
               &copy; 2026 Webify. All rights reserved.
             </p>
             <p className="flex flex-wrap items-center gap-x-6 gap-y-2">

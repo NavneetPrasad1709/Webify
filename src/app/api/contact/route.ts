@@ -50,6 +50,11 @@ const hits = new Map<string, { count: number; windowStart: number }>();
 
 function rateLimited(ip: string): boolean {
   const now = Date.now();
+  // Fluid Compute keeps an instance alive across many requests, so an
+  // unpruned map grows with every distinct IP for the life of the process.
+  for (const [key, seen] of hits) {
+    if (now - seen.windowStart > LIMIT_WINDOW_MS) hits.delete(key);
+  }
   const entry = hits.get(ip);
   if (!entry || now - entry.windowStart > LIMIT_WINDOW_MS) {
     hits.set(ip, { count: 1, windowStart: now });
@@ -87,7 +92,9 @@ function parseLead(data: Record<string, unknown>): Lead | null {
     message:
       typeof data.message === "string" ? data.message.trim().slice(0, 5000) : "",
   };
-  if (!lead.firstName || !lead.companyName) return null;
+  // Company is deliberately optional: requiring it turns away the unregistered
+  // founder this site exists to reach. Name and a reachable address are enough.
+  if (!lead.firstName) return null;
   if (!EMAIL_RE.test(lead.email)) return null;
   if (lead.message.length < 10) return null;
   return lead;
@@ -96,7 +103,7 @@ function parseLead(data: Record<string, unknown>): Lead | null {
 function leadText(lead: Lead): string {
   return [
     `Name: ${lead.firstName}`,
-    `Company: ${lead.companyName}`,
+    lead.companyName && `Company: ${lead.companyName}`,
     lead.projectType && `Needs: ${lead.projectType}`,
     lead.timeline && `Timeline: ${lead.timeline}`,
     `Email: ${lead.email}`,
@@ -111,7 +118,7 @@ function leadText(lead: Lead): string {
 function toEmailLead(lead: Lead): LeadEmail {
   return {
     firstName: lead.firstName,
-    companyName: lead.companyName,
+    companyName: lead.companyName || "Not specified",
     email: lead.email,
     projectType: lead.projectType || "Not specified",
     timeline: lead.timeline || "Not specified",
@@ -137,7 +144,9 @@ function acknowledgementText(lead: Lead): string {
 }
 
 async function deliver(lead: Lead): Promise<"sent" | "unconfigured" | "failed"> {
-  const subject = `New project inquiry from ${lead.firstName} (${lead.companyName})`;
+  const subject = lead.companyName
+    ? `New project inquiry from ${lead.firstName} (${lead.companyName})`
+    : `New project inquiry from ${lead.firstName}`;
 
   if (process.env.RESEND_API_KEY) {
     const send = (payload: Record<string, unknown>) =>
@@ -206,7 +215,22 @@ async function deliver(lead: Lead): Promise<"sent" | "unconfigured" | "failed"> 
   return "unconfigured";
 }
 
+/** Nothing legitimate this form sends comes close to this. */
+const MAX_BODY_BYTES = 16 * 1024;
+
 export async function POST(req: Request) {
+  // Reject before parsing. Buffering an arbitrarily large body first would
+  // let an attacker spend the server's memory at no cost to themselves, and
+  // it happens ahead of the rate limiter, which cannot help here.
+  const contentType = req.headers.get("content-type") ?? "";
+  if (!contentType.toLowerCase().startsWith("application/json")) {
+    return Response.json({ ok: false }, { status: 415 });
+  }
+  const declaredLength = Number(req.headers.get("content-length") ?? 0);
+  if (declaredLength > MAX_BODY_BYTES) {
+    return Response.json({ ok: false }, { status: 413 });
+  }
+
   let data: Record<string, unknown>;
   try {
     data = await req.json();

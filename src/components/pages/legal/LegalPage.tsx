@@ -16,7 +16,7 @@ export function LegalSection({
       <h2 className="text-[18px] font-extrabold tracking-tight text-ink md:text-[20px]">
         {title}
       </h2>
-      <div className="mt-3 space-y-3 text-[15px] leading-[1.7] font-medium text-black md:text-base">
+      <div className="mt-3 space-y-3 text-[15px] leading-[1.7] font-medium text-black [&_li]:pl-1 [&_strong]:font-semibold [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5 md:text-base">
         {children}
       </div>
     </div>

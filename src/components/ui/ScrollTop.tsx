@@ -22,7 +22,7 @@ export default function ScrollTop() {
         show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
       }`}
     >
-      <img src="/assets/webify-icon-dark.png" alt="" className="h-5 w-auto" />
+      <img src="/assets/brand/webify-icon-dark-384.webp" alt="" className="h-5 w-auto" />
     </button>
   );
 }

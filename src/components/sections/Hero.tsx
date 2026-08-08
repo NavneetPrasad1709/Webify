@@ -41,30 +41,41 @@ export default function Hero() {
   const [word, setWord] = useState(0);
 
   useLayoutEffect(() => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     const ctx = gsap.context(() => {
       /* Line-mask reveals: headline + bottom statement rise out of clip wrappers. */
       gsap.fromTo(
         ".hero-line",
         { yPercent: 110 },
-        { yPercent: 0, duration: 1.2, ease: "power4.out", stagger: 0.12 }
+        { yPercent: 0, duration: reduce ? 0 : 1.2, ease: "power4.out", stagger: reduce ? 0 : 0.12 }
       );
 
       /* Continuous vertical ticker (template style): two stacked copies,
-         wrapper glides one copy-height forever. */
-      gsap.to(tickerListRef.current, {
-        yPercent: -50,
-        duration: 9,
-        ease: "none",
-        repeat: -1,
-      });
+         wrapper glides one copy-height forever. Both of the infinite loops
+         below run for the life of the page, so reduced motion has to park
+         them at rest rather than merely shorten them. */
+      if (reduce) {
+        gsap.set(tickerListRef.current, { yPercent: 0 });
+        gsap.set(cardFloatRef.current, { y: 0 });
+      } else {
+        gsap.to(tickerListRef.current, {
+          yPercent: -50,
+          duration: 9,
+          ease: "none",
+          repeat: -1,
+        });
+      }
 
       /* Card blur-in, then gentle idle float on a nested wrapper. */
-      gsap.fromTo(cardRef.current, revealFrom, { ...revealTo, delay: 0.6 });
-      gsap.fromTo(
-        cardFloatRef.current,
-        { y: -8 },
-        { y: 8, duration: 3, ease: "sine.inOut", yoyo: true, repeat: -1 }
-      );
+      gsap.fromTo(cardRef.current, revealFrom, { ...revealTo, delay: reduce ? 0 : 0.6 });
+      if (!reduce) {
+        gsap.fromTo(
+          cardFloatRef.current,
+          { y: -8 },
+          { y: 8, duration: 3, ease: "sine.inOut", yoyo: true, repeat: -1 }
+        );
+      }
 
       /* Scroll parallax - layers depart at different rates. */
       const scrub = {

@@ -183,7 +183,7 @@ export default function ServicesBand() {
                 <div className="flex items-center gap-5 md:gap-8">
                   <span
                     className={`font-mono text-sm tabular-nums tracking-widest transition-colors duration-300 ${
-                      active ? "text-white" : dimmed ? "text-white/25" : "text-lime"
+                      active ? "text-white" : dimmed ? "text-white/70" : "text-lime"
                     }`}
                   >
                     {s.n}
@@ -191,7 +191,7 @@ export default function ServicesBand() {
                   <span className="min-w-0">
                     <h3
                       className={`text-[clamp(30px,5.4vw,68px)] font-extrabold uppercase leading-[1.02] tracking-tight transition-[color,transform] duration-300 group-hover:md:translate-x-3 ${
-                        active ? "text-white" : dimmed ? "text-white/25" : "text-white/55"
+                        active ? "text-white" : dimmed ? "text-white/70" : "text-white"
                       }`}
                     >
                       {s.title}

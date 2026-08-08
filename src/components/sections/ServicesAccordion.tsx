@@ -5,6 +5,7 @@ import Link from "next/link";
 import { gsap, ScrollTrigger, revealFrom, revealTo } from "@/lib/anim";
 import { services } from "@/lib/pages/service";
 import RollingText from "@/components/ui/RollingText";
+import LazyVideo from "@/components/ui/LazyVideo";
 
 function ArrowIcon({ open }: { open: boolean }) {
   return (
@@ -181,20 +182,24 @@ export default function ServicesAccordion() {
                       data-svc-media
                       className={`${s.video ? "" : "sheen "}group/media relative order-first block overflow-hidden rounded-xl bg-fill-dark md:order-none`}
                     >
+                      {/* LazyVideo carries the Save-Data, reduced-motion and
+                          viewport guards this raw <video> was missing. */}
                       {isOpen && s.video ? (
-                        <video
-                          autoPlay
-                          muted
-                          loop
-                          playsInline
-                          poster={s.listingImage}
+                        <LazyVideo
                           src={s.video}
+                          poster={s.listingImage}
                           className="aspect-[8/5] w-full object-cover transition-transform duration-500 ease-out group-hover/media:scale-[1.03]"
                         />
                       ) : (
+                        /* Without loading="lazy" Next promotes these nine
+                           thumbnails to <head> preloads: 943 kB fetched on
+                           the critical path for a panel collapsed to zero
+                           height that nobody sees without clicking. */
                         <img
                           src={s.listingImage}
                           alt={s.title}
+                          loading="lazy"
+                          decoding="async"
                           className="aspect-[8/5] w-full object-cover transition-transform duration-500 ease-out group-hover/media:scale-[1.03]"
                         />
                       )}

@@ -50,11 +50,15 @@ export const routingCards: RoutingCard[] = [
     href: "mailto:contact@webify.org.in?subject=Project%20inquiry",
   },
   {
+    /* The low-commitment route deliberately points at the calendar, not a
+       mailto: someone who is unsure what they need converts on a short call
+       far better than on a blank compose window, and a booking is measurable
+       where a mailto is not. */
     number: "02",
     title: "Ask a Question",
-    text: "Not sure what you need yet? Send the question as it is in your head, we will point you in the right direction.",
-    cta: "Email Support",
-    href: "mailto:contact@webify.org.in?subject=Support",
+    text: "Not sure what you need yet? Take twenty minutes and talk it through. No deck, no pressure, and you leave with a straight answer either way.",
+    cta: "Book a Call",
+    href: BOOKING_URL,
   },
 ];
 
@@ -64,20 +68,48 @@ export type FormField = {
   placeholder: string;
   type: "text" | "email";
   required: boolean;
+  /** Maps to the HTML autocomplete token so browsers can fill the field. */
+  autoComplete: string;
   full?: boolean;
 };
 
+/* Only a name and a reachable address are required. Everything else is a
+   qualifier: a founder without a registered company is exactly the visitor
+   this site is for, so a required company field would turn them away. */
 export const formFields: FormField[] = [
-  { id: "first-name", label: "First Name", placeholder: "e.g. James", type: "text", required: true },
-  { id: "company-name", label: "Company Name", placeholder: "e.g. Webify", type: "text", required: true },
+  {
+    id: "first-name",
+    label: "First Name",
+    placeholder: "e.g. James",
+    type: "text",
+    required: true,
+    autoComplete: "given-name",
+  },
+  {
+    id: "company-name",
+    label: "Company (optional)",
+    placeholder: "e.g. Webify",
+    type: "text",
+    required: false,
+    autoComplete: "organization",
+  },
   {
     id: "project-type",
     label: "What do you need?",
     placeholder: "e.g. New website, redesign, app",
     type: "text",
     required: false,
+    autoComplete: "off",
   },
-  { id: "email", label: "Email Address", placeholder: "hello@example.com", type: "email", required: true, full: true },
+  {
+    id: "email",
+    label: "Email Address",
+    placeholder: "hello@example.com",
+    type: "email",
+    required: true,
+    autoComplete: "email",
+    full: true,
+  },
 ];
 
 export const messageField = {

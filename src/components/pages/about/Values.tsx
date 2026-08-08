@@ -28,7 +28,10 @@ function ValuePill({ item }: { item: ValueItem }) {
         className={`inline-block rounded-full border px-8 py-4 text-[clamp(30px,5vw,64px)] font-extrabold uppercase leading-none tracking-[-0.02em] transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:px-[50px] md:py-[30px] ${
           open
             ? "border-ink bg-ink text-white"
-            : "border-primary-lite text-primary-lite group-hover:border-ink group-hover:bg-ink group-hover:text-white group-focus-within:border-ink group-focus-within:bg-ink group-focus-within:text-white"
+            : /* primary-lite on the cobalt band measured 2.61:1, below AA at
+                 every one of the 32 pills. White at 85% clears it while
+                 keeping the resting state visibly quieter than the hover. */
+              "border-white/60 text-white/85 group-hover:border-ink group-hover:bg-ink group-hover:text-white group-focus-within:border-ink group-focus-within:bg-ink group-focus-within:text-white"
         }`}
       >
         {item.name}

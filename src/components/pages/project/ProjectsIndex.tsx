@@ -63,7 +63,7 @@ export default function ProjectsIndex() {
                 className="w-max rounded-lg bg-white px-3.5 py-2"
               >
                 <p className="text-[12px] uppercase tracking-wide text-gray-mid">
-                  Live Build
+                  Live Build / Self-initiated
                 </p>
                 <p className="text-[15px] font-semibold leading-tight">
                   View Project
@@ -74,6 +74,7 @@ export default function ProjectsIndex() {
             {/* Center - visual */}
             <Link
               href={`/project/${p.slug}`}
+              aria-label={`View the ${p.name} project`}
               className="order-1 block overflow-hidden rounded-xl shadow-[0_16px_44px_rgba(0,0,0,.12)] md:order-2"
             >
               <div className="aspect-[1908/908] w-full">

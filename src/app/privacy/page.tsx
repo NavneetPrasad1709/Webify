@@ -13,9 +13,9 @@ export default function PrivacyPage() {
       <LegalSection title="The short version">
         <p>
           The only personal data this site collects is what you type into the
-          contact form. It goes to our inbox so we can reply to you, and
-          nowhere else. We do not sell it, share it, or use it for anything
-          except the conversation you started.
+          contact form. It reaches our inbox through the delivery providers
+          named below, and is used for nothing except the conversation you
+          started. We do not sell it, rent it, or add you to a mailing list.
         </p>
       </LegalSection>
 
@@ -44,6 +44,37 @@ export default function PrivacyPage() {
           to you and to run the project conversation you asked for. We never
           sell or rent personal data, and we never add you to a mailing list
           you did not ask for.
+        </p>
+      </LegalSection>
+
+      {/* Naming processors is not optional under GDPR Art. 13(1)(e), and a
+          form that posts to a third party while the policy says the data goes
+          nowhere else is worse than a policy that simply omitted them. */}
+      <LegalSection title="Who handles your data">
+        <p>
+          Getting your message to us involves three companies, each of which
+          processes it only to deliver or store it:
+        </p>
+        <ul>
+          <li>
+            <strong>Vercel</strong> (United States) hosts this site and runs
+            the form endpoint your submission is posted to.
+          </li>
+          <li>
+            <strong>Resend</strong> (United States) sends the resulting emails:
+            the notification to us and the confirmation to you.
+          </li>
+          <li>
+            <strong>Web3Forms</strong> (United States) is the backup delivery
+            route, used only if the primary one fails, so that a technical
+            fault cannot lose your message silently.
+          </li>
+        </ul>
+        <p>
+          If you book a call instead of using the form, that booking is handled
+          by <strong>Cal.com</strong> and covered by their privacy policy. None
+          of these providers is permitted to use your data for their own
+          purposes.
         </p>
       </LegalSection>
 

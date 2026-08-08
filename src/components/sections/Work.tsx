@@ -140,13 +140,17 @@ export default function Work() {
               >
               {/* Center - visual (in flow on mobile, absolutely centered on md+).
                   Hover scale lives on the frame; GSAP pans the img vertically. */}
+              {/* The only thing inside this link is a decorative video, so
+                  without a label it announces as an unnamed link. */}
               <Link
                 href={`/project/${slug}`}
+                aria-label={`View the ${p.name} project`}
                 className="group/visual block w-full overflow-hidden rounded-xl shadow-[0_20px_60px_rgba(0,0,0,.12)] md:absolute md:inset-0 md:m-auto md:h-max md:w-[46%]"
               >
                 <div className="relative aspect-[1908/908] w-full overflow-hidden transition-transform duration-500 ease-out group-hover/visual:scale-[1.02]">
                   <LazyVideo
                     data-work-visual
+                    aria-hidden="true"
                     src={p.video}
                     poster={p.image}
                     className="h-full w-full object-cover will-change-transform"
@@ -175,7 +179,12 @@ export default function Work() {
                   href={`/project/${slug}`}
                   className="w-max rounded-lg bg-white px-3.5 py-2"
                 >
-                  <p className="text-[12px] uppercase tracking-wide text-gray-mid">Live Build</p>
+                  {/* Qualified on the card itself: these are real deployed
+                      builds, but self-initiated, and burying that on a detail
+                      page reads as a client roster we do not have. */}
+                  <p className="text-[12px] uppercase tracking-wide text-gray-mid">
+                    Live Build / Self-initiated
+                  </p>
                   <p className="text-[15px] font-semibold leading-tight">View Project</p>
                 </Link>
               </div>

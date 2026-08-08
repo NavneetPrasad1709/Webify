@@ -8,22 +8,27 @@ export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
 }
 
+/* Service first, location absent. These pages are read by founders comparing
+   remote partners, most of them on a US clock and none of them searching for
+   a city; a location qualifier in the title narrows the page for every one of
+   them and wins nothing back, because a new domain will not rank for a
+   competitive local term for a year regardless. */
 const metaTitles: Record<string, string> = {
-  "website-development": "Website Development Company in Greater Noida",
-  "branding-design": "Branding and UI/UX Design Services in Delhi NCR",
-  "crm-system": "Custom CRM Development Company in Delhi NCR",
-  "e-commerce": "E-commerce Website Development in Delhi NCR",
-  "landing-page": "Landing Page Design & Development in Delhi NCR",
-  "website-support": "Website Support and Maintenance in Delhi NCR",
-  redesign: "Website Redesign Services in Greater Noida",
-  "app-development": "Mobile App Development Company in Delhi NCR",
-  seo: "SEO Services in Greater Noida and Delhi NCR",
+  "website-development": "Website Development Company for Startups and Teams",
+  "branding-design": "Branding and UI/UX Design Services for Digital Products",
+  "crm-system": "Custom CRM Development for Growing Teams",
+  "e-commerce": "E-commerce Website Development, Designed to Convert",
+  "landing-page": "Landing Page Design and Development for Campaigns",
+  "website-support": "Website Support and Maintenance, Handled Monthly",
+  redesign: "Website Redesign Services for Sites That Underperform",
+  "app-development": "Mobile App Development Company for Product Teams",
+  seo: "SEO Services That Compound Instead of Spiking",
 };
 
 const areaClauses = [
-  "Built by Webify in Greater Noida, serving businesses across Delhi NCR.",
-  "Built by Webify, serving Greater Noida and Delhi NCR.",
-  "Serving Greater Noida and Delhi NCR.",
+  "Fixed-price, remote delivery, with evening IST hours held for US calls.",
+  "Fixed-price and remote, with hours held for US timezones.",
+  "Fixed-price projects, delivered remotely.",
 ];
 
 export async function generateMetadata({
@@ -54,12 +59,34 @@ export default async function ServiceSinglePage({
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Service",
-    name: service.title,
-    description: service.blurb,
-    url: `${SITE_URL}/service/${service.slug}`,
-    provider: { "@id": `${SITE_URL}/#organization` },
-    areaServed: ["Greater Noida", "Noida", "Ghaziabad", "Delhi", "Worldwide"],
+    "@graph": [
+      {
+        "@type": "Service",
+        name: service.title,
+        description: service.blurb,
+        url: `${SITE_URL}/service/${service.slug}`,
+        provider: { "@id": `${SITE_URL}/#organization` },
+        areaServed: ["Worldwide", "Greater Noida", "Noida", "Ghaziabad", "Delhi"],
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Services",
+            item: `${SITE_URL}/service`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: service.title,
+            item: `${SITE_URL}/service/${service.slug}`,
+          },
+        ],
+      },
+    ],
   };
 
   return (

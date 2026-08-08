@@ -6,9 +6,9 @@ import Faq from "@/components/sections/Faq";
 import CtaBand from "@/components/sections/CtaBand";
 
 export const metadata: Metadata = {
-  title: "Web Design & Development Services in Delhi NCR",
+  title: "Web Design and Development Services, Fixed Price",
   description:
-    "Website development, e-commerce stores, CRM systems, branding, and SEO. Fixed-price projects from Webify, a studio in Greater Noida serving Delhi NCR.",
+    "Websites, e-commerce, CRM systems, mobile apps, branding and SEO. Fixed-price projects scoped before work starts, built and delivered by a senior-led team.",
 };
 
 export default function ServicePage() {

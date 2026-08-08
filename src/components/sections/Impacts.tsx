@@ -46,7 +46,14 @@ export default function Impacts() {
           if (!numEl) return;
           const value = parseFloat(numEl.dataset.value ?? "0");
           const decimals = parseInt(numEl.dataset.decimals ?? "0", 10);
+          // The element ships with the final figure, so the tween has to
+          // reset it to zero itself rather than counting up from markup.
+          // Reduced motion keeps the number exactly as rendered.
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            return;
+          }
           const counter = { current: 0 };
+          numEl.textContent = (0).toFixed(decimals);
           gsap.to(counter, {
             current: value,
             duration: 1.6,
@@ -100,12 +107,15 @@ export default function Impacts() {
                 aria-hidden="true"
               />
               <div className="text-[clamp(48px,6vw,88px)] font-extrabold tracking-tight tabular-nums leading-[0.9]">
+                {/* Ships the real figure, not 0: without JS the section
+                    otherwise claims zero of everything, and the count-up
+                    tween starts from 0 on trigger anyway. */}
                 <span
                   className="impact-number"
                   data-value={stat.value}
                   data-decimals={decimals}
                 >
-                  {(0).toFixed(decimals)}
+                  {stat.value.toFixed(decimals)}
                 </span>
                 {stat.suffix}
               </div>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { gsap, ScrollTrigger } from "@/lib/anim";
 import RollingText from "@/components/ui/RollingText";
+import { BOOKING_URL } from "@/lib/site";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -229,7 +230,7 @@ export default function Nav() {
         <Link href="/" onClick={() => setOpen(false)}>
           <span className="flex items-center">
             <img
-              src={onDark ? "/assets/webify-logo-white.png" : "/assets/webify-logo-black.png"}
+              src={onDark ? "/assets/brand/webify-logo-white-480.webp" : "/assets/brand/webify-logo-black-480.webp"}
               alt="Webify"
               className="h-10 w-auto object-contain md:h-11"
             />
@@ -306,7 +307,7 @@ export default function Nav() {
       >
         {/* Brand watermark behind the menu links */}
         <img
-          src="/assets/webify-icon-dark.png"
+          src="/assets/brand/webify-icon-dark-384.webp"
           alt=""
           aria-hidden="true"
           className="pointer-events-none absolute -bottom-[10%] -right-[6%] h-[70vh] w-auto opacity-[0.05]"
@@ -341,6 +342,20 @@ export default function Nav() {
               className="-my-2 inline-flex min-h-11 items-center text-[15px] font-medium text-white"
             >
               contact@webify.org.in
+            </a>
+          </div>
+          <div>
+            <p className="font-mono text-[12px] uppercase tracking-widest text-gray-soft">
+              TALK
+            </p>
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              tabIndex={open ? 0 : -1}
+              className="-my-2 inline-flex min-h-11 items-center text-[15px] font-medium text-white"
+            >
+              Book a 20 minute call
             </a>
           </div>
           <div>

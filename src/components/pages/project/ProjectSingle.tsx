@@ -11,6 +11,7 @@ import {
 } from "@/lib/pages/project";
 import { getService } from "@/lib/pages/service";
 import PillButton from "@/components/ui/PillButton";
+import { BOOKING_URL } from "@/lib/site";
 import LazyVideo from "@/components/ui/LazyVideo";
 import RollingText from "@/components/ui/RollingText";
 
@@ -23,6 +24,10 @@ export default function ProjectSingle({
   next: ProjectDetail;
 }) {
   const sectionRef = useRef<HTMLElement>(null);
+
+  /* Carry the page the visitor was reading into the form, so they do not
+     have to retype what they just spent five minutes on. */
+  const contactHref = `/contact?topic=${encodeURIComponent(`Something like ${project.name}`)}`;
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -253,9 +258,14 @@ export default function ProjectSingle({
             Want a build like this for your own product? Fixed quote within 3
             working days.
           </p>
-          <PillButton tone="blue" href="/contact">
-            Start a Project
-          </PillButton>
+          <div className="flex flex-wrap justify-center gap-3">
+            <PillButton tone="blue" href={BOOKING_URL}>
+              Book a 20 Minute Call
+            </PillButton>
+            <PillButton tone="dark" href={contactHref}>
+              Start a Project
+            </PillButton>
+          </div>
         </div>
 
         {/* Next project */}

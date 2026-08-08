@@ -21,18 +21,24 @@ const interDisplay = Inter({
   fallback: ["system-ui", "arial"],
 });
 
+/* Both weights are genuinely used, but only for eyebrows and micro-labels
+   that are never the LCP element, so they do not belong on the critical
+   path. display: swap keeps them rendering in the fallback until they land. */
 const dmMono = DM_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-dm-mono",
   display: "swap",
+  preload: false,
 });
 
-/* 55-char title, 158-char description: target keyword + city, per the
-   local-SEO goal in AGENTS.md. City names only; no country label in copy. */
-const defaultTitle = "Webify | Web Design & Development Company in Delhi NCR";
+/* The buyer is a founder or small team hiring a remote partner, usually on a
+   US clock, so the title sells the service rather than a city: a location
+   qualifier here narrows the page for every visitor who did not arrive from
+   a local search. Location targeting belongs on pages built for it. */
+const defaultTitle = "Webify | Web Design and Development Company for Startups";
 const description =
-  "Senior-led web design and development company in Greater Noida, building websites, SaaS products, and web apps for Delhi NCR businesses and clients worldwide.";
+  "Senior-led design and engineering for websites, SaaS products and web apps. Fixed-price projects, remote delivery, and evening IST hours held for US calls.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -42,13 +48,16 @@ export const metadata: Metadata = {
   },
   description,
   alternates: { canonical: "./" },
+  /* Deliberately no title or description here. Next inherits each route's own
+     metadata into its Open Graph card when this object omits them; setting
+     them once at the root made all 24 nested pages share the homepage card,
+     which matters because most visitors arrive through a pasted link. `url`
+     stays out for the same reason: a static value would pin every card to
+     the homepage. */
   openGraph: {
     siteName: "Webify",
     type: "website",
     locale: "en_US",
-    url: "/",
-    title: defaultTitle,
-    description,
   },
   twitter: { card: "summary_large_image" },
 };

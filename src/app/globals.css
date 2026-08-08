@@ -8,11 +8,16 @@
   --color-primary-lite: #87adff;
   --color-fill-dark: #252525;
   --color-fill-light: #f3f3f3;
-  --color-gray-mid: #7d7d7d;
+  /* #7d7d7d failed 4.5:1 at all 25 call sites (4.12:1 on white, 3.71:1 on
+     the light fill). #595959 clears AA on both grounds at 7.00:1 / 6.31:1. */
+  --color-gray-mid: #595959;
   --color-gray-soft: #999999;
   --color-gray-deep: #6a6a6a;
   --color-line-dark: #323232;
   --color-border-soft: #ececec;
+  /* Form control borders: the soft token is decorative and reads at 1.18:1,
+     below the 3:1 UI-component minimum a field outline has to meet. */
+  --color-field: #767676;
   --color-lime: #f3f696;
   --color-fill-light-2: #e9e9e9;
   --color-fill-dark-2: #333333;
@@ -27,6 +32,30 @@
 
 html {
   scroll-behavior: initial;
+}
+
+/* The intro veil is server-rendered and opaque, so it must never need
+   JavaScript to disappear. This clears it on a wall clock: a slow bundle, a
+   blocked script or a hydration error can no longer leave a first-time
+   visitor staring at a black rectangle. Preloader.tsx cancels this animation
+   when it hydrates in time and drives the same move through GSAP instead.
+   Total duration must stay in sync with VEIL_FALLBACK_MS there. */
+@keyframes wf-veil-lift {
+  to {
+    transform: translateY(-100%);
+    visibility: hidden;
+  }
+}
+
+[data-preloader] {
+  animation: wf-veil-lift 0.5s 0.9s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-preloader] {
+    animation-duration: 1ms;
+    animation-delay: 1ms;
+  }
 }
 
 body {

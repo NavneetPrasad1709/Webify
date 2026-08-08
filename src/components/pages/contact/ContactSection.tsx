@@ -1,10 +1,11 @@
 "use client";
 
-import { FormEvent, useLayoutEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { track } from "@vercel/analytics";
 import { gsap } from "@/lib/anim";
 import PillButton from "@/components/ui/PillButton";
+import { BOOKING_URL } from "@/lib/site";
 import {
   contactChannels,
   formFields,
@@ -59,8 +60,11 @@ function ChannelIcon({ icon }: { icon: "calendar" | "email" | "location" }) {
 const WEB3FORMS_KEY =
   process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "0ee32ca7-b451-4557-9a79-09149da9db82";
 
+/* Border is #767676 rather than the near-invisible soft token: at 1.18:1 the
+   field was not perceivable as a control at all. The UA outline is replaced
+   rather than removed, so keyboard users keep a visible focus target. */
 const fieldClasses =
-  "w-full min-h-[54px] rounded-lg border border-border-soft bg-fill-light px-4 py-3.5 text-base text-ink placeholder:text-gray-deep outline-none transition-colors duration-300 focus:border-primary";
+  "w-full min-h-[54px] rounded-lg border border-field bg-fill-light px-4 py-3.5 text-base text-ink placeholder:text-gray-deep transition-colors duration-300 hover:border-ink focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 
 export default function ContactSection({
   defaultTopic = "",
@@ -69,9 +73,16 @@ export default function ContactSection({
   defaultTopic?: string;
 }) {
   const sectionRef = useRef<HTMLElement>(null);
+  const successRef = useRef<HTMLParagraphElement>(null);
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(false);
+
+  // The form unmounts on success, so focus would otherwise fall back to
+  // <body> and a keyboard user would lose their place entirely.
+  useEffect(() => {
+    if (submitted) successRef.current?.focus();
+  }, [submitted]);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -158,6 +169,11 @@ export default function ContactSection({
       return;
     }
 
+    // Declared out here so the catch block can report how the send died.
+    // 0 means the request never reached the server at all.
+    let status = 0;
+    let usedFallback = false;
+
     try {
       let ok = false;
 
@@ -169,14 +185,21 @@ export default function ContactSection({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
+        status = res.status;
         ok = res.ok;
       } catch {
         ok = false;
       }
 
+      // A 4xx is the server rejecting this submission on purpose: a honeypot
+      // hit, a validation failure, or the rate limiter. Retrying it through
+      // Web3Forms would let the browser overrule every protection the route
+      // exists to apply, so only transport failures and 5xx fall through.
+      const serverRejected = status >= 400 && status < 500;
+
       // 2) Fallback: post to Web3Forms from the browser, so a missing or
       //    broken server key never silently costs a lead.
-      if (!ok && WEB3FORMS_KEY) {
+      if (!ok && !serverRejected && WEB3FORMS_KEY) {
         // Web3Forms accepts submissions from the browser only (its free plan
         // rejects server-side calls), and its access key is public by design.
         // JSON is required: the endpoint rejects multipart form data.
@@ -188,7 +211,9 @@ export default function ContactSection({
           },
           body: JSON.stringify({
             access_key: WEB3FORMS_KEY,
-            subject: `New project inquiry from ${data["first-name"]} (${data["company-name"]})`,
+            subject: data["company-name"]
+              ? `New project inquiry from ${data["first-name"]} (${data["company-name"]})`
+              : `New project inquiry from ${data["first-name"]}`,
             from_name: "Webify Website",
             // Web3Forms uses this as the reply-to, so replies reach the lead.
             email: data.email,
@@ -201,13 +226,25 @@ export default function ContactSection({
           }),
         });
         ok = res.ok && (await res.json()).success === true;
+        if (ok) usedFallback = true;
       }
 
       if (!ok) throw new Error("delivery failed");
       setSubmitted(true);
-      track("lead_submitted");
+      // Properties matter more than the event: without them there is no way
+      // to tell which page, service or delivery path produced a lead.
+      track("lead_submitted", {
+        topic: data["project-type"] || "none",
+        timeline: data.timeline || "none",
+        via: usedFallback ? "web3forms" : "resend",
+      });
     } catch {
       setError(true);
+      // A lead that fails both paths is otherwise invisible: the visitor sees
+      // an error and the studio never learns anyone tried.
+      track("lead_failed", {
+        stage: status === 0 ? "network" : String(status),
+      });
     } finally {
       setSending(false);
     }
@@ -315,12 +352,26 @@ export default function ContactSection({
 
           <div className="flex w-full items-center lg:max-w-[818px]">
             <div className="w-full">
+              {/* Rendered unconditionally so the live region exists before its
+                  content does. A region created in the same paint as its text
+                  is frequently never announced. */}
+              <p role="status" aria-live="polite" className="sr-only">
+                {submitted ? successMessage : ""}
+              </p>
               {submitted ? (
-                <div
-                  role="status"
-                  className="rounded-lg bg-fill-light p-8 text-center text-base font-medium text-ink"
-                >
-                  {successMessage}
+                <div className="flex flex-col items-center gap-6 rounded-lg bg-fill-light p-8 text-center">
+                  <p
+                    ref={successRef}
+                    tabIndex={-1}
+                    className="text-base font-medium text-ink outline-none"
+                  >
+                    {successMessage}
+                  </p>
+                  {/* The visitor has already said yes once. This is the
+                      cheapest moment on the whole site to ask for the call. */}
+                  <PillButton tone="blue" href={BOOKING_URL}>
+                    Skip the Wait, Book a Call
+                  </PillButton>
                 </div>
               ) : (
                 <form
@@ -354,6 +405,7 @@ export default function ContactSection({
                         maxLength={256}
                         placeholder={f.placeholder}
                         required={f.required}
+                        autoComplete={f.autoComplete}
                         defaultValue={f.id === "project-type" ? defaultTopic : undefined}
                         className={fieldClasses}
                       />
@@ -404,13 +456,25 @@ export default function ContactSection({
                       {sending ? "Sending..." : "Send Message"}
                     </button>
                     {error ? (
+                      /* Deliberately not "email us instead": if this failed,
+                         the mail path may be what failed. The calendar is a
+                         route that does not depend on our inbox at all. */
                       <p role="alert" className="mt-3 text-center text-sm font-semibold text-ink">
-                        Something went wrong. Email us directly at contact@webify.org.in.
+                        Something went wrong on our side.{" "}
+                        <a
+                          href={BOOKING_URL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-primary underline underline-offset-2"
+                        >
+                          Book a call instead
+                        </a>{" "}
+                        and we will pick it up there.
                       </p>
                     ) : (
                       <p className="mt-3 text-center text-sm text-black font-medium">
-                        We reply within 24 hours. Your details stay private and
-                        are never shared:{" "}
+                        We reply within 24 hours. Your details are used only to
+                        reply, never sold or shared for marketing:{" "}
                         <Link
                           href="/privacy"
                           className="underline underline-offset-2 transition-colors duration-300 hover:text-primary"

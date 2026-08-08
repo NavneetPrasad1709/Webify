@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import ContactSection from "@/components/pages/contact/ContactSection";
 
 export const metadata: Metadata = {
-  title: "Contact a Web Development Company in Delhi NCR",
+  title: "Contact Webify or Book a 20 Minute Call",
   description:
-    "Write to Webify, a web development company in Greater Noida serving Delhi NCR. You talk directly to the people who design and build. Replies within 24 hours.",
+    "Tell us what you are building, or take a short call instead. You talk to the people who design and build it, and we reply within 24 hours, wherever you are.",
 };
 
 export default async function ContactPage({

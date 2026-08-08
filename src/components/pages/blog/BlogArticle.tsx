@@ -74,6 +74,12 @@ export default function BlogArticle({ post, next }: BlogArticleProps) {
     ? getService(post.relatedService)
     : undefined;
 
+  /* Carry the page the visitor was reading into the form, so they do not
+     have to retype what they just spent five minutes on. */
+  const contactHref = relatedService
+    ? `/contact?topic=${encodeURIComponent(relatedService.title)}`
+    : "/contact";
+
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       // Header entrance
@@ -162,7 +168,7 @@ export default function BlogArticle({ post, next }: BlogArticleProps) {
             Building something this applies to? A senior replies within 24
             hours with an honest scope and fixed quote.
           </p>
-          <PillButton tone="blue" href="/contact">
+          <PillButton tone="blue" href={contactHref}>
             Start a Project
           </PillButton>
           {relatedService && (

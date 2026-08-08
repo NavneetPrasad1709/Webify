@@ -424,3 +424,94 @@ Owned research (annual "State of fixed-price web engineering" style report: Capg
 ## Final Goal
 
 Webify does not become TCS by imitating TCS. It becomes a world-class technology brand by being everything the enterprise six structurally cannot be: fast (publish the scores), transparent (pricing on the page), human (the founder is the trust element), honest (the discipline is already in the codebase; finish enforcing it), and craft-proven (the site itself, torn down in public, is the first case study). Fix the funnel this week, fix the contradictions this month, then let every published project, teardown, and badge compound. The benchmark to beat next year is not Accenture's homepage; it is Instrument's, and this codebase is closer to that than its current 44/100 suggests.
+
+---
+
+## 9 August 2026: positioning pivot + audit remediation
+
+**Positioning changed.** The site no longer targets Delhi-NCR local search as its
+spine. Almost nobody arrives here from a search engine: they arrive from an
+Upwork or Contra profile, a LinkedIn message, a cold email or a proposal link,
+usually on a US clock. A new domain needs 12 to 18 months to rank for a
+competitive term like "web design company", so organic search cannot be the
+mechanism that delivers a first client. See AGENTS.md for the rewritten target
+audience and the landing-from-elsewhere checklist that replaced the local-SEO
+section. Local remains in scope as secondary near-term revenue, and the
+LocalBusiness schema, NAP and address stay exactly where they were.
+
+### Shipped this pass
+
+**Delivery (found by live testing, not by the audit)**
+- [x] Every address on webify.org.in hard bounces (550 5.1.1) and Resend
+      returns 200 before dropping the message, so leads were silently lost.
+      `LEAD_INBOX` now separates the published address from the delivering one.
+- [x] `RESEND_API_KEY` set in Vercel, verified `delivered` end to end.
+
+**Conversion**
+- [x] Cal.com booking surfaced in the footer, the nav overlay, service and
+      project pages, the contact routing cards and the form success state.
+- [x] Company Name made optional client-side and server-side.
+- [x] Service, project and blog CTAs carry `?topic=` into the form.
+- [x] `lead_submitted` gained topic/timeline/via properties; `lead_failed`
+      added, so a lead that fails both delivery paths is no longer invisible.
+- [x] Web3Forms fallback gated on transport and 5xx only, so a 4xx rejection
+      is no longer overruled by the browser.
+- [x] Error state points at the calendar rather than an inbox that may be
+      exactly what failed.
+
+**Weight**
+- [x] 943 kB of collapsed-accordion thumbnails removed from head preloads.
+- [x] Brand PNGs re-exported as WebP: 275 kB down to 44 kB.
+- [x] Preloader veil now clears on a CSS wall clock with no JS, runs at half
+      its old duration, and is skipped entirely for referred and campaign
+      traffic, which is most of it.
+- [x] DM Mono off the critical path.
+- [x] ServicesAccordion video routed through LazyVideo.
+
+**Accessibility**
+- [x] `--color-gray-mid` #7d7d7d to #595959: fixes 25 failing call sites.
+- [x] `inert` on duplicate marquee tracks (WCAG 4.1.2, Level A).
+- [x] Hero's two infinite loops honour prefers-reduced-motion (SC 2.2.2).
+- [x] ServicesBand and /about value pill contrast raised above AA.
+- [x] Form: visible focus ring, perceivable borders, autocomplete tokens,
+      persistent live region, focus moved to the success message.
+- [x] Accessible names on project card media links.
+- [x] Homepage stat figures ship their real values instead of `0`.
+
+**SEO**
+- [x] Per-route Open Graph cards; the root object no longer overrides them.
+- [x] Titles and descriptions rewritten service-first for the global buyer.
+- [x] `lastModified` on every sitemap entry.
+- [x] BreadcrumbList on service, project and blog routes; CreativeWork on
+      project routes.
+- [x] All 12 blog descriptions rewritten to 140-160 chars; posts bylined to a
+      Person with `dateModified` and `mainEntityOfPage`.
+
+**Truth and hygiene**
+- [x] Privacy policy names Vercel, Resend, Web3Forms and Cal.com as
+      processors, and the false "and nowhere else" claim is gone.
+- [x] "Live Build / Self-initiated" qualifier on the homepage and index chips.
+- [x] Track-record claims with zero clients rewritten.
+- [x] `error.tsx` and `global-error.tsx` added.
+- [x] `/api/contact` rejects non-JSON and oversized bodies before parsing.
+- [x] Rate-limiter map pruned; `sessionStorage` access guarded.
+
+### Still open after this pass
+- [ ] Email hosting for webify.org.in, then remove `contact@` from Resend's
+      suppression list and point `LEAD_INBOX` back at it. **Owner action.**
+- [ ] Google Business Profile. **Owner action.**
+- [ ] LinkedIn and GitHub profiles, then `sameAs` on the Organization node.
+      **Owner action.**
+- [ ] Cal.com: 20 minute duration, display name, clean handle. **Owner action.**
+- [ ] The team claim: eleven surfaces say team, one human is named, and three
+      stock photos sit beside the claim. Needs an owner decision, not a
+      unilateral rewrite.
+- [ ] JS diet. Still ~938 kB raw on every route. Nav and Preloader both import
+      GSAP directly and both mount in the root layout, so dynamic-importing
+      SmoothScroll alone achieves nothing; splitting has to start there.
+- [ ] Service page videos: 6.07 MB on /service, 3x to 7x encoder waste.
+- [ ] hero.mp4 mobile rendition.
+- [ ] Distinct FAQ set for /service with FAQPage schema.
+- [ ] Per-service overview copy to replace the shared 95-word boilerplate.
+- [ ] One-field email capture for visitors not ready for the form.
+- [ ] `npm i next@16.3.0` for the outstanding advisories.

@@ -211,12 +211,12 @@ export const valuesSection = {
       {
         name: "BOLDNESS",
         number: "15",
-        text: "Boldness guides our work, helping us innovate, experiment, and exceed client expectations consistently.",
+        text: "Boldness guides our work: we innovate, experiment, and push past the first answer that would have been good enough.",
       },
       {
         name: "FOCUS",
         number: "16",
-        text: "By maintaining focus, we produce high-quality work that achieves objectives and exceeds expectations.",
+        text: "By maintaining focus, we produce work that hits the objective it was scoped against, not the one that was easier to reach.",
       },
     ],
   ] as ValueItem[][],
