@@ -353,45 +353,52 @@ export default function LeadPopup() {
             track("lead_popup_open", { path: pathname });
           }
         }}
-        aria-label={open ? "Close the project form" : "Start a project"}
-        /* The brand mark in a cobalt disc, the same object as the back-to-top
-           control. Cobalt does vanish against the cobalt band, so the white
-           ring is not decoration: it is what keeps the button findable there.
-           The inset highlight and the shadow that deepens on lift are what
-           separate it from a flat circle. */
-        className="group pointer-events-auto relative flex h-[60px] w-[60px] items-center justify-center rounded-full bg-primary ring-2 ring-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_14px_34px_rgba(0,81,255,0.42)] transition-[transform,box-shadow,background-color] duration-300 ease-out hover:-translate-y-0.5 hover:bg-primary-deep hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_20px_44px_rgba(0,81,255,0.55)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+        /* The mark alone said nothing: a brand icon in a circle reads as a
+           watermark or a chat widget, not as a way to start a project. The
+           disc keeps its identity as the left half of a pill, and the label
+           does the explaining. Cobalt genuinely vanishes against the cobalt
+           band, so the white ring is not decoration: it is what keeps this
+           findable there, while reading as a rim on black and an invisible
+           halo on white. */
+        className="group pointer-events-auto relative flex h-14 items-center gap-3 rounded-full bg-primary py-2 pl-2 pr-6 ring-2 ring-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_14px_34px_rgba(0,81,255,0.42)] transition-[transform,box-shadow,background-color] duration-300 ease-out hover:-translate-y-0.5 hover:bg-primary-deep hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_20px_44px_rgba(0,81,255,0.55)] active:translate-y-0 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
       >
-        {open ? (
-          <svg viewBox="0 0 20 20" className="h-5 w-5 text-white" aria-hidden="true">
-            <path
-              d="M4.5 4.5l11 11M15.5 4.5l-11 11"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg>
-        ) : (
-          <>
+        <span className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white">
+          {open ? (
+            <svg viewBox="0 0 20 20" className="h-4 w-4 text-ink" aria-hidden="true">
+              <path
+                d="M4.5 4.5l11 11M15.5 4.5l-11 11"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+          ) : (
             <img
-              src="/assets/brand/webify-icon-dark-384.webp"
+              src="/assets/brand/webify-icon-light-384.webp"
               alt=""
               aria-hidden="true"
               width={384}
               height={323}
-              className="h-6 w-auto"
+              className="h-5 w-auto"
             />
-            {/* Lime availability marker: the studio is open to work, which is
-                the actual reason to press this. Sized as a detail, not a
-                notification badge demanding to be cleared. */}
+          )}
+          {/* Lime availability marker: the studio is open to work, which is
+              the actual reason to press this. Ringed in the pill's own colour
+              so it sits on the disc rather than floating over it, and sized
+              as a detail rather than a badge asking to be cleared. */}
+          {!open ? (
             <span
               data-lead-pulse
               aria-hidden="true"
-              className="absolute right-0.5 top-0.5 flex h-2.5 w-2.5"
+              className="absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5"
             >
               <span className="absolute inset-0 rounded-full bg-lime ring-2 ring-primary group-hover:ring-primary-deep" />
             </span>
-          </>
-        )}
+          ) : null}
+        </span>
+        <span className="whitespace-nowrap text-xs font-bold uppercase tracking-wider text-white">
+          {open ? "Close" : "Start a Project"}
+        </span>
       </button>
       </div>
     </div>
