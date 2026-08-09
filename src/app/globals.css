@@ -93,6 +93,31 @@ html {
   animation: wf-intro-word 0.48s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* The bar under the live row of the mobile hero's build list. Its duration is
+   the headline rotator's interval in Hero.tsx, so the two read as one clock:
+   when the bar reaches the end, the headline turns over. Keep them in sync. */
+@keyframes wf-hero-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+[data-hero-progress] {
+  animation: wf-hero-progress 3.4s linear forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The rotator does not run at all under reduced motion, so a timer would
+     be counting down to nothing. Show the row as simply current. */
+  [data-hero-progress] {
+    animation: none;
+    transform: scaleX(1);
+  }
+}
+
 /* Scroll reveal, driven by src/lib/reveal.ts. The safety animation matters:
    these elements are server-rendered, so if the hydration bundle never
    arrives the content would otherwise stay invisible forever. */

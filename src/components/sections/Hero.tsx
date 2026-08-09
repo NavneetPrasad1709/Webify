@@ -243,35 +243,55 @@ export default function Hero() {
           live one turns the rotation from something you wait through into
           something you can read at a glance. */}
       <div className="relative z-10 mt-auto px-5 pb-8 pt-12 lg:hidden">
-        <p className="eyebrow text-lime">What we build</p>
-        <ul className="mt-4 border-t border-white/15">
+        <div className="flex items-baseline justify-between gap-4">
+          <p className="eyebrow text-lime">What we build</p>
+          <p
+            aria-hidden="true"
+            className="font-mono text-[11px] tabular-nums tracking-widest text-white"
+          >
+            {String(word + 1).padStart(2, "0")}
+            <span className="text-white/55">
+              {" / "}
+              {String(ROTATING.length).padStart(2, "0")}
+            </span>
+          </p>
+        </div>
+
+        <ul className="mt-5">
           {ROTATING.map((item, i) => {
             const live = i === word;
             return (
-              <li
-                key={item}
-                className="flex items-center gap-3 border-b border-white/15 py-2.5"
-              >
+              <li key={item} className="relative">
+                {/* A rule down the left rather than a bullet: it gives the
+                    stack a spine, and lighting one segment reads as position
+                    in a sequence instead of as decoration. */}
                 <span
                   aria-hidden="true"
-                  className={`h-1.5 w-1.5 shrink-0 rounded-full transition-colors duration-500 ${
-                    live ? "bg-lime" : "bg-white/25"
+                  className={`absolute inset-y-0 left-0 w-[2px] transition-colors duration-500 ${
+                    live ? "bg-lime" : "bg-white/15"
                   }`}
                 />
                 <span
-                  className={`font-mono text-[11px] tabular-nums tracking-widest transition-colors duration-500 ${
-                    live ? "text-white" : "text-white/70"
-                  }`}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span
-                  className={`text-[15px] font-semibold tracking-tight transition-colors duration-500 ${
-                    live ? "text-white" : "text-white/70"
+                  className={`block py-3 pl-4 text-[17px] font-semibold tracking-tight transition-[color,transform,letter-spacing] duration-500 ease-out ${
+                    live
+                      ? "translate-x-1.5 text-white"
+                      : "translate-x-0 text-white/70"
                   }`}
                 >
                   {item}
                 </span>
+                {/* The bar under the live row runs down the same clock as the
+                    headline rotation, so the next item is visibly on its way
+                    rather than arriving out of nowhere. Keyed on `word` so
+                    React remounts it and the animation restarts each turn. */}
+                {live ? (
+                  <span
+                    key={word}
+                    data-hero-progress
+                    aria-hidden="true"
+                    className="absolute bottom-0 left-0 h-px w-full origin-left bg-lime/70"
+                  />
+                ) : null}
               </li>
             );
           })}
