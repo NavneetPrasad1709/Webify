@@ -360,11 +360,11 @@ export default function LeadPopup() {
            band, so the white ring is not decoration: it is what keeps this
            findable there, while reading as a rim on black and an invisible
            halo on white. */
-        className="group pointer-events-auto relative flex h-14 items-center gap-3 rounded-full bg-primary py-2 pl-2 pr-6 ring-2 ring-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_14px_34px_rgba(0,81,255,0.42)] transition-[transform,box-shadow,background-color] duration-300 ease-out hover:-translate-y-0.5 hover:bg-primary-deep hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_20px_44px_rgba(0,81,255,0.55)] active:translate-y-0 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+        className="group pointer-events-auto relative flex h-12 items-center gap-2 rounded-full bg-primary py-1.5 pl-1.5 pr-4 ring-2 ring-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_12px_28px_rgba(0,81,255,0.42)] transition-[transform,box-shadow,background-color] duration-300 ease-out hover:-translate-y-0.5 hover:bg-primary-deep hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_18px_38px_rgba(0,81,255,0.55)] active:translate-y-0 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
       >
-        <span className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white">
+        <span className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white">
           {open ? (
-            <svg viewBox="0 0 20 20" className="h-4 w-4 text-ink" aria-hidden="true">
+            <svg viewBox="0 0 20 20" className="h-3.5 w-3.5 text-ink" aria-hidden="true">
               <path
                 d="M4.5 4.5l11 11M15.5 4.5l-11 11"
                 stroke="currentColor"
@@ -379,7 +379,7 @@ export default function LeadPopup() {
               aria-hidden="true"
               width={384}
               height={323}
-              className="h-5 w-auto"
+              className="h-4 w-auto"
             />
           )}
           {/* Lime availability marker: the studio is open to work, which is
@@ -390,13 +390,15 @@ export default function LeadPopup() {
             <span
               data-lead-pulse
               aria-hidden="true"
-              className="absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5"
+              className="absolute -right-0.5 -top-0.5 flex h-2 w-2"
             >
               <span className="absolute inset-0 rounded-full bg-lime ring-2 ring-primary group-hover:ring-primary-deep" />
             </span>
           ) : null}
         </span>
-        <span className="whitespace-nowrap text-xs font-bold uppercase tracking-wider text-white">
+        {/* Sentence case, not tracked uppercase: same legibility in roughly
+            30px less width, and it matches every other CTA on the site. */}
+        <span className="whitespace-nowrap text-[13px] font-semibold text-white">
           {open ? "Close" : "Start a Project"}
         </span>
       </button>
