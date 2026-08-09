@@ -129,7 +129,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-svh overflow-hidden bg-ink"
+      className="relative flex min-h-svh flex-col overflow-hidden bg-ink"
     >
       {/* Background: hero video + vignette + top gradient. The poster is the
           LCP image, so it is preloaded; the 1.9 MB video only starts fetching
@@ -141,8 +141,13 @@ export default function Hero() {
           className="h-full w-full object-cover"
         />
       </div>
+      {/* The vignette is an ellipse, so on a tall narrow viewport it reaches
+          full black barely past the headline and crushes the whole lower half
+          of the frame. That is what read as blank space on a phone: not an
+          empty layout, an invisible video. Mobile gets a gentler falloff that
+          keeps the footage legible; desktop keeps the original. */}
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,#0d0d0d_100%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,rgba(13,13,13,0.85)_100%)] lg:bg-[radial-gradient(ellipse_at_center,transparent_40%,#0d0d0d_100%)]"
         aria-hidden="true"
       />
       <div
@@ -227,8 +232,54 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* Mobile only: the full build list, with the row the headline is
+          currently showing lit up.
+
+          The headline cycles through these five one at a time, which means a
+          phone visitor sees a fifth of what we do and has to wait sixteen
+          seconds for the rest. Desktop fills this area with the promise
+          ticker; mobile had nothing there at all, which is what made the
+          lower half read as dead space. Showing the whole list and marking the
+          live one turns the rotation from something you wait through into
+          something you can read at a glance. */}
+      <div className="relative z-10 mt-auto px-5 pb-8 pt-12 lg:hidden">
+        <p className="eyebrow text-lime">What we build</p>
+        <ul className="mt-4 border-t border-white/15">
+          {ROTATING.map((item, i) => {
+            const live = i === word;
+            return (
+              <li
+                key={item}
+                className="flex items-center gap-3 border-b border-white/15 py-2.5"
+              >
+                <span
+                  aria-hidden="true"
+                  className={`h-1.5 w-1.5 shrink-0 rounded-full transition-colors duration-500 ${
+                    live ? "bg-lime" : "bg-white/25"
+                  }`}
+                />
+                <span
+                  className={`font-mono text-[11px] tabular-nums tracking-widest transition-colors duration-500 ${
+                    live ? "text-white" : "text-white/70"
+                  }`}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span
+                  className={`text-[15px] font-semibold tracking-tight transition-colors duration-500 ${
+                    live ? "text-white" : "text-white/70"
+                  }`}
+                >
+                  {item}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+
       {/* Bottom-left: honest studio statement, line-mask reveal like the headline */}
-      <p className="absolute bottom-10 left-5 z-10 max-w-xs text-[13px] font-bold uppercase leading-snug text-white md:bottom-12 md:left-10">
+      <p className="relative z-10 mb-10 max-w-xs px-5 text-[13px] font-bold uppercase leading-snug text-white lg:absolute lg:bottom-12 lg:left-10 lg:mb-0 lg:px-0">
         <span className="block overflow-hidden">
           <span className="hero-line block">
             WEBIFY is a SENIOR-LED COMPANY
