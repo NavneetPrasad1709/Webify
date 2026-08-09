@@ -122,9 +122,13 @@ export default function LeadPopup() {
     };
 
     window.addEventListener("keydown", onKeyDown);
+    // Locking scroll through an attribute keeps Nav's own body.overflow write
+    // for the menu curtain from fighting this one.
+    document.documentElement.dataset.popupOpen = "true";
     const id = requestAnimationFrame(() => firstFieldRef.current?.focus());
     return () => {
       window.removeEventListener("keydown", onKeyDown);
+      document.documentElement.dataset.popupOpen = "false";
       cancelAnimationFrame(id);
     };
   }, [open, dismiss]);
@@ -151,14 +155,27 @@ export default function LeadPopup() {
     "w-full rounded-lg border border-white/20 bg-white/[0.06] px-3.5 py-3 text-[15px] text-white placeholder:text-white/45 transition-colors duration-200 hover:border-white/35 focus:border-primary-lite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-lite";
 
   return (
-    <div
-      data-lead-popup-root
-      className="pointer-events-none fixed inset-x-0 bottom-0 z-[90] flex flex-col items-end gap-3 p-4 md:p-6">
+    <div data-lead-popup-root>
+      {/* Blurs the page behind the panel, which turns a floating widget into
+          something the visitor has to answer. Clicking it dismisses, so the
+          interruption is never a trap. */}
+      <div
+        aria-hidden="true"
+        data-lead-backdrop
+        data-open={open}
+        onClick={() => {
+          dismiss();
+          triggerRef.current?.focus();
+        }}
+        className="fixed inset-0 z-[88] bg-ink/50"
+      />
+
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-[90] flex flex-col items-end gap-3 p-4 md:p-6">
       <div
         ref={panelRef}
         id="lead-popup"
         role="dialog"
-        aria-modal="false"
+        aria-modal={open}
         aria-label="Start a project"
         aria-hidden={!open}
         data-lead-popup
@@ -336,32 +353,36 @@ export default function LeadPopup() {
             track("lead_popup_open", { path: pathname });
           }
         }}
-        /* Lime, not cobalt: this button floats over black sections, white
-           sections and the cobalt band, and a cobalt pill disappears
-           entirely on the last of those. Lime is the one brand colour that
-           holds on all three. */
-        className="pointer-events-auto flex h-14 items-center gap-2.5 rounded-full bg-lime pl-5 pr-6 text-sm font-bold text-ink shadow-[0_12px_32px_rgba(0,0,0,0.35)] transition-[background-color,transform] duration-200 hover:bg-white active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime"
+        /* Lime, not cobalt: this floats over black sections, white sections
+           and the cobalt band, and a cobalt pill disappears entirely on the
+           last of those. Lime is the one brand colour that holds on all
+           three. The inset top highlight and the tightened uppercase label
+           are what separate a floating widget from a chat bubble. */
+        className="group pointer-events-auto flex h-[52px] items-center gap-3 rounded-full bg-lime pl-5 pr-6 font-mono text-[12px] font-medium uppercase tracking-[0.12em] text-ink ring-1 ring-ink/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_14px_36px_rgba(0,0,0,0.4)] transition-[transform,box-shadow,background-color] duration-300 ease-out hover:-translate-y-0.5 hover:bg-white hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_20px_46px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-lime"
       >
-        <svg viewBox="0 0 20 20" className="h-4 w-4 shrink-0" aria-hidden="true">
-          {open ? (
+        {open ? (
+          <svg viewBox="0 0 20 20" className="h-3.5 w-3.5 shrink-0" aria-hidden="true">
             <path
-              d="M4 4l12 12M16 4L4 16"
+              d="M4.5 4.5l11 11M15.5 4.5l-11 11"
               stroke="currentColor"
               strokeWidth="2"
               strokeLinecap="round"
             />
-          ) : (
-            <path
-              d="M2.5 4.5h15v11h-15zM2.5 5l7.5 5 7.5-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.7"
-              strokeLinejoin="round"
-            />
-          )}
-        </svg>
+          </svg>
+        ) : (
+          /* A live availability marker rather than an envelope: it says the
+             studio is open to work, which is the actual reason to click. */
+          <span
+            data-lead-pulse
+            className="relative flex h-2 w-2 shrink-0"
+            aria-hidden="true"
+          >
+            <span className="absolute inset-0 rounded-full bg-ink" />
+          </span>
+        )}
         {open ? "Close" : "Start a Project"}
       </button>
+      </div>
     </div>
   );
 }

@@ -224,16 +224,76 @@ html {
     visibility 0s;
 }
 
+/* Blurred backdrop.
+   The blur is declared once and never animated; only opacity moves. Two
+   reasons. A fully transparent element paints nothing, so its backdrop-filter
+   does not apply either, which means fading opacity fades the blur for free.
+   And animating the filter meant writing blur(0px), which the CSS minifier
+   rewrote to the invalid blur() and then dropped the whole declaration, so
+   the page darkened without ever blurring. No -webkit- prefix either: the
+   build adds prefixes from browserslist, and hand-writing it made the
+   minifier collapse both properties into the prefixed one alone. */
+[data-lead-backdrop] {
+  visibility: hidden;
+  opacity: 0;
+  backdrop-filter: blur(16px) saturate(0.9);
+  transition:
+    opacity 0.3s ease-out,
+    visibility 0s linear 0.3s;
+}
+
+[data-lead-backdrop][data-open="true"] {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity 0.36s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s;
+}
+
+/* The panel is a real interrupt once the page behind it is blurred, so the
+   page must not scroll underneath it. Driven by an attribute rather than an
+   inline style because Nav writes to body.overflow for its own curtain and
+   the two would overwrite each other. */
+html[data-popup-open="true"] body {
+  overflow: hidden;
+}
+
 /* The menu curtain sits below the floating panel in the stacking order, so
    the panel steps aside rather than hovering on top of an open menu. */
 [data-menu-open="true"] [data-lead-popup-root] {
   display: none;
 }
 
+/* Slow breath on the availability dot. Not a notification ping: it should
+   read as a light left on, not as an alert demanding attention. */
+@keyframes wf-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.72);
+    opacity: 0.5;
+  }
+}
+
+[data-lead-pulse] > span {
+  animation: wf-pulse 2.4s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-lead-popup] {
     transition-duration: 1ms;
     transform: none;
+  }
+
+  [data-lead-backdrop] {
+    transition-duration: 1ms;
+  }
+
+  [data-lead-pulse] > span {
+    animation: none;
   }
 }
 
