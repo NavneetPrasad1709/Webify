@@ -50,14 +50,20 @@ export default function Nav() {
   // Initial guess (SSR-safe): homepage opens on a dark hero. After mount,
   // the scroll sampler below reads the actual background behind the logo.
   const [darkBg, setDarkBg] = useState(pathname === "/");
-  const onDark = open || darkBg;
   const navRef = useRef<HTMLElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const [barHidden, setBarHidden] = useState(false);
+  // Off the top the bar wears its own dark glass, so it separates from
+  // whatever section it is passing over instead of dissolving into it.
+  const [scrolled, setScrolled] = useState(false);
   const openRef = useRef(false);
   const hasOpenedRef = useRef(false);
   const hiddenRef = useRef(false);
+  const scrolledRef = useRef(false);
+  // On its own ground the logo is always the white lockup, whatever the page
+  // behind it is doing.
+  const onDark = open || scrolled || darkBg;
 
   // Sample the page background under the logo so the logo always contrasts -
   // works across every section of every page, no per-section markers needed.
@@ -109,6 +115,13 @@ export default function Nav() {
       const y = window.scrollY;
       const goingDown = y > lastY;
       lastY = y;
+
+      const isScrolled = y > 24;
+      if (isScrolled !== scrolledRef.current) {
+        scrolledRef.current = isScrolled;
+        setScrolled(isScrolled);
+      }
+
       if (openRef.current) return;
       const shouldHide = goingDown && y > 120;
       if (shouldHide === hiddenRef.current) return;
@@ -120,6 +133,8 @@ export default function Nav() {
       if (!raf) raf = requestAnimationFrame(evaluate);
     };
 
+    // A reload part-way down the page starts scrolled; the bar has to know.
+    evaluate();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
@@ -192,6 +207,7 @@ export default function Nav() {
         ref={navRef}
         data-nav-bar
         data-hidden={barHidden && !open}
+        data-scrolled={scrolled && !open}
         className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-5 py-5 md:px-10"
       >
         <Link href="/" onClick={() => setOpen(false)}>
