@@ -79,7 +79,7 @@ export type FormField = {
 export const formFields: FormField[] = [
   {
     id: "first-name",
-    label: "First Name",
+    label: "First name",
     placeholder: "e.g. James",
     type: "text",
     required: true,
@@ -94,21 +94,23 @@ export const formFields: FormField[] = [
     autoComplete: "organization",
   },
   {
-    id: "project-type",
-    label: "What do you need?",
-    placeholder: "e.g. New website, redesign, app",
-    type: "text",
-    required: false,
-    autoComplete: "off",
-  },
-  {
     id: "email",
-    label: "Email Address",
+    label: "Email address",
     placeholder: "hello@example.com",
     type: "email",
     required: true,
     autoComplete: "email",
     full: true,
+  },
+  /* Sits beside the timeline select, so the two optional qualifiers share a
+     row instead of each leaving half the grid empty. */
+  {
+    id: "project-type",
+    label: "What do you need? (optional)",
+    placeholder: "e.g. New website, redesign, app",
+    type: "text",
+    required: false,
+    autoComplete: "off",
   },
 ];
 
@@ -122,8 +124,8 @@ export const messageField = {
    Deliberately no budget select while public pricing is withheld. */
 export const timelineField = {
   id: "timeline",
-  label: "When do you want to launch?",
-  placeholder: "Select a timeline (optional)",
+  label: "Launch timing (optional)",
+  placeholder: "Select a timeline",
   options: [
     "As soon as possible",
     "In 1 to 2 months",

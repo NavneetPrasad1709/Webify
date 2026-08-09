@@ -51,11 +51,16 @@ function ChannelIcon({ icon }: { icon: "calendar" | "email" | "location" }) {
   );
 }
 
-/* Border is #767676 rather than the near-invisible soft token: at 1.18:1 the
-   field was not perceivable as a control at all. The UA outline is replaced
-   rather than removed, so keyboard users keep a visible focus target. */
+/* Fields sit on the dark panel below, in the same language as the floating
+   popup form: one visual idea for both places a lead can be typed. The UA
+   outline is replaced rather than removed, so keyboard users keep a visible
+   focus target, and the border clears the 3:1 minimum a control outline has
+   to meet where the old #ececec token read at 1.18:1. */
 const fieldClasses =
-  "w-full min-h-[54px] rounded-lg border border-field bg-fill-light px-4 py-3.5 text-base text-ink placeholder:text-gray-deep transition-colors duration-300 hover:border-ink focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
+  "w-full min-h-[54px] rounded-xl border border-white/20 bg-white/[0.06] px-4 py-3.5 text-base text-white placeholder:text-white/45 transition-colors duration-200 hover:border-white/35 focus:border-primary-lite focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-lite";
+
+const labelClasses =
+  "mb-2.5 block font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-white";
 
 export default function ContactSection({
   defaultTopic = "",
@@ -198,12 +203,27 @@ export default function ContactSection({
               <p role="status" aria-live="polite" className="sr-only">
                 {submitted ? successMessage : ""}
               </p>
-              {submitted ? (
-                <div className="flex flex-col items-center gap-6 rounded-lg bg-fill-light p-8 text-center">
+              {/* The fields used to float loose on white, which left them
+                  reading as scattered grey boxes beside a photo that did have
+                  a card. Giving the form its own ink panel makes it the
+                  heaviest object on the page, which is what it should be, and
+                  the two columns finally balance. */}
+              <div className="rounded-card bg-ink p-6 text-white sm:p-8 md:p-10">
+                <div className="mb-8 flex items-baseline justify-between gap-4 border-b border-white/15 pb-6">
+                  <p className="eyebrow text-lime">Project brief</p>
+                  <p className="font-mono text-[11px] uppercase tracking-widest text-white">
+                    2 minutes
+                  </p>
+                </div>
+                {submitted ? (
+                <div className="flex flex-col items-center gap-6 py-6 text-center">
+                  <span className="w-max rounded-full bg-lime px-3.5 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-ink">
+                    Message sent
+                  </span>
                   <p
                     ref={successRef}
                     tabIndex={-1}
-                    className="text-base font-medium text-ink outline-none"
+                    className="max-w-[34ch] text-lg font-semibold leading-snug text-white outline-none"
                   >
                     {successMessage}
                   </p>
@@ -215,7 +235,7 @@ export default function ContactSection({
                 </div>
               ) : (
                 <form
-                  className="contact-form grid w-full grid-cols-1 gap-x-4 gap-y-6 md:grid-cols-2 md:gap-y-[30px]"
+                  className="contact-form grid w-full grid-cols-1 gap-x-4 gap-y-5 md:grid-cols-2"
                   onSubmit={handleSubmit}
                 >
                   {/* Honeypot: invisible to humans, irresistible to bots */}
@@ -232,11 +252,8 @@ export default function ContactSection({
 
                   {formFields.map((f) => (
                     <div key={f.id} className={`field-wrap ${f.full ? "md:col-span-2" : ""}`}>
-                      <label htmlFor={f.id} className="mb-3 block font-semibold">
+                      <label htmlFor={f.id} className={labelClasses}>
                         {f.label}
-                        {f.required && (
-                          <span className="text-primary" aria-hidden="true"> *</span>
-                        )}
                       </label>
                       <input
                         id={f.id}
@@ -252,15 +269,18 @@ export default function ContactSection({
                     </div>
                   ))}
 
-                  <div className="field-wrap md:col-span-2">
-                    <label htmlFor={timelineField.id} className="mb-3 block font-semibold">
+                  <div className="field-wrap">
+                    <label htmlFor={timelineField.id} className={labelClasses}>
                       {timelineField.label}
                     </label>
                     <select
                       id={timelineField.id}
                       name={timelineField.id}
                       defaultValue=""
-                      className={`${fieldClasses} cursor-pointer`}
+                      /* The native dropdown paints its options with system colours, so
+                         they have to be told about the dark panel or the list
+                         opens as white text on white. */
+                      className={`${fieldClasses} cursor-pointer [&>option]:bg-ink [&>option]:text-white`}
                     >
                       <option value="">{timelineField.placeholder}</option>
                       {timelineField.options.map((o) => (
@@ -272,9 +292,8 @@ export default function ContactSection({
                   </div>
 
                   <div className="field-wrap md:col-span-2">
-                    <label htmlFor={messageField.id} className="mb-3 block font-semibold">
+                    <label htmlFor={messageField.id} className={labelClasses}>
                       {messageField.label}
-                      <span className="text-primary" aria-hidden="true"> *</span>
                     </label>
                     <textarea
                       id={messageField.id}
@@ -283,7 +302,7 @@ export default function ContactSection({
                       minLength={10}
                       maxLength={5000}
                       placeholder={messageField.placeholder}
-                      className={`${fieldClasses} min-h-[146px] resize-y`}
+                      className={`${fieldClasses} min-h-[150px] resize-none`}
                     />
                   </div>
 
@@ -291,7 +310,7 @@ export default function ContactSection({
                     <button
                       type="submit"
                       disabled={sending}
-                      className="block w-full min-h-[50px] cursor-pointer rounded-full bg-primary px-5 py-[15px] font-semibold text-white transition-colors duration-300 hover:bg-ink disabled:pointer-events-none disabled:opacity-60"
+                      className="block min-h-[54px] w-full cursor-pointer rounded-full bg-primary px-5 py-[15px] font-semibold text-white shadow-[0_10px_28px_rgba(0,81,255,0.35)] transition-[background-color,transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:bg-primary-deep hover:shadow-[0_16px_38px_rgba(0,81,255,0.5)] active:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary-lite disabled:pointer-events-none disabled:opacity-60"
                     >
                       {sending ? "Sending..." : "Send Message"}
                     </button>
@@ -299,25 +318,25 @@ export default function ContactSection({
                       /* Deliberately not "email us instead": if this failed,
                          the mail path may be what failed. The calendar is a
                          route that does not depend on our inbox at all. */
-                      <p role="alert" className="mt-3 text-center text-sm font-semibold text-ink">
+                      <p role="alert" className="mt-4 text-center text-sm font-semibold text-white">
                         Something went wrong on our side.{" "}
                         <a
                           href={BOOKING_URL}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-primary underline underline-offset-2"
+                          className="text-primary-lite underline underline-offset-2"
                         >
                           Book a call instead
                         </a>{" "}
                         and we will pick it up there.
                       </p>
                     ) : (
-                      <p className="mt-3 text-center text-sm text-black font-medium">
+                      <p className="mt-4 text-center text-[13px] leading-relaxed text-white/70">
                         We reply within 24 hours. Your details are used only to
                         reply, never sold or shared for marketing:{" "}
                         <Link
                           href="/privacy"
-                          className="underline underline-offset-2 transition-colors duration-300 hover:text-primary"
+                          className="text-white underline underline-offset-2 transition-colors duration-300 hover:text-primary-lite"
                         >
                           privacy policy
                         </Link>
@@ -327,6 +346,7 @@ export default function ContactSection({
                   </div>
                 </form>
               )}
+              </div>
             </div>
           </div>
         </div>
