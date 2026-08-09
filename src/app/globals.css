@@ -105,6 +105,8 @@ html {
   }
 }
 
+/* Duration comes from the component as an inline style, so the interval
+   lives in one place instead of being a number repeated across two files. */
 [data-hero-progress] {
   animation: wf-hero-progress 3.4s linear forwards;
 }

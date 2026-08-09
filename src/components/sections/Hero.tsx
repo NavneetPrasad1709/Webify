@@ -17,6 +17,11 @@ const ROTATING = [
   "Landing Pages",
 ];
 
+/* One source for the rotation interval. The progress bar under the live row
+   of the mobile build list is handed this same number as an inline animation
+   duration, so the bar and the headline cannot drift apart. */
+const ROTATE_MS = 3400;
+
 /* Honest operating promises - loop in the template-style vertical ticker. */
 const TICKER = [
   "Senior-led, end to end",
@@ -39,6 +44,8 @@ export default function Hero() {
   const cardFloatRef = useRef<HTMLDivElement>(null);
   const wordRef = useRef<HTMLSpanElement>(null);
   const [word, setWord] = useState(0);
+  // Auto-advance until the visitor picks a row, then it is theirs.
+  const [auto, setAuto] = useState(true);
 
   useLayoutEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -93,38 +100,46 @@ export default function Hero() {
     return () => ctx.revert();
   }, []);
 
-  /* Headline word rotator: current word slides up out through the line's clip
-     window, the next rises in from below. Skipped for reduced motion. */
+  /* The headline swap is driven by the value, not by whoever changed it, so a
+     tap on the build list animates exactly like an automatic turn does. The
+     word rises into its clip window from below; the outgoing one is replaced
+     in the same frame, which is what makes a tap feel immediate rather than
+     making the visitor sit through an exit first. */
+  const firstWordRender = useRef(true);
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const el = wordRef.current;
     if (!el) return;
-    let i = 0;
-    const id = window.setInterval(() => {
-      gsap
-        .timeline()
-        .to(el, {
-          yPercent: -112,
-          filter: "blur(6px)",
-          autoAlpha: 0,
-          duration: 0.3,
-          ease: "power2.in",
-        })
-        .add(() => {
-          i = (i + 1) % ROTATING.length;
-          setWord(i);
-        })
-        .fromTo(
-          el,
-          { yPercent: 112, filter: "blur(6px)", autoAlpha: 0 },
-          { yPercent: 0, filter: "blur(0px)", autoAlpha: 1, duration: 0.55, ease: "power3.out" }
-        );
-    }, 3400);
-    return () => {
-      window.clearInterval(id);
-      gsap.killTweensOf(el);
-    };
-  }, []);
+    if (firstWordRender.current) {
+      firstWordRender.current = false;
+      return;
+    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    gsap.fromTo(
+      el,
+      { yPercent: 112, filter: "blur(6px)", autoAlpha: 0 },
+      {
+        yPercent: 0,
+        filter: "blur(0px)",
+        autoAlpha: 1,
+        duration: 0.55,
+        ease: "power3.out",
+        overwrite: "auto",
+      }
+    );
+  }, [word]);
+
+  /* The timer only advances the index. It stops the moment the visitor takes
+     over, which doubles as the pause control that auto-advancing content is
+     supposed to have. */
+  useEffect(() => {
+    if (!auto) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setInterval(
+      () => setWord((w) => (w + 1) % ROTATING.length),
+      ROTATE_MS
+    );
+    return () => window.clearInterval(id);
+  }, [auto]);
 
   return (
     <section
@@ -254,6 +269,7 @@ export default function Hero() {
               {" / "}
               {String(ROTATING.length).padStart(2, "0")}
             </span>
+            {!auto ? <span className="ml-2 text-lime">Held</span> : null}
           </p>
         </div>
 
@@ -271,27 +287,66 @@ export default function Hero() {
                     live ? "bg-lime" : "bg-white/15"
                   }`}
                 />
-                <span
-                  className={`block py-3 pl-4 text-[17px] font-semibold tracking-tight transition-[color,transform,letter-spacing] duration-500 ease-out ${
-                    live
-                      ? "translate-x-1.5 text-white"
-                      : "translate-x-0 text-white/70"
-                  }`}
+                {/* Real buttons, because the headline is a thing you can
+                    operate rather than something you sit and wait through.
+                    Tapping a row sends the headline straight to it and stops
+                    the timer, which is also the pause control that
+                    auto-advancing content is meant to have and did not. */}
+                <button
+                  type="button"
+                  aria-current={live ? "true" : undefined}
+                  aria-label={`We build ${item}${live && !auto ? ", resume rotation" : ""}`}
+                  onClick={() => {
+                    if (live) {
+                      setAuto((on) => !on);
+                      return;
+                    }
+                    setWord(i);
+                    setAuto(false);
+                  }}
+                  className="group flex w-full items-center gap-3 py-3 pl-4 pr-1 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime"
                 >
-                  {item}
-                </span>
+                  <span
+                    className={`origin-left text-[16px] font-semibold tracking-tight transition-[color,transform] duration-500 ease-out ${
+                      live
+                        ? "translate-x-1.5 scale-[1.28] text-white"
+                        : "scale-100 text-white/70 group-active:text-white"
+                    }`}
+                  >
+                    {item}
+                  </span>
+                  {/* Only the live row carries the hint, so the affordance is
+                      discoverable without labelling all five. */}
+                  {live ? (
+                    <span
+                      aria-hidden="true"
+                      className="ml-auto font-mono text-[10px] uppercase tracking-widest text-white/55"
+                    >
+                      {auto ? "Tap to hold" : "Tap to play"}
+                    </span>
+                  ) : null}
+                </button>
                 {/* The bar under the live row runs down the same clock as the
-                    headline rotation, so the next item is visibly on its way
-                    rather than arriving out of nowhere. Keyed on `word` so
-                    React remounts it and the animation restarts each turn. */}
-                {live ? (
+                    headline, so the next item is visibly on its way rather
+                    than arriving out of nowhere. Keyed on `word` so React
+                    remounts it and the fill restarts each turn, and handed the
+                    interval directly so the two can never drift apart. */}
+                {live && auto ? (
                   <span
                     key={word}
                     data-hero-progress
                     aria-hidden="true"
+                    style={{ animationDuration: `${ROTATE_MS}ms` }}
                     className="absolute bottom-0 left-0 h-px w-full origin-left bg-lime/70"
                   />
-                ) : null}
+                ) : (
+                  live && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute bottom-0 left-0 h-px w-full bg-lime/70"
+                    />
+                  )
+                )}
               </li>
             );
           })}
