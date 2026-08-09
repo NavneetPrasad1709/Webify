@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 
 /** Must match the total of the wf-veil-lift fallback in globals.css. */
-const VEIL_FALLBACK_MS = 1400;
+const VEIL_FALLBACK_MS = 1600;
 
 /**
  * Brand intro on page load: icon breathes in, wordmark follows, veil lifts.
@@ -31,34 +31,43 @@ export default function Preloader() {
       seen = false;
     }
 
-    // Almost nobody reaches this site by typing the address. They arrive from
-    // a profile, a proposal link or a campaign, already deciding whether we
-    // are worth ten more seconds, and a logo animation spends those seconds
-    // on us instead of on the work. The intro is for direct visits only.
-    const params = new URLSearchParams(window.location.search);
-    const fromCampaign = Array.from(params.keys()).some((k) =>
-      k.startsWith("utm_")
-    );
-    const fromElsewhere =
-      document.referrer !== "" &&
-      !document.referrer.startsWith(window.location.origin);
+    /* The intro used to be skipped for anyone arriving from another site,
+       which meant almost nobody ever saw it, since almost nobody types this
+       address. That skip existed because the veil could once hang until the
+       JavaScript bundle arrived. It cannot any more: the whole sequence is
+       CSS and clears on a wall clock at VEIL_FALLBACK_MS whatever happens to
+       the bundle, so the worst case is bounded and the brand moment is worth
+       the second and a half.
+
+       Once per session still holds. Replaying it on every page load would
+       turn a first impression into a toll gate, which is why a plain refresh
+       in the same tab shows no intro: open a new tab to see it again. */
 
     // Past the CSS fallback the veil has already lifted on its own; hiding it
     // now simply removes it from the tree.
     const tooLate = performance.now() > VEIL_FALLBACK_MS;
 
-    if (seen || fromCampaign || fromElsewhere || tooLate) {
+    if (seen || tooLate) {
       veil.style.animation = "none";
       veil.style.display = "none";
       return;
     }
 
-    // Let the CSS timeline finish, then take the veil out of the layout so it
-    // can never intercept a click.
-    const done = () => {
+    /* Let the veil's own animation finish, then take it out of the layout so
+       it can never intercept a click.
+
+       The target check is the whole point. animationend bubbles, so the icon
+       and the wordmark inside the veil were each firing this listener as they
+       finished, and with `once` the first of them tore the veil down at about
+       0.8s: the lift never played and the intro looked like a flicker. The
+       check is on the element rather than the animation name because the CSS
+       minifier is free to rename keyframes. */
+    const done = (event: AnimationEvent) => {
+      if (event.target !== veil) return;
       veil.style.display = "none";
+      veil.removeEventListener("animationend", done);
     };
-    veil.addEventListener("animationend", done, { once: true });
+    veil.addEventListener("animationend", done);
     return () => veil.removeEventListener("animationend", done);
   }, []);
 

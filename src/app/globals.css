@@ -48,7 +48,7 @@ html {
 }
 
 [data-preloader] {
-  animation: wf-veil-lift 0.5s 0.9s forwards;
+  animation: wf-veil-lift 0.55s 1.05s forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -86,11 +86,11 @@ html {
 }
 
 [data-intro-icon] {
-  animation: wf-intro-icon 0.24s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: wf-intro-icon 0.44s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 [data-intro-word] {
-  animation: wf-intro-word 0.26s 0.14s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: wf-intro-word 0.48s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* Scroll reveal, driven by src/lib/reveal.ts. The safety animation matters:
