@@ -353,15 +353,16 @@ export default function LeadPopup() {
             track("lead_popup_open", { path: pathname });
           }
         }}
-        /* Lime, not cobalt: this floats over black sections, white sections
-           and the cobalt band, and a cobalt pill disappears entirely on the
-           last of those. Lime is the one brand colour that holds on all
-           three. The inset top highlight and the tightened uppercase label
-           are what separate a floating widget from a chat bubble. */
-        className="group pointer-events-auto flex h-[52px] items-center gap-3 rounded-full bg-lime pl-5 pr-6 font-mono text-[12px] font-medium uppercase tracking-[0.12em] text-ink ring-1 ring-ink/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_14px_36px_rgba(0,0,0,0.4)] transition-[transform,box-shadow,background-color] duration-300 ease-out hover:-translate-y-0.5 hover:bg-white hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_20px_46px_rgba(0,0,0,0.5)] active:translate-y-0 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-lime"
+        aria-label={open ? "Close the project form" : "Start a project"}
+        /* The brand mark in a cobalt disc, the same object as the back-to-top
+           control. Cobalt does vanish against the cobalt band, so the white
+           ring is not decoration: it is what keeps the button findable there.
+           The inset highlight and the shadow that deepens on lift are what
+           separate it from a flat circle. */
+        className="group pointer-events-auto relative flex h-[60px] w-[60px] items-center justify-center rounded-full bg-primary ring-2 ring-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_14px_34px_rgba(0,81,255,0.42)] transition-[transform,box-shadow,background-color] duration-300 ease-out hover:-translate-y-0.5 hover:bg-primary-deep hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_20px_44px_rgba(0,81,255,0.55)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
       >
         {open ? (
-          <svg viewBox="0 0 20 20" className="h-3.5 w-3.5 shrink-0" aria-hidden="true">
+          <svg viewBox="0 0 20 20" className="h-5 w-5 text-white" aria-hidden="true">
             <path
               d="M4.5 4.5l11 11M15.5 4.5l-11 11"
               stroke="currentColor"
@@ -370,17 +371,27 @@ export default function LeadPopup() {
             />
           </svg>
         ) : (
-          /* A live availability marker rather than an envelope: it says the
-             studio is open to work, which is the actual reason to click. */
-          <span
-            data-lead-pulse
-            className="relative flex h-2 w-2 shrink-0"
-            aria-hidden="true"
-          >
-            <span className="absolute inset-0 rounded-full bg-ink" />
-          </span>
+          <>
+            <img
+              src="/assets/brand/webify-icon-dark-384.webp"
+              alt=""
+              aria-hidden="true"
+              width={384}
+              height={323}
+              className="h-6 w-auto"
+            />
+            {/* Lime availability marker: the studio is open to work, which is
+                the actual reason to press this. Sized as a detail, not a
+                notification badge demanding to be cleared. */}
+            <span
+              data-lead-pulse
+              aria-hidden="true"
+              className="absolute right-0.5 top-0.5 flex h-2.5 w-2.5"
+            >
+              <span className="absolute inset-0 rounded-full bg-lime ring-2 ring-primary group-hover:ring-primary-deep" />
+            </span>
+          </>
         )}
-        {open ? "Close" : "Start a Project"}
       </button>
       </div>
     </div>
