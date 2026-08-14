@@ -54,33 +54,15 @@ Senior-led web design and development. Fixed-price projects for founders and sma
 
 ## About
 
-2,000 characters maximum. This one is about 1,150.
+2,000 characters maximum. This one is 1,563.
 
-```
-We design and build websites, SaaS products, web apps, dashboards and landing pages for founders and small teams.
+The standard claimed here is high, and every line of it can be checked in ten
+seconds by anyone who opens devtools on webify.org.in. That is the difference
+between this and "Apple-level UI, Amazon-level security": naming the actual
+practice lands harder than naming a famous company, and it survives the check
+that a serious buyer will run.
 
-Three things make this different from hiring an agency or a freelancer.
 
-You talk to the people who build it. The person who writes your scope is on the call when you question it. There is no account layer relaying messages between you and the work.
-
-The price is agreed before work starts. Fixed-price projects, quoted in USD. If the scope genuinely changes it gets re-quoted and you approve it. Nothing is billed by surprise.
-
-You can see progress without asking for it. A staging URL in the first week, updated as we build, so you are never waiting on a status email to find out where things are.
-
-Hours: we hold 6:00 pm to 11:00 pm IST for calls. That is 8:30 am to 1:30 pm in New York and the start of the working day in San Francisco. You brief us at the end of your day and read the update at the start of the next one.
-
-Recent work, all live and open in a new tab:
-Vexel AI, an AI product site that leads with the outcome instead of the technology: https://saas.webify.org.in
-Dental Health, a practice site built around one job, turning searches into booked appointments: https://webify-dentist.vercel.app
-EverGreen, an architecture studio site where the work carries the page: https://webify-luxory-homes.vercel.app
-
-Every file, repo and asset is yours from day one.
-
-Start a project: https://www.webify.org.in
-Book a 20 minute call: https://cal.com/navneet-prasad-geein6/intro
-```
-
----
 
 ## Specialties
 
