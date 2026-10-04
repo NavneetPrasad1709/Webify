@@ -2,10 +2,14 @@
 
 import { useLayoutEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger, revealFrom, revealTo } from "@/lib/anim";
-import { faqs } from "@/lib/data";
+import { faqs as defaultFaqs } from "@/lib/data";
 import PillButton from "@/components/ui/PillButton";
 
-export default function Faq() {
+export default function Faq({
+  faqs = defaultFaqs,
+}: {
+  faqs?: { q: string; a: string }[];
+}) {
   const sectionRef = useRef<HTMLElement>(null);
   const bodyRefs = useRef<(HTMLDivElement | null)[]>([]);
   const iconRefs = useRef<(HTMLSpanElement | null)[]>([]);

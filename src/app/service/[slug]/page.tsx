@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ServiceSingle from "@/components/pages/service/ServiceSingle";
-import { services, getService } from "@/lib/pages/service";
+import Faq from "@/components/sections/Faq";
+import { services, getService, serviceFaqs } from "@/lib/pages/service";
 import { SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -15,6 +16,8 @@ export function generateStaticParams() {
    competitive local term for a year regardless. */
 const metaTitles: Record<string, string> = {
   "website-development": "Website Development Company for Startups and Teams",
+  "custom-software": "Custom Software Development Company for Startups",
+  "ai-development": "AI Development Company: Chatbots, Agents and LLM Apps",
   "branding-design": "Branding and UI/UX Design Services for Digital Products",
   "crm-system": "Custom CRM Development for Growing Teams",
   "e-commerce": "E-commerce Website Development, Designed to Convert",
@@ -57,6 +60,8 @@ export default async function ServiceSinglePage({
   const service = getService(slug);
   if (!service) notFound();
 
+  const faqs = serviceFaqs[service.slug] ?? [];
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -66,8 +71,21 @@ export default async function ServiceSinglePage({
         description: service.blurb,
         url: `${SITE_URL}/service/${service.slug}`,
         provider: { "@id": `${SITE_URL}/#organization` },
+        serviceType: service.title,
         areaServed: ["Worldwide", "Greater Noida", "Noida", "Ghaziabad", "Delhi"],
       },
+      ...(faqs.length
+        ? [
+            {
+              "@type": "FAQPage",
+              mainEntity: faqs.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            },
+          ]
+        : []),
       {
         "@type": "BreadcrumbList",
         itemListElement: [
@@ -96,6 +114,7 @@ export default async function ServiceSinglePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <ServiceSingle service={service} />
+      {faqs.length > 0 && <Faq faqs={faqs} />}
     </main>
   );
 }

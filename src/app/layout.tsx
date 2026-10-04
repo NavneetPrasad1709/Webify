@@ -37,9 +37,9 @@ const dmMono = DM_Mono({
    US clock, so the title sells the service rather than a city: a location
    qualifier here narrows the page for every visitor who did not arrive from
    a local search. Location targeting belongs on pages built for it. */
-const defaultTitle = "Webify | Web Design and Development Company for Startups";
+const defaultTitle = "Webify | Web, Software and AI Development Company";
 const description =
-  "Senior-led design and engineering for websites, SaaS products and web apps. Fixed-price projects, remote delivery, and evening IST hours held for US calls.";
+  "Senior-led team building websites, custom software, SaaS and AI products. Fixed-price projects, remote delivery, and evening IST hours held for US calls.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -82,12 +82,19 @@ const jsonLd = {
       image: `${SITE_URL}/opengraph-image.png`,
       email: "contact@webify.org.in",
       description,
-      foundingDate: "2026",
+      foundingDate: "2024",
       founder: {
         "@type": "Person",
         name: "Navneet Prasad",
         jobTitle: "Founder",
       },
+      employee: [
+        {
+          "@type": "Person",
+          name: "Mayank Gautam",
+          jobTitle: "Chief Marketing Officer",
+        },
+      ],
       address: {
         "@type": "PostalAddress",
         streetAddress: "Tech Zone IV",
@@ -103,6 +110,19 @@ const jsonLd = {
         latitude: 28.6026,
         longitude: 77.4358,
       },
+      sameAs: ["https://www.linkedin.com/company/webify-co"],
+      knowsAbout: [
+        "Website development",
+        "Custom software development",
+        "SaaS development",
+        "AI development",
+        "AI chatbots and agents",
+        "Mobile app development",
+        "E-commerce development",
+        "CRM development",
+        "UI/UX design",
+        "Search engine optimization",
+      ],
       areaServed: [
         { "@type": "City", name: "Greater Noida" },
         { "@type": "City", name: "Noida" },
