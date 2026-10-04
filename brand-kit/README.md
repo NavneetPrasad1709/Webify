@@ -9,6 +9,7 @@ someone else's text box.
 | [linkedin/PAGE-CONTENT.md](linkedin/PAGE-CONTENT.md) | Company page: every field, tagline, About, 20 specialties | **Yes.** Needs domain email |
 | [linkedin/PERSONAL-PROFILE.md](linkedin/PERSONAL-PROFILE.md) | Headline, About, Experience, Featured, Skills | No |
 | [upwork/PROFILE.md](upwork/PROFILE.md) | Title, overview, rate, portfolio entries | No |
+| [listings/LISTINGS.md](listings/LISTINGS.md) | Search Console, Bing, Google Business Profile, Clutch, GoodFirms, DesignRush, Sortlist | No (sign up with the working inbox) |
 | [outreach/TEMPLATES.md](outreach/TEMPLATES.md) | Upwork proposals, LinkedIn DMs, cold email, white-label | No |
 | [linkedin/cover-1128x191.png](linkedin/cover-1128x191.png) | Page and profile banner | No |
 | [linkedin/logo-300x300.png](linkedin/logo-300x300.png) | Page logo | No |
