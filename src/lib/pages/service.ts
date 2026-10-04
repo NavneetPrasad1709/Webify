@@ -63,8 +63,9 @@ export const services: ServiceEntry[] = [
   {
     slug: "custom-software",
     title: "Custom Software Development",
-    listingImage: "/assets/service/listing-design-systems.webp",
-    heroImage: "/assets/service/single-design-systems.webp",
+    listingImage: "/assets/service/listing-custom-software.webp",
+    heroImage: "/assets/service/single-custom-software.webp",
+    video: "/assets/service/loops/custom-software.mp4",
     blurb:
       "Web apps, SaaS platforms, internal tools, and APIs built around how your business actually runs, not around a template.",
     itemsLabel: "What we build:",
@@ -89,8 +90,9 @@ export const services: ServiceEntry[] = [
   {
     slug: "ai-development",
     title: "AI Development",
-    listingImage: "/assets/service/listing-website-saas.webp",
-    heroImage: "/assets/service/single-website-saas.webp",
+    listingImage: "/assets/service/listing-ai-development.webp",
+    heroImage: "/assets/service/single-ai-development.webp",
+    video: "/assets/service/loops/ai-development.mp4",
     blurb:
       "AI agents, chatbots, and LLM features built into your product or operations, grounded in your own data and shipped to production.",
     itemsLabel: "What we build:",
