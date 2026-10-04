@@ -118,9 +118,9 @@ function EditorMock() {
 
 function CmsMock() {
   const rows = [
-    { t: "Design decisions that move revenue", d: "8 June 2026", g: "from-primary to-primary-lite" },
-    { t: "Scaling systems that convert", d: "10 May 2026", g: "from-[#f97316] to-[#f3f696]" },
-    { t: "A field guide to design QA", d: "22 April 2026", g: "from-[#a5b4fc] to-[#312e81]" },
+    { t: "Design decisions that move revenue", d: "8 June 2024", g: "from-primary to-primary-lite" },
+    { t: "Scaling systems that convert", d: "10 May 2024", g: "from-[#f97316] to-[#f3f696]" },
+    { t: "A field guide to design QA", d: "22 April 2024", g: "from-[#a5b4fc] to-[#312e81]" },
   ];
   return (
     <div className="h-full w-full rounded-t-xl border border-white/10 bg-[#141414] p-4">

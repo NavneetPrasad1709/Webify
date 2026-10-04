@@ -89,7 +89,7 @@ export default function Footer() {
                 Senior-led design and engineering company. Websites and products
                 that grow revenue, built end to end by our in-house team.
               </p>
-              <p className="eyebrow mt-7 text-ink">EST. 2026</p>
+              <p className="eyebrow mt-7 text-ink">EST. 2024</p>
             </div>
 
             {footerNav.map((col) => (
@@ -168,7 +168,7 @@ export default function Footer() {
                 decoding="async"
                 className="h-5 w-auto"
               />
-              &copy; 2026 Webify. All rights reserved.
+              &copy; 2024 Webify. All rights reserved.
             </p>
             <p className="flex flex-wrap items-center gap-x-6 gap-y-2">
               <Link href="/privacy" className="footer-navlink">

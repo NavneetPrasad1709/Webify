@@ -65,10 +65,10 @@ export default function FoundingOffers() {
         ref={titleRef}
         className="pointer-events-none sticky top-[22vh] z-0 px-5 text-center"
       >
-        <p className="eyebrow mb-4 text-gray-mid">FOUNDING CLIENTS</p>
+        <p className="eyebrow mb-4 text-gray-mid">WHY WEBIFY</p>
         <h2 className="display-2">
-          <span className="block text-ink">BE ONE OF OUR</span>
-          <span className="block text-primary">FIRST CLIENTS</span>
+          <span className="block text-ink">YOUR BRAND,</span>
+          <span className="block text-primary">OUR FULL FOCUS</span>
         </h2>
       </div>
 
@@ -108,7 +108,7 @@ export default function FoundingOffers() {
       {/* The hardest sell on the page should not end without an ask */}
       <div className="relative z-10 mt-14 flex flex-col items-center gap-4 px-5 text-center md:mt-20">
         <p className="max-w-md text-base font-medium text-black">
-          Founding rates for our first 10 projects, locked for 12 months.
+          Fixed quote in 3 working days. Rates locked for 12 months.
         </p>
         <PillButton tone="blue" href="/contact">
           Start a Project

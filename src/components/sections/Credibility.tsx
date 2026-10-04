@@ -131,7 +131,7 @@ export default function Credibility() {
               {/* Founding stamp - honest provenance, large under the headline */}
               <p className="cred-est mt-7 flex items-baseline gap-3 text-[clamp(38px,6.4vw,84px)] font-extrabold uppercase leading-none tracking-tight md:mt-9">
                 <span className="text-ink">Est.</span>
-                <span className="text-primary">2026</span>
+                <span className="text-primary">2024</span>
               </p>
             </div>
 

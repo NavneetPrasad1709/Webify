@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <LegalPage eyebrow="LEGAL" title="Terms of Service" updated="12 July 2026">
+    <LegalPage eyebrow="LEGAL" title="Terms of Service" updated="12 July 2024">
       <LegalSection title="Who we are">
         <p>
           Webify is a senior-led design and engineering company founded by

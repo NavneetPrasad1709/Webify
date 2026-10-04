@@ -60,7 +60,7 @@ export const projectDetails: ProjectDetail[] = [
   {
     slug: "vexel-ai",
     name: "Vexel AI",
-    year: "2026",
+    year: "2024",
     image: "/assets/project/vexel-ai.webp",
     video: "/assets/project/vexel-ai.mp4",
     bodyImage: "/assets/project/vexel-ai-body.webp",
@@ -113,7 +113,7 @@ export const projectDetails: ProjectDetail[] = [
   {
     slug: "dental-health",
     name: "Dental Health",
-    year: "2026",
+    year: "2024",
     image: "/assets/project/dental-health.webp",
     video: "/assets/project/dental-health.mp4",
     bodyImage: "/assets/project/dental-health-body.webp",
@@ -166,7 +166,7 @@ export const projectDetails: ProjectDetail[] = [
   {
     slug: "evergreen-studio",
     name: "EverGreen Studio",
-    year: "2026",
+    year: "2024",
     image: "/assets/project/evergreen-studio.webp",
     video: "/assets/project/evergreen-studio.mp4",
     bodyImage: "/assets/project/evergreen-studio-body.webp",
