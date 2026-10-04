@@ -13,18 +13,41 @@ export const aboutIntro = {
   text: "Webify is new, and says so. No borrowed case studies, no rented logos: a team of software developers and UI/UX designers who design and ship every project end to end, from the first call to launch.",
 };
 
-/* The real founder: the studio's verifiable human trust anchor. Facts only,
-   no invented credentials. */
-export const founder = {
-  tag: "FOUNDER",
+export interface TeamMember {
+  name: string;
+  role: string;
+  bio: string;
+  image: string;
+  imageAlt: string;
+  address?: string;
+  reach?: string;
+  email?: string;
+}
+
+/* The real people behind the work: the studio's verifiable trust anchor.
+   Facts only, no invented credentials. */
+export const founder: TeamMember = {
   name: "Navneet Prasad",
-  role: "Founder & Lead Engineer",
-  bio: "Navneet founded Webify and leads its team of software developers and UI/UX designers. Every project is designed and built in-house, with no account managers and no handoffs, so you work directly with the people doing the work, from the first call to launch and through the 30-day support window after it.",
+  role: "Founder & Lead Engineer, Web, Software and AI",
+  bio: "Navneet founded Webify to give founders one senior team that takes a product from idea to production: websites, custom software, and AI. As lead engineer, Navneet sets the architecture on every project and builds with Next.js, React, Node.js, and modern AI models, from LLM-powered chatbots and agents to the dashboards and APIs behind them. No account managers and no handoffs: you work directly with the people writing the code, from the first call through launch and the 30-day support window after it.",
   address: "Tech Zone IV, Greater Noida, Uttar Pradesh 201318",
   reach: "Remote-first, working with clients worldwide",
   email: "contact@webify.org.in",
   image: "/assets/about/founder.webp",
   imageAlt: "Navneet Prasad, founder of Webify",
+};
+
+export const cmo: TeamMember = {
+  name: "Mayank Gautam",
+  role: "Chief Marketing Officer",
+  bio: "Mayank leads marketing at Webify and owns how every product reaches its market: positioning, messaging, content, SEO, and launch strategy. Using AI-driven research and content workflows, Mayank finds what buyers are actually searching for and shapes each site to be found on Google, cited in AI answers, and chosen once a visitor lands. Every launch goes out with a clear story behind it, not just clean code.",
+  image: "/assets/about/cmo.webp",
+  imageAlt: "Mayank Gautam, Chief Marketing Officer at Webify",
+};
+
+export const team = {
+  tag: "THE TEAM",
+  members: [founder, cmo],
 };
 
 export interface TemplateCard {
