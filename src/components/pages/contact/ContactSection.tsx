@@ -192,10 +192,12 @@ export default function ContactSection({
             <img
               src="/assets/about/founder.webp"
               alt="Navneet Prasad, founder of Webify"
+              width={1162}
+              height={1353}
               loading="lazy"
               decoding="async"
               data-reveal=""
-              className="contact-img h-64 w-full object-cover sm:h-96 lg:h-full"
+              className="contact-img h-auto w-full lg:h-full lg:object-cover lg:object-top"
             />
           </div>
 
