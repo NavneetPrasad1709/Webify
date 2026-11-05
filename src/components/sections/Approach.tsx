@@ -58,16 +58,15 @@ function PhonesMock() {
 }
 
 function DashboardMock() {
-  const stats = ["$3,690", "$120,423", "40,780", "98,340"];
+  /* Skeleton stat tiles, not numbers: readable figures in a decorative mock
+     get read by crawlers and visitors as claimed results. */
+  const tiles = ["w-12", "w-16", "w-10", "w-14"];
   return (
     <div className="h-full w-full rounded-t-xl border border-white/10 bg-[#f3f3f3] p-4">
       <div className="flex flex-wrap gap-2">
-        {stats.map((s) => (
-          <span
-            key={s}
-            className="rounded-md bg-white px-2.5 py-1.5 font-mono text-[10px] font-semibold text-ink shadow-sm"
-          >
-            {s}
+        {tiles.map((w, i) => (
+          <span key={i} className="rounded-md bg-white px-2.5 py-2 shadow-sm">
+            <span className={`block h-1.5 ${w} rounded-full ${i === 1 ? "bg-primary/70" : "bg-ink/25"}`} />
           </span>
         ))}
       </div>
@@ -118,9 +117,10 @@ function EditorMock() {
 
 function CmsMock() {
   const rows = [
-    { t: "Design decisions that move revenue", d: "8 June 2024", g: "from-primary to-primary-lite" },
-    { t: "Scaling systems that convert", d: "10 May 2024", g: "from-[#f97316] to-[#f3f696]" },
-    { t: "A field guide to design QA", d: "22 April 2024", g: "from-[#a5b4fc] to-[#312e81]" },
+    /* Real posts from /blog, so the mock never names an article that does not exist. */
+    { t: "Designing a SaaS Landing Page That Sells the Outcome", d: "Published", g: "from-primary to-primary-lite" },
+    { t: "What a Modern Local Business Website Actually Needs", d: "Published", g: "from-[#f97316] to-[#f3f696]" },
+    { t: "Restraint as a Feature: Designing for Luxury Brands", d: "Published", g: "from-[#a5b4fc] to-[#312e81]" },
   ];
   return (
     <div className="h-full w-full rounded-t-xl border border-white/10 bg-[#141414] p-4">

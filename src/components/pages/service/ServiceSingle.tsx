@@ -201,19 +201,34 @@ export default function ServiceSingle({ service }: { service: ServiceEntry }) {
             <div className="flex flex-col justify-between gap-10">
               <div data-ss-reveal>
                 <h3 className="text-[22px] font-semibold leading-[1.2] tracking-[-0.02em] md:text-[24px]">
-                  {single.overviewHeading}
+                  {service.overview?.heading ?? single.overviewHeading}
                 </h3>
-                {single.overviewParagraphs.map((p, i) => (
-                  <p key={i} className="mt-4 leading-[1.3] text-ink">
-                    {p}
-                  </p>
-                ))}
+                {service.overview ? (
+                  <>
+                    <p className="eyebrow mt-6 text-gray-deep">The Problem</p>
+                    <p className="mt-2 font-medium leading-[1.4] text-black">
+                      {service.overview.problem}
+                    </p>
+                    <p className="eyebrow mt-6 text-gray-deep">How We Solve It</p>
+                    <p className="mt-2 font-medium leading-[1.4] text-black">
+                      {service.overview.approach}
+                    </p>
+                  </>
+                ) : (
+                  single.overviewParagraphs.map((p, i) => (
+                    <p key={i} className="mt-4 leading-[1.3] text-ink">
+                      {p}
+                    </p>
+                  ))
+                )}
               </div>
               <div
                 data-ss-reveal
                 className="flex max-w-[284px] flex-col gap-10 rounded-2xl bg-fill-light p-5"
               >
-                <p className="leading-[1.3] text-ink">{single.overviewBoxText}</p>
+                <p className="font-medium leading-[1.3] text-black">
+                  {service.overview?.fit ?? single.overviewBoxText}
+                </p>
                 <PillButton tone="blue" href={contactHref} className="w-max">
                   Start a Project
                 </PillButton>

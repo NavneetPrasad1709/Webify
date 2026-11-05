@@ -11,10 +11,16 @@ someone else's text box.
 | [upwork/PROFILE.md](upwork/PROFILE.md) | Title, overview, rate, portfolio entries | No |
 | [listings/LISTINGS.md](listings/LISTINGS.md) | Search Console, Bing, Google Business Profile, Clutch, GoodFirms, DesignRush, Sortlist | No (sign up with the working inbox) |
 | [outreach/TEMPLATES.md](outreach/TEMPLATES.md) | Upwork proposals, LinkedIn DMs, cold email, white-label | No |
+| [sales/FIRST-CLIENT-PLAN.md](sales/FIRST-CLIENT-PLAN.md) | 30-day sprint, one offer, internal quote sheet, call script | No |
+| [sales/TRACKER.csv](sales/TRACKER.csv) | One row per prospect touch | No |
 | [linkedin/cover-1128x191.png](linkedin/cover-1128x191.png) | Page and profile banner | No |
 | [linkedin/logo-300x300.png](linkedin/logo-300x300.png) | Page logo | No |
 
 ## The one blocker
+
+**Update, Nov 2026:** the domain's MX now points at Zoho (mx.zoho.in), so the
+DNS half below is done. Still to confirm: a test email to contact@ arrives,
+the Resend suppression entry is cleared, and `LEAD_INBOX` is moved back.
 
 LinkedIn will not create a company page without an email address on the
 company domain. Gmail, Outlook and Yahoo are all rejected. Every address on

@@ -30,6 +30,9 @@ export type ServiceEntry = {
   timeline?: string;
   /** Slug of a live concept build on /project that demonstrates this service. */
   relatedProject?: string;
+  /** Service-specific overview: the buyer's problem, how we solve it, who it fits.
+      Falls back to the shared single.overview* copy. */
+  overview?: { heading: string; problem: string; approach: string; fit: string };
 };
 
 export const services: ServiceEntry[] = [
@@ -59,6 +62,14 @@ export const services: ServiceEntry[] = [
     ],
     timeline: "4-8 Weeks",
     relatedProject: "vexel-ai",
+    overview: {
+      heading: "Your Site Should Be Your Best Salesperson",
+      problem:
+        "Most sites look fine and say little. Visitors cannot tell what you sell, pages load slowly on mobile, and every small change waits on a developer.",
+      approach:
+        "We start from the one action a visitor should take, write the structure around it, then build on a fast modern stack with a CMS your team can edit. You watch it come together on a staging URL from week one.",
+      fit: "For founders and teams whose site no longer matches the business, or who are launching one for the first time.",
+    },
   },
   {
     slug: "custom-software",
@@ -86,6 +97,14 @@ export const services: ServiceEntry[] = [
       "Deployment, Documentation & Handover",
     ],
     timeline: "6-14 Weeks",
+    overview: {
+      heading: "Stop Running The Business In Spreadsheets",
+      problem:
+        "Teams outgrow spreadsheets and stacks of SaaS tools that never quite talk to each other. Work gets copied by hand, data lives in five places, and nobody trusts the numbers.",
+      approach:
+        "We map the workflow with you first, then build a focused first version that replaces the manual steps: one database, clear roles, and integrations with the tools you keep. It ships early and grows from real use.",
+      fit: "For operators and founders whose process is their edge and no off-the-shelf tool fits it.",
+    },
   },
   {
     slug: "ai-development",
@@ -114,6 +133,14 @@ export const services: ServiceEntry[] = [
     ],
     timeline: "3-8 Weeks",
     relatedProject: "vexel-ai",
+    overview: {
+      heading: "AI That Does One Job Well",
+      problem:
+        "Most AI projects stall as demos. The bot sounds impressive, then answers wrong, costs more than expected, and nobody can see what it said to customers.",
+      approach:
+        "We pick one narrow, repetitive task, ground the model in your own data, and ship it with guardrails, logging, and cost limits inside the tools you already use. Then we measure it against real questions before anyone relies on it.",
+      fit: "For teams drowning in repeat questions, manual lead triage, or document work that follows the same pattern every time.",
+    },
   },
   {
     slug: "branding-design",
@@ -142,6 +169,14 @@ export const services: ServiceEntry[] = [
     ],
     timeline: "3-5 Weeks",
     relatedProject: "evergreen-studio",
+    overview: {
+      heading: "Look As Good As The Work You Do",
+      problem:
+        "A brand built piece by piece ends up inconsistent: a logo from one designer, a site from another, slides from a template. Buyers read that as a smaller company than you are.",
+      approach:
+        "We define the positioning first, then design one system of logo, type, color, and interface patterns, and document it so every future page and deck stays on brand without us.",
+      fit: "For new companies setting a foundation and growing ones whose look no longer matches their ambition.",
+    },
   },
   {
     slug: "crm-system",
@@ -170,6 +205,14 @@ export const services: ServiceEntry[] = [
       "Team Training & Post-Launch Support",
     ],
     timeline: "6-12 Weeks",
+    overview: {
+      heading: "A CRM Your Team Actually Opens",
+      problem:
+        "Off-the-shelf CRMs charge per seat, bury your process under fields nobody uses, and still leave follow-ups living in someone's inbox. Leads slip and nobody notices until the month closes.",
+      approach:
+        "We design the pipeline around how your team really sells, migrate your existing data cleanly, and automate the follow-ups and reports people forget. No per-seat licence, and you own it.",
+      fit: "For sales teams that have outgrown spreadsheets or are paying for a CRM they barely use.",
+    },
   },
   {
     slug: "e-commerce",
@@ -195,6 +238,14 @@ export const services: ServiceEntry[] = [
       "Store Training & Post-Launch Support",
     ],
     timeline: "5-8 Weeks",
+    overview: {
+      heading: "A Store That Gets Out Of The Way",
+      problem:
+        "Slow product pages, a checkout with one step too many, and an admin your team dreads. Each one quietly costs sales, and the store looks busy while revenue stays flat.",
+      approach:
+        "We choose Shopify or a custom build based on your catalog, then design every page around getting a buyer from product to paid. Payments, shipping, tax, and tracking are set up and tested before launch.",
+      fit: "For brands launching online or moving off a store that has become hard to run.",
+    },
   },
   {
     slug: "landing-page",
@@ -217,6 +268,14 @@ export const services: ServiceEntry[] = [
     ],
     timeline: "2-3 Weeks",
     relatedProject: "vexel-ai",
+    overview: {
+      heading: "One Page, One Offer, One Action",
+      problem:
+        "Paid traffic sent to a general homepage wastes budget. Visitors arrive with one question and find ten answers to things they did not ask.",
+      approach:
+        "We write the offer first, then design and build a single page around one action, with tracking and pixels in place so you know exactly what each visit is worth. After launch we tune it against real data.",
+      fit: "For campaigns, product launches, and founders testing a new offer before building more.",
+    },
   },
   {
     slug: "website-support",
@@ -238,6 +297,14 @@ export const services: ServiceEntry[] = [
       "Priority Response for Critical Issues",
     ],
     timeline: "Ongoing",
+    overview: {
+      heading: "Someone On Call After Launch",
+      problem:
+        "Sites drift after launch. Plugins go out of date, a form quietly stops sending, and every small change means chasing whoever built it.",
+      approach:
+        "We monitor uptime, security, and performance, keep everything updated and backed up, and handle change requests on a predictable monthly arrangement, with a reply within 24 hours.",
+      fit: "For teams that want their site looked after without hiring a developer.",
+    },
   },
   {
     slug: "redesign",
@@ -259,6 +326,14 @@ export const services: ServiceEntry[] = [
       "Launch Support & Before/After Reporting",
     ],
     timeline: "4-8 Weeks",
+    overview: {
+      heading: "Keep What Works, Rebuild What Does Not",
+      problem:
+        "An outdated site loses trust in seconds, but a careless rebuild can wipe out the rankings and content that still bring in business.",
+      approach:
+        "We audit traffic, content, and conversions first, keep what earns its place, and rebuild the rest on a modern stack. Every old URL is redirected so search visibility survives the move.",
+      fit: "For businesses whose site is slow, hard to update, or no longer reflects what they sell.",
+    },
   },
   {
     slug: "app-development",
@@ -280,6 +355,14 @@ export const services: ServiceEntry[] = [
       "App Store Submission & Release Support",
     ],
     timeline: "8-14 Weeks",
+    overview: {
+      heading: "From Idea To Both App Stores",
+      problem:
+        "Mobile projects often stall between design and release: scope keeps growing, builds break on real devices, and store review rejects the first submission.",
+      approach:
+        "We scope a lean first release, design native flows, build and test on real devices, and handle App Store and Google Play submission, then iterate from real usage.",
+      fit: "For founders taking a product to mobile and companies giving customers an app of their own.",
+    },
   },
   {
     slug: "seo",
@@ -301,6 +384,14 @@ export const services: ServiceEntry[] = [
       "Monthly Rankings & Traffic Reporting",
     ],
     timeline: "3-6 Months",
+    overview: {
+      heading: "Be Found By The Buyers Already Searching",
+      problem:
+        "Most sites are invisible for the searches that matter because of technical gaps, thin pages, and no clear plan for what to rank for.",
+      approach:
+        "We fix the technical foundation, map the searches your buyers actually make, and build pages that answer them. Reporting tracks rankings and enquiries, not vanity traffic.",
+      fit: "For businesses ready to invest in a channel that compounds over months, not days.",
+    },
   },
 ];
 
@@ -451,7 +542,7 @@ export const single = {
   overviewImage: "/assets/service/overview.webp",
   overviewHeading: "Solutions Crafted For Performance And Growth",
   overviewParagraphs: [
-    "We provide strategic, creative, and result-driven services that help businesses build strong brands, attract the right audience, and communicate with confidence. From brand systems and visual design to engineering, digital assets, and marketing materials, every service is crafted to deliver consistency, clarity, and long-term value.",
+    "Every service starts from the problem you are trying to solve, not from a package. We scope it with you, quote it in writing at a fixed price, and build it with the people you talk to.",
     "Every engagement runs one accountable process: discovery, strategy, design, and implementation, so the work ships on time, performs under pressure, and keeps compounding value long after launch.",
   ],
   overviewBoxText:
