@@ -23,7 +23,7 @@ in `MASTER_WEBSITE_AUDIT.md` and `TECHNICAL_SEO_AUDIT.md`.
 | P1 | Team proof | Only Navneet Prasad and Mayank Gautam are verified on the site | Not changed. "5+ team" is not published until names and roles are supplied |
 | P1 | AI privacy claim "Your data is not used to train public models" | Too broad as a blanket promise | Reworded: on the business API plans used, providers do not train on customer data by default, and exact terms are confirmed per project in writing. **Owner: confirm this matches each provider you use** |
 | P1 | Time-zone claim | **Wrong today.** Said 6 to 11 pm IST = 8:30 am to 1:30 pm New York, true only in US summer time. In November it is 7:30 am to 12:30 pm. An earlier line also said "daytime hours for clients in India", but 6 to 11 pm is evening in India | Now states both seasons; India line removed |
-| P1 | Contact form delivery | Tested on live (see below) | Works; delivery to inbox needs your eyes |
+| P1 | Contact form delivery | Tested on live (see below) | Validation and acceptance work; inbox delivery pending owner check |
 | P1 | Budget qualification field | Would add a visible form field (UI change) and contradicts the no-public-prices rule | Not done; flagged for decision |
 | P1 | Pricing clarity | Exclusions and payment terms were missing | Pricing FAQ now states milestone payments and that hosting, domains and third-party subscriptions are billed separately |
 | P2 | Mobile homepage length | Already reduced 24.7% (live). Within the review's 25 to 35% band in practice | None this pass |
@@ -38,7 +38,7 @@ in `MASTER_WEBSITE_AUDIT.md` and `TECHNICAL_SEO_AUDIT.md`.
 | Message under 10 chars | Reject | 400 |
 | Non-JSON body | Reject | 415 |
 | Honeypot filled (bot) | Fake success, nothing sent | 200 (by design) |
-| Real submission, marked "Claude audit test" | Accepted and delivered | 200 from the server |
+| Real submission, marked "Claude audit test" | Accepted by Resend | 200: **accepted** by Resend. Inbox delivery **not verified** (pending owner check) |
 
 Server returns non-2xx on delivery failure, and the form then shows its
 fallback; there is no fake success for humans. **Unverified:** that the
@@ -52,3 +52,5 @@ Booking link (Cal.com) returns 200.
 Homepage heights after this pass vs the deployed version: 0 px difference at
 390, 768 and 1440; 23 to 26 px at 360, 375 and 430 (one sentence re-wrapping).
 No horizontal overflow at any width.
+
+> Correction (6 Nov 2026): an earlier version of this table said "accepted and delivered". An HTTP 200 from Resend means the message was accepted for sending, not that it reached an inbox. See FINAL_OWNER_VERIFICATION.md.
