@@ -30,6 +30,6 @@ is meant for changes.
 
 ## Possible improvement (not done)
 
-The script submits the whole sitemap each time. With 37 URLs that is fine.
+The script submits the whole sitemap each time. With 36 URLs that is fine.
 If the site grows past a few hundred URLs, submit only changed URLs (diff
 the sitemap `lastmod` against the last run).

@@ -6,7 +6,7 @@
   record. That is the record Google uses to verify a **Domain property**
   (`sc-domain:webify.org.in`), so the property was very likely added and
   verified already.
-- Sitemap exists at `https://www.webify.org.in/sitemap.xml` (200, 37 URLs, valid).
+- Sitemap exists at `https://www.webify.org.in/sitemap.xml` (200, 36 URLs, valid).
 
 ## What could not be checked
 

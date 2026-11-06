@@ -8,14 +8,14 @@ plus live checks of redirects, robots.txt and crawler responses.
 | Check | Result |
 | --- | --- |
 | robots.txt | Valid. Allows all, disallows `/api/`, names Googlebot, Bingbot, OAI-SearchBot, PerplexityBot explicitly (added), points to sitemap |
-| XML sitemap | Valid, 37 URLs, all 200, all canonical www URLs, no redirects or noindex URLs inside; new SaaS page and article included automatically |
+| XML sitemap | Valid, 36 URLs, all 200, all canonical www URLs, no redirects or noindex URLs inside; new SaaS page and article included automatically |
 | Status codes | All sitemap URLs 200; unknown URL returns a real 404 with the custom page |
 | Redirects | apex to www and http to https are 308. `http://webify.org.in` takes 2 hops (http to https apex to www). Minor; fix in Vercel domain settings if wanted |
 | Trailing slash | `/service/` 308s to `/service` (one canonical form) |
-| Canonical tags | Present and correct on all 37 |
+| Canonical tags | Present and correct on all 36 |
 | noindex | None anywhere |
-| Titles | Unique on all 37; 23 to 64 characters |
-| Meta descriptions | Unique on all 37; 120 to 171 characters |
+| Titles | Unique on all 36; 23 to 64 characters |
+| Meta descriptions | Unique on all 36; 120 to 171 characters |
 | H1 | Exactly one per page |
 | Image alt | 0 images without alt |
 | Open Graph | Per-route OG image on every page |

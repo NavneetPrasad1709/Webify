@@ -16,7 +16,7 @@ is listed as a limitation, not guessed.
   OAI-SearchBot, GPTBot, PerplexityBot and ClaudeBot user agents (all 200, full
   text present).
 
-## 2. Route inventory (37 indexable URLs in the sitemap)
+## 2. Route inventory (36 indexable URLs in the sitemap)
 
 | Group | Routes |
 | --- | --- |
@@ -59,7 +59,7 @@ which implied past clients. Rewritten.
 
 ## 6. Technical SEO
 
-All 37 sitemap URLs: 200, unique titles, unique descriptions, correct
+All 36 sitemap URLs: 200, unique titles, unique descriptions, correct
 canonical (www), exactly one H1, OG image, no `<img>` without alt, valid
 JSON-LD, no `noindex`. 69 internal links checked, 0 broken. Full table:
 `TECHNICAL_SEO_AUDIT.md`.

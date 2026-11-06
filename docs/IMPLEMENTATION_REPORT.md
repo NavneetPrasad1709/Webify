@@ -10,7 +10,7 @@ Date: 6 Nov 2026. Not yet deployed. Build and lint pass (0 errors).
 | Shorter mobile homepage | 23,053 to 17,359 px at 375 px (24.7%). 30 to 40% target not reached without removing buyer information |
 | Remove duplication | Two duplicate sections off the homepage, five sections condensed |
 | Distinct service messaging | 12 service pages each with own problem, approach, fit; 7 new cost-factor FAQs |
-| Technical SEO | 37 URLs clean; titles, schema, robots refined |
+| Technical SEO | 36 URLs clean; titles, schema, robots refined |
 | AI search readiness | All AI crawlers get 200; OAI-SearchBot explicit; AI referral and AI-lead tracking added |
 | Conversion | Unified CTAs; misleading "clients" line removed |
 | Reporting | Search Console report script ready; needs one-time consent |
@@ -68,7 +68,7 @@ Date: 6 Nov 2026. Not yet deployed. Build and lint pass (0 errors).
 
 - `npm run build` and `npm run lint` (0 errors, 22 pre-existing warnings).
 - TypeScript `tsc --noEmit` clean.
-- Crawl of all 37 sitemap URLs: 200, unique titles/descriptions, canonicals,
+- Crawl of all 36 sitemap URLs: 200, unique titles/descriptions, canonicals,
   one H1, alt text, valid JSON-LD, 0 broken internal links.
 - Live crawler-access test for 7 user agents.
 - Before/after screenshots and heights at 360, 375, 390, 430, 768, 1440 px; no
