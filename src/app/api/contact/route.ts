@@ -17,7 +17,9 @@
  * fill ("website"), and per-IP rate limiting (in-memory per instance).
  */
 
+import { randomUUID } from "node:crypto";
 import { BOOKING_URL, SITE_URL } from "@/lib/site";
+import { saveLead, saveSentIds, storageConfigured } from "@/lib/lead-store";
 import {
   clientConfirmationEmail,
   leadNotificationEmail,
@@ -143,14 +145,16 @@ function acknowledgementText(lead: Lead): string {
   ].join("\n");
 }
 
-async function deliver(lead: Lead): Promise<"sent" | "unconfigured" | "failed"> {
+const RESEND_API = process.env.RESEND_API_URL || "https://api.resend.com";
+
+async function deliver(lead: Lead, leadId: string): Promise<"sent" | "unconfigured" | "failed"> {
   const subject = lead.companyName
     ? `New project inquiry from ${lead.firstName} (${lead.companyName})`
     : `New project inquiry from ${lead.firstName}`;
 
   if (process.env.RESEND_API_KEY) {
     const send = (payload: Record<string, unknown>) =>
-      fetch("https://api.resend.com/emails", {
+      fetch(`${RESEND_API}/emails`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
@@ -169,13 +173,21 @@ async function deliver(lead: Lead): Promise<"sent" | "unconfigured" | "failed"> 
       subject,
       text: leadText(lead),
       html: leadNotificationEmail(toEmailLead(lead), SITE_URL),
+      // Tags come back on webhook events, which is how a bounce is matched
+      // to the stored lead (see /api/resend-webhook).
+      tags: [
+        { name: "kind", value: "lead_notify" },
+        { name: "lead", value: leadId },
+      ],
     });
     if (!res.ok) return "failed";
+    const notifyId = ((await res.json().catch(() => ({}))) as { id?: string }).id ?? null;
+    let ackId: string | null = null;
 
     // 2) Confirmation to the sender. Best effort: a failed acknowledgement
     //    must never lose a lead that already arrived.
     try {
-      await send({
+      const ack = await send({
         from: "Webify <hello@webify.org.in>",
         to: [lead.email],
         reply_to: INBOX,
@@ -187,11 +199,23 @@ async function deliver(lead: Lead): Promise<"sent" | "unconfigured" | "failed"> 
           BOOKING_URL,
           INBOX
         ),
+        tags: [
+          { name: "kind", value: "lead_autoreply" },
+          { name: "lead", value: leadId },
+        ],
       });
+      ackId = ((await ack.json().catch(() => ({}))) as { id?: string }).id ?? null;
     } catch {
       // ignore
     }
 
+    // Accepted by Resend, not yet delivered: delivery is confirmed (or not)
+    // later by the webhook. Recording ids lets the two be matched.
+    if (storageConfigured()) {
+      await saveSentIds(leadId, { notifyId, ackId }).catch((err) =>
+        console.error("[contact-lead] could not record sent ids", err)
+      );
+    }
     return "sent";
   }
 
@@ -255,8 +279,21 @@ export async function POST(req: Request) {
     return Response.json({ ok: false }, { status: 400 });
   }
 
+  // Store first: the stored copy survives any email failure. A storage
+  // outage must not block delivery, so it is logged, never fatal.
+  const leadId = randomUUID().replace(/-/g, "");
+  if (storageConfigured()) {
+    try {
+      await saveLead({ id: leadId, receivedAt: new Date().toISOString(), ...lead });
+    } catch (err) {
+      console.error("[contact-lead] lead NOT stored (email delivery continues)", err);
+    }
+  } else {
+    console.warn("[contact-lead] no Blob store connected; lead exists only as email");
+  }
+
   try {
-    const outcome = await deliver(lead);
+    const outcome = await deliver(lead, leadId);
     if (outcome === "sent") return Response.json({ ok: true });
     if (outcome === "unconfigured") {
       console.error("[contact-lead] no delivery provider configured; lead NOT delivered");

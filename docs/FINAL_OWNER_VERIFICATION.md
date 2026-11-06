@@ -13,12 +13,12 @@ Status key: **Verified complete** · **Pending owner action** · **Failed** ·
 | --- | --- | --- |
 | 1a | Lead recipient configured | Verified complete |
 | 1b | Sending domain SPF / DKIM / bounce MX | Verified complete |
-| 1c | DMARC | Verified complete (present), weak policy, see note |
+| 1c | DMARC | Present, monitor-only. Owner decision: add reporting first, quarantine later; no DNS change made |
 | 1d | Test email reached the inbox | **Pending owner action** |
 | 1e | Resend delivery events (delivered / bounced) | Not accessible (send-only key) |
-| 1f | Async bounce handling | **Failed** (gap, see below) |
+| 1f | Async bounce handling | Implemented and tested with a mock; pending owner setup (see RESEND_DELIVERY_MONITORING.md) |
 | 2 | Resend API key security | Verified complete |
-| 3 | AI privacy statement | Pending owner action (wording qualified) |
+| 3 | AI privacy statement | Verified complete: owner approved paid business/API plans only |
 | 4 | Google Search Console | Not accessible (DNS verification record present) |
 | 5 | Bing Webmaster Tools | Not accessible |
 | 5b | Bing AI Performance | Not accessible |
@@ -129,3 +129,16 @@ No citation data is claimed. IndexNow submission of all 36 URLs returned
 | `src/lib/pages/service.ts` | AI data-training answer limited to paid plans, free tiers flagged (text only) |
 | `docs/FINAL_WEBSITE_AUDIT.md` | "Accepted and delivered" corrected to "accepted by Resend; inbox delivery not verified" |
 | `docs/FINAL_OWNER_VERIFICATION.md` | This file |
+
+## Update: owner decisions (6 Nov 2026)
+
+- **AI privacy:** approved. Policy: client data only on paid business/API
+  plans with verified terms; no free API tiers or consumer accounts for client
+  data; approved providers documented per project.
+- **Bounce alerts and lead storage:** built. See `RESEND_DELIVERY_MONITORING.md`.
+  12/12 mock tests pass. Needs a Blob store, an alert mailbox and the Resend
+  webhook to go live.
+- **DMARC:** wait. Next step when ready: add `rua=mailto:<reports address>`,
+  review reports for 1 to 2 weeks, then consider `p=quarantine`. No DNS
+  change made.
+- **Push:** held until the owner checks the test email.

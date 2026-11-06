@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalPage eyebrow="LEGAL" title="Privacy Policy" updated="12 July 2024">
+    <LegalPage eyebrow="LEGAL" title="Privacy Policy" updated="6 November 2026">
       <LegalSection title="The short version">
         <p>
           The only personal data this site collects is what you type into the
@@ -57,8 +57,9 @@ export default function PrivacyPage() {
         </p>
         <ul>
           <li>
-            <strong>Vercel</strong> (United States) hosts this site and runs
-            the form endpoint your submission is posted to.
+            <strong>Vercel</strong> (United States) hosts this site, runs
+            the form endpoint your submission is posted to, and keeps a
+            private copy of each submission so a failed email cannot lose it.
           </li>
           <li>
             <strong>Resend</strong> (United States) sends the resulting emails:
@@ -80,8 +81,8 @@ export default function PrivacyPage() {
 
       <LegalSection title="Retention and your rights">
         <p>
-          Inquiries stay in our inbox for as long as the conversation or
-          engagement needs them. You can ask us at any time to show you what
+          Inquiries stay in our inbox, and in the private copy described
+          above, for as long as the conversation or engagement needs them. You can ask us at any time to show you what
           we hold about you, correct it, or delete it entirely: email{" "}
           <a
             href="mailto:contact@webify.org.in?subject=Privacy%20request"

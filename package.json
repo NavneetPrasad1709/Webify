@@ -8,10 +8,12 @@
     "start": "next start",
     "lint": "eslint",
     "indexnow": "node scripts/indexnow.mjs",
-    "seo:report": "node scripts/seo-report.mjs"
+    "seo:report": "node scripts/seo-report.mjs",
+    "test:webhook": "node scripts/test-resend-webhook.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
+    "@vercel/blob": "^2.8.2",
     "gsap": "^3.15.0",
     "lenis": "^1.3.25",
     "next": "16.2.10",
