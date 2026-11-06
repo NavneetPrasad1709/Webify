@@ -65,8 +65,13 @@ export default function ProjectSingle({
       });
 
       // Count-up feature numbers (mirrors the source counter-animation)
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       gsap.utils.toArray<HTMLElement>("[data-ps-counter]").forEach((el) => {
+        if (reduceMotion) return; // keep the real value, no count-up
         const end = parseFloat(el.dataset.count || "0");
+        // The real value ships in the HTML (crawlers, no-JS, slow phones);
+        // only a live browser rewinds it to 0 for the count-up.
+        el.textContent = "0";
         const obj = { val: 0 };
         gsap.to(obj, {
           val: end,
@@ -221,7 +226,7 @@ export default function ProjectSingle({
                   data-count={f.value}
                   className="text-[56px] leading-none md:text-[72px]"
                 >
-                  0
+                  {f.value}
                 </span>
                 <span className="text-[56px] leading-none md:text-[72px]">
                   {f.suffix}

@@ -118,7 +118,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "How does pricing work?",
-    a: "Every project is a fixed quote, in USD or INR, agreed in writing before work starts. No hourly billing. Send a short brief and you get a written quote within 3 working days.",
+    a: "Every project is a fixed quote, in USD or INR, agreed in writing before work starts, usually paid in milestones (a deposit to start, the balance at launch). Hosting, domains, and third-party subscriptions are billed by those providers and are not part of the project fee. Send a short brief and you get a written quote within 3 working days.",
   },
   {
     q: "Do you work with clients outside India?",

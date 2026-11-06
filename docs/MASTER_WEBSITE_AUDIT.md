@@ -41,7 +41,7 @@ radii, shadows or animations were changed.
 Live homepage at 375 px: **23,053 px** (about 29 phone screens). Cause was
 content, not layout: the same five promises (direct access, founding rates,
 24h reply, 30-day support, ownership) appeared 4 to 6 times each across
-sections. Details and results: `MOBILE_CONTENT_OPTIMISATION.md`.
+sections. Details and results: `MOBILE_CONTENT_AUDIT.md`.
 
 ## 5. Content duplication found
 

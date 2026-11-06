@@ -45,7 +45,7 @@ Ads account).
   A separate page would be near-duplicate content.
 - No country landing pages (no local teams outside India).
 
-## Long-tail questions to answer next (see SEO_CONTENT_STRATEGY.md)
+## Long-tail questions to answer next (see CONTENT_STRATEGY.md)
 
 How much does SaaS development cost; custom software cost factors; how to
 choose a software development company; questions to ask before hiring an

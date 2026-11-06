@@ -12,7 +12,7 @@ const answers = [
   {
     label: "Hours",
     heading: "Your morning, our evening",
-    body: "Calls run 6:00 to 11:00 pm IST: 8:30 am to 1:30 pm in New York, and normal daytime hours for clients in India.",
+    body: "Calls run 6:00 to 11:00 pm IST: 7:30 am to 12:30 pm in New York in winter, 8:30 am to 1:30 pm in summer.",
   },
   {
     label: "Who builds it",

@@ -168,7 +168,7 @@ export default function Footer() {
                 decoding="async"
                 className="h-5 w-auto"
               />
-              &copy; 2024 Webify. All rights reserved.
+              &copy; 2024&ndash;{new Date().getFullYear()} Webify. All rights reserved.
             </p>
             <p className="flex flex-wrap items-center gap-x-6 gap-y-2">
               <Link href="/privacy" className="footer-navlink">

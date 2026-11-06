@@ -93,3 +93,27 @@ Date: 6 Nov 2026. Not yet deployed. Build and lint pass (0 errors).
     exhausted today; the local Lighthouse runs are not like-for-like).
 11. Manually check the hover roll on footer links and scroll smoothness on a
     real phone (headless browsers cannot judge feel).
+
+---
+
+## Follow-up pass (6 Nov 2026, later): external review fixes, no UI changes
+
+Verdicts per issue: `FINAL_WEBSITE_AUDIT.md`. Files changed:
+
+| File | Change |
+| --- | --- |
+| `src/components/pages/project/ProjectSingle.tsx` | Counters render real values in HTML; count-up only in a live browser; skipped under reduced motion |
+| `src/components/sections/WorkingRemotely.tsx` | New York hours correct in winter and summer; wrong "daytime in India" line removed |
+| `src/lib/pages/service.ts` | AI data-training answer narrowed to what can be confirmed |
+| `src/components/sections/Footer.tsx` | Copyright 2024 to current year |
+| `src/lib/data.ts` | Pricing FAQ: milestone payments, third-party costs excluded |
+| `src/components/ui/AiReferral.tsx` | Adds `booking_click`, `cta_click`, `work_click`, `form_start` events |
+| `docs/` | FINAL_WEBSITE_AUDIT, MOBILE_QA_REPORT, CONVERSION_TRACKING added; three docs renamed to MOBILE_CONTENT_AUDIT, OFF_PAGE_SEO_STRATEGY, CONTENT_STRATEGY |
+
+Already fixed before this pass (verified live): homepage mockup numbers,
+"most of our clients" line, generic AI and custom-software overviews.
+Not an issue: homepage blog already shows the newest 3 posts.
+
+Verified: lint 0 errors, `tsc` clean, build passes, live form API tested
+(400/415 on bad input, 200 on a real test lead), homepage heights unchanged
+at 390/768/1440 px and within 26 px at phone widths.
