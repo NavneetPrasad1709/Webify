@@ -12,22 +12,22 @@ const answers = [
   {
     label: "Hours",
     heading: "Your morning, our evening",
-    body: "Calls run 6:00 pm to 11:00 pm IST. That lands between 8:30 am and 1:30 pm in New York, and the start of the working day in San Francisco. You brief us at the end of your day and read the update at the start of the next one.",
+    body: "Calls run 6:00 to 11:00 pm IST: 8:30 am to 1:30 pm in New York, and normal daytime hours for clients in India.",
   },
   {
     label: "Who builds it",
     heading: "The people who scoped it",
-    body: "You talk to the developers and designers doing the work, not an account layer that relays it. The person who writes your scope is on the call when you question it.",
+    body: "You talk to the developers and designers doing the work. No account managers, no handoffs.",
   },
   {
     label: "Between calls",
     heading: "A live URL, not a status email",
-    body: "You get a staging link in the first week and it updates as we build. Progress is something you check, not something you have to ask for.",
+    body: "A staging link from week one that updates as we build.",
   },
   {
     label: "Money",
-    heading: "Fixed price, quoted in USD",
-    body: "The number is agreed before any work starts. If the scope genuinely changes, it gets re-quoted and you approve it. Nothing is billed by surprise.",
+    heading: "Fixed price, USD or INR",
+    body: "Agreed before work starts. If scope changes, it is re-quoted and you approve it first.",
   },
 ];
 
@@ -41,8 +41,7 @@ export default function WorkingRemotely() {
             Remote, and specific about it
           </h2>
           <p className="mx-auto mt-7 max-w-[58ch] text-base font-medium leading-relaxed text-black md:text-lg">
-            Most of our clients have never met us in person and never need to.
-            Here is exactly how that works, before you have to ask.
+            Working with us is fully remote. Here is exactly how it works.
           </p>
         </div>
 
@@ -70,7 +69,7 @@ export default function WorkingRemotely() {
             Book a 20 Minute Call
           </PillButton>
           <PillButton tone="dark" href="/contact">
-            Start a Project
+            Discuss Your Project
           </PillButton>
         </div>
       </div>

@@ -6,9 +6,6 @@ import Work from "@/components/sections/Work";
 import ServicesBand from "@/components/sections/ServicesBand";
 import Impacts from "@/components/sections/Impacts";
 import Approach from "@/components/sections/Approach";
-import Brands from "@/components/sections/Brands";
-import FoundingOffers from "@/components/sections/FoundingOffers";
-import CtaBand from "@/components/sections/CtaBand";
 import Pricing from "@/components/sections/Pricing";
 import Faq from "@/components/sections/Faq";
 import Blog from "@/components/sections/Blog";
@@ -37,14 +34,11 @@ export default function Home() {
       <Work />
       <ServicesBand />
       <Impacts />
-      <Brands />
       <Approach />
-      <FoundingOffers />
       <Pricing />
       <Faq />
       <Blog />
       <WorkingRemotely />
-      <CtaBand />
     </main>
   );
 }

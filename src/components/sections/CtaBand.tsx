@@ -13,7 +13,7 @@ export default function CtaBand() {
         </p>
         <div className="mt-8 flex justify-center">
           <PillButton tone="blue" href="/contact">
-            Start a Project
+            Discuss Your Project
           </PillButton>
         </div>
       </div>

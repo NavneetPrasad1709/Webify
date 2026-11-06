@@ -109,7 +109,7 @@ export default function BlogIndex() {
           Reading up before a build of your own? Tell us what you are making.
         </p>
         <PillButton tone="dark" href="/contact">
-          Start a Project
+          Discuss Your Project
         </PillButton>
       </div>
     </section>

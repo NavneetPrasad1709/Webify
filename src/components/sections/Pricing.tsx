@@ -45,9 +45,7 @@ export default function Pricing() {
         <p className="eyebrow text-gray-mid">FOUNDING RATES, FIRST 10 PROJECTS</p>
         <h2 className="display-2 mt-4">Pricing</h2>
         <p className="mx-auto mt-5 max-w-lg text-[15px] font-medium text-black md:text-base">
-          Every project is a fixed quote, agreed in writing before we start. No
-          hourly surprises. Our first 10 projects ship at founding rates,
-          locked for 12 months.
+          Fixed quotes, agreed in writing before we start. No hourly billing.
         </p>
       </div>
 
@@ -90,11 +88,11 @@ export default function Pricing() {
                   href="/contact"
                   className="mt-8 w-full justify-center text-ink!"
                 >
-                  Start a Project
+                  Discuss Your Project
                 </PillButton>
               ) : (
                 <PillButton tone="dark" href="/contact" className="mt-8 w-full justify-center">
-                  Start a Project
+                  Discuss Your Project
                 </PillButton>
               )}
 
@@ -117,10 +115,7 @@ export default function Pricing() {
       </div>
 
       <p className="mx-auto mt-10 max-w-2xl text-center text-sm font-medium text-black">
-        Every quote is fixed and scoped in writing before we start. You own everything we ship,
-        backed by a 30-day post-launch window. These are founding-client rates for our first 10
-        projects, and early clients keep them for 12 months. Need ongoing help after launch? We
-        offer a light care retainer once your project is live.
+        Founding rates for our first 10 projects, kept for 12 months. Quoted in USD or INR.
       </p>
     </section>
   );

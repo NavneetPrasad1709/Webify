@@ -3,7 +3,8 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { gsap, ScrollTrigger, revealFrom, revealTo } from "@/lib/anim";
-import { services } from "@/lib/pages/service";
+import { homeServices as services } from "@/lib/pages/service";
+import PillButton from "@/components/ui/PillButton";
 import RollingText from "@/components/ui/RollingText";
 import LazyVideo from "@/components/ui/LazyVideo";
 
@@ -209,6 +210,13 @@ export default function ServicesAccordion() {
               </article>
             );
           })}
+        </div>
+
+        {/* The homepage lists the core services; the full catalogue is one click away. */}
+        <div className="mt-14 flex justify-center">
+          <PillButton tone="blue" href="/service">
+            View All Services
+          </PillButton>
         </div>
       </div>
     </section>

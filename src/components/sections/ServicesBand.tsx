@@ -162,8 +162,7 @@ export default function ServicesBand() {
             ))}
           </h2>
           <p className="sb-fade mt-6 max-w-xl text-[15px] leading-relaxed text-white md:text-base">
-            Whichever one is yours, you work directly with the senior team that designs
-            and builds it. See our live builds, we launched in 2024.
+            Whichever one is yours, you work directly with the team that builds it.
           </p>
         </div>
 
@@ -257,7 +256,7 @@ export default function ServicesBand() {
             A senior replies within 24 hours.
           </p>
           <PillButton tone="white" href="/contact">
-            Start a Project
+            Discuss Your Project
           </PillButton>
         </div>
       </div>

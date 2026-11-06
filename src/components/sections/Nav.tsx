@@ -71,6 +71,10 @@ export default function Nav() {
     let raf = 0;
     const sample = () => {
       raf = 0;
+      // Past the top the bar wears its own dark ground and the logo is white
+      // regardless, so skip the forced layout (elementsFromPoint + computed
+      // styles up the tree) that otherwise runs on every scroll frame.
+      if (window.scrollY > 24) return;
       const stack = document.elementsFromPoint(72, 44);
       for (const el of stack) {
         if (navRef.current?.contains(el)) continue;
@@ -107,14 +111,15 @@ export default function Nav() {
      scroll. This used to be a ScrollTrigger, which is a heavy dependency for
      comparing two numbers, and it is the reason gsap loaded on every route. */
   useEffect(() => {
-    let lastY = window.scrollY;
+    // Direction only flips after a deliberate 12px of travel. Trackpads and
+    // smooth-scroll easing produce 1px reversals that otherwise blink the bar.
+    const THRESHOLD = 12;
+    let anchorY = window.scrollY;
     let raf = 0;
 
     const evaluate = () => {
       raf = 0;
       const y = window.scrollY;
-      const goingDown = y > lastY;
-      lastY = y;
 
       const isScrolled = y > 24;
       if (isScrolled !== scrolledRef.current) {
@@ -122,8 +127,19 @@ export default function Nav() {
         setScrolled(isScrolled);
       }
 
-      if (openRef.current) return;
-      const shouldHide = goingDown && y > 120;
+      if (openRef.current) {
+        anchorY = y;
+        return;
+      }
+      const delta = y - anchorY;
+      let shouldHide = hiddenRef.current;
+      if (y <= 120) shouldHide = false;
+      else if (delta > THRESHOLD) shouldHide = true;
+      else if (delta < -THRESHOLD) shouldHide = false;
+      // Keep the anchor at the extreme of the current direction.
+      if ((hiddenRef.current && y > anchorY) || (!hiddenRef.current && y < anchorY) || shouldHide !== hiddenRef.current) {
+        anchorY = y;
+      }
       if (shouldHide === hiddenRef.current) return;
       hiddenRef.current = shouldHide;
       setBarHidden(shouldHide);
@@ -211,11 +227,19 @@ export default function Nav() {
         className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-5 py-5 md:px-10"
       >
         <Link href="/" onClick={() => setOpen(false)}>
-          <span className="flex items-center">
+          {/* Both lockups stay mounted and cross-fade. Swapping one img's src
+              made the browser fetch/decode mid-scroll and the logo blinked. */}
+          <span className="relative flex items-center">
             <img
-              src={onDark ? "/assets/brand/webify-logo-white-480.webp" : "/assets/brand/webify-logo-black-480.webp"}
+              src="/assets/brand/webify-logo-white-480.webp"
               alt="Webify"
-              className="h-10 w-auto object-contain md:h-11"
+              className={`h-10 w-auto object-contain transition-opacity duration-200 md:h-11 ${onDark ? "opacity-100" : "opacity-0"}`}
+            />
+            <img
+              src="/assets/brand/webify-logo-black-480.webp"
+              alt=""
+              aria-hidden="true"
+              className={`absolute left-0 top-0 h-10 w-auto object-contain transition-opacity duration-200 md:h-11 ${onDark ? "opacity-0" : "opacity-100"}`}
             />
           </span>
         </Link>
@@ -295,7 +319,7 @@ export default function Nav() {
           src="/assets/brand/webify-icon-dark-384.webp"
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute -bottom-[10%] -right-[6%] h-[70vh] w-auto opacity-[0.05]"
+          className="pointer-events-none absolute -bottom-[10%] -right-[6%] h-[70vh] w-auto object-contain opacity-[0.05]"
         />
         <nav className="flex flex-1 flex-col items-start justify-center gap-3 overflow-y-auto px-5 pt-24 pb-6 md:px-10">
           {NAV_LINKS.map((link, i) => (

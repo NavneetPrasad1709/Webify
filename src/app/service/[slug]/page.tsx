@@ -16,8 +16,9 @@ export function generateStaticParams() {
    competitive local term for a year regardless. */
 const metaTitles: Record<string, string> = {
   "website-development": "Website Development Company for Startups and Teams",
-  "custom-software": "Custom Software Development Company for Startups",
-  "ai-development": "AI Development Company: Chatbots, Agents and LLM Apps",
+  "saas-development": "SaaS Development Company: MVPs and Web Products",
+  "custom-software": "Custom Software Development for Business Systems",
+  "ai-development": "AI Development and Automation: Agents and Chatbots",
   "branding-design": "Branding and UI/UX Design Services for Digital Products",
   "crm-system": "Custom CRM Development for Growing Teams",
   "e-commerce": "E-commerce Website Development, Designed to Convert",

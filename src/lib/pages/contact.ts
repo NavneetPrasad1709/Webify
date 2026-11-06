@@ -44,7 +44,7 @@ export type RoutingCard = {
 export const routingCards: RoutingCard[] = [
   {
     number: "01",
-    title: "Start a Project",
+    title: "Discuss Your Project",
     text: "Email us what you are building and a senior team member replies within 24 hours, with an honest take on scope and timeline.",
     cta: "Email Us",
     href: "mailto:contact@webify.org.in?subject=Project%20inquiry",

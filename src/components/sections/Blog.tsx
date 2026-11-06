@@ -78,13 +78,14 @@ export default function Blog() {
 
       {/* Cards grid */}
       <div className="blog-grid max-w-6xl mx-auto mt-12 grid md:grid-cols-3 gap-5">
-        {latest.map((p) => (
+        {latest.map((p, i) => (
           // Whole card is the link (title and description clicks work too),
           // matching the /blog index card pattern.
           <Link
             key={p.slug}
             href={`/blog/${p.slug}`}
-            className="blog-card group bg-fill-light rounded-card p-4 flex flex-col"
+            /* Two previews on phones, three from tablet up: the third lives on /blog. */
+            className={`blog-card group bg-fill-light rounded-card p-4 flex-col ${i === 2 ? "hidden md:flex" : "flex"}`}
           >
             <span className="relative block aspect-[4/3] overflow-hidden rounded-xl">
               <Image

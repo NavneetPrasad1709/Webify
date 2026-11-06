@@ -44,19 +44,30 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
 
       lenis.on("scroll", () => getScrollBridge()?.update());
 
+      // Until gsap loads, a plain rAF drives Lenis. Once it does, Lenis moves
+      // onto gsap's ticker: two separate loops put scrubbed tweens one frame
+      // behind the scroll position, which reads as jitter.
       let frame = 0;
       const raf = (time: number) => {
         lenis.raf(time);
         frame = requestAnimationFrame(raf);
       };
       frame = requestAnimationFrame(raf);
+      let untick: (() => void) | undefined;
 
       // Sections that mounted before Lenis took over measured against the
       // native scroller, so their triggers need re-measuring once it does.
-      const stop = onScrollBridge((bridge) => bridge.refresh());
+      const stop = onScrollBridge((bridge) => {
+        if (!untick) {
+          cancelAnimationFrame(frame);
+          untick = bridge.tick((t) => lenis.raf(t));
+        }
+        bridge.refresh();
+      });
 
       teardown = () => {
         cancelAnimationFrame(frame);
+        untick?.();
         stop();
         lenis.destroy();
         lenisRef.current = null;

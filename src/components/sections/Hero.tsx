@@ -10,11 +10,11 @@ import LazyVideo from "@/components/ui/LazyVideo";
 /* Rotating build targets - each must read naturally after "We Build". */
 /* Only build targets the studio actually sells (see /service). */
 const ROTATING = [
-  "Websites",
   "SaaS Products",
+  "Custom Software",
+  "AI Automation",
   "Web Apps",
-  "Dashboards",
-  "Landing Pages",
+  "Websites",
 ];
 
 /* One source for the rotation interval. The progress bar under the live row
@@ -176,8 +176,8 @@ export default function Hero() {
         className="display-1 relative z-10 px-5 pt-32 text-white md:px-10 md:pt-40"
       >
         <span className="sr-only">
-          We build websites, SaaS products, web apps, dashboards, and landing
-          pages.
+          We build SaaS products, custom software, AI automation, web apps,
+          and websites.
         </span>
         <span aria-hidden="true" className="block overflow-hidden">
           <span className="hero-line block">We Build</span>
@@ -234,13 +234,13 @@ export default function Hero() {
             className="rounded-card bg-fill-dark/80 p-6 backdrop-blur"
           >
             <h2 className="text-[26px] font-semibold leading-snug tracking-tight text-white">
-              Webify <span className="text-gray-soft">is a</span> Senior-Led{" "}
-              <span className="text-gray-soft">Design &amp; Engineering</span>{" "}
-              Company
+              Webify <span className="text-gray-soft">is a</span> Product Engineering{" "}
+              <span className="text-gray-soft">&amp;</span> AI Automation{" "}
+              <span className="text-gray-soft">Company</span>
             </h2>
             <div className="mt-6">
               <PillButton tone="blue" href="/contact">
-                <RollingText label="Start a Project" />
+                <RollingText label="Discuss Your Project" />
               </PillButton>
             </div>
           </div>
@@ -357,12 +357,12 @@ export default function Hero() {
       <p className="relative z-10 mb-10 max-w-xs px-5 text-[13px] font-bold uppercase leading-snug text-white lg:absolute lg:bottom-12 lg:left-10 lg:mb-0 lg:px-0">
         <span className="block overflow-hidden">
           <span className="hero-line block">
-            WEBIFY is a SENIOR-LED COMPANY
+            WE BUILD DIGITAL PRODUCTS
           </span>
         </span>
         <span className="block overflow-hidden">
           <span className="hero-line block">
-            BUILT FOR CLARITY, SPEED, AND EXECUTION.
+            THAT MOVE BUSINESSES FORWARD.
           </span>
         </span>
       </p>

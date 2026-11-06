@@ -67,7 +67,7 @@ export default function Footer() {
             Book a 20 Minute Call
           </PillButton>
           <PillButton tone="dark" href="/contact">
-            Start a Project
+            Discuss Your Project
           </PillButton>
         </div>
 
@@ -99,7 +99,7 @@ export default function Footer() {
                   {col.links.map((link) => (
                     <li key={link.label}>
                       <Link href={link.href} className="footer-navlink text-xl font-semibold">
-                        <span>{link.label}</span>
+                        <span data-label={link.label}>{link.label}</span>
                       </Link>
                     </li>
                   ))}
@@ -115,7 +115,7 @@ export default function Footer() {
                     href="mailto:contact@webify.org.in?subject=Project%20inquiry"
                     className="footer-navlink text-xl font-semibold"
                   >
-                    <span>contact@webify.org.in</span>
+                    <span data-label="contact@webify.org.in">contact@webify.org.in</span>
                   </a>
                 </li>
                 <li>
@@ -125,7 +125,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="footer-navlink text-xl font-semibold"
                   >
-                    <span>Book a 20 minute call</span>
+                    <span data-label="Book a 20 minute call">Book a 20 minute call</span>
                   </a>
                 </li>
                 <li>
@@ -172,10 +172,10 @@ export default function Footer() {
             </p>
             <p className="flex flex-wrap items-center gap-x-6 gap-y-2">
               <Link href="/privacy" className="footer-navlink">
-                <span>Privacy Policy</span>
+                <span data-label="Privacy Policy">Privacy Policy</span>
               </Link>
               <Link href="/terms" className="footer-navlink">
-                <span>Terms of Service</span>
+                <span data-label="Terms of Service">Terms of Service</span>
               </Link>
             </p>
           </div>

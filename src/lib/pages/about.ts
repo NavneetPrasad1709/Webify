@@ -3,7 +3,7 @@
 export const aboutHero = {
   tag: "WHO WE ARE",
   title: "A Founding Company",
-  cta: "Start a Project",
+  cta: "Discuss Your Project",
   video: "/assets/about/hero-banner.mp4",
   poster: "/assets/about/hero-banner-poster.jpg",
 };
@@ -85,7 +85,7 @@ export const resultsSection = {
       bold: "Branding",
       sub: "Identities That Speak",
       text: "Visual Identities That Stand Out",
-      cta: "Start a Project",
+      cta: "Discuss Your Project",
     },
   ] as TemplateCard[],
 };

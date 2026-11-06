@@ -43,11 +43,10 @@ export default function Journey() {
         gsap.utils.toArray<HTMLElement>("[data-journey-image]").forEach((img, i) => {
           gsap.fromTo(
             img,
-            { opacity: 0, y: 60, filter: "blur(8px)" },
+            { opacity: 0, y: 60 },
             {
               opacity: 1,
               y: 0,
-              filter: "blur(0px)",
               ease: "none",
               scrollTrigger: {
                 trigger: ref.current,

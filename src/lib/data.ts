@@ -7,7 +7,7 @@ import { services } from "@/lib/pages/service";
    the homepage sections read those canonical sources directly. */
 
 export const impactsParagraph =
-  "Webify is a senior-led design and engineering company built to ship websites and products that grow revenue, for founders and product leaders who value precision, speed, and outcomes. Digital systems that scale without adding operational drag. Strategy, design, and execution from one in-house team of engineers and designers.";
+  "Webify is a product engineering and AI automation company. We design and build SaaS products, custom software, AI-powered systems, and the websites that sell them, with one focused team of designers and engineers.";
 
 export const stats: {
   value: number;
@@ -76,11 +76,9 @@ export const pricingPlans: PricingPlan[] = [
     blurb: "For a focused site or landing page, designed and built to convert.",
     timeline: "Ships in 2 to 3 weeks",
     features: [
-      "Strategy and content session",
+      "Strategy and copy session",
       "Bespoke design, no templates",
-      "Responsive build, launch-ready",
-      "CMS so you can edit it yourself",
-      "2 revision rounds",
+      "CMS you can edit yourself",
       "30-day post-launch support",
     ],
   },
@@ -91,46 +89,44 @@ export const pricingPlans: PricingPlan[] = [
     featured: true,
     features: [
       "Everything in Launch",
-      "Full multi-page site or web app",
-      "CMS setup and integrations",
+      "Multi-page site with integrations",
       "SEO and performance pass",
-      "Dedicated senior designer and developer",
       "Weekly working session",
     ],
   },
   {
     name: "Product",
-    blurb: "For a web app or product, designed and engineered by our in-house team.",
+    blurb: "For a SaaS product, web app, AI feature, or custom business system.",
     timeline: "Scoped per build",
     features: [
       "Everything in Website",
-      "A dedicated senior design and engineering team",
-      "A roadmap we plan together",
-      "Ship in focused cycles, no long lock-in",
+      "Dedicated design and engineering team",
+      "Roadmap planned together",
+      "Focused cycles, no long lock-in",
     ],
   },
 ];
 
 export const faqs: { q: string; a: string }[] = [
   {
-    q: "Do you work with international clients?",
-    a: "Yes. We are a remote-first company set up to work with clients worldwide, across North America, Europe, the Middle East, and beyond. We run projects async-first with clear documentation and schedule calls in overlapping hours, so time zones rarely slow anything down.",
-  },
-  {
-    q: "How does the creative process work?",
-    a: "Every engagement starts with a discovery workshop where we define goals, audience, and scope. From there we move through strategy, design, and build in weekly sprints, with a shared board so you always know what is in progress and what ships next.",
+    q: "What does Webify build?",
+    a: "SaaS products and MVPs, custom business software, AI automation and chatbots, CRMs, mobile apps, and the websites that sell them. One team designs and engineers each project end to end.",
   },
   {
     q: "How long does a typical project take?",
-    a: "A landing page or site refresh usually ships in 2 to 3 weeks. A full multi-page website typically ships in 4 to 8 weeks, and larger web apps and products are scoped per build. We agree on a delivery schedule in writing before any work begins.",
+    a: "A landing page ships in 2 to 3 weeks, a full website in 4 to 8 weeks, and a SaaS MVP or custom system in 6 to 14 weeks. The schedule is agreed in writing before work starts.",
   },
   {
-    q: "How do pricing and engagements work?",
-    a: "Every project is a fixed quote, agreed in writing before work starts, so there is no hourly billing and no surprises. We are taking our first 10 projects at founding rates, locked in for 12 months. Tell us what you are building and you get a written quote within 3 working days.",
+    q: "How does pricing work?",
+    a: "Every project is a fixed quote, in USD or INR, agreed in writing before work starts. No hourly billing. Send a short brief and you get a written quote within 3 working days.",
+  },
+  {
+    q: "Do you work with clients outside India?",
+    a: "Yes. We work remotely with clients worldwide, with calls in hours that overlap US, UK, and Middle East working days.",
   },
   {
     q: "What happens after launch?",
-    a: "We do not disappear at go-live. Every project includes a 30-day support window for fixes and refinements. After your first project ships, you can move to a light care retainer for ongoing iterations, new pages, and performance monitoring.",
+    a: "Every project includes 30 days of support for fixes and refinements. After that, an optional care retainer covers updates and new work.",
   },
 ];
 
@@ -169,47 +165,34 @@ export interface ApproachCard {
   wide: boolean;
 }
 
+/* Four real steps, in order. Rows alternate wide/narrow (3+2, 2+3) on desktop. */
 export const approachCards: ApproachCard[] = [
   {
-    title: "Strategy-First Kickoff",
-    body: "Every engagement opens by defining clear goals, mapping your audience, and aligning with your brand voice, a foundation the design can stand on.",
-    highlights: ["defining clear goals", "brand voice"],
+    title: "1. Scope In Writing",
+    body: "A short call, then a written scope with a fixed price and a timeline. Nothing starts until you approve it.",
+    highlights: ["fixed price"],
     visual: "browser",
     wide: true,
   },
   {
-    title: "Mobile-First By Default",
-    body: "Every layout is composed for seamless mobile-first experiences, holding performance and clarity on every device.",
-    highlights: ["seamless mobile-first experiences"],
-    visual: "phones",
+    title: "2. Design You Approve",
+    body: "Screens designed in Figma around the one action your users need to take, with two revision rounds.",
+    highlights: ["two revision rounds"],
+    visual: "editor",
     wide: false,
   },
   {
-    title: "Conversion-Driven",
-    body: "Websites built with strategy, designed to engage audiences, and crafted to turn visitors into customers.",
-    highlights: ["visitors into customers"],
+    title: "3. Build On A Live URL",
+    body: "A staging link from week one that updates as we build, so progress is something you check, not ask for.",
+    highlights: ["staging link from week one"],
     visual: "dashboard",
     wide: false,
   },
   {
-    title: "Pixel-Perfect Development",
-    body: "Designed and developed with pixel-perfect precision, delivering high performance and easy updates.",
-    highlights: ["pixel-perfect precision"],
-    visual: "editor",
-    wide: true,
-  },
-  {
-    title: "Seamless CMS Launch",
-    body: "Launched on a powerful CMS, so your team can update and manage content effortlessly after going live.",
-    highlights: ["update and manage content"],
+    title: "4. Launch And Hand Over",
+    body: "Launch, a CMS your team can edit, full handover of code and accounts, and 30 days of support after go-live.",
+    highlights: ["full handover", "30 days of support"],
     visual: "cms",
     wide: true,
-  },
-  {
-    title: "Future-Ready",
-    body: "Systems designed to be scalable and future-ready, adapting as your business grows.",
-    highlights: ["scalable and future-ready"],
-    visual: "dial",
-    wide: false,
   },
 ];

@@ -15,6 +15,9 @@
 export type ScrollBridge = {
   update: () => void;
   refresh: () => void;
+  /** Run `fn(timeMs)` on gsap's ticker, so smooth scroll and every scrubbed
+      tween advance in the same frame. Returns a remover. */
+  tick: (fn: (timeMs: number) => void) => () => void;
 };
 
 let current: ScrollBridge | null = null;

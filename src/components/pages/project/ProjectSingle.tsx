@@ -263,7 +263,7 @@ export default function ProjectSingle({
               Book a 20 Minute Call
             </PillButton>
             <PillButton tone="dark" href={contactHref}>
-              Start a Project
+              Discuss Your Project
             </PillButton>
           </div>
         </div>

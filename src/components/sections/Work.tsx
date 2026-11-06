@@ -57,17 +57,16 @@ export default function Work() {
         // STACK: as the next card rises to cover this one, this one recedes -
         // scaling down and dimming behind it so the deck reads with depth.
         if (next) {
+          const st = { trigger: next, start: "top bottom", end: "top 16%", scrub: true };
           gsap.fromTo(
             card,
-            { scale: 1, filter: "brightness(1)" },
-            {
-              scale: 0.9,
-              filter: "brightness(0.82)",
-              ease: "none",
-              transformOrigin: "center top",
-              scrollTrigger: { trigger: next, start: "top bottom", end: "top 16%", scrub: true },
-            }
+            { scale: 1 },
+            { scale: 0.9, ease: "none", transformOrigin: "center top", scrollTrigger: st }
           );
+          const dim = card.querySelector("[data-work-dim]");
+          if (dim) {
+            gsap.fromTo(dim, { opacity: 0 }, { opacity: 0.18, ease: "none", scrollTrigger: { ...st } });
+          }
         }
 
         // No vertical pan on the visual: the hero video has its own motion,
@@ -79,11 +78,10 @@ export default function Work() {
       if (titleRef.current) {
         gsap.fromTo(
           titleRef.current,
-          { opacity: 1, scale: 1, filter: "blur(0px)", transformOrigin: "center center" },
+          { opacity: 1, scale: 1, transformOrigin: "center center" },
           {
             opacity: 0,
             scale: 0.94,
-            filter: "blur(4px)",
             transformOrigin: "center center",
             ease: "none",
             scrollTrigger: {
@@ -138,6 +136,14 @@ export default function Work() {
                 data-work-card
                 className="relative mx-auto flex w-[min(96%,1560px)] flex-col gap-6 rounded-card bg-fill-light p-6 shadow-[0_30px_90px_-40px_rgba(0,0,0,0.45)] will-change-transform md:min-h-[62vh] md:p-10"
               >
+              {/* Dimming veil for the stacked-deck recede: an opacity tween
+                  composites cheaply, a scrubbed brightness filter repaints the
+                  whole card (video included) every frame. */}
+              <span
+                data-work-dim
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 z-30 rounded-[inherit] bg-black opacity-0"
+              />
               {/* Center - visual (in flow on mobile, absolutely centered on md+).
                   Hover scale lives on the frame; GSAP pans the img vertically. */}
               {/* The only thing inside this link is a decorative video, so
@@ -204,7 +210,7 @@ export default function Work() {
 
       <div className="relative z-10 mt-16 flex justify-center md:mt-24">
         <PillButton tone="dark" href="/project">
-          View All Projects
+          Explore Our Work
         </PillButton>
       </div>
     </section>

@@ -535,14 +535,26 @@ button:not(:disabled),
   line-height: 1.4;
   color: var(--color-ink);
 }
+/* A real second copy (::after) sits one full box below and the pair rolls up
+   by 100% of its own height, so a label that wraps to two lines still rolls
+   cleanly. The old text-shadow copy was offset by one line and overlapped
+   the second line of wrapped labels. */
 .footer-navlink > span {
+  position: relative;
   display: inline-block;
-  text-shadow: 0 1.4em var(--color-primary);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.footer-navlink > span::after {
+  content: attr(data-label);
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  color: var(--color-primary);
 }
 .footer-navlink:hover > span,
 .footer-navlink:focus-visible > span {
-  transform: translateY(-1.4em);
+  transform: translateY(-100%);
 }
 .footer-navlink:focus-visible {
   outline: 2px solid var(--color-primary);
@@ -554,6 +566,6 @@ button:not(:disabled),
   .footer-navlink:focus-visible > span {
     transform: none;
     color: var(--color-primary);
-    text-shadow: none;
   }
+  .footer-navlink > span::after { content: none; }
 }

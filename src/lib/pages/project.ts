@@ -65,7 +65,7 @@ export const projectDetails: ProjectDetail[] = [
     video: "/assets/project/vexel-ai.mp4",
     bodyImage: "/assets/project/vexel-ai-body.webp",
     liveUrl: "https://saas.webify.org.in/",
-    serviceSlug: "website-development",
+    serviceSlug: "saas-development",
     description:
       "A conversion-first marketing site and product dashboard UI for an AI sales-agent SaaS, designed and built to turn a complex product into a clear, fast, credible first impression.",
     meta: [

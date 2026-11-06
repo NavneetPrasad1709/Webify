@@ -5,6 +5,7 @@ import Team from "@/components/pages/about/Team";
 import Journey from "@/components/pages/about/Journey";
 import Methodology from "@/components/pages/about/Methodology";
 import Values from "@/components/pages/about/Values";
+import FoundingOffers from "@/components/sections/FoundingOffers";
 import CtaBand from "@/components/sections/CtaBand";
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function AboutPage() {
       <Journey />
       <Methodology />
       <Values />
+      <FoundingOffers />
       <CtaBand />
     </main>
   );

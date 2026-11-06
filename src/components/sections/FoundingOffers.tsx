@@ -111,7 +111,7 @@ export default function FoundingOffers() {
           Fixed quote in 3 working days. Rates locked for 12 months.
         </p>
         <PillButton tone="blue" href="/contact">
-          Start a Project
+          Discuss Your Project
         </PillButton>
       </div>
     </section>

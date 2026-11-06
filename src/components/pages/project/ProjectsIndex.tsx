@@ -116,7 +116,7 @@ export default function ProjectsIndex() {
           working days.
         </p>
         <PillButton tone="dark" href="/contact">
-          Start a Project
+          Discuss Your Project
         </PillButton>
       </div>
     </section>

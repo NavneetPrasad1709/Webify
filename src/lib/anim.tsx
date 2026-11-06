@@ -12,6 +12,14 @@ gsap.registerPlugin(ScrollTrigger);
 registerScrollBridge({
   update: () => ScrollTrigger.update(),
   refresh: () => ScrollTrigger.refresh(),
+  tick: (fn) => {
+    const cb = (time: number) => fn(time * 1000);
+    gsap.ticker.add(cb);
+    // Lag smoothing makes gsap skip time after a slow frame, which shows up
+    // as a jump once the smooth scroller is driven from this ticker.
+    gsap.ticker.lagSmoothing(0);
+    return () => gsap.ticker.remove(cb);
+  },
 });
 
 export { gsap, ScrollTrigger };

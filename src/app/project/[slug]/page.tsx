@@ -23,7 +23,7 @@ export async function generateMetadata({
      what was built. */
   const service = getService(project.serviceSlug);
   const title = service
-    ? `${project.name} | ${service.title} Case Study`
+    ? `${project.name} | ${service.title} Live Build`
     : `${project.name} | Live Build`;
 
   return {

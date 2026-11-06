@@ -279,7 +279,7 @@ export default function Approach() {
 
         <div className="mt-14 flex justify-center">
           <PillButton tone="blue" href="/contact">
-            Start a Project
+            Discuss Your Project
           </PillButton>
         </div>
       </div>

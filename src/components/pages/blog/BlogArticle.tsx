@@ -169,7 +169,7 @@ export default function BlogArticle({ post, next }: BlogArticleProps) {
             hours with an honest scope and fixed quote.
           </p>
           <PillButton tone="blue" href={contactHref}>
-            Start a Project
+            Discuss Your Project
           </PillButton>
           {relatedService && (
             <p className="text-base font-medium text-black">

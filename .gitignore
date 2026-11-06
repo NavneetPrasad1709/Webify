@@ -55,3 +55,11 @@ _frames/
 
 # Private sales plan and internal quote sheet (repo is public)
 brand-kit/sales/
+
+# Search Console OAuth credentials and private search reports (repo is public)
+.seo/
+reports/seo/
+
+# Full-page audit screenshots are large; keep locally, commit metrics only
+docs/screenshots/before/*.png
+docs/screenshots/after/*.png

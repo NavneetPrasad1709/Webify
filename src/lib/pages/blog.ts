@@ -33,6 +33,102 @@ export const blogCategories = [
 
 export const posts: BlogPost[] = [
   {
+    slug: "what-a-saas-mvp-needs-on-day-one",
+    title: "What a SaaS MVP Needs on Day One, and What Can Wait",
+    description: "A practical checklist for founders scoping a first SaaS version: the features a paying customer needs at launch, the ones that can wait, and how to keep the build short.",
+    date: "November 6, 2026",
+    author: "Navneet Prasad",
+    category: "Insights",
+    relatedService: "saas-development",
+    thumb: "/assets/project/vexel-ai.webp",
+    hero: "/assets/project/vexel-ai.webp",
+    blocks: [
+      {
+        type: "lede",
+        text: "A SaaS MVP is the smallest version of a product that a real customer will pay for and keep using. Most first builds run long not because the engineering is hard, but because version one is scoped like version three. This is the checklist we use to cut it back."
+      },
+      {
+        type: "h2",
+        text: "What Is a SaaS MVP?"
+      },
+      {
+        type: "p",
+        text: "A minimum viable product for software as a service is a working web application with one complete workflow, real accounts, and a way to take payment. It is not a prototype or a clickable mockup. The test is simple: could a stranger sign up, get the core job done without your help, and pay for it? If yes, it is an MVP. If any of those steps needs you on a call, it is still a demo."
+      },
+      {
+        type: "h2",
+        text: "What Version One Needs"
+      },
+      {
+        type: "list",
+        ordered: true,
+        items: [
+          "Sign-up, login, and password reset. Use a proven auth provider rather than building your own.",
+          "The one workflow customers pay for, finished properly, including empty states and error messages.",
+          "Payments: a subscription or one-off charge through Stripe, Razorpay, or a similar provider.",
+          "Transactional emails: welcome, receipts, and password reset.",
+          "An admin view so your team can see users, fix accounts, and answer support questions.",
+          "Basic product analytics, so you can see which parts of the workflow people actually use.",
+          "A marketing page that explains the outcome in one sentence and links to sign-up."
+        ]
+      },
+      {
+        type: "h2",
+        text: "What Can Wait for Version Two"
+      },
+      {
+        type: "list",
+        ordered: false,
+        items: [
+          "Teams, roles, and granular permissions, unless your first buyers are companies that need them on day one.",
+          "Integrations beyond the single one your core workflow depends on.",
+          "Advanced reporting and data exports.",
+          "A native mobile app. A responsive web app covers most early users.",
+          "Custom themes, white-labelling, and settings nobody has asked for yet."
+        ]
+      },
+      {
+        type: "h2",
+        text: "How Long Should It Take?"
+      },
+      {
+        type: "p",
+        text: "For a focused scope like the one above, a small senior team can usually design and ship a first version in roughly 6 to 12 weeks. The biggest variable is not the stack, it is how many workflows and user roles you insist on before launch. Every extra role multiplies the screens, the permissions logic, and the testing."
+      },
+      {
+        type: "h2",
+        text: "Choosing a Stack That Will Not Need a Rewrite"
+      },
+      {
+        type: "p",
+        text: "Pick boring, well-documented technology so any future developer can pick it up. A common choice is Next.js and React for the interface, Node.js for the API, a managed Postgres database, and a hosted platform such as Vercel. The goal is not novelty. It is that the code your MVP ships with can grow into version two without starting over."
+      },
+      {
+        type: "h2",
+        text: "Questions to Answer Before You Hire Anyone"
+      },
+      {
+        type: "list",
+        ordered: true,
+        items: [
+          "Who is the first customer, specifically, and what job are they paying to get done?",
+          "What is the one workflow that does that job, from sign-up to result?",
+          "How will they pay, and how much, at least as a first guess?",
+          "What would make you call version one a success after 90 days?",
+          "Who will own the code, the database, and the hosting accounts? The answer should be you."
+        ]
+      },
+      {
+        type: "h2",
+        text: "Conclusion"
+      },
+      {
+        type: "p",
+        text: "A good MVP feels small to build and complete to use. Scope it to one paid workflow, build that properly with accounts, billing, and an admin view, and push everything else to version two. You will launch sooner, learn from real customers, and spend the next budget on what they actually ask for."
+      }
+    ]
+  },
+  {
     slug: "designing-a-saas-landing-page-that-sells-the-outcome",
     title: "Designing a SaaS Landing Page That Sells the Outcome",
     description: "Lessons from building Vexel, a live AI-product site that leads with the outcome a buyer wants rather than the technology behind it, and converts better for it.",

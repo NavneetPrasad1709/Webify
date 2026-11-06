@@ -230,7 +230,7 @@ export default function ServiceSingle({ service }: { service: ServiceEntry }) {
                   {service.overview?.fit ?? single.overviewBoxText}
                 </p>
                 <PillButton tone="blue" href={contactHref} className="w-max">
-                  Start a Project
+                  Discuss Your Project
                 </PillButton>
               </div>
             </div>
@@ -277,7 +277,7 @@ export default function ServiceSingle({ service }: { service: ServiceEntry }) {
                   {single.processNote}
                 </p>
                 <PillButton tone="blue" href={contactHref}>
-                  Start a Project
+                  Discuss Your Project
                 </PillButton>
               </div>
             </div>
@@ -404,7 +404,7 @@ export default function ServiceSingle({ service }: { service: ServiceEntry }) {
               Book a 20 Minute Call
             </PillButton>
             <PillButton tone="dark" href={contactHref}>
-              Start a Project
+              Discuss Your Project
             </PillButton>
           </div>
         </div>

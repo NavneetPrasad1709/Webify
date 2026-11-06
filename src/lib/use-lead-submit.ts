@@ -117,6 +117,14 @@ export function useLeadSubmit(source: string) {
           topic: data["project-type"] || "none",
           timeline: data.timeline || "none",
           via: usedFallback ? "web3forms" : "resend",
+          // Set by AiReferral when the session started from an AI answer engine.
+          ai: (() => {
+            try {
+              return sessionStorage.getItem("wf-ai-ref") || "none";
+            } catch {
+              return "none";
+            }
+          })(),
         });
       } catch {
         setError(true);

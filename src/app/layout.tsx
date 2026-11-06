@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
+import AiReferral from "@/components/ui/AiReferral";
 import { Inter, DM_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -37,9 +38,9 @@ const dmMono = DM_Mono({
    US clock, so the title sells the service rather than a city: a location
    qualifier here narrows the page for every visitor who did not arrive from
    a local search. Location targeting belongs on pages built for it. */
-const defaultTitle = "Webify | Web, Software and AI Development Company";
+const defaultTitle = "Webify | SaaS, Custom Software and AI Automation Company";
 const description =
-  "Senior-led team building websites, custom software, SaaS and AI products. Fixed-price projects, remote delivery, and evening IST hours held for US calls.";
+  "Webify designs and builds SaaS products, custom software, AI automation and websites for growing businesses in India and worldwide. Fixed-price projects.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -86,7 +87,8 @@ const jsonLd = {
       founder: {
         "@type": "Person",
         name: "Navneet Prasad",
-        jobTitle: "Founder",
+        jobTitle: "Founder & Lead Engineer",
+        url: `${SITE_URL}/about`,
       },
       employee: [
         {
@@ -115,7 +117,10 @@ const jsonLd = {
         "Website development",
         "Custom software development",
         "SaaS development",
+        "MVP development",
         "AI development",
+        "AI automation",
+        "Business workflow automation",
         "AI chatbots and agents",
         "Mobile app development",
         "E-commerce development",
@@ -128,6 +133,10 @@ const jsonLd = {
         { "@type": "City", name: "Noida" },
         { "@type": "City", name: "Ghaziabad" },
         { "@type": "City", name: "Delhi" },
+        { "@type": "Country", name: "India" },
+        { "@type": "Country", name: "United States" },
+        { "@type": "Country", name: "United Kingdom" },
+        { "@type": "Country", name: "United Arab Emirates" },
         "Worldwide",
       ],
       contactPoint: {
@@ -176,6 +185,7 @@ export default function RootLayout({
           <LeadPopup />
         </SmoothScroll>
         <Analytics />
+        <AiReferral />
       </body>
     </html>
   );

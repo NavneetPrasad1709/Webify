@@ -72,6 +72,42 @@ export const services: ServiceEntry[] = [
     },
   },
   {
+    slug: "saas-development",
+    title: "SaaS Development",
+    listingImage: "/assets/project/vexel-ai.webp",
+    heroImage: "/assets/project/vexel-ai.webp",
+    video: "/assets/project/vexel-ai.mp4",
+    blurb:
+      "SaaS products and MVPs built end to end: the marketing site, the app, accounts, billing, and the dashboard your users log in to.",
+    itemsLabel: "What we build:",
+    items: [
+      "SaaS MVPs & First Versions",
+      "Multi-Tenant Web Apps",
+      "Subscriptions & Billing",
+      "Product Dashboards & Admin",
+    ],
+    whatIs:
+      "SaaS development is designing and building software your customers sign up for and use in the browser, usually on a subscription. For a first version that means the essentials and nothing more: sign-up and login, the core feature people pay for, billing, an admin view for your team, and a marketing site that explains it. We build on Next.js, React, Node.js, and a managed Postgres database, so the product can grow without a rewrite.",
+    deliverables: [
+      "MVP Scoping: The One Job Version One Must Do",
+      "Product UX & Interface Design",
+      "Accounts, Teams, Roles & Permissions",
+      "Subscriptions & Payments (Stripe or Razorpay)",
+      "Admin Dashboard, Analytics & Emails",
+      "Deployment, Monitoring & Handover",
+    ],
+    timeline: "6-12 Weeks",
+    relatedProject: "vexel-ai",
+    overview: {
+      heading: "Ship The First Version Customers Pay For",
+      problem:
+        "Most first SaaS builds take too long because version one tries to be version three. Months go into features nobody has asked for, and the launch slips while the money runs down.",
+      approach:
+        "We cut the scope to the one workflow people will pay for, then build it properly: accounts, billing, an admin view, and a marketing site. You get a staging URL in week one and a product you own outright at launch.",
+      fit: "For founders validating a SaaS idea and teams turning an internal tool into a product.",
+    },
+  },
+  {
     slug: "custom-software",
     title: "Custom Software Development",
     listingImage: "/assets/service/listing-custom-software.webp",
@@ -81,7 +117,7 @@ export const services: ServiceEntry[] = [
       "Web apps, SaaS platforms, internal tools, and APIs built around how your business actually runs, not around a template.",
     itemsLabel: "What we build:",
     items: [
-      "Web Applications & SaaS Platforms",
+      "Web Applications & Business Systems",
       "Internal Tools & Admin Dashboards",
       "Client Portals & Booking Systems",
       "APIs & Third-Party Integrations",
@@ -399,6 +435,13 @@ export const services: ServiceEntry[] = [
    Rendered on each single page and emitted as FAQPage JSON-LD. No prices
    (withheld until the founding projects ship) and no client claims. */
 export const serviceFaqs: Record<string, { q: string; a: string }[]> = {
+  "saas-development": [
+    { q: "How long does it take to build a SaaS MVP?", a: "A focused first version usually takes 6 to 12 weeks: one core workflow, accounts, billing, an admin view, and a marketing site. Anything that does not help the first paying customers is moved to version two." },
+    { q: "What does a SaaS MVP need on day one?", a: "Sign-up and login, the one feature customers pay for, payments, basic emails, an admin view so you can support users, and analytics to see what they actually use. Teams, integrations, and advanced reporting can usually wait." },
+    { q: "Which tech stack do you use for SaaS products?", a: "Usually Next.js and React on the front end, Node.js on the back end, a managed Postgres database, and Stripe or Razorpay for billing, deployed on Vercel or similar. It is a common, well-documented stack, so any future developer can pick it up." },
+    { q: "Do I own the SaaS code and data?", a: "Yes. The repository, database, hosting, and payment accounts are in your name from the start, so you can raise money, hire a team, or move providers without asking us." },
+    { q: "What affects the cost of building a SaaS product?", a: "The number of user roles, how complex the core workflow is, billing rules, third-party integrations, and how polished version one needs to be. Cutting scope to one paid workflow is the biggest lever on both cost and launch date." },
+  ],
   "website-development": [
     { q: "How long does it take to build a website?", a: "A marketing site usually takes 4 to 8 weeks from kickoff to launch, depending on page count, content readiness, and integrations. You get the exact timeline in writing with your fixed quote, before any work starts." },
     { q: "How much does website development cost?", a: "Every project is a fixed quote based on scope, agreed in writing before work starts, so there is no hourly billing. Send a short brief and you get a written quote within 3 working days." },
@@ -410,12 +453,14 @@ export const serviceFaqs: Record<string, { q: string; a: string }[]> = {
     { q: "Is custom software better than an off-the-shelf tool?", a: "When an off-the-shelf tool fits your process, use it. Custom software pays off when your workflow is your advantage, when you are paying for many seats you barely use, or when several tools need to work as one system." },
     { q: "Who owns the code and data?", a: "You do, from day one. The repository, the database, the hosting accounts, and the documentation are all in your name, so you are never locked in to us." },
     { q: "How long does custom software development take?", a: "A focused first version usually ships in 6 to 14 weeks. We scope a lean first release that solves the core problem, launch it, and then extend it based on real use." },
+    { q: "What affects the cost of custom software?", a: "How many workflows and user roles it covers, how much existing data needs migrating, which tools it must integrate with, and any compliance or audit requirements. We quote a lean first version, then extend it from real use." },
   ],
   "ai-development": [
     { q: "What can AI actually do for my business?", a: "The strongest use cases are narrow and repetitive: answering customer questions from your own documentation, qualifying and routing leads, drafting proposals or reports, extracting data from documents, and searching an internal knowledge base in plain language." },
     { q: "Can you build a chatbot trained on our own data?", a: "Yes. We connect the model to your documents, help center, or database through retrieval, so it answers from your content and cites it, instead of guessing. Your data is not used to train public models." },
     { q: "Which AI models do you work with?", a: "We work with the leading models from Anthropic, OpenAI, and Google, and choose per task based on accuracy, speed, and cost. The integration is built so the model can be swapped later without a rebuild." },
     { q: "How do you keep AI answers accurate and costs under control?", a: "Every AI feature ships with grounding in your data, guardrails on what it may answer, an evaluation set we test against, usage limits, and logging, so you can see what it said and what it cost." },
+    { q: "What affects the cost of an AI project?", a: "How much of your data needs cleaning and connecting, how accurate answers must be, where the feature lives (website, app, or internal tool), and expected usage, since model costs scale with volume. We estimate running costs before you commit." },
   ],
   "branding-design": [
     { q: "What is included in a branding project?", a: "Strategy and positioning, a logo suite, color and typography systems, iconography, brand guidelines, and the UI patterns that carry the brand into your website and product." },
@@ -428,12 +473,14 @@ export const serviceFaqs: Record<string, { q: string; a: string }[]> = {
     { q: "Can you migrate our existing data?", a: "Yes. We migrate clients, leads, deals, and history from spreadsheets or your current CRM, cleaned and de-duplicated, as part of the build." },
     { q: "Can the CRM connect to email, WhatsApp, or payments?", a: "Yes. Email, telephony, payment gateways, calendars, and messaging tools can all be integrated, so follow-ups and updates happen without manual entry." },
     { q: "How long does a custom CRM take?", a: "Typically 6 to 12 weeks for a first version, followed by team training and post-launch support." },
+    { q: "What affects the cost of a custom CRM?", a: "The number of pipelines and user roles, how much data is migrated, the integrations it needs (email, calendar, payments, messaging), and reporting depth. A first version usually covers one team's process end to end." },
   ],
   "e-commerce": [
     { q: "Shopify or a custom store: which should I choose?", a: "Shopify suits most stores that want to launch fast and manage everything themselves. A custom build makes sense for unusual catalogs, complex pricing, or deep integrations. We recommend the one that fits after a short scoping call." },
     { q: "How long does it take to build an online store?", a: "Usually 5 to 8 weeks, including catalog setup, payment gateway, shipping and tax configuration, and training." },
     { q: "Which payment gateways can you integrate?", a: "Stripe, PayPal, Razorpay, and most other major gateways, plus local payment methods where your customers expect them." },
     { q: "Can you migrate my existing store?", a: "Yes. Products, customers, and orders can be migrated with URL redirects in place, so you keep your search rankings through the switch." },
+    { q: "What affects the cost of an online store?", a: "Platform choice, catalog size and variants, custom design versus a theme, payment and shipping rules, and integrations with inventory or accounting tools." },
   ],
   "landing-page": [
     { q: "How fast can you deliver a landing page?", a: "Usually 2 to 3 weeks including copywriting, design, build, tracking setup, and a conversion review after launch." },
@@ -458,6 +505,7 @@ export const serviceFaqs: Record<string, { q: string; a: string }[]> = {
     { q: "How long does it take to build a mobile app?", a: "A first release usually takes 8 to 14 weeks, from scoping and design through App Store and Google Play submission." },
     { q: "Do you handle App Store and Play Store submission?", a: "Yes. Store listings, review requirements, and release management are part of the service." },
     { q: "Can you add AI features to an app?", a: "Yes. Chat assistants, smart search, and automation powered by large language models can be built into the app as part of the same project." },
+    { q: "What affects the cost of a mobile app?", a: "Native or cross-platform, the number of screens and user roles, offline needs, backend and admin requirements, and integrations such as payments or maps. A lean first release keeps both cost and review risk down." },
   ],
   seo: [
     { q: "How long does SEO take to show results?", a: "Technical fixes can show impact within weeks. Rankings for long-tail searches usually move in 3 to 6 months, and competitive terms take longer. Anyone promising page one in a week is not being honest." },
@@ -466,6 +514,22 @@ export const serviceFaqs: Record<string, { q: string; a: string }[]> = {
     { q: "Do you optimize for AI search like ChatGPT and Google AI Overviews?", a: "Yes. Clear structure, structured data, and direct answers to buyer questions help your site get cited in AI answers as well as ranked in classic search." },
   ],
 };
+
+/* The homepage accordion shows the core services only; the full catalogue
+   lives on /service. Keeps the mobile homepage focused on what buyers
+   most often come for. */
+export const homeServiceSlugs = [
+  "saas-development",
+  "custom-software",
+  "ai-development",
+  "website-development",
+  "crm-system",
+  "app-development",
+];
+
+export const homeServices: ServiceEntry[] = homeServiceSlugs
+  .map((slug) => services.find((s) => s.slug === slug))
+  .filter((s): s is ServiceEntry => Boolean(s));
 
 export function getService(slug: string): ServiceEntry | undefined {
   return services.find((s) => s.slug === slug);
@@ -488,7 +552,7 @@ export const listingHero = {
   titleLines: ["Services", "That Deliver"],
   subtitle:
     "One in-house team of developers and designers for strategy, design, build, and everything after launch.",
-  ctaLabel: "Start a Project",
+  ctaLabel: "Discuss Your Project",
   ctaHref: "/contact",
 };
 
@@ -499,7 +563,7 @@ export const techStack = {
   eyebrow: "Flexible Stack",
   titleLines: ["Flexible", "Technology Stack"],
   note: "We pick the stack that fits your scale, not the other way around.",
-  ctaLabel: "Start a Project",
+  ctaLabel: "Discuss Your Project",
   ctaHref: "/contact",
   tiers: [
     {
